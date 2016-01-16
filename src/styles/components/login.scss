@@ -1,0 +1,32 @@
+/* Login */
+.login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #2a3e49;
+}
+
+.login-overlay .login-content {
+  max-width: 300px;
+  margin: 0 auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  margin-top: -240px;
+}
+
+.login-overlay .login-content img {
+  margin-bottom: 20px;
+}
+
+.login-overlay .login-content .panel {
+  border: 0;
+}
+
+.login-overlay .login-content .panel hr {
+  border-color: #ddd;
+  margin: 15px -15px;
+}

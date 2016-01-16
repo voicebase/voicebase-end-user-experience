@@ -1,0 +1,25 @@
+body {
+  background: #f5f5f5;
+  overflow: hidden;
+}
+
+a {
+  color: #0079c0;
+}
+
+.text-success {
+  color: #85d04a;
+}
+
+html,
+body,
+body > .container-fluid,
+body > .container-fluid > .row,
+body > .container-fluid > .row > div {
+  height: 100%;
+}
+
+body > .container-fluid > .row > div {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
