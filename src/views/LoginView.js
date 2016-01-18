@@ -8,12 +8,19 @@ import LoginForm from '../components/LoginForm'
 
 export class LoginView extends React.Component {
   static propTypes = {
+    history: PropTypes.object.isRequired,
     state: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
 
   constructor(props) {
     super(props);
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.state.auth.isLoggedIn) {
+      this.props.history.pushState(null, '/all')
+    }
   }
 
   signIn(credentials) {
@@ -26,7 +33,9 @@ export class LoginView extends React.Component {
         <div className="login-content">
           <img src={Logo} className="img-responsive"/>
           <Panel>
-            <LoginForm onSubmit={this.signIn.bind(this)} />
+            <LoginForm onSubmit={this.signIn.bind(this)}
+                       errorMessage={this.props.state.auth.errorMessage}
+                       isPending={this.props.state.auth.isPending} />
           </Panel>
         </div>
       </div>

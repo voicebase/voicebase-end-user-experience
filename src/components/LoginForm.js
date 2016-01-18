@@ -1,33 +1,42 @@
 import React, { PropTypes } from 'react'
 import { reduxForm } from 'redux-form';
-import {Input, Button} from 'react-bootstrap'
+import {Input, Button, Alert} from 'react-bootstrap'
 
 class LoginForm extends React.Component {
 
   static propTypes = {
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
-    submitting: PropTypes.bool.isRequired
+    errorMessage: PropTypes.string.isRequired,
+    isPending: PropTypes.bool.isRequired
   };
+
+  hasFieldError(field) {
+    return !(field.touched && field.error) ? 'success' : 'error';
+  }
 
   render () {
     const {
       fields: { username, password },
-      handleSubmit,
-      submitting
+      handleSubmit
     } = this.props;
 
     return (
-      <form onSubmit={handleSubmit}>
-        <Input type="text" name="username" label="Email" placeholder="Email" {...username}/>
-        {username.touched && username.error && <div>{username.error}</div>}
-        <Input type="password" name="password" label="Password" placeholder="Password" {...password}/>
-        {password.touched && password.error && <div>{password.error}</div>}
-        <Input type="checkbox" label="Remember me"/>
-        <hr/>
-        <Button type="submit" bsStyle="primary" className="pull-left" disabled={submitting} onClick={handleSubmit}>Login</Button>
-        <Button bsStyle="link" className="pull-right">Forgot details</Button>
-      </form>
+      <div>
+        {this.props.errorMessage && <Alert bsStyle="danger">The API Key or Password you entered are incorrect. Please try again (make sure your caps lock is off).</Alert>}
+        <form onSubmit={handleSubmit}>
+          <Input type="text" bsStyle={this.hasFieldError(username)} hasFeedback name="username" label="Email" placeholder="Email" {...username}/>
+          {username.touched && username.error && <div className="login-field-error">{username.error}</div>}
+          <Input type="password" bsStyle={this.hasFieldError(password)} hasFeedback name="password" label="Password" placeholder="Password" {...password}/>
+          {password.touched && password.error && <div className="login-field-error">{password.error}</div>}
+          <Input type="checkbox" label="Remember me"/>
+          <hr/>
+          <Button type="submit" bsStyle="primary" className="pull-left" disabled={this.props.isPending} onClick={handleSubmit}>
+            {this.props.isPending ? 'Signing In' : 'Sign In'}
+          </Button>
+          <Button bsStyle="link" className="pull-right">Forgot details</Button>
+        </form>
+      </div>
     )
   }
 }

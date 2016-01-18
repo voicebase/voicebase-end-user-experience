@@ -26,22 +26,42 @@ export const actions = {
  * */
 const initialState = {
   isLoggedIn: false,
-  token: ''
+  isPending: false,
+  token: '',
+  errorMessage: ''
 };
 
 /*
  * Reducers
  * */
 export default handleActions({
-  'SIGN_IN_PENDING': (state, { payload }) => {
-    return state;
+  [`${SIGN_IN}_PENDING`]: (state, { payload }) => {
+    return {
+      ...state,
+      isPending: true,
+      errorMessage: '',
+      isLoggedIn: false,
+      token: ''
+    };
   },
 
-  'SIGN_IN_REJECTED': (state, { payload }) => {
-    return state;
+  [`${SIGN_IN}_REJECTED`]: (state, { payload: error }) => {
+    return {
+      ...state,
+      isPending: false,
+      errorMessage: error,
+      isLoggedIn: false,
+      token: ''
+    };
   },
 
-  'SIGN_IN_FULFILLED': (state, { payload }) => {
-    return state;
+  [`${SIGN_IN}_FULFILLED`]: (state, { payload: response }) => {
+    return {
+      ...state,
+      isPending: false,
+      errorMessage: '',
+      isLoggedIn: true,
+      token: response.token
+    };
   }
 }, initialState);

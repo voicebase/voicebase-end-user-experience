@@ -8,12 +8,29 @@ import { Route, IndexRoute, Redirect } from 'react-router'
 // your current file is.
 import CoreLayout from 'layouts/CoreLayout/CoreLayout'
 import LoginView from 'views/LoginView'
+import AllView from '../views/AllView'
 import NotFoundView from 'views/NotFoundView'
 
-export default (
-  <Route path='/' component={CoreLayout}>
-    <IndexRoute component={LoginView} />
-    <Route path='/404' component={NotFoundView} />
-    <Redirect from='*' to='/404' />
-  </Route>
-)
+export default function (store, history) {
+  const redirectIfLoggedIn = (nextState, replaceState) => {
+    const { auth } = store.getState();
+    console.log(auth.isLoggedIn);
+    if (!auth.isLoggedIn) {
+      replaceState(null, '/login');
+    }
+    else {
+      replaceState(null, '/all');
+    }
+  };
+
+  return (
+    <Route path='/' component={CoreLayout}>
+      <IndexRoute onEnter={redirectIfLoggedIn} />
+
+      <Route path='/all' component={AllView} />
+      <Route path='/login' component={LoginView} />
+      <Route path='/404' component={NotFoundView} />
+      <Redirect from='*' to='/404' />
+    </Route>
+  )
+}
