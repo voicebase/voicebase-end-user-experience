@@ -14,8 +14,7 @@ import NotFoundView from 'views/NotFoundView'
 export default function (store, history) {
   const redirectIfLoggedIn = (nextState, replaceState) => {
     const { auth } = store.getState();
-    console.log(auth.isLoggedIn);
-    if (!auth.isLoggedIn) {
+    if (!auth.token) {
       replaceState(null, '/login');
     }
     else {

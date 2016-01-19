@@ -7,12 +7,18 @@ class LoginForm extends React.Component {
   static propTypes = {
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
+    handleRemember: PropTypes.func.isRequired,
+    isRemember: PropTypes.bool.isRequired,
     errorMessage: PropTypes.string.isRequired,
     isPending: PropTypes.bool.isRequired
   };
 
   hasFieldError(field) {
     return !(field.touched && field.error) ? 'success' : 'error';
+  }
+
+  onChangeRemember(event) {
+    this.props.handleRemember(event.target.checked);
   }
 
   render () {
@@ -29,7 +35,7 @@ class LoginForm extends React.Component {
           {username.touched && username.error && <div className="login-field-error">{username.error}</div>}
           <Input type="password" bsStyle={this.hasFieldError(password)} hasFeedback name="password" label="Password" placeholder="Password" {...password}/>
           {password.touched && password.error && <div className="login-field-error">{password.error}</div>}
-          <Input type="checkbox" label="Remember me"/>
+          <Input type="checkbox" label="Remember me" checked={this.props.isRemember} onChange={this.onChangeRemember.bind(this)}/>
           <hr/>
           <Button type="submit" bsStyle="primary" className="pull-left" disabled={this.props.isPending} onClick={handleSubmit}>
             {this.props.isPending ? 'Signing In' : 'Sign In'}

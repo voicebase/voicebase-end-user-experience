@@ -18,13 +18,17 @@ export class LoginView extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (nextProps.state.auth.isLoggedIn) {
+    if (nextProps.state.auth.token) {
       this.props.history.pushState(null, '/all')
     }
   }
 
   signIn(credentials) {
     this.props.actions.signIn(credentials);
+  }
+
+  setRemember(isRemember) {
+    this.props.actions.setRemember(isRemember);
   }
 
   render() {
@@ -34,6 +38,8 @@ export class LoginView extends React.Component {
           <img src={Logo} className="img-responsive"/>
           <Panel>
             <LoginForm onSubmit={this.signIn.bind(this)}
+                       handleRemember={this.setRemember.bind(this)}
+                       isRemember={this.props.state.auth.isRemember}
                        errorMessage={this.props.state.auth.errorMessage}
                        isPending={this.props.state.auth.isPending} />
           </Panel>

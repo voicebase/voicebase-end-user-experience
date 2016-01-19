@@ -7,6 +7,8 @@ import {
   createStore
 } from 'redux'
 
+import storage from './storage';
+
 export default function configureStore (initialState) {
   let createStoreWithMiddleware
   const middleware = applyMiddleware(thunk, promiseMiddleware())
@@ -14,12 +16,16 @@ export default function configureStore (initialState) {
   if (__DEBUG__) {
     createStoreWithMiddleware = compose(
       middleware,
+      storage,
       window.devToolsExtension
         ? window.devToolsExtension()
         : require('containers/DevTools').default.instrument()
     )
   } else {
-    createStoreWithMiddleware = compose(middleware)
+    createStoreWithMiddleware = compose(
+      middleware,
+      storage
+    )
   }
 
   const store = createStoreWithMiddleware(createStore)(

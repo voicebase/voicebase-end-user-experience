@@ -1,5 +1,4 @@
 import { createAction, handleActions } from 'redux-actions'
-//import * as _ from 'lodash';
 
 import AuthApi from '../../api/authApi'
 
@@ -7,6 +6,7 @@ import AuthApi from '../../api/authApi'
  * Constants
  * */
 export const SIGN_IN = 'SIGN_IN';
+export const SET_REMEMBER = 'SET_REMEMBER';
 
 /*
  * Actions
@@ -17,15 +17,18 @@ export const signIn = createAction(SIGN_IN, (credentials) => {
   }
 });
 
+export const setRemember = createAction(SET_REMEMBER, (isRemember) => isRemember);
+
 export const actions = {
-  signIn
+  signIn,
+  setRemember
 };
 
 /*
  * State
  * */
 const initialState = {
-  isLoggedIn: false,
+  isRemember: false,
   isPending: false,
   token: '',
   errorMessage: ''
@@ -40,7 +43,6 @@ export default handleActions({
       ...state,
       isPending: true,
       errorMessage: '',
-      isLoggedIn: false,
       token: ''
     };
   },
@@ -50,7 +52,6 @@ export default handleActions({
       ...state,
       isPending: false,
       errorMessage: error,
-      isLoggedIn: false,
       token: ''
     };
   },
@@ -60,8 +61,14 @@ export default handleActions({
       ...state,
       isPending: false,
       errorMessage: '',
-      isLoggedIn: true,
       token: response.token
+    };
+  },
+
+  [SET_REMEMBER]: (state, { payload: isRemember }) => {
+    return {
+      ...state,
+      isRemember: isRemember
     };
   }
 }, initialState);
