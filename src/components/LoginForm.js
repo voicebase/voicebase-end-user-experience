@@ -17,6 +17,12 @@ class LoginForm extends React.Component {
     return !(field.touched && field.error) ? 'success' : 'error';
   }
 
+  hasBsStyleAttr(field) {
+    if (field.touched) {
+      field.bsStyle = this.hasFieldError(field);
+    }
+  }
+
   onChangeRemember(event) {
     this.props.handleRemember(event.target.checked);
   }
@@ -27,14 +33,19 @@ class LoginForm extends React.Component {
       handleSubmit
     } = this.props;
 
+    this.hasBsStyleAttr(username);
+    this.hasBsStyleAttr(password);
+
     return (
       <div>
         {this.props.errorMessage && <Alert bsStyle="danger">The API Key or Password you entered are incorrect. Please try again (make sure your caps lock is off).</Alert>}
         <form onSubmit={handleSubmit}>
-          <Input type="text" bsStyle={this.hasFieldError(username)} hasFeedback name="username" label="Email" placeholder="Email" {...username}/>
+          <Input type="text" hasFeedback name="username" label="Email" placeholder="Email" {...username}/>
           {username.touched && username.error && <div className="login-field-error">{username.error}</div>}
-          <Input type="password" bsStyle={this.hasFieldError(password)} hasFeedback name="password" label="Password" placeholder="Password" {...password}/>
+
+          <Input type="password" hasFeedback name="password" label="Password" placeholder="Password" {...password}/>
           {password.touched && password.error && <div className="login-field-error">{password.error}</div>}
+
           <Input type="checkbox" label="Remember me" checked={this.props.isRemember} onChange={this.onChangeRemember.bind(this)}/>
           <hr/>
           <Button type="submit" bsStyle="primary" className="pull-left" disabled={this.props.isPending} onClick={handleSubmit}>
