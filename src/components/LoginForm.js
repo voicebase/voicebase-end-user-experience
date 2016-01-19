@@ -38,7 +38,7 @@ class LoginForm extends React.Component {
           <Input type="checkbox" label="Remember me" checked={this.props.isRemember} onChange={this.onChangeRemember.bind(this)}/>
           <hr/>
           <Button type="submit" bsStyle="primary" className="pull-left" disabled={this.props.isPending} onClick={handleSubmit}>
-            {this.props.isPending ? 'Signing In' : 'Sign In'}
+            {this.props.isPending ? 'Signing In...' : 'Sign In'}
           </Button>
           <Button bsStyle="link" className="pull-right">Forgot details</Button>
         </form>

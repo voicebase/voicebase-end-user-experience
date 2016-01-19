@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux';
 import {actions as authActions} from '../redux/modules/auth'
+import connectWrapper from '../redux/utils/connect'
 import {Panel} from 'react-bootstrap'
 import Logo from '../images/voicebase-logo-2.png'
 import LoginForm from '../components/LoginForm'
@@ -49,14 +48,4 @@ export class LoginView extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  state
-});
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(authActions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginView)
+export default connectWrapper(authActions, LoginView)
