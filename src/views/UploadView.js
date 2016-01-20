@@ -9,22 +9,10 @@ export class AllView extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
-  componentWillMount(nextProps) {
-    let media = this.props.state.media;
-    if (media.isCompleted && media.media.length === 0) {
-      this.props.history.pushState(null, '/upload');
-    }
-  }
-
-  signOut() {
-    this.props.actions.signOut();
-  }
-
   render () {
     return (
       <div className='container text-center'>
-        <h1>All media page!</h1>
-        <button type="button" onClick={this.signOut.bind(this)}>Logout</button>
+        <h1>Upload View</h1>
       </div>
     )
   }

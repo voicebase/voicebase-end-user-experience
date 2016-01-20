@@ -5,6 +5,7 @@ import CoreLayout from '../views/CoreLayout'
 import AppLayout from '../views/AppLayout'
 import LoginView from '../views/LoginView'
 import AllView from '../views/AllView'
+import UploadView from '../views/UploadView'
 import NotFoundView from '../views/NotFoundView'
 
 export default function (store, history) {
@@ -24,6 +25,7 @@ export default function (store, history) {
 
       <Route component={AppLayout}>
         <Route path='/all' component={AllView} />
+        <Route path='/upload' component={UploadView} />
       </Route>
 
       <Route path='/login' component={LoginView} />
