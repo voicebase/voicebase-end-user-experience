@@ -3,9 +3,13 @@ import axios from 'axios'
 const baseUrl = 'https://apis.voicebase.com/v2-beta';
 
 export default {
-  signIn(credentials) {
-    let url = `${baseUrl}?apikey=${credentials.username}&password=${credentials.password}`;
-    return axios.get(url)
+  getMedia(token) {
+    let url = `${baseUrl}/media?include=metadata`;
+    return axios.get(url, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    })
       .then(response => {
         return response.data;
       })

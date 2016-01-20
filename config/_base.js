@@ -46,7 +46,6 @@ const config = {
     'redux',
     'redux-actions',
     'redux-simple-router',
-    'isomorphic-fetch',
     'lodash',
     'classnames',
     'redux-promise-middleware',

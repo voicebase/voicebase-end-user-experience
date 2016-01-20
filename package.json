@@ -28,12 +28,12 @@
   "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.9.0",
     "classnames": "^2.2.3",
     "debug": "^2.2.0",
     "dotenv": "^1.2.0",
     "font-awesome": "^4.5.0",
     "history": "^1.17.0",
-    "isomorphic-fetch": "^2.2.0",
     "koa": "^2.0.0-alpha.3",
     "koa-connect-history-api-fallback": "^0.3.0",
     "koa-convert": "^1.2.0",
