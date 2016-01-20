@@ -18,7 +18,7 @@ export class LoginView extends React.Component {
 
   componentWillUpdate(nextProps) {
     if (nextProps.state.auth.token) {
-      this.props.history.pushState(null, '/all')
+      this.props.history.pushState(null, '/')
     }
   }
 

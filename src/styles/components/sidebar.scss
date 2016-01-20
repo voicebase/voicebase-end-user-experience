@@ -1,0 +1,130 @@
+.sidebar {
+  background: #2a3e49;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+}
+
+.sidebar__content {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 123px;
+  /* Height of .nav-bottom */
+}
+
+.sidebar .logo-wrapper {
+  padding: 20px;
+  text-align: center;
+  background: #1a2e39;
+}
+
+.sidebar .logo-wrapper img {
+  max-height: 40px;
+  margin: 0 auto;
+}
+
+.sidebar h4 {
+  text-transform: uppercase;
+  font-size: 12px;
+  color: white;
+  margin: 10px 0 0;
+  padding: 10px 20px;
+  color: #67899b;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.sidebar h4 i {
+  font-size: 12px;
+  margin-right: 6px;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -7px;
+  opacity: 0.5;
+}
+
+.sidebar h4.collapsed i {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+  filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(180), M12=-sin(180), M21=sin(180), M22=cos(180));
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(180), M12=-sin(180), M21=sin(180), M22=cos(180))";
+  zoom: 1;
+}
+
+.sidebar h4:hover {
+  color: #87a9bb;
+}
+
+.sidebar .nav {
+  position: relative;
+}
+
+.sidebar .nav.bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+}
+
+.sidebar .nav > li {
+  margin: 0;
+}
+
+.sidebar .nav > li > a {
+  color: #afcad9;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.sidebar .nav > li.upload-files > a {
+  color: #85d04a;
+}
+
+.sidebar .nav > li > a:hover, .sidebar .nav > li > a:focus {
+  background: #3a4e59;
+  color: white;
+}
+
+.sidebar .nav > li > a .text-muted {
+  color: #67899b;
+  margin-left: 6px;
+  font-size: 12px;
+}
+
+.sidebar .nav > li.active > a {
+  background: #0079c0;
+  color: white;
+}
+
+.sidebar .nav > li.active > a .text-muted {
+  color: #afcad9;
+}

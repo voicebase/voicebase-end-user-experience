@@ -1,15 +1,11 @@
 import React from 'react'
 import { Route, IndexRoute, Redirect } from 'react-router'
 
-// NOTE: here we're making use of the `resolve.root` configuration
-// option in webpack, which allows us to specify import paths as if
-// they were from the root of the ~/src directory. This makes it
-// very easy to navigate to files regardless of how deeply nested
-// your current file is.
-import CoreLayout from 'layouts/CoreLayout/CoreLayout'
-import LoginView from 'views/LoginView'
+import CoreLayout from '../views/CoreLayout'
+import AppLayout from '../views/AppLayout'
+import LoginView from '../views/LoginView'
 import AllView from '../views/AllView'
-import NotFoundView from 'views/NotFoundView'
+import NotFoundView from '../views/NotFoundView'
 
 export default function (store, history) {
   const redirectIfLoggedIn = (nextState, replaceState) => {
@@ -26,7 +22,10 @@ export default function (store, history) {
     <Route path='/' component={CoreLayout}>
       <IndexRoute onEnter={redirectIfLoggedIn} />
 
-      <Route path='/all' component={AllView} />
+      <Route component={AppLayout}>
+        <Route path='/all' component={AllView} />
+      </Route>
+
       <Route path='/login' component={LoginView} />
       <Route path='/404' component={NotFoundView} />
       <Redirect from='*' to='/404' />

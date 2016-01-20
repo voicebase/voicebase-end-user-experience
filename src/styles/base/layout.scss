@@ -13,13 +13,24 @@ a {
 
 html,
 body,
-body > .container-fluid,
-body > .container-fluid > .row,
-body > .container-fluid > .row > div {
+body .page-container,
+body .container-fluid,
+body .container-fluid > .row,
+body .container-fluid > .row > div {
   height: 100%;
 }
 
-body > .container-fluid > .row > div {
+body .container-fluid > .row > div {
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.content {
+  padding: 0;
+  position: absolute;
+  left: 200px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: auto;
 }
