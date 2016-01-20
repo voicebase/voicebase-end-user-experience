@@ -1,4 +1,5 @@
 import persistState from 'redux-localstorage';
+import { initialState as authInitialState } from './modules/auth'
 
 const storageConfig = {
   key: 'voicebaseStorage',
@@ -7,8 +8,7 @@ const storageConfig = {
       return {
         ...persistedState,
         auth: {
-          ...persistedState.auth,
-          token: ''
+          ...authInitialState
         }
       }
     }

@@ -31,7 +31,7 @@ export const actions = {
 /*
  * State
  * */
-const initialState = {
+export const initialState = {
   isRemember: false,
   isPending: false,
   token: '',
