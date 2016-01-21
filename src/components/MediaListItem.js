@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import {Input, Collapse} from 'react-bootstrap'
+import {Collapse} from 'react-bootstrap'
 
 export class MediaListItem extends React.Component {
   static propTypes = {
