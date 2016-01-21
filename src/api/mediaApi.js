@@ -11,7 +11,16 @@ export default {
       }
     })
       .then(response => {
-        return response.data;
+        let mediaIds = [];
+        let media = {};
+        response.data.media.forEach(mediaItem => {
+          mediaIds.push(mediaItem.mediaId);
+          media[mediaItem.mediaId] = mediaItem;
+        });
+        return {
+          mediaIds,
+          media
+        };
       })
       .catch(error => {
         if (error.data && error.data.errors) {

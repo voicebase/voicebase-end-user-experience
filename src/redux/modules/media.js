@@ -24,10 +24,12 @@ export const actions = {
  * State
  * */
 export const initialState = {
-  media: [],
+  mediaIds: [],
+  media: {},
   isGetPending: false,
   isGetCompleted: false,
-  errorMessage: ''
+  errorMessage: '',
+  lastUploadedIds: []
 };
 
 /*
@@ -58,6 +60,7 @@ export default handleActions({
       isGetPending: false,
       isGetCompleted: true,
       errorMessage: '',
+      mediaIds: response.mediaIds,
       media: response.media
     };
   }
