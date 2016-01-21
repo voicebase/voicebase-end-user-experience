@@ -11,7 +11,7 @@ export class AllView extends React.Component {
 
   componentWillMount(nextProps) {
     let media = this.props.state.media;
-    if (media.isGetCompleted && media.media.length === 0) {
+    if (media.isGetCompleted && media.mediaIds.length === 0) {
       this.props.history.pushState(null, '/upload');
     }
   }
