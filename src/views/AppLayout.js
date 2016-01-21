@@ -15,14 +15,19 @@ export class AppLayout extends React.Component {
   };
 
   componentWillMount() {
+    this.redirectIfNotLoggedIn();
     const token = this.props.state.auth.token;
     if (token) {
       this.props.actions.getMedia(token);
     }
   }
 
-  componentWillUpdate(nextProps) {
-    if (!nextProps.state.auth.token) {
+  componentWillUpdate() {
+    this.redirectIfNotLoggedIn();
+  }
+
+  redirectIfNotLoggedIn() {
+    if (!this.props.state.auth.token) {
       this.props.history.pushState(null, '/login');
     }
   }
@@ -36,8 +41,8 @@ export class AppLayout extends React.Component {
             <SidebarMenu state={state} actions={this.props.actions}/>
           </Col>
           <Col xs={10} className="content">
-            {state.media.isPending && <Spinner />}
-            {!state.media.isPending && this.props.children}
+            {state.media.isGetPending && <Spinner />}
+            {!state.media.isGetPending && this.props.children}
           </Col>
         </Row>
       </Grid>

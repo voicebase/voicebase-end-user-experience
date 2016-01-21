@@ -25,8 +25,8 @@ export const actions = {
  * */
 export const initialState = {
   media: [],
-  isPending: false,
-  isCompleted: false,
+  isGetPending: false,
+  isGetCompleted: false,
   errorMessage: ''
 };
 
@@ -37,8 +37,8 @@ export default handleActions({
   [`${GET_MEDIA}_PENDING`]: (state, { payload }) => {
     return {
       ...state,
-      isPending: true,
-      isCompleted: false,
+      isGetPending: true,
+      isGetCompleted: false,
       errorMessage: ''
     };
   },
@@ -46,8 +46,8 @@ export default handleActions({
   [`${GET_MEDIA}_REJECTED`]: (state, { payload: error }) => {
     return {
       ...state,
-      isPending: false,
-      isCompleted: false,
+      isGetPending: false,
+      isGetCompleted: false,
       errorMessage: error
     };
   },
@@ -55,8 +55,8 @@ export default handleActions({
   [`${GET_MEDIA}_FULFILLED`]: (state, { payload: response }) => {
     return {
       ...state,
-      isPending: false,
-      isCompleted: true,
+      isGetPending: false,
+      isGetCompleted: true,
       errorMessage: '',
       media: response.media
     };
