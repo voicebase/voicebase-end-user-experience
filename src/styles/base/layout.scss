@@ -34,3 +34,22 @@ body .container-fluid > .row > div {
   right: 0;
   width: auto;
 }
+
+.content__heading {
+  padding: 20px;
+}
+
+.content__heading h3 {
+  margin: 0;
+}
+
+.content__heading h3 .text-muted {
+  font-size: 16px;
+  position: relative;
+  top: -3px;
+  left: 5px;
+}
+
+.content__body {
+  padding: 0 20px;
+}

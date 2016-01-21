@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react'
 import connectWrapper from '../redux/utils/connect'
 import {actions as authActions} from '../redux/modules/auth'
+import CounterLabel from '../components/CounterLabel'
+import SearchForm from '../components/SearchForm'
+import MediaList from '../components/MediaList'
 
 export class AllView extends React.Component {
   static propTypes = {
@@ -16,15 +19,19 @@ export class AllView extends React.Component {
     }
   }
 
-  signOut() {
-    this.props.actions.signOut();
-  }
-
   render () {
+    let state = this.props.state;
     return (
-      <div className='container text-center'>
-        <h1>All media page!</h1>
-        <button type="button" onClick={this.signOut.bind(this)}>Logout</button>
+      <div>
+        <div className="content__heading">
+          <h3>
+            All My Files
+            <CounterLabel value={state.media.mediaIds.length}/>
+          </h3>
+        </div>
+        <SearchForm />
+
+        <MediaList state={state.media} actions={this.props.actions} />
       </div>
     )
   }

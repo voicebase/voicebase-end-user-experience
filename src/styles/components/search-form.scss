@@ -1,0 +1,48 @@
+.form--filters {
+  padding: 0 20px 20px;
+}
+
+.form--filters .form-group {
+  margin: 0;
+  position: relative;
+}
+
+.form--filters .form-group i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  font-size: 14px;
+  line-height: 1;
+  margin-top: -7px;
+  color: #aaa;
+  z-index: 9;
+}
+
+.form--filters .form-group input {
+  padding-left: 30px;
+  background: transparent;
+}
+
+.form--filters .form-group input:focus {
+  background: white;
+}
+
+.form--filters .btn-default {
+  background: transparent;
+  color: #777;
+}
+
+.form--filters .btn-default:focus, .form--filters .btn-default:hover {
+  z-index: 3;
+  background: white;
+  color: #333;
+}
+
+.form--filters .btn-default i,
+.form--filters .dropdown .caret {
+  margin-left: 5px;
+}
+
+.form--filters .btn-primary {
+  font-weight: bold;
+}

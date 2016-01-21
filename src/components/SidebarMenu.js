@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import {Nav, NavItem} from 'react-bootstrap'
 import Logo from '../images/voicebase-logo-2.png'
+import CounterLabel from '../components/CounterLabel'
 
 export class SidebarMenu extends React.Component {
   static propTypes = {
@@ -22,7 +23,7 @@ export class SidebarMenu extends React.Component {
     if (mediaIds.length > 0) {
       content = <NavItem href="/all" active={this.isItemActive('/all')}>
         All My Files
-        <span className="text-muted">{mediaIds.length}</span>
+        <CounterLabel value={mediaIds.length}/>
       </NavItem>
     }
     return content;
@@ -34,7 +35,7 @@ export class SidebarMenu extends React.Component {
     if (lastUploadedIds.length > 0) {
       content = <NavItem href="/last-upload" active={this.isItemActive('/last-upload')}>
         Last Upload
-        <span className="text-muted">3</span>
+        <CounterLabel value={lastUploadedIds.length}/>
       </NavItem>
     }
     return content;
