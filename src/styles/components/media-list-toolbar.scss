@@ -1,0 +1,23 @@
+.listings__toolbar {
+  padding: 0 20px 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.listings__toolbar .btn {
+  opacity: 1 !important;
+}
+
+.listings__toolbar .btn i {
+  font-size: 14px;
+  float: left;
+  margin-right: 6px;
+  margin-top: 1px;
+}
+
+.listings__toolbar .btn-count {
+  background: #2a3e49 !important;
+  border-color: #2a3e49 !important;
+  font-weight: bold;
+  color: white;
+}

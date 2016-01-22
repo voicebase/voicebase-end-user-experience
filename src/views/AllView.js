@@ -3,6 +3,7 @@ import connectWrapper from '../redux/utils/connect'
 import {actions as authActions} from '../redux/modules/auth'
 import CounterLabel from '../components/CounterLabel'
 import SearchForm from '../components/SearchForm'
+import MediaListToolbar from '../components/MediaListToolbar'
 import MediaList from '../components/MediaList'
 
 export class AllView extends React.Component {
@@ -30,7 +31,7 @@ export class AllView extends React.Component {
           </h3>
         </div>
         <SearchForm />
-
+        <MediaListToolbar selectedMediaIds={state.media.selectedMediaIds} actions={this.props.actions} />
         <MediaList state={state.media} actions={this.props.actions} />
       </div>
     )
