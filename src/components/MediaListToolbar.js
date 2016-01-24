@@ -13,6 +13,14 @@ export class MediaListToolbar extends React.Component {
     }, 300)
   }
 
+  selectAll() {
+    this.props.actions.selectAllMedia();
+  }
+
+  unselectAll() {
+    this.props.actions.unselectAllMedia();
+  }
+
   render () {
     let countIds = this.props.selectedMediaIds.length;
     return (
@@ -25,8 +33,8 @@ export class MediaListToolbar extends React.Component {
             <Button>
               <i className="fa fa-trash" /> Delete selected
             </Button>
-            <Button>Select all</Button>
-            <Button>Deselect all</Button>
+            <Button onClick={this.selectAll.bind(this)}>Select all</Button>
+            <Button onClick={this.unselectAll.bind(this)}>Deselect all</Button>
           </ButtonGroup>
         </div>
       </Collapse>

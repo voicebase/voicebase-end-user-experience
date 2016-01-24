@@ -37,13 +37,14 @@ export class MediaListItem extends React.Component {
 
   render () {
     let itemClasses = classnames('list-group-item', 'listing', {collapsed: !this.props.isExpanded});
+    let checked = this.props.state.media[this.props.mediaId].checked;
 
     return (
       <div>
         <div className={itemClasses} onClick={this.toggle.bind(this)}>
           <h4 className="list-group-item-heading">Title lorem ipsum dolor est compendum</h4>
           <p className="list-group-item-text">Uploaded Jan 5, 2010 | Length 00:05:16</p>
-          <input type="checkbox" className="listing__checkbox" onChange={this.selectMedia.bind(this)} />
+          <input type="checkbox" className="listing__checkbox" checked={checked} onChange={this.selectMedia.bind(this)} />
           <a href="#" className="listing__delete"><i className="fa fa-trash"/></a>
         </div>
         <Collapse in={this.props.isExpanded}>

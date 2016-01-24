@@ -11,6 +11,8 @@ export const EXPAND_MEDIA = 'EXPAND_MEDIA';
 export const COLLAPSE_MEDIA = 'COLLAPSE_MEDIA';
 export const SELECT_MEDIA = 'SELECT_MEDIA';
 export const UNSELECT_MEDIA = 'UNSELECT_MEDIA';
+export const SELECT_ALL_MEDIA = 'SELECT_ALL_MEDIA';
+export const UNSELECT_ALL_MEDIA = 'UNSELECT_ALL_MEDIA';
 
 /*
  * Actions
@@ -25,13 +27,17 @@ export const expandMedia = createAction(EXPAND_MEDIA, (mediaId) => mediaId);
 export const collapseMedia = createAction(COLLAPSE_MEDIA, (mediaId) => mediaId);
 export const selectMedia = createAction(SELECT_MEDIA, (mediaId) => mediaId);
 export const unselectMedia = createAction(UNSELECT_MEDIA, (mediaId) => mediaId);
+export const selectAllMedia = createAction(SELECT_ALL_MEDIA);
+export const unselectAllMedia = createAction(UNSELECT_ALL_MEDIA);
 
 export const actions = {
   getMedia,
   expandMedia,
   collapseMedia,
   selectMedia,
-  unselectMedia
+  unselectMedia,
+  selectAllMedia,
+  unselectAllMedia
 };
 
 /*
@@ -99,6 +105,13 @@ export default handleActions({
   [SELECT_MEDIA]: (state, { payload: mediaId }) => {
     return {
       ...state,
+      media: {
+        ...state.media,
+        [mediaId]: {
+          ...state.media[mediaId],
+          checked: true
+        }
+      },
       selectedMediaIds: _.concat(state.selectedMediaIds, mediaId)
     }
   },
@@ -106,7 +119,46 @@ export default handleActions({
   [UNSELECT_MEDIA]: (state, { payload: mediaId }) => {
     return {
       ...state,
+      media: {
+        ...state.media,
+        [mediaId]: {
+          ...state.media[mediaId],
+          checked: false
+        }
+      },
       selectedMediaIds: _.filter(state.selectedMediaIds, id => id !== mediaId)
+    }
+  },
+
+  [SELECT_ALL_MEDIA]: (state) => {
+    let selectedMediaIds = [];
+    let media = _.mapValues(state.media, function(mediaItem) {
+      selectedMediaIds = _.concat(selectedMediaIds, mediaItem.mediaId);
+      return {
+        ...mediaItem,
+        checked: true
+      }
+    });
+
+    return {
+      ...state,
+      media: media,
+      selectedMediaIds: selectedMediaIds
+    }
+  },
+
+  [UNSELECT_ALL_MEDIA]: (state) => {
+    let media = _.mapValues(state.media, function(mediaItem) {
+      return {
+        ...mediaItem,
+        checked: false
+      }
+    });
+
+    return {
+      ...state,
+      media: media,
+      selectedMediaIds: []
     }
   }
 
