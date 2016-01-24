@@ -1,11 +1,16 @@
 .listings__toolbar {
   font-size: 12px;
   font-weight: bold;
-  transition: all 0.3s linear 0.3s;
+  transition: all 0.3s linear;
 }
 
 .listings__toolbar .btn {
   opacity: 1 !important;
+}
+
+.listings__toolbar .btn:focus {
+  z-index: 0;
+  outline: none;
 }
 
 .listings__toolbar .btn i {
