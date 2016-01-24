@@ -1,5 +1,6 @@
 import React from 'react'
 import {Row, Col, Input, Button, DropdownButton, MenuItem} from 'react-bootstrap'
+import DatePicker from './DatePicker'
 
 export class SearchForm extends React.Component {
 
@@ -21,10 +22,7 @@ export class SearchForm extends React.Component {
           </Col>
 
           <Col sm={4}>
-            <div className="form-group form-group--date">
-              <i className="fa fa-calendar-o"/>
-              <Input type="text" name="daterange" placeholder="Date range"/>
-            </div>
+            <DatePicker />
           </Col>
 
           <Col sm={3}>
