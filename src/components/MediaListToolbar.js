@@ -1,17 +1,11 @@
 import React, { PropTypes } from 'react'
-import {Collapse, ButtonGroup, Button} from 'react-bootstrap'
+import {ButtonGroup, Button} from 'react-bootstrap'
 
 export class MediaListToolbar extends React.Component {
   static propTypes = {
     selectedMediaIds: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
   };
-
-  componentWillMount(nextProps) {
-    setTimeout(() => {
-      return true;
-    }, 300)
-  }
 
   selectAll() {
     this.props.actions.selectAllMedia();
@@ -23,9 +17,14 @@ export class MediaListToolbar extends React.Component {
 
   render () {
     let countIds = this.props.selectedMediaIds.length;
+    let style = {
+      maxHeight: countIds > 0 ? '50px' : 0,
+      padding: countIds > 0 ? '0 20px 20px' : '0 20px',
+      transition: 'max-height .3s ease'
+    };
+
     return (
-      <Collapse in={countIds > 0} transitionAppear timeout={countIds > 0 ? 300 : 0}>
-        <div className="listings__toolbar">
+        <div className='listings__toolbar' style={style}>
           <ButtonGroup bsSize="small">
             <Button className="btn-count" disabled>
               <span className="count">{countIds}</span> selected files
@@ -37,7 +36,6 @@ export class MediaListToolbar extends React.Component {
             <Button onClick={this.unselectAll.bind(this)}>Deselect all</Button>
           </ButtonGroup>
         </div>
-      </Collapse>
     )
   }
 }
