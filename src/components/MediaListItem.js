@@ -1,9 +1,11 @@
 import React, { PropTypes } from 'react'
 import {Collapse} from 'react-bootstrap'
 import classnames from 'classnames';
+import Spinner from './Spinner';
 
 export class MediaListItem extends React.Component {
   static propTypes = {
+    token: PropTypes.string.isRequired,
     mediaId: PropTypes.string.isRequired,
     isExpanded: PropTypes.bool.isRequired,
     state: PropTypes.object.isRequired,
@@ -17,10 +19,10 @@ export class MediaListItem extends React.Component {
   getTitle() {
     let title = this.props.mediaId;
     let metadata = this.props.state.media[this.props.mediaId].metadata;
-    if(metadata && metadata.external && metadata.external.id) {
+    if (metadata && metadata.external && metadata.external.id) {
       title = metadata.external.id;
     }
-    if(metadata && metadata.title) {
+    if (metadata && metadata.title) {
       title = metadata.title;
     }
     return title;
@@ -47,9 +49,16 @@ export class MediaListItem extends React.Component {
     }
   }
 
+  deleteMedia(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.props.actions.deleteMedia(this.props.token, this.props.mediaId);
+  }
+
   render () {
     let itemClasses = classnames('list-group-item', 'listing', {collapsed: !this.props.isExpanded});
-    let checked = this.props.state.media[this.props.mediaId].checked;
+    let media = this.props.state.media[this.props.mediaId];
+    let checked = media.checked;
 
     return (
       <div>
@@ -57,7 +66,9 @@ export class MediaListItem extends React.Component {
           <h4 className="list-group-item-heading">{this.getTitle()}</h4>
           <p className="list-group-item-text">Uploaded Jan 5, 2010 | Length 00:05:16</p>
           <input type="checkbox" className="listing__checkbox" checked={checked} onChange={this.selectMedia.bind(this)} />
-          <a href="#" className="listing__delete"><i className="fa fa-trash"/></a>
+          {media.deletePending && <div className="spinner-remove_item"><Spinner/></div>}
+          {!media.deletePending && <a href="#" className="listing__delete" onClick={this.deleteMedia.bind(this)}><i className="fa fa-trash"/></a>}
+
         </div>
         <Collapse in={this.props.isExpanded}>
           <div>

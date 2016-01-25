@@ -28,5 +28,24 @@ export default {
         }
         return Promise.reject(error)
       });
+  },
+
+  deleteMedia(token, mediaId) {
+    let url = `${baseUrl}/media/${mediaId}`;
+    return axios.delete(url, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(response => {
+        return response;
+      })
+      .catch(error => {
+        if (error.data && error.data.errors) {
+          error = error.data.errors.error;
+        }
+        alert(error);
+        return Promise.reject({error, mediaId})
+      });
   }
 }

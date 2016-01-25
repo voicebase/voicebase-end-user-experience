@@ -13,6 +13,7 @@ export const SELECT_MEDIA = 'SELECT_MEDIA';
 export const UNSELECT_MEDIA = 'UNSELECT_MEDIA';
 export const SELECT_ALL_MEDIA = 'SELECT_ALL_MEDIA';
 export const UNSELECT_ALL_MEDIA = 'UNSELECT_ALL_MEDIA';
+export const DELETE_MEDIA = 'DELETE_MEDIA';
 
 /*
  * Actions
@@ -29,6 +30,15 @@ export const selectMedia = createAction(SELECT_MEDIA, (mediaId) => mediaId);
 export const unselectMedia = createAction(UNSELECT_MEDIA, (mediaId) => mediaId);
 export const selectAllMedia = createAction(SELECT_ALL_MEDIA);
 export const unselectAllMedia = createAction(UNSELECT_ALL_MEDIA);
+export const deleteMedia = createAction(DELETE_MEDIA, (token, mediaId) => {
+  return {
+    data: {
+      token,
+      mediaId
+    },
+    promise: MediaApi.deleteMedia(token, mediaId)
+  }
+});
 
 export const actions = {
   getMedia,
@@ -37,7 +47,8 @@ export const actions = {
   selectMedia,
   unselectMedia,
   selectAllMedia,
-  unselectAllMedia
+  unselectAllMedia,
+  deleteMedia
 };
 
 /*
@@ -160,6 +171,42 @@ export default handleActions({
       media: media,
       selectedMediaIds: []
     }
+  },
+
+  [`${DELETE_MEDIA}_PENDING`]: (state, { payload }) => {
+    return {
+      ...state,
+      media: {
+        ...state.media,
+        [payload.mediaId]: {
+          ...state.media[payload.mediaId],
+          deletePending: true
+        }
+      }
+    };
+  },
+
+  [`${DELETE_MEDIA}_REJECTED`]: (state, { payload }) => {
+    return {
+      ...state,
+      media: {
+        ...state.media,
+        [payload.mediaId]: {
+          ...state.media[payload.mediaId],
+          deletePending: false,
+          deleteError: payload.error
+        }
+      }
+    };
+  },
+
+  [`${DELETE_MEDIA}_FULFILLED`]: (state, { payload: response }) => {
+    let mediaIds = state.mediaIds.filter(mediaId => response.mediaId !== mediaId);
+    return {
+      ...state,
+      mediaIds: mediaIds,
+      media: _.pick(state.media, mediaIds)
+    };
   }
 
 }, initialState);
