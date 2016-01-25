@@ -1,13 +1,38 @@
-import React from 'react'
-import {Row, Col, Input, Button, DropdownButton, MenuItem} from 'react-bootstrap'
+import React, { PropTypes } from 'react'
+import {Row, Col, Input, Button} from 'react-bootstrap'
 import DatePicker from './DatePicker'
+import OrderDropdown from './OrderDropdown'
 
 export class SearchForm extends React.Component {
+  static propTypes = {
+    state: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired
+  };
 
   searchButtonAddon() {
     return (
-      <Button bsStyle="primary">Search</Button>
+      <Button bsStyle="primary" onClick={this.startSearch.bind(this)}>Search</Button>
     )
+  }
+
+  applyDate(dateFrom, dateTo) {
+    this.props.actions.applyDate({dateFrom, dateTo});
+  }
+
+  clearDate() {
+    this.props.actions.clearDate();
+  }
+
+  onSelectOrder(orderId) {
+    this.props.actions.selectOrder(orderId);
+  }
+
+  changeSearchText(event) {
+    this.props.actions.setSearchString(event.target.value);
+  }
+
+  startSearch() {
+    this.props.actions.startSearch();
   }
 
   render() {
@@ -17,22 +42,26 @@ export class SearchForm extends React.Component {
           <Col sm={5}>
             <div className="form-group form-group--search">
               <i className="fa fa-search"/>
-              <Input type="text" placeholder="Search transcripts..." buttonAfter={this.searchButtonAddon()}/>
+              <Input type="text"
+                     placeholder="Search transcripts..."
+                     value={this.props.state.searchString}
+                     buttonAfter={this.searchButtonAddon()}
+                     onInput={this.changeSearchText.bind(this)}/>
             </div>
           </Col>
 
           <Col sm={4}>
-            <DatePicker />
+            <DatePicker dateFrom={this.props.state.dateFrom}
+                        dateTo={this.props.state.dateTo}
+                        applyDate={this.applyDate.bind(this)}
+                        clearDate={this.clearDate.bind(this)}/>
           </Col>
 
           <Col sm={3}>
             <div className="pull-right">
-              <DropdownButton id="sort-list-dropdown" title="Order by Newest">
-                <MenuItem eventKey="1">Order by Title A-Z</MenuItem>
-                <MenuItem eventKey="2">Order by Title Z-A</MenuItem>
-                <MenuItem active eventKey="3">Order by Newest</MenuItem>
-                <MenuItem eventKey="4">Order by Oldest</MenuItem>
-              </DropdownButton>
+              <OrderDropdown onSelectOrder={this.onSelectOrder.bind(this)}
+                             selectedOrderId={this.props.state.selectedOrderId}
+                             orderList={this.props.state.order} />
             </div>
           </Col>
 

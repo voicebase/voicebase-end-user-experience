@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import connectWrapper from '../redux/utils/connect'
 import {actions as authActions} from '../redux/modules/auth'
 import {actions as mediaActions} from '../redux/modules/media'
+import {actions as searchActions} from '../redux/modules/search'
 import {Grid, Row, Col} from 'react-bootstrap'
 import SidebarMenu from '../components/SidebarMenu'
 import Spinner from '../components/Spinner'
@@ -50,6 +51,6 @@ export class AppLayout extends React.Component {
   }
 }
 
-let actions = Object.assign(authActions, mediaActions);
+let actions = Object.assign(authActions, mediaActions, searchActions);
 export default connectWrapper(actions, AppLayout)
 

@@ -30,7 +30,7 @@ export class AllView extends React.Component {
             <CounterLabel value={state.media.mediaIds.length}/>
           </h3>
         </div>
-        <SearchForm />
+        <SearchForm state={state.search} actions={this.props.actions}/>
         <MediaListToolbar selectedMediaIds={state.media.selectedMediaIds} actions={this.props.actions} />
         <MediaList state={state.media} actions={this.props.actions} />
       </div>
