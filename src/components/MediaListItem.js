@@ -14,6 +14,18 @@ export class MediaListItem extends React.Component {
     super(props);
   }
 
+  getTitle() {
+    let title = this.props.mediaId;
+    let metadata = this.props.state.media[this.props.mediaId].metadata;
+    if(metadata && metadata.external && metadata.external.id) {
+      title = metadata.external.id;
+    }
+    if(metadata && metadata.title) {
+      title = metadata.title;
+    }
+    return title;
+  }
+
   toggle(event) {
     if (event.target.type) return false; // prevent click on checkbox
 
@@ -42,7 +54,7 @@ export class MediaListItem extends React.Component {
     return (
       <div>
         <div className={itemClasses} onClick={this.toggle.bind(this)}>
-          <h4 className="list-group-item-heading">Title lorem ipsum dolor est compendum</h4>
+          <h4 className="list-group-item-heading">{this.getTitle()}</h4>
           <p className="list-group-item-text">Uploaded Jan 5, 2010 | Length 00:05:16</p>
           <input type="checkbox" className="listing__checkbox" checked={checked} onChange={this.selectMedia.bind(this)} />
           <a href="#" className="listing__delete"><i className="fa fa-trash"/></a>
