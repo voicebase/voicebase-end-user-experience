@@ -2,14 +2,15 @@ import React, { PropTypes } from 'react'
 import {Collapse} from 'react-bootstrap'
 import classnames from 'classnames';
 import Spinner from './Spinner';
-import VbsPlayer from './player/VbsPlayer';
+import VbsPlayerApp from './player/VbsPlayerApp';
 
 export class MediaListItem extends React.Component {
   static propTypes = {
     token: PropTypes.string.isRequired,
     mediaId: PropTypes.string.isRequired,
     isExpanded: PropTypes.bool.isRequired,
-    state: PropTypes.object.isRequired,
+    mediaState: PropTypes.object.isRequired,
+    playerState: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
 
@@ -19,7 +20,7 @@ export class MediaListItem extends React.Component {
 
   getTitle() {
     let title = this.props.mediaId;
-    let metadata = this.props.state.media[this.props.mediaId].metadata;
+    let metadata = this.props.mediaState.media[this.props.mediaId].metadata;
     if (metadata && metadata.external && metadata.external.id) {
       title = metadata.external.id;
     }
@@ -33,8 +34,8 @@ export class MediaListItem extends React.Component {
     if (event.target.type) return false; // prevent click on checkbox
 
     if (!this.props.isExpanded) {
-      this.props.state.activeMediaId && this.props.actions.collapseMedia(this.props.state.activeMediaId);
-      if (!this.props.state.mediaData[this.props.mediaId]) {
+      this.props.mediaState.activeMediaId && this.props.actions.collapseMedia(this.props.mediaState.activeMediaId);
+      if (!this.props.mediaState.mediaData[this.props.mediaId]) {
         this.props.actions.getDataForMedia(this.props.token, this.props.mediaId);
       }
       this.props.actions.expandMedia(this.props.mediaId);
@@ -65,8 +66,8 @@ export class MediaListItem extends React.Component {
 
   render () {
     let itemClasses = classnames('list-group-item', 'listing', {collapsed: !this.props.isExpanded});
-    let media = this.props.state.media[this.props.mediaId];
-    let mediaData = this.props.state.mediaData[this.props.mediaId];
+    let media = this.props.mediaState.media[this.props.mediaId];
+    let mediaData = this.props.mediaState.mediaData[this.props.mediaId];
     let checked = media.checked;
 
     return (
@@ -83,10 +84,11 @@ export class MediaListItem extends React.Component {
           <div>
             {this.isGettingMediaData(mediaData) && <div className="spinner-media_item"><Spinner/></div>}
             {mediaData && mediaData.data &&
-            <VbsPlayer token={this.props.token}
-                       mediaId={this.props.mediaId}
-                       state={this.props.state}
-                       actions={this.props.actions}/>
+            <VbsPlayerApp token={this.props.token}
+                          mediaId={this.props.mediaId}
+                          mediaState={mediaData}
+                          playerState={this.props.playerState}
+                          actions={this.props.actions}/>
             }
           </div>
         </Collapse>

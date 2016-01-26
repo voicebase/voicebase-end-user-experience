@@ -32,7 +32,7 @@ export class AllView extends React.Component {
         </div>
         <SearchForm state={state.search} actions={this.props.actions}/>
         <MediaListToolbar token={state.auth.token} selectedMediaIds={state.media.selectedMediaIds} actions={this.props.actions} />
-        <MediaList token={state.auth.token} state={state.media} actions={this.props.actions} />
+        <MediaList token={state.auth.token} state={state} actions={this.props.actions} />
       </div>
     )
   }

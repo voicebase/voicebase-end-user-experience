@@ -1,0 +1,148 @@
+.listings .player {
+  padding: 0 20px 5px;
+}
+
+.player {
+  display: flex;
+  position: relative;
+}
+
+.player__buttons .btn-primary + .btn-default {
+  border-left-color: transparent !important;
+}
+
+.player__timeline {
+  flex: 1;
+  margin: 0 10px;
+  position: relative;
+}
+
+.player__timeline__slider {
+  background: transparent;
+  border-radius: 50%;
+  border: 5px solid #fafafa;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), inset 0 1px 3px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+.player__timeline__slider:hover {
+  border-color: white;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5), inset 0 3px 5px rgba(0, 0, 0, 0.5);
+}
+
+.player__timeline__progress {
+  height: 10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  margin-top: -5px;
+}
+
+.player__timeline__progress__bg {
+  background: #c1ddf3;
+  border-radius: 3px;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
+  height: 100%;
+  position: relative;
+}
+
+.player__timeline__progress__fg {
+  background: #0079c0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.player__timeline__buffer {
+  background: #8ACAFF;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.player__time {
+  line-height: 30px;
+  margin-right: 10px;
+  color: #777;
+  font-size: 12px;
+}
+
+.player__keywords {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin-top: -7px;
+  display: none;
+}
+
+.show-keywords .player__keywords {
+  display: block;
+}
+
+.player__keywords__marker {
+  display: block;
+  position: absolute;
+  top: 0;
+  border-style: solid;
+  border-width: 12px 8px;
+  border-color: transparent;
+  border-bottom-color: #ccc;
+  border-bottom-color: #85d04a;
+  opacity: 0.75;
+}
+
+.player__keywords__marker:hover {
+  opacity: 1;
+}
+
+.player__detection {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin-top: 10px;
+  display: none;
+}
+
+.show-detection .player__detection {
+  display: block;
+}
+
+.player__detection__row {
+  height: 3px;
+  margin-bottom: 3px;
+  position: relative;
+}
+
+.player__detection__marker {
+  display: block;
+  position: absolute;
+  top: 0;
+  height: 3px;
+}
+
+.player__detection__marker.red {
+  background: #d9534f;
+}
+
+.player__detection__marker.green {
+  background: #85d04a;
+}
+
+.player__info {
+  background: #f5f5f5;
+}

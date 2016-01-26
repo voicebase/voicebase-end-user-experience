@@ -9,16 +9,20 @@ export class MediaList extends React.Component {
   };
 
   render () {
-    let activeMediaId = this.props.state.activeMediaId;
+    let state = this.props.state;
+    let mediaState = state.media;
+    let activeMediaId = mediaState.activeMediaId;
+
     return (
       <div className="list-group listings">
         {
-          this.props.state.mediaIds.map(mediaId => {
+          mediaState.mediaIds.map(mediaId => {
             return <MediaListItem key={mediaId}
                                   mediaId={mediaId}
                                   isExpanded={mediaId === activeMediaId}
                                   token={this.props.token}
-                                  state={this.props.state}
+                                  mediaState={mediaState}
+                                  playerState={state.player}
                                   actions={this.props.actions} />
           })
 
