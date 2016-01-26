@@ -14,6 +14,7 @@ export const UNSELECT_MEDIA = 'UNSELECT_MEDIA';
 export const SELECT_ALL_MEDIA = 'SELECT_ALL_MEDIA';
 export const UNSELECT_ALL_MEDIA = 'UNSELECT_ALL_MEDIA';
 export const DELETE_MEDIA = 'DELETE_MEDIA';
+export const GET_DATA_FOR_MEDIA = 'GET_DATA_FOR_MEDIA';
 
 /*
  * Actions
@@ -40,6 +41,16 @@ export const deleteMedia = createAction(DELETE_MEDIA, (token, mediaId) => {
   }
 });
 
+export const getDataForMedia = createAction(GET_DATA_FOR_MEDIA, (token, mediaId) => {
+  return {
+    data: {
+      token,
+      mediaId
+    },
+    promise: MediaApi.getDataForMedia(token, mediaId)
+  }
+});
+
 export const actions = {
   getMedia,
   expandMedia,
@@ -48,7 +59,8 @@ export const actions = {
   unselectMedia,
   selectAllMedia,
   unselectAllMedia,
-  deleteMedia
+  deleteMedia,
+  getDataForMedia
 };
 
 /*
@@ -206,6 +218,47 @@ export default handleActions({
       ...state,
       mediaIds: mediaIds,
       media: _.pick(state.media, mediaIds)
+    };
+  },
+
+  [`${GET_DATA_FOR_MEDIA}_PENDING`]: (state, { payload }) => {
+    return {
+      ...state,
+      mediaData: {
+        ...state.mediaData,
+        [payload.mediaId]: {
+          ...state.mediaData[payload.mediaId],
+          getPending: true
+        }
+      }
+    };
+  },
+
+  [`${GET_DATA_FOR_MEDIA}_REJECTED`]: (state, { payload }) => {
+    return {
+      ...state,
+      mediaData: {
+        ...state.mediaData,
+        [payload.mediaId]: {
+          ...state.mediaData[payload.mediaId],
+          getPending: false,
+          getError: payload.error
+        }
+      }
+    };
+  },
+
+  [`${GET_DATA_FOR_MEDIA}_FULFILLED`]: (state, { payload: response }) => {
+    return {
+      ...state,
+      mediaData: {
+        ...state.mediaData,
+        [response.mediaId]: {
+          data: response,
+          getPending: false,
+          getError: ''
+        }
+      }
     };
   }
 

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import {Collapse} from 'react-bootstrap'
 import classnames from 'classnames';
 import Spinner from './Spinner';
+import VbsPlayer from './player/VbsPlayer';
 
 export class MediaListItem extends React.Component {
   static propTypes = {
@@ -33,6 +34,9 @@ export class MediaListItem extends React.Component {
 
     if (!this.props.isExpanded) {
       this.props.state.activeMediaId && this.props.actions.collapseMedia(this.props.state.activeMediaId);
+      if (!this.props.state.mediaData[this.props.mediaId]) {
+        this.props.actions.getDataForMedia(this.props.token, this.props.mediaId);
+      }
       this.props.actions.expandMedia(this.props.mediaId);
     }
     else {
@@ -55,9 +59,14 @@ export class MediaListItem extends React.Component {
     this.props.actions.deleteMedia(this.props.token, this.props.mediaId);
   }
 
+  isGettingMediaData(mediaData) {
+    return (!mediaData || (mediaData && mediaData.getPending));
+  }
+
   render () {
     let itemClasses = classnames('list-group-item', 'listing', {collapsed: !this.props.isExpanded});
     let media = this.props.state.media[this.props.mediaId];
+    let mediaData = this.props.state.mediaData[this.props.mediaId];
     let checked = media.checked;
 
     return (
@@ -72,7 +81,13 @@ export class MediaListItem extends React.Component {
         </div>
         <Collapse in={this.props.isExpanded}>
           <div>
-            123
+            {this.isGettingMediaData(mediaData) && <div className="spinner-media_item"><Spinner/></div>}
+            {mediaData && mediaData.data &&
+            <VbsPlayer token={this.props.token}
+                       mediaId={this.props.mediaId}
+                       state={this.props.state}
+                       actions={this.props.actions}/>
+            }
           </div>
         </Collapse>
       </div>

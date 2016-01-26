@@ -11,8 +11,14 @@ export default {
       }
     })
       .then(response => {
-        let mediaIds = [];
-        let media = {};
+        let mediaIds = ['fake_mediaId'];
+        let media = {
+          'fake_mediaId': {
+            mediaId: 'fake_mediaId',
+            status: 'finished',
+            metadata: {title: 'Fake Media For Testing'}
+          }
+        };
         response.data.media.forEach(mediaItem => {
           mediaIds.push(mediaItem.mediaId);
           media[mediaItem.mediaId] = mediaItem;
@@ -38,7 +44,7 @@ export default {
       }
     })
       .then(response => {
-        return response;
+        return response.data;
       })
       .catch(error => {
         if (error.data && error.data.errors) {
@@ -46,6 +52,28 @@ export default {
         }
         alert(error);
         return Promise.reject({error, mediaId})
+      });
+  },
+
+  getDataForMedia(token, mediaId) {
+    let _mediaId = (mediaId === 'fake_mediaId') ? '89af3eea-47b3-4520-a979-92bbbe2116ea' : mediaId;
+    let url = `${baseUrl}/media/${_mediaId}`;
+    return axios.get(url, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(response => {
+        if (mediaId === 'fake_mediaId') {
+          response.data.media.mediaId = 'fake_mediaId';
+        }
+        return response.data.media;
+      })
+      .catch(error => {
+        if (error.data && error.data.errors) {
+          error = error.data.errors.error;
+        }
+        return Promise.reject({error})
       });
   }
 }
