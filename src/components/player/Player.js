@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import VbsReactPlayer from './react-player/VbsReactPlayer'
-import { ButtonGroup, Button, DropdownButton, Dropdown, MenuItem } from 'react-bootstrap'
+import { ButtonGroup, Button, Popover, OverlayTrigger } from 'react-bootstrap'
 import Spinner from '../Spinner';
 import VolumeSlider from './VolumeSlider';
 
@@ -88,12 +88,15 @@ export class Player extends React.Component {
     });
   }
 
-  onSelect(event) {
-    event.preventDefault();
-    event.stopPropagation()
-    event.nativeEvent.stopImmediatePropagation();
-    event.nativeEvent.stopPropagation()
-    event.nativeEvent.preventDefault()
+  getSlider() {
+    let id = 'volume-slider' + this.props.mediaId;
+    return (
+      <Popover id={id} className="volume-slider">
+        <VolumeSlider orientation="vertical"
+                      value={this.state.volume}
+                      onChange={this.onVolumeChange.bind(this)}/>
+      </Popover>
+    )
   }
 
   render () {
@@ -146,15 +149,9 @@ export class Player extends React.Component {
           </div>
 
           <ButtonGroup className="player__buttons">
-            <Dropdown id={'volume-dropdown-' + this.props.mediaId}>
-              <Button bsRole="toggle"><i className="fa fa-fw fa-volume-up"/></Button>
-
-              <div bsRole="menu" className="dropdown-menu volume-dropdown-menu pull-right">
-                <VolumeSlider orientation="vertical"
-                              value={this.state.volume}
-                              onChange={this.onVolumeChange.bind(this)}/>
-              </div>
-            </Dropdown>
+            <OverlayTrigger trigger="click" placement="bottom" overlay={this.getSlider()}>
+              <Button><i className="fa fa-fw fa-volume-up"/></Button>
+            </OverlayTrigger>
             <Button><i className="fa fa-fw fa-cloud-download" /></Button>
           </ButtonGroup>
         </div>
@@ -166,7 +163,7 @@ export class Player extends React.Component {
           height={0}
           url={playerState.url}
           playing={playerState.playing}
-          volume={playerState.volume}
+          volume={this.state.volume}
           onProgress={this.onProgress.bind(this)}
           onEnded={this.onPause.bind(this)}
           onDuration={this.onDuration.bind(this)}

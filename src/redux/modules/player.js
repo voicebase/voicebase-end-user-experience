@@ -49,7 +49,6 @@ export const initialState = {
 const initialPlayerState = {
   url: '',
   playing: false,
-  volume: 1,
   played: 0,
   loaded: 0,
   duration: 0,
