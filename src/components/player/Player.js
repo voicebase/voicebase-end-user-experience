@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react'
-import ReactPlayer from 'react-player'
+import VbsReactPlayer from './react-player/VbsReactPlayer'
 import { ButtonGroup, Button } from 'react-bootstrap'
 import Spinner from '../Spinner';
 
 export class Player extends React.Component {
   static propTypes = {
     mediaId: PropTypes.string.isRequired,
+    playerType: PropTypes.string.isRequired,
     playerState: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
@@ -73,6 +74,9 @@ export class Player extends React.Component {
     let position = this.calcPosition(event);
     this.refs.player.seekTo(parseFloat(position));
     this.props.actions.setPosition(this.props.mediaId, position);
+    if (this.props.playerType === 'JwPlayer') {
+      this.onPlay();
+    }
   }
 
   render () {
@@ -130,8 +134,9 @@ export class Player extends React.Component {
           </ButtonGroup>
         </div>
 
-        <ReactPlayer
+        <VbsReactPlayer
           ref='player'
+          activePlayer={this.props.playerType}
           width={0}
           height={0}
           url={playerState.url}

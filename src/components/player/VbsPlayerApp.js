@@ -19,6 +19,7 @@ export class VbsPlayerApp extends React.Component {
     return (
       <div className="vbs-player-app">
         <Player mediaId={this.props.mediaId}
+                playerType="JwPlayer"
                 playerState={this.props.playerState.players[this.props.mediaId] || {loading: true}}
                 actions={this.props.actions} />
       </div>

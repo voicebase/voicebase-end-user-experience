@@ -146,3 +146,15 @@
 .player__info {
   background: #f5f5f5;
 }
+
+.jwplayer {
+  opacity: 1 !important; // fix empty place for player
+}
+
+.jwlogo {
+  display: none;
+}
+
+.jwcontrolbar {
+  display: none !important;
+}
