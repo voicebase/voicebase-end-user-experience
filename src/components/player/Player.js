@@ -10,6 +10,14 @@ export class Player extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
+  constructor(props) {
+    super(props);
+    this.state = { // moving slider; state is faster than redux
+      seeking: false,
+      seekValue: 0
+    };
+  }
+
   togglePlay() {
     (this.props.playerState.playing) ? this.onPause() : this.onPlay();
   }
@@ -35,12 +43,35 @@ export class Player extends React.Component {
     }
   }
 
-  onSeek(event) {
+  calcPosition(event) {
     let timelineLeftOffset = this.refs.timeline.getBoundingClientRect().left;
     let clickLeftOffset = event.pageX;
     let timelineWidth = event.currentTarget.clientWidth;
-    let position = ((clickLeftOffset - timelineLeftOffset)) / timelineWidth;
-    this.refs.player.seekTo(parseFloat(position))
+    return ((clickLeftOffset - timelineLeftOffset)) / timelineWidth;
+  }
+
+  onSeekMouseDown(event) {
+    let position = this.calcPosition(event);
+    this.setState({
+      seeking: true,
+      seekValue: position
+    });
+  }
+
+  onSeekMouseMove(event) {
+    if (!this.state.seeking) {
+      return false;
+    }
+    let position = this.calcPosition(event);
+    this.setState({
+      seekValue: position
+    });
+  };
+
+  onSeekMouseUp(event) {
+    this.setState({ seeking: false });
+    let position = this.calcPosition(event);
+    this.refs.player.seekTo(parseFloat(position));
     this.props.actions.setPosition(this.props.mediaId, position);
   }
 
@@ -52,9 +83,10 @@ export class Player extends React.Component {
       );
     }
 
-    let sliderPos = {left: (playerState.played * 100) + '%'};
-    let progressPos = {width: (playerState.played * 100) + '%'};
-    let bufferPos = {width: (playerState.loaded * 100) + '%'};
+    let sliderValue = (!this.state.seeking) ? (playerState.played * 100) : (this.state.seekValue * 100);
+    let sliderStyles = {left: sliderValue + '%'};
+    let progressStyles = {width: sliderValue + '%'};
+    let bufferStyles = {width: (playerState.loaded * 100) + '%'};
 
     return (
       <div className="vbs-player">
@@ -69,12 +101,15 @@ export class Player extends React.Component {
             </Button>
           </ButtonGroup>
 
-          <div className="player__timeline show-keywords">
-            <div className="player__timeline__slider" style={sliderPos}></div>
-            <div ref="timeline" className="player__timeline__progress" onClick={this.onSeek.bind(this)}>
+          <div className="player__timeline show-keywords"
+               onMouseDown={this.onSeekMouseDown.bind(this)}
+               onMouseMove={this.onSeekMouseMove.bind(this)}
+               onMouseUp={this.onSeekMouseUp.bind(this)}>
+            <div className="player__timeline__slider" style={sliderStyles}></div>
+            <div ref="timeline" className="player__timeline__progress">
               <div className="player__timeline__progress__bg">
-                <div className="player__timeline__buffer" style={bufferPos}></div>
-                <div className="player__timeline__progress__fg" style={progressPos}></div>
+                <div className="player__timeline__buffer" style={bufferStyles}></div>
+                <div className="player__timeline__progress__fg" style={progressStyles}></div>
               </div>
 
               <div className="player__keywords">
