@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
 import VbsReactPlayer from './react-player/VbsReactPlayer'
-import { ButtonGroup, Button } from 'react-bootstrap'
+import { ButtonGroup, Button, DropdownButton, Dropdown, MenuItem } from 'react-bootstrap'
 import Spinner from '../Spinner';
+import VolumeSlider from './VolumeSlider';
 
 export class Player extends React.Component {
   static propTypes = {
@@ -15,7 +16,8 @@ export class Player extends React.Component {
     super(props);
     this.state = { // moving slider; state is faster than redux
       seeking: false,
-      seekValue: 0
+      seekValue: 0,
+      volume: 0
     };
   }
 
@@ -79,6 +81,21 @@ export class Player extends React.Component {
     }
   }
 
+  onVolumeChange(value) {
+    console.log(value);
+    this.setState({
+      volume: value
+    });
+  }
+
+  onSelect(event) {
+    event.preventDefault();
+    event.stopPropagation()
+    event.nativeEvent.stopImmediatePropagation();
+    event.nativeEvent.stopPropagation()
+    event.nativeEvent.preventDefault()
+  }
+
   render () {
     let playerState = this.props.playerState;
     if (!playerState || playerState.loading) {
@@ -129,7 +146,15 @@ export class Player extends React.Component {
           </div>
 
           <ButtonGroup className="player__buttons">
-            <Button><i className="fa fa-fw fa-volume-up" /></Button>
+            <Dropdown id={'volume-dropdown-' + this.props.mediaId}>
+              <Button bsRole="toggle"><i className="fa fa-fw fa-volume-up"/></Button>
+
+              <div bsRole="menu" className="dropdown-menu volume-dropdown-menu pull-right">
+                <VolumeSlider orientation="vertical"
+                              value={this.state.volume}
+                              onChange={this.onVolumeChange.bind(this)}/>
+              </div>
+            </Dropdown>
             <Button><i className="fa fa-fw fa-cloud-download" /></Button>
           </ButtonGroup>
         </div>

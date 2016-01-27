@@ -158,3 +158,12 @@
 .jwcontrolbar {
   display: none !important;
 }
+
+.volume-dropdown-menu {
+  min-width: 44px;
+}
+
+.volume-dropdown-menu:focus,
+.player__buttons .dropdown.open{
+  outline: none;
+}
