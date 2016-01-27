@@ -29,12 +29,12 @@ export default class JwPlayer extends VbsBase {
     this.player.onComplete(() => this.props.onEnded());
   }
   play () {
-    if(this.player.getState() === 'PAUSED') {
+    if (this.player.getState() !== 'PLAYING') {
       this.player.play()
     }
   }
   pause () {
-    if(this.player.getState() === 'PLAYING') {
+    if (this.player.getState() !== 'PAUSED') {
       this.player.pause()
     }
   }
