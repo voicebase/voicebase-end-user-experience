@@ -17,7 +17,7 @@ export class Player extends React.Component {
     this.state = { // moving slider; state is faster than redux
       seeking: false,
       seekValue: 0,
-      volume: 0
+      volume: 100
     };
   }
 
