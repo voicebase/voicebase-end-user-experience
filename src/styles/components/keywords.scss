@@ -1,0 +1,56 @@
+.listing__keywords {
+  overflow: hidden !important;
+}
+
+.listing__keywords > .row {
+  height: 100%;
+}
+
+.listing__keywords > .row > div {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.listing__keywords ul {
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  line-height: 24px;
+  margin: 0;
+  padding: 15px 20px;
+}
+
+.listing__keywords ul li {
+  float: left;
+  width: 25%;
+}
+
+.listing__keywords ul li a {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: block;
+}
+
+.listing__keywords__keyword-name {
+  color: #0079c0 !important;
+}
+
+.listing__keywords ul li a span {
+  color: #999;
+}
+
+.listing__keywords ul li.active a {
+  color: #333;
+}
+
+.listing__keywords__topics {
+  font-weight: bold !important;
+}
+
+.listing__keywords__topics li {
+  width: auto !important;
+  float: none !important;
+}
