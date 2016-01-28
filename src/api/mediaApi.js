@@ -1,4 +1,5 @@
 import axios from 'axios'
+import fakeJson from './fakeData'
 
 const baseUrl = 'https://apis.voicebase.com/v2-beta';
 
@@ -56,13 +57,20 @@ export default {
   },
 
   getDataForMedia(token, mediaId) {
-    let _mediaId = (mediaId === 'fake_mediaId') ? '89af3eea-47b3-4520-a979-92bbbe2116ea' : mediaId;
-    let url = `${baseUrl}/media/${_mediaId}`;
-    return axios.get(url, {
-      headers: {
-        Authorization: 'Bearer ' + token
-      }
-    })
+    if (mediaId === 'fake_mediaId') {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(fakeJson.media);
+        }, 500)
+      })
+    }
+    else {
+      let url = `${baseUrl}/media/${mediaId}`;
+      return axios.get(url, {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      })
       .then(response => {
         if (mediaId === 'fake_mediaId') {
           response.data.media.mediaId = 'fake_mediaId';
@@ -75,5 +83,6 @@ export default {
         }
         return Promise.reject({error})
       });
+    }
   }
 }

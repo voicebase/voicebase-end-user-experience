@@ -100,6 +100,7 @@ webpackConfig.module.loaders = [{
   test: /\.js$/,
   exclude: /node_modules/,
   loader: 'babel',
+  compact: false,
   query: {
     cacheDirectory: true,
     plugins: ['transform-runtime'],
