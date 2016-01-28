@@ -50,6 +50,12 @@
   font-weight: bold !important;
 }
 
+.listing__keywords__topics,
+.listing__keywords-of-topic {
+  max-height: 230px;
+  overflow: auto;
+}
+
 .listing__keywords__topics li {
   width: auto !important;
   float: none !important;
