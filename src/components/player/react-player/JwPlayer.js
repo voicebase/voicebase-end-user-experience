@@ -34,7 +34,8 @@ export default class JwPlayer extends VbsBase {
     }
   }
   pause () {
-    if (this.player.getState() !== 'PAUSED') {
+    let status = this.player.getState();
+    if (status !== 'PAUSED' && status !== 'IDLE') {
       this.player.pause()
     }
   }
