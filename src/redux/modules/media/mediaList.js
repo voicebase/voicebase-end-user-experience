@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
 import _ from 'lodash'
 
-import MediaApi from '../../api/mediaApi'
+import MediaApi from '../../../api/mediaApi'
 
 /*
  * Constants
@@ -14,7 +14,6 @@ export const UNSELECT_MEDIA = 'UNSELECT_MEDIA';
 export const SELECT_ALL_MEDIA = 'SELECT_ALL_MEDIA';
 export const UNSELECT_ALL_MEDIA = 'UNSELECT_ALL_MEDIA';
 export const DELETE_MEDIA = 'DELETE_MEDIA';
-export const GET_DATA_FOR_MEDIA = 'GET_DATA_FOR_MEDIA';
 
 /*
  * Actions
@@ -24,7 +23,6 @@ export const getMedia = createAction(GET_MEDIA, (token) => {
     promise: MediaApi.getMedia(token)
   }
 });
-
 export const expandMedia = createAction(EXPAND_MEDIA, (mediaId) => mediaId);
 export const collapseMedia = createAction(COLLAPSE_MEDIA, (mediaId) => mediaId);
 export const selectMedia = createAction(SELECT_MEDIA, (mediaId) => mediaId);
@@ -41,16 +39,6 @@ export const deleteMedia = createAction(DELETE_MEDIA, (token, mediaId) => {
   }
 });
 
-export const getDataForMedia = createAction(GET_DATA_FOR_MEDIA, (token, mediaId) => {
-  return {
-    data: {
-      token,
-      mediaId
-    },
-    promise: MediaApi.getDataForMedia(token, mediaId)
-  }
-});
-
 export const actions = {
   getMedia,
   expandMedia,
@@ -59,8 +47,7 @@ export const actions = {
   unselectMedia,
   selectAllMedia,
   unselectAllMedia,
-  deleteMedia,
-  getDataForMedia
+  deleteMedia
 };
 
 /*
@@ -74,7 +61,6 @@ export const initialState = {
   errorMessage: '',
   lastUploadedIds: [],
   activeMediaId: '',
-  mediaData: {},
   selectedMediaIds: []
 };
 
@@ -219,47 +205,5 @@ export default handleActions({
       mediaIds: mediaIds,
       media: _.pick(state.media, mediaIds)
     };
-  },
-
-  [`${GET_DATA_FOR_MEDIA}_PENDING`]: (state, { payload }) => {
-    return {
-      ...state,
-      mediaData: {
-        ...state.mediaData,
-        [payload.mediaId]: {
-          ...state.mediaData[payload.mediaId],
-          getPending: true
-        }
-      }
-    };
-  },
-
-  [`${GET_DATA_FOR_MEDIA}_REJECTED`]: (state, { payload }) => {
-    return {
-      ...state,
-      mediaData: {
-        ...state.mediaData,
-        [payload.mediaId]: {
-          ...state.mediaData[payload.mediaId],
-          getPending: false,
-          getError: payload.error
-        }
-      }
-    };
-  },
-
-  [`${GET_DATA_FOR_MEDIA}_FULFILLED`]: (state, { payload: response }) => {
-    return {
-      ...state,
-      mediaData: {
-        ...state.mediaData,
-        [response.mediaId]: {
-          data: response,
-          getPending: false,
-          getError: ''
-        }
-      }
-    };
   }
-
 }, initialState);

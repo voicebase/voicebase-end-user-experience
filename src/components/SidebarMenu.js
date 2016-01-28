@@ -19,7 +19,7 @@ export class SidebarMenu extends React.Component {
 
   getAllItem() {
     let content = null;
-    let mediaIds = this.props.state.media.mediaIds;
+    let mediaIds = this.props.state.media.mediaList.mediaIds;
     if (mediaIds.length > 0) {
       content = <NavItem href="/all" active={this.isItemActive('/all')}>
         All My Files
@@ -31,7 +31,7 @@ export class SidebarMenu extends React.Component {
 
   getLastUploadedItem() {
     let content = null;
-    let lastUploadedIds = this.props.state.media.lastUploadedIds;
+    let lastUploadedIds = this.props.state.media.mediaList.lastUploadedIds;
     if (lastUploadedIds.length > 0) {
       content = <NavItem href="/last-upload" active={this.isItemActive('/last-upload')}>
         Last Upload

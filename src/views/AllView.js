@@ -14,25 +14,26 @@ export class AllView extends React.Component {
   };
 
   componentWillMount(nextProps) {
-    let media = this.props.state.media;
-    if (media.isGetCompleted && media.mediaIds.length === 0) {
+    let mediaList = this.props.state.media.mediaList;
+    if (mediaList.isGetCompleted && mediaList.mediaIds.length === 0) {
       this.props.history.pushState(null, '/upload');
     }
   }
 
   render () {
     let state = this.props.state;
+    let mediaList = state.media.mediaList;
     return (
       <div>
         <div className="content__heading">
           <h3>
             All My Files
-            <CounterLabel value={state.media.mediaIds.length}/>
+            <CounterLabel value={mediaList.mediaIds.length}/>
           </h3>
         </div>
         <SearchForm state={state.search} actions={this.props.actions}/>
-        <MediaListToolbar token={state.auth.token} selectedMediaIds={state.media.selectedMediaIds} actions={this.props.actions} />
-        <MediaList token={state.auth.token} state={state} actions={this.props.actions} />
+        <MediaListToolbar token={state.auth.token} selectedMediaIds={mediaList.selectedMediaIds} actions={this.props.actions} />
+        <MediaList token={state.auth.token} state={state.media} actions={this.props.actions} />
       </div>
     )
   }

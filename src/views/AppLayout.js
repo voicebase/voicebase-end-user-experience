@@ -1,9 +1,6 @@
 import React, { PropTypes } from 'react'
 import connectWrapper from '../redux/utils/connect'
-import {actions as authActions} from '../redux/modules/auth'
-import {actions as mediaActions} from '../redux/modules/media'
-import {actions as searchActions} from '../redux/modules/search'
-import {actions as playerActions} from '../redux/modules/player'
+import actions from '../redux/rootActions'
 import {Grid, Row, Col} from 'react-bootstrap'
 import SidebarMenu from '../components/SidebarMenu'
 import Spinner from '../components/Spinner'
@@ -43,8 +40,8 @@ export class AppLayout extends React.Component {
             <SidebarMenu state={state} actions={this.props.actions}/>
           </Col>
           <Col xs={10} className="content">
-            {state.media.isGetPending && <Spinner />}
-            {!state.media.isGetPending && this.props.children}
+            {state.media.mediaList.isGetPending && <Spinner />}
+            {!state.media.mediaList.isGetPending && this.props.children}
           </Col>
         </Row>
       </Grid>
@@ -52,6 +49,5 @@ export class AppLayout extends React.Component {
   }
 }
 
-let actions = Object.assign(authActions, mediaActions, searchActions, playerActions);
 export default connectWrapper(actions, AppLayout)
 

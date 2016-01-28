@@ -10,7 +10,6 @@ export class MediaListItem extends React.Component {
     mediaId: PropTypes.string.isRequired,
     isExpanded: PropTypes.bool.isRequired,
     mediaState: PropTypes.object.isRequired,
-    playerState: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
 
@@ -20,7 +19,7 @@ export class MediaListItem extends React.Component {
 
   getTitle() {
     let title = this.props.mediaId;
-    let metadata = this.props.mediaState.media[this.props.mediaId].metadata;
+    let metadata = this.props.mediaState.mediaList.media[this.props.mediaId].metadata;
     if (metadata && metadata.external && metadata.external.id) {
       title = metadata.external.id;
     }
@@ -35,7 +34,7 @@ export class MediaListItem extends React.Component {
 
     if (!this.props.isExpanded) {
       this.props.mediaState.activeMediaId && this.props.actions.collapseMedia(this.props.mediaState.activeMediaId);
-      if (!this.props.mediaState.mediaData[this.props.mediaId]) {
+      if (!this.props.mediaState.mediaData.data[this.props.mediaId]) {
         this.props.actions.getDataForMedia(this.props.token, this.props.mediaId);
       }
       this.props.actions.expandMedia(this.props.mediaId);
@@ -66,8 +65,9 @@ export class MediaListItem extends React.Component {
 
   render () {
     let itemClasses = classnames('list-group-item', 'listing', {collapsed: !this.props.isExpanded});
-    let media = this.props.mediaState.media[this.props.mediaId];
-    let mediaData = this.props.mediaState.mediaData[this.props.mediaId];
+    let mediaState = this.props.mediaState;
+    let media = mediaState.mediaList.media[this.props.mediaId];
+    let mediaData = mediaState.mediaData.data[this.props.mediaId];
     let checked = media.checked;
 
     return (
@@ -83,12 +83,13 @@ export class MediaListItem extends React.Component {
         <Collapse in={this.props.isExpanded}>
           <div>
             {this.isGettingMediaData(mediaData) && <div className="spinner-media_item"><Spinner/></div>}
-            {mediaData && mediaData.data &&
-            <VbsPlayerApp token={this.props.token}
-                          mediaId={this.props.mediaId}
-                          mediaState={mediaData}
-                          playerState={this.props.playerState}
-                          actions={this.props.actions}/>
+            {
+              mediaData && mediaData.data &&
+              <VbsPlayerApp token={this.props.token}
+                            mediaId={this.props.mediaId}
+                            mediaState={mediaData}
+                            playerState={mediaState.player}
+                            actions={this.props.actions}/>
             }
           </div>
         </Collapse>
