@@ -57,7 +57,7 @@ export class Player extends React.Component {
   calcMarkerOffset(time) {
     let timelineWidth = this.refs.timeline.clientWidth;
     let duration = this.props.playerState.duration;
-    if(!duration) return 0;
+    if (!duration) return 0;
 
     return ((time * timelineWidth) / duration);
   }
