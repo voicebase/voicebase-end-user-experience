@@ -87,8 +87,7 @@ export class MediaListItem extends React.Component {
               mediaData && mediaData.data &&
               <VbsPlayerApp token={this.props.token}
                             mediaId={this.props.mediaId}
-                            mediaState={mediaData}
-                            playerState={mediaState.player}
+                            mediaState={mediaState}
                             actions={this.props.actions}/>
             }
           </div>

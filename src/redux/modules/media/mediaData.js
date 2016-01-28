@@ -89,16 +89,16 @@ export default handleActions({
   },
 
   [SET_ACTIVE_TOPIC]: (state, { payload }) => {
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          [payload.mediaId]: {
-            ...state.data[payload.mediaId],
-            activeTopic: payload.topicId
-          }
+    return {
+      ...state,
+      data: {
+        ...state.data,
+        [payload.mediaId]: {
+          ...state.data[payload.mediaId],
+          activeTopic: payload.topicId
         }
       }
+    }
   }
 
 }, initialState);

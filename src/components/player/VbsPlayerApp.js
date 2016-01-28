@@ -8,7 +8,6 @@ export class VbsPlayerApp extends React.Component {
     token: PropTypes.string.isRequired,
     mediaId: PropTypes.string.isRequired,
     mediaState: PropTypes.object.isRequired,
-    playerState: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
 
@@ -18,17 +17,22 @@ export class VbsPlayerApp extends React.Component {
   }
 
   render () {
+    let mediaState = this.props.mediaState;
+    let playerState = mediaState.player;
+    let mediaData = mediaState.mediaData.data[this.props.mediaId];
+
     return (
       <div className="vbs-player-app">
         <Player mediaId={this.props.mediaId}
                 playerType="JwPlayer"
-                playerState={this.props.playerState.players[this.props.mediaId] || {loading: true}}
+                markersState={mediaState.markers[this.props.mediaId]}
+                playerState={playerState.players[this.props.mediaId] || {loading: true}}
                 actions={this.props.actions} />
 
         <Tabs className="listing__tabs">
           <Tab eventKey={1} title="Keywords">
             <KeywordsTabContent mediaId={this.props.mediaId}
-                                mediaState={this.props.mediaState}
+                                mediaState={mediaData}
                                 actions={this.props.actions} />
           </Tab>
           <Tab eventKey={2} title="Detection">Tab 2 content</Tab>

@@ -13,6 +13,18 @@ export class Keywords extends React.Component {
     this.props.actions.setActiveTopic(this.props.mediaId, topicId);
   }
 
+  setMarkers(keyword, activeSpeakerId) {
+    let times = keyword.t[activeSpeakerId];
+    let markers = times.map(_time => {
+      let time = parseFloat(_time);
+      return {
+        time,
+        keywordName: keyword.name
+      }
+    });
+    this.props.actions.setMarkers(this.props.mediaId, markers);
+  }
+
   render () {
     let mediaState = this.props.mediaState;
     let activeTopicId = mediaState.activeTopic;
@@ -46,7 +58,7 @@ export class Keywords extends React.Component {
                   let times = keyword.t[activeSpeakerId];
                   return (
                     <li key={'keyword-' + keywordId}>
-                      <a href="javascript:void(0)">
+                      <a href="javascript:void(0)" onClick={this.setMarkers.bind(this, keyword, activeSpeakerId)}>
                         <span className="listing__keywords__keyword-name">{keyword.name}</span>
                         <span> ({times.length})</span>
                       </a>

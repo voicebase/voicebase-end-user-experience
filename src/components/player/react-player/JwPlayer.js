@@ -30,7 +30,8 @@ export default class JwPlayer extends VbsBase {
   }
   play () {
     if (this.player.getState() !== 'PLAYING') {
-      this.player.play()
+      this.player.play();
+      this.onPlay();
     }
   }
   pause () {
@@ -50,7 +51,6 @@ export default class JwPlayer extends VbsBase {
     this.player.setVolume(fraction)
   }
   getDuration () {
-    if (!this.isReady) return null;
     return this.player.getDuration()
   }
   getFractionPlayed () {

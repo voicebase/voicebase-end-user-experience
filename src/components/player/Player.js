@@ -8,6 +8,7 @@ export class Player extends React.Component {
   static propTypes = {
     mediaId: PropTypes.string.isRequired,
     playerType: PropTypes.string.isRequired,
+    markersState: PropTypes.object,
     playerState: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
@@ -51,6 +52,14 @@ export class Player extends React.Component {
     let clickLeftOffset = event.pageX;
     let timelineWidth = event.currentTarget.clientWidth;
     return ((clickLeftOffset - timelineLeftOffset)) / timelineWidth;
+  }
+
+  calcMarkerOffset(time) {
+    let timelineWidth = this.refs.timeline.clientWidth;
+    let duration = this.props.playerState.duration;
+    if(!duration) return 0;
+
+    return ((time * timelineWidth) / duration);
   }
 
   onSeekMouseDown(event) {
@@ -99,6 +108,20 @@ export class Player extends React.Component {
     )
   }
 
+  getMarkers() {
+    let markersState = this.props.markersState;
+    if (!markersState) return null;
+
+    return markersState.markerIds.map(markerId => {
+      let marker = markersState.markers[markerId];
+      let position = this.calcMarkerOffset(marker.time);
+      let offsetStyle = {left: position + '%'};
+      return (
+        <a href="#" key={'marker-' + markerId} className="player__keywords__marker" style={offsetStyle} />
+      )
+    })
+  }
+
   render () {
     let playerState = this.props.playerState;
     if (!playerState || playerState.loading) {
@@ -137,6 +160,7 @@ export class Player extends React.Component {
               </div>
 
               <div className="player__keywords">
+                {this.getMarkers()}
               </div>
               <div className="player__detection">
                 <div className="player__detection__row">
@@ -163,6 +187,7 @@ export class Player extends React.Component {
           height={0}
           url={playerState.url}
           playing={playerState.playing}
+          onPlay={this.onPlay.bind(this)}
           volume={this.state.volume}
           onProgress={this.onProgress.bind(this)}
           onEnded={this.onPause.bind(this)}
