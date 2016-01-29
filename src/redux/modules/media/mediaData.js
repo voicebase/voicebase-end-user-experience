@@ -81,6 +81,7 @@ export default handleActions({
           speakers: parsedResult.speakers,
           activeTopic: parsedResult.activeTopic,
           activeSpeaker: parsedResult.activeSpeaker,
+          transcript: parsedResult.transcript,
           getPending: false,
           getError: ''
         }
@@ -132,12 +133,26 @@ const parseMediaData = function (data) {
     });
   }
 
+  let transcript = {
+    wordIds: [],
+    words: {}
+  };
+  if (data.transcripts && data.transcripts.latest && data.transcripts.latest.words) {
+    data.transcripts.latest.words.forEach((word, i) => {
+      transcript.wordIds.push(i);
+      transcript.words[i] = {
+        ...word
+      };
+    });
+  }
+
   return {
     activeTopic: (topics[0]) ? 0 : null,
     activeSpeaker: speakers[0],
     speakers,
     topicsIds,
-    topics
+    topics,
+    transcript
   }
 };
 

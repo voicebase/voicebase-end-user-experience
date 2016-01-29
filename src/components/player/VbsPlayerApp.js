@@ -34,6 +34,7 @@ export class VbsPlayerApp extends React.Component {
           <Tab eventKey={1} title="Keywords">
             <KeywordsTabContent mediaId={this.props.mediaId}
                                 mediaState={mediaData}
+                                playerState={playerState.players[this.props.mediaId] || {}}
                                 actions={this.props.actions} />
           </Tab>
           <Tab eventKey={2} title="Detection">Tab 2 content</Tab>
