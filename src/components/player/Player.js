@@ -115,6 +115,24 @@ export class Player extends React.Component {
     }, 100);
   }
 
+  seekToNextMarker() {
+    let isLastMarker = true;
+    let markersState = this.props.markersState;
+    for (let markerId of markersState.markerIds) {
+      let marker = markersState.markers[markerId];
+      let markerPosition = (marker.time) / this.props.playerState.duration;
+      if (markerPosition > this.props.playerState.played) {
+        this.seekOnPosition(markerPosition);
+        isLastMarker = false;
+        return false;
+      }
+    }
+    if (isLastMarker) {
+      let firstMarker = markersState.markers[markersState.markerIds[0]];
+      this.onSeekMarker(firstMarker.time);
+    }
+  }
+
   /*
   * position is a percent value / 100
   * */
@@ -183,7 +201,7 @@ export class Player extends React.Component {
               {playerState.playing && <i className="fa fa-fw fa-pause" />}
               {!playerState.playing && <i className="fa fa-fw fa-play" />}
             </Button>
-            <Button>
+            <Button onClick={this.seekToNextMarker.bind(this)}>
               <i className="fa fa-fw fa-share" />
             </Button>
           </ButtonGroup>
