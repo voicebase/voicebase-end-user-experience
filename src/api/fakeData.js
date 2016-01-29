@@ -8,7 +8,10 @@ export default {
   "media": {
     "mediaId": "fake_mediaId",
     "status": "finished",
-    "metadata": {},
+    "metadata": {
+      title: 'Fake Media For Testing',
+      duration: 360
+    },
     "transcripts": {
       "latest": {
         "revision": "118a47b5-61cb-4bdb-a9c2-fd45f1143e41",

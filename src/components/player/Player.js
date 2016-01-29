@@ -8,6 +8,7 @@ export class Player extends React.Component {
   static propTypes = {
     mediaId: PropTypes.string.isRequired,
     playerType: PropTypes.string.isRequired,
+    mediaState: PropTypes.object.isRequired,
     markersState: PropTypes.object,
     playerState: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
@@ -22,12 +23,28 @@ export class Player extends React.Component {
     };
   }
 
+  componentWillMount() {
+    let duration = this.props.mediaState.data.metadata.duration;
+    if (duration) {
+      this.onDuration(duration);
+    }
+  }
+
+  componentDidUpdate() {
+    let markersState = this.props.markersState;
+    if (markersState && markersState.justCreated) {
+      this.seekToFirstMarker(markersState);
+    }
+  }
+
   togglePlay() {
     (this.props.playerState.playing) ? this.onPause() : this.onPlay();
   }
 
   onDuration(duration) {
-    this.props.actions.setDuration(this.props.mediaId, duration);
+    if (duration && duration > 0) {
+      this.props.actions.setDuration(this.props.mediaId, duration);
+    }
   }
 
   onPlay() {
@@ -83,6 +100,25 @@ export class Player extends React.Component {
   onSeekMouseUp(event) {
     this.setState({ seeking: false });
     let position = this.calcPosition(event);
+    this.seekOnPosition(position);
+  }
+
+  onSeekMarker(markerTime) {
+    this.seekOnPosition(markerTime / this.props.playerState.duration);
+  }
+
+  seekToFirstMarker(markersState) {
+    let firstMarker = markersState.markers[markersState.markerIds[0]];
+    this.props.actions.clearJustCreatedMarkers(this.props.mediaId);
+    setTimeout(() => {
+      this.onSeekMarker(firstMarker.time);
+    }, 100);
+  }
+
+  /*
+  * position is a percent value / 100
+  * */
+  seekOnPosition(position) {
     this.refs.player.seekTo(parseFloat(position));
     this.props.actions.setPosition(this.props.mediaId, position);
     if (this.props.playerType === 'JwPlayer') {
@@ -115,9 +151,13 @@ export class Player extends React.Component {
     return markersState.markerIds.map(markerId => {
       let marker = markersState.markers[markerId];
       let position = this.calcMarkerOffset(marker.time);
-      let offsetStyle = {left: position + '%'};
+      let offsetStyle = {left: position + 'px'};
       return (
-        <a href="#" key={'marker-' + markerId} className="player__keywords__marker" style={offsetStyle} />
+        <a href="#"
+           key={'marker-' + markerId}
+           className="player__keywords__marker"
+           style={offsetStyle}
+           onClick={this.onSeekMarker.bind(this, marker.time)} />
       )
     })
   }
@@ -148,28 +188,30 @@ export class Player extends React.Component {
             </Button>
           </ButtonGroup>
 
-          <div className="player__timeline show-keywords"
-               onMouseDown={this.onSeekMouseDown.bind(this)}
-               onMouseMove={this.onSeekMouseMove.bind(this)}
-               onMouseUp={this.onSeekMouseUp.bind(this)}>
-            <div className="player__timeline__slider" style={sliderStyles}></div>
-            <div ref="timeline" className="player__timeline__progress">
-              <div className="player__timeline__progress__bg">
-                <div className="player__timeline__buffer" style={bufferStyles}></div>
-                <div className="player__timeline__progress__fg" style={progressStyles}></div>
-              </div>
-
-              <div className="player__keywords">
-                {this.getMarkers()}
-              </div>
-              <div className="player__detection">
-                <div className="player__detection__row">
-                </div>
-                <div className="player__detection__row">
+          <div className="player__timeline show-keywords">
+            <div onMouseDown={this.onSeekMouseDown.bind(this)}
+                 onMouseMove={this.onSeekMouseMove.bind(this)}
+                 onMouseUp={this.onSeekMouseUp.bind(this)}>
+              <div className="player__timeline__slider" style={sliderStyles}></div>
+              <div ref="timeline" className="player__timeline__progress">
+                <div className="player__timeline__progress__bg">
+                  <div className="player__timeline__buffer" style={bufferStyles}></div>
+                  <div className="player__timeline__progress__fg" style={progressStyles}></div>
                 </div>
               </div>
-
             </div>
+
+            <div className="player__keywords">
+              {this.getMarkers()}
+            </div>
+
+            <div className="player__detection">
+              <div className="player__detection__row">
+              </div>
+              <div className="player__detection__row">
+              </div>
+            </div>
+
           </div>
 
           <ButtonGroup className="player__buttons">

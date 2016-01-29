@@ -4,6 +4,7 @@ import { createAction, handleActions } from 'redux-actions'
  * Constants
  * */
 export const SET_MARKERS = 'SET_MARKERS';
+export const CLEAR_JUST_CREATED_MARKERS = 'CLEAR_JUST_CREATED_MARKERS';
 
 /*
  * Actions
@@ -11,9 +12,11 @@ export const SET_MARKERS = 'SET_MARKERS';
 export const setMarkers = createAction(SET_MARKERS, (mediaId, markers) => {
   return {mediaId, markers};
 });
+export const clearJustCreatedMarkers = createAction(CLEAR_JUST_CREATED_MARKERS, (mediaId) => mediaId);
 
 export const actions = {
-  setMarkers
+  setMarkers,
+  clearJustCreatedMarkers
 };
 
 /*
@@ -46,9 +49,19 @@ export default handleActions({
       [payload.mediaId]: {
         ...state[payload.mediaId],
         markerIds,
-        markers
+        markers,
+        justCreated: true
+      }
+    };
+  },
+
+  [CLEAR_JUST_CREATED_MARKERS]: (state, {payload: mediaId}) => {
+    return {
+      ...state,
+      [mediaId]: {
+        ...state[mediaId],
+        justCreated: false
       }
     };
   }
-
 }, initialState);
