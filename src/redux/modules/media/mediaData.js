@@ -82,6 +82,7 @@ export default handleActions({
           activeTopic: parsedResult.activeTopic,
           activeSpeaker: parsedResult.activeSpeaker,
           transcript: parsedResult.transcript,
+          predictions: parsedResult.predictions,
           getPending: false,
           getError: ''
         }
@@ -146,13 +147,21 @@ const parseMediaData = function (data) {
     });
   }
 
+  let predictions = {};
+  if (data.predictions && data.predictions.latest) {
+    predictions = {
+      ...data.predictions.latest
+    }
+  }
+
   return {
     activeTopic: (topics[0]) ? 0 : null,
     activeSpeaker: speakers[0],
     speakers,
     topicsIds,
     topics,
-    transcript
+    transcript,
+    predictions
   }
 };
 

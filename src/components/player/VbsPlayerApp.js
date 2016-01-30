@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import Player from './Player';
 import { Tabs, Tab } from 'react-bootstrap';
 import KeywordsTabContent from './KeywordsTabContent'
+import Predictions from './Predictions'
 
 export class VbsPlayerApp extends React.Component {
   static propTypes = {
@@ -39,7 +40,11 @@ export class VbsPlayerApp extends React.Component {
                                 actions={this.props.actions} />
           </Tab>
           <Tab eventKey={2} title="Detection">Tab 2 content</Tab>
-          <Tab eventKey={3} title="Prediction">Tab 3 content</Tab>
+          <Tab eventKey={3} title="Prediction">
+            <Predictions mediaId={this.props.mediaId}
+                         predictionsState={mediaData.predictions}
+                         actions={this.props.actions} />
+          </Tab>
         </Tabs>
 
       </div>

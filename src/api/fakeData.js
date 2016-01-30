@@ -10501,7 +10501,18 @@ export default {
           }
         ]
       }
+    },
+    "predictions" : {
+      "latest" : {
+        "sales-lead": 0.025,
+        "request-quote": 5.5,
+        "directions" : 3.3,
+        "employment" : 0,
+        "churn" : 85,
+        "appointment": false
+      }
     }
+
   }
 }
 /*eslint-enable */

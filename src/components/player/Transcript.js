@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import ReactDOM from 'react-dom'
 import $ from 'jquery'
 import classnames from 'classnames';
 
@@ -17,8 +16,8 @@ export class Transcript extends React.Component {
 
   componentDidUpdate() {
     if (this.refs.current && !this.isHoverTranscript) {
-      let $transcriptDom = $(ReactDOM.findDOMNode(this.refs.transcript));
-      let $current = $(ReactDOM.findDOMNode(this.refs.current));
+      let $transcriptDom = $(this.refs.transcript);
+      let $current = $(this.refs.current);
       let scrollTop = $current.offset().top - $transcriptDom.offset().top + $transcriptDom.scrollTop() - ($transcriptDom.height()) / 2;
       $transcriptDom.animate({
         scrollTop: scrollTop
