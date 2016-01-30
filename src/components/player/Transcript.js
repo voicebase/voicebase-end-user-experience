@@ -48,10 +48,12 @@ export class Transcript extends React.Component {
 
     // Prepare markers highlight
     let markers = {};
-    markersState.markerIds.forEach(markerId => {
-      let marker = markersState.markers[markerId];
-      markers[marker.time * 1000] = marker;
-    });
+    if (markersState) {
+      markersState.markerIds.forEach(markerId => {
+        let marker = markersState.markers[markerId];
+        markers[marker.time * 1000] = marker;
+      });
+    }
 
     return (
       <div className="listing__transcript">
