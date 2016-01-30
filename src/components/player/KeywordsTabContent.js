@@ -7,6 +7,7 @@ export class KeywordsTabContent extends React.Component {
     mediaId: PropTypes.string.isRequired,
     mediaState: PropTypes.object.isRequired,
     playerState: PropTypes.object.isRequired,
+    markersState: PropTypes.object,
     actions: PropTypes.object.isRequired
   };
 
@@ -20,6 +21,7 @@ export class KeywordsTabContent extends React.Component {
         <Transcript mediaId={this.props.mediaId}
                     playerState={this.props.playerState}
                     mediaState={this.props.mediaState}
+                    markersState={this.props.markersState}
                     actions={this.props.actions} />
       </div>
     )

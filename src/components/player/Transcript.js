@@ -8,6 +8,7 @@ export class Transcript extends React.Component {
     mediaId: PropTypes.string.isRequired,
     playerState: PropTypes.object.isRequired,
     mediaState: PropTypes.object.isRequired,
+    markersState: PropTypes.object,
     actions: PropTypes.object.isRequired
   };
 
@@ -36,24 +37,41 @@ export class Transcript extends React.Component {
   render() {
     let mediaState = this.props.mediaState;
     let playerState = this.props.playerState;
+    let markersState = this.props.markersState;
     let transcript = mediaState.transcript;
 
     let time = playerState.duration * playerState.played;
+    // Calculate current bounds
     let bottomHighlightBound = parseInt(time / this.transcriptHighlight, 10) * this.transcriptHighlight;
     let topHighlightBound = bottomHighlightBound + this.transcriptHighlight;
     let currentWordsCounter = 0;
+
+    // Prepare markers highlight
+    let markers = {};
+    markersState.markerIds.forEach(markerId => {
+      let marker = markersState.markers[markerId];
+      markers[marker.time * 1000] = marker;
+    });
 
     return (
       <div className="listing__transcript">
         <div className="listing__transcript__content" ref="transcript" onMouseEnter={this.onHoverTranscript.bind(this)} onMouseLeave={this.onBlurTranscript.bind(this)}>
           {
-            transcript.wordIds.map((wordId, i) => {
+            transcript.wordIds.map((wordId) => {
               let word = transcript.words[wordId];
               let wordTimeInSec = word.s / 1000;
 
+              // highlight for current position of playing
               let isCurrent = (wordTimeInSec > bottomHighlightBound && wordTimeInSec < topHighlightBound);
               currentWordsCounter = (isCurrent) ? currentWordsCounter + 1 : currentWordsCounter;
-              let highlightClass = classnames({current: isCurrent});
+
+              // hightlight for keywords
+              let isFindingKeyword = (markers[word.s]);
+
+              let highlightClass = classnames({
+                current: isCurrent,
+                'highlighted green': isFindingKeyword
+              });
 
               return (
                 <span key={word.p} className={highlightClass} ref={currentWordsCounter === 1 ? 'current' : null}>
