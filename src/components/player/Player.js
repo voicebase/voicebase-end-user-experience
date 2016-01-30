@@ -120,7 +120,8 @@ export class Player extends React.Component {
     let markersState = this.props.markersState;
     for (let markerId of markersState.markerIds) {
       let marker = markersState.markers[markerId];
-      let markerPosition = (marker.time) / this.props.playerState.duration;
+      const ONE_SECOND = 1;
+      let markerPosition = (marker.time - ONE_SECOND) / this.props.playerState.duration;
       if (markerPosition > this.props.playerState.played) {
         this.seekOnPosition(markerPosition);
         isLastMarker = false;
