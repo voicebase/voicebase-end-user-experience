@@ -55,6 +55,10 @@ export default class JwPlayer extends VbsBase {
   }
   getFractionPlayed () {
     if (!this.isReady) return null;
+    let status = this.player.getState();
+    if (status === 'BUFFERING') {
+      return null;
+    }
     return this.player.getPosition() / this.getDuration()
   }
   getFractionLoaded () {
