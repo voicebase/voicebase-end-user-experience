@@ -3,7 +3,6 @@ import connectWrapper from '../redux/utils/connect'
 import actions from '../redux/rootActions'
 import {Grid, Row, Col} from 'react-bootstrap'
 import SidebarMenu from '../components/SidebarMenu'
-import Spinner from '../components/Spinner'
 
 export class AppLayout extends React.Component {
   static propTypes = {
@@ -40,8 +39,7 @@ export class AppLayout extends React.Component {
             <SidebarMenu state={state} actions={this.props.actions}/>
           </Col>
           <Col xs={10} className="content">
-            {state.media.mediaList.isGetPending && <Spinner />}
-            {!state.media.mediaList.isGetPending && this.props.children}
+            {this.props.children}
           </Col>
         </Row>
       </Grid>

@@ -4,6 +4,7 @@ import {actions as mediaActions} from '../redux/modules/media/mediaList'
 import {actions as mediaDataActions} from '../redux/modules/media/mediaData'
 import {actions as playerActions} from '../redux/modules/media/player'
 import {actions as markersActions} from '../redux/modules/media/markers'
+import {actions as groupsActions} from '../redux/modules/groups'
 
 export default Object.assign(
   authActions,
@@ -11,5 +12,6 @@ export default Object.assign(
   mediaActions,
   mediaDataActions,
   playerActions,
-  markersActions
+  markersActions,
+  groupsActions
 )

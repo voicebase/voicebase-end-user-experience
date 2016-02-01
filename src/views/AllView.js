@@ -5,6 +5,7 @@ import CounterLabel from '../components/CounterLabel'
 import SearchForm from '../components/SearchForm'
 import MediaListToolbar from '../components/MediaListToolbar'
 import MediaList from '../components/MediaList'
+import Spinner from '../components/Spinner'
 
 export class AllView extends React.Component {
   static propTypes = {
@@ -25,15 +26,22 @@ export class AllView extends React.Component {
     let mediaList = state.media.mediaList;
     return (
       <div>
-        <div className="content__heading">
-          <h3>
-            All My Files
-            <CounterLabel value={mediaList.mediaIds.length}/>
-          </h3>
-        </div>
-        <SearchForm state={state.search} actions={this.props.actions}/>
-        <MediaListToolbar token={state.auth.token} selectedMediaIds={mediaList.selectedMediaIds} actions={this.props.actions} />
-        <MediaList token={state.auth.token} state={state.media} actions={this.props.actions} />
+        {mediaList.isGetPending && <Spinner />}
+        {
+          !mediaList.isGetPending &&
+          <div>
+            <div className="content__heading">
+              <h3>
+                All My Files
+                <CounterLabel value={mediaList.mediaIds.length}/>
+              </h3>
+            </div>
+            <SearchForm state={state.search} actions={this.props.actions}/>
+            <MediaListToolbar token={state.auth.token} selectedMediaIds={mediaList.selectedMediaIds}
+                              actions={this.props.actions}/>
+            <MediaList token={state.auth.token} state={state.media} actions={this.props.actions}/>
+          </div>
+        }
       </div>
     )
   }
