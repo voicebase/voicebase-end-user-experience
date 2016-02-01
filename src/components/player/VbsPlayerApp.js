@@ -40,11 +40,11 @@ export class VbsPlayerApp extends React.Component {
                                 actions={this.props.actions} />
           </Tab>
           <Tab eventKey={2} title="Detection">Tab 2 content</Tab>
-          <Tab eventKey={3} title="Prediction">
+          {mediaData.predictions && <Tab eventKey={3} title="Prediction">
             <Predictions mediaId={this.props.mediaId}
                          predictionsState={mediaData.predictions}
                          actions={this.props.actions} />
-          </Tab>
+          </Tab>}
         </Tabs>
 
       </div>

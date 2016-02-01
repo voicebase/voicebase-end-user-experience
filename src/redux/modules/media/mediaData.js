@@ -76,6 +76,7 @@ export default handleActions({
         ...state.data,
         [response.mediaId]: {
           data: response,
+          status: parsedResult.status,
           topicsIds: parsedResult.topicsIds,
           topics: parsedResult.topics,
           speakers: parsedResult.speakers,
@@ -147,7 +148,7 @@ const parseMediaData = function (data) {
     });
   }
 
-  let predictions = {};
+  let predictions = null;
   if (data.predictions && data.predictions.latest) {
     predictions = {
       ...data.predictions.latest
@@ -155,6 +156,7 @@ const parseMediaData = function (data) {
   }
 
   return {
+    status: data.status,
     activeTopic: (topics[0]) ? 0 : null,
     activeSpeaker: speakers[0],
     speakers,

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import {Collapse} from 'react-bootstrap'
+import {Collapse, Alert, Row, Col} from 'react-bootstrap'
 import classnames from 'classnames';
 import Spinner from './Spinner';
 import VbsPlayerApp from './player/VbsPlayerApp';
@@ -84,7 +84,17 @@ export class MediaListItem extends React.Component {
           <div>
             {this.isGettingMediaData(mediaData) && <div className="spinner-media_item"><Spinner/></div>}
             {
-              mediaData && mediaData.data &&
+              mediaData && mediaData.status === 'failed' &&
+              <Row className="row-without-margin">
+                <Col sm={12}>
+                  <Alert bsStyle="danger">
+                    <h4>Upload was failed</h4>
+                  </Alert>
+                </Col>
+              </Row>
+            }
+            {
+              mediaData && mediaData.data && mediaData.status === 'finished' &&
               <VbsPlayerApp token={this.props.token}
                             mediaId={this.props.mediaId}
                             mediaState={mediaState}
