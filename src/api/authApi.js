@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const baseUrl = 'https://apis.voicebase.com/v2-beta';
+// const baseUrl = 'https://apis.voicebase.com/v2-beta';
+const baseUrl = 'http://localhost:8080/auth0demo/api/auth';
 
 export default {
   signIn(credentials) {

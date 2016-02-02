@@ -57,6 +57,7 @@ export class SidebarMenu extends React.Component {
         </Nav>
 
         <Nav stacked className="bottom">
+          <NavItem href="/apikeys" active={this.isItemActive('/apikeys')}>API Keys</NavItem>
           <NavItem href="/account" active={this.isItemActive('/account')}>My Account</NavItem>
           <NavItem href="/settings" active={this.isItemActive('/settings')}>Settings</NavItem>
           <NavItem href="#" onClick={this.signOut.bind(this)}>Logout</NavItem>
