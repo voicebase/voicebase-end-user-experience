@@ -66,3 +66,16 @@ body .container-fluid > .row > div {
 .overflow-hidden {
   overflow: hidden;
 }
+
+.list-group-item__section {
+  border: 1px solid #ddd;
+
+  &:first-child {
+    border-top: 0;
+  }
+
+  .list-group-item {
+    border: 0;
+  }
+}
+

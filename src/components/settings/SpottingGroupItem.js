@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
-import {Col, Button, ListGroupItem, Label} from 'react-bootstrap'
+import {Col, Button, ListGroupItem, Label, Collapse} from 'react-bootstrap'
 import Spinner from '../Spinner'
+import SpottingGroupItemForm from './SpottingGroupItemForm'
 
 export class SpottingGroupItem extends React.Component {
   static propTypes = {
@@ -9,16 +10,28 @@ export class SpottingGroupItem extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
   deleteGroup(event) {
     event.preventDefault();
     event.stopPropagation();
     this.props.actions.deleteGroup(this.props.token, this.props.group.id, this.props.group.name);
   }
 
+  editGroup(group) {
+    console.log(group);
+  }
+
   render() {
     let group = this.props.group;
+
     return (
-        <ListGroupItem>
+      <section className="list-group-item__section">
+        <ListGroupItem href="javascript:void(0)" onClick={ () => this.setState({ open: !this.state.open })}>
           <Col sm={4}>
             <h4 className="list-group-item-heading">
               {group.name}
@@ -42,33 +55,19 @@ export class SpottingGroupItem extends React.Component {
               <i className="fa fa-trash"/>
             </Button>
           }
-          <div className="collapse" id="phraseSpottingGroups-1" aria-expanded="false">
-            <form className="form-settings ng-pristine ng-valid">
-              <div className="form-group">
-                <input type="text" className="form-control" placeholder="Group Name (Mandatory)" />
-              </div>
-              <div className="form-group">
-                <textarea className="form-control" placeholder="Description (Optional)" defaultValue="Description goes here" />
-              </div>
-              <div className="form-group">
-                <div className="tokenfield form-control">
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="checkbox">
-                  <label>
-                    <input type="checkbox" checked="" />
-                    Default phrase spotting group
-                  </label>
-                </div>
-              </div>
-              <div className="buttons">
-                <button type="button" className="btn btn-success collapsed" data-toggle="collapse" data-target="#phraseSpottingGroups-1" aria-expanded="false">Save</button>
-                <button type="button" className="btn btn-default collapsed" data-toggle="collapse" data-target="#phraseSpottingGroups-1" aria-expanded="false">Cancel</button>
-              </div>
-            </form>
-          </div>
         </ListGroupItem>
+
+        <Collapse id={'group-form' + group.id} in={this.state.open}>
+          <div>
+            <SpottingGroupItemForm formId={'group' + group.id}
+                                   formKey={'group' + group.id}
+                                   onSubmit={this.editGroup.bind(this)}
+                                   errorMessage={group.errorMessage}
+                                   isPending={false} />
+          </div>
+        </Collapse>
+
+      </section>
     )
   }
 }
