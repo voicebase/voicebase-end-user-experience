@@ -36,8 +36,19 @@ export class SpottingGroupItem extends React.Component {
   render() {
     let group = this.props.group;
 
-    let initialValue = {...group};
-    delete initialValue.keywords;
+    let keywords = group.keywordIds.map(id => group.keywords[id]);
+    let initialValue = {
+      name: group.name,
+      description: group.description,
+      isDefault: group.isDefault,
+      keywords: keywords.join(',')
+    };
+    let keywordsSelectValue = keywords.map(word => {
+      return {
+        value: word,
+        label: word
+      }
+    });
 
     return (
       <section className="list-group-item__section">
@@ -71,8 +82,8 @@ export class SpottingGroupItem extends React.Component {
         <Collapse id={'group-form' + group.id} in={this.state.open}>
           <div>
             <SpottingGroupItemForm formKey={'group' + group.id}
+                                   keywordsSelectValue={keywordsSelectValue}
                                    initialValues={initialValue}
-                                   group={group}
                                    onSubmit={this.editGroup.bind(this)}
                                    errorMessage={group.errorMessage}
                                    isPending={false} />

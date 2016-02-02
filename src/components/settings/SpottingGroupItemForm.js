@@ -7,7 +7,7 @@ import 'react-select/dist/react-select.css'
 class SpottingGroupItemForm extends React.Component {
 
   static propTypes = {
-    group: PropTypes.object.isRequired,
+    keywordsSelectValue: PropTypes.array.isRequired,
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
@@ -20,16 +20,6 @@ class SpottingGroupItemForm extends React.Component {
       handleSubmit
     } = this.props;
 
-    let initialSelectValue = [];
-    let wordsValues = Object.keys(this.props.group.keywords).map(i => {
-      let keyword = this.props.group.keywords[i];
-      initialSelectValue = initialSelectValue.concat(keyword);
-      return {
-        value: keyword,
-        label: keyword
-      }
-    });
-
     return (
       <div>
         <form className="form-settings" onSubmit={handleSubmit}>
@@ -40,12 +30,12 @@ class SpottingGroupItemForm extends React.Component {
             <Select name="keywords"
                     multi
                     allowCreate
-                    options={wordsValues}
-                    value={initialSelectValue.join(',')}
+                    options={this.props.keywordsSelectValue}
                     {...keywords}
                     onBlur={() => {}}
             />
           </div>
+          {keywords.visited && keywords.error && <div className="login-field-error">{keywords.error}</div>}
 
           <Input type="textarea" name="description" placeholder="Description (Optional)" {...description} />
           <Input type="checkbox" name="isDefault" label="Default phrase spotting group" {...isDefault} />
@@ -63,6 +53,9 @@ const validate = values => {
   const errors = {};
   if (!values.name) {
     errors.name = 'Group name is required';
+  }
+  if (!values.keywords) {
+    errors.keywords = 'Keywords are required';
   }
   return errors;
 };
