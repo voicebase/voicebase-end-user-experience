@@ -37,6 +37,28 @@ export default {
       }
       return Promise.reject({error})
     });
+  },
+
+  createGroup(token, groupId, newGroup) {
+    let url = `${baseUrl}/definitions/keywords/groups/${newGroup.name}`;
+    return axios.put(url, {
+      name: newGroup.name,
+      keywords: newGroup.keywords
+    }, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      if (error.data && error.data.errors) {
+        error = error.data.errors.error;
+      }
+      return Promise.reject({error})
+    });
   }
 
 }

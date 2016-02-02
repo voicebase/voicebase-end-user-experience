@@ -22,12 +22,22 @@ export class SpottingGroupItem extends React.Component {
     this.props.actions.deleteGroup(this.props.token, this.props.group.id, this.props.group.name);
   }
 
-  editGroup(group) {
-    console.log(group);
+  editGroup(values) {
+    let keywords = values.keywords.split(',');
+
+    let newGroup = {
+      name: values.name,
+      keywords
+    };
+    console.log(newGroup);
+    //this.props.actions.editGroup(this.props.token, this.props.group.id, newGroup);
   }
 
   render() {
     let group = this.props.group;
+
+    let initialValue = {...group};
+    delete initialValue.keywords;
 
     return (
       <section className="list-group-item__section">
@@ -41,7 +51,8 @@ export class SpottingGroupItem extends React.Component {
             <p className="list-group-item-labels">
               <Label bsStyle="primary">Default</Label>
               {
-                group.keywords.map(keywordName => {
+                group.keywordIds.map(keywordId => {
+                  let keywordName = group.keywords[keywordId];
                   let key = 'group__keyword-label-' + keywordName;
                   return <Label key={key} className="label-bordered">{ keywordName }</Label>
                 })
@@ -59,8 +70,9 @@ export class SpottingGroupItem extends React.Component {
 
         <Collapse id={'group-form' + group.id} in={this.state.open}>
           <div>
-            <SpottingGroupItemForm formId={'group' + group.id}
-                                   formKey={'group' + group.id}
+            <SpottingGroupItemForm formKey={'group' + group.id}
+                                   initialValues={initialValue}
+                                   group={group}
                                    onSubmit={this.editGroup.bind(this)}
                                    errorMessage={group.errorMessage}
                                    isPending={false} />

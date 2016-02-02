@@ -7,6 +7,7 @@ import GroupsApi from '../../api/groupsApi'
  * */
 export const GET_GROUPS = 'GET_GROUPS';
 export const DELETE_GROUP = 'DELETE_GROUP';
+export const EDIT_GROUP = 'EDIT_GROUP';
 
 /*
  * Actions
@@ -27,9 +28,20 @@ export const deleteGroup = createAction(DELETE_GROUP, (token, groupId, groupName
   }
 });
 
+export const editGroup = createAction(EDIT_GROUP, (token, groupId, newGroup) => {
+  return {
+    data: {
+      token,
+      groupId
+    },
+    promise: GroupsApi.createGroup(token, groupId, newGroup)
+  }
+});
+
 export const actions = {
   getGroups,
-  deleteGroup
+  deleteGroup,
+  editGroup
 };
 
 /*
@@ -66,8 +78,16 @@ export default handleActions({
     let groups = {};
     response.groups.forEach((group, i) => {
       groupIds.push(i);
+      let keywordIds = [];
+      let keywords = {};
+      group.keywords.forEach((keyword, i) => {
+        keywordIds.push(i);
+        keywords[i] = keyword;
+      });
       groups[i] = {
-        ...group,
+        name: group.name,
+        keywordIds,
+        keywords,
         id: i
       };
     });
