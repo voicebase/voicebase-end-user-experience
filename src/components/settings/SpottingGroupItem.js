@@ -16,6 +16,12 @@ export class SpottingGroupItem extends React.Component {
     this.state = {};
   }
 
+  collapseForm() {
+    this.setState({
+      open: false
+    });
+  }
+
   deleteGroup(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -29,8 +35,8 @@ export class SpottingGroupItem extends React.Component {
       name: values.name,
       keywords
     };
-    console.log(newGroup);
-    //this.props.actions.editGroup(this.props.token, this.props.group.id, newGroup);
+    this.collapseForm();
+    this.props.actions.editGroup(this.props.token, this.props.group.id, newGroup);
   }
 
   render() {
@@ -70,9 +76,9 @@ export class SpottingGroupItem extends React.Component {
               }
             </p>
           </Col>
-          { group.isDeletePending && <div className="spinner-remove_item"><Spinner/></div> }
+          { (group.isDeletePending || group.isEditPending) && <div className="spinner-remove_item"><Spinner/></div> }
           {
-            !group.isDeletePending &&
+            !group.isDeletePending && !group.isEditPending &&
             <Button bsStyle="link" className="btn-delete" onClick={this.deleteGroup.bind(this)}>
               <i className="fa fa-trash"/>
             </Button>
@@ -85,6 +91,7 @@ export class SpottingGroupItem extends React.Component {
                                    keywordsSelectValue={keywordsSelectValue}
                                    initialValues={initialValue}
                                    onSubmit={this.editGroup.bind(this)}
+                                   onCancel={this.collapseForm.bind(this)}
                                    errorMessage={group.errorMessage}
                                    isPending={false} />
           </div>

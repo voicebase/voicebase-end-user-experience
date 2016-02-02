@@ -133,6 +133,58 @@ export default handleActions({
       groupIds,
       groups: _.pick(state.groups, groupIds)
     };
+  },
+
+  [EDIT_GROUP + '_PENDING']: (state, { payload }) => {
+    return {
+      ...state,
+      groups: {
+        ...state.groups,
+        [payload.groupId]: {
+          ...state.groups[payload.groupId],
+          isEditPending: true,
+          editError: ''
+        }
+      }
+    };
+  },
+
+  [EDIT_GROUP + '_REJECTED']: (state, { payload }) => {
+    return {
+      ...state,
+      groups: {
+        ...state.groups,
+        [payload.groupId]: {
+          ...state.groups[payload.groupId],
+          isEditPending: false,
+          editError: payload.error
+        }
+      }
+    };
+  },
+
+  [EDIT_GROUP + '_FULFILLED']: (state, { payload }) => {
+    let keywordIds = [];
+    let keywords = {};
+    payload.data.keywords.forEach((keyword, i) => {
+      keywordIds.push(i);
+      keywords[i] = keyword;
+    });
+
+    return {
+      ...state,
+      groups: {
+        ...state.groups,
+        [payload.groupId]: {
+          ...state.groups[payload.groupId],
+          name: payload.data.name,
+          keywordIds,
+          keywords,
+          isEditPending: false,
+          editError: ''
+        }
+      }
+    };
   }
 
 }, initialState);

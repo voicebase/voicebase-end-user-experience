@@ -51,7 +51,10 @@ export default {
       }
     })
     .then(response => {
-      return response.data;
+      return {
+        groupId,
+        data: response.data
+      }
     })
     .catch(error => {
       if (error.data && error.data.errors) {
