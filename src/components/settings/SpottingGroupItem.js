@@ -76,7 +76,7 @@ export class SpottingGroupItem extends React.Component {
               }
             </p>
           </Col>
-          { (group.isDeletePending || group.isEditPending) && <div className="spinner-remove_item"><Spinner/></div> }
+          { (group.isDeletePending || group.isEditPending) && <div className="spinner-small_item"><Spinner/></div> }
           {
             !group.isDeletePending && !group.isEditPending &&
             <Button bsStyle="link" className="btn-delete" onClick={this.deleteGroup.bind(this)}>
@@ -92,8 +92,7 @@ export class SpottingGroupItem extends React.Component {
                                    initialValues={initialValue}
                                    onSubmit={this.editGroup.bind(this)}
                                    onCancel={this.collapseForm.bind(this)}
-                                   errorMessage={group.errorMessage}
-                                   isPending={false} />
+            />
           </div>
         </Collapse>
 

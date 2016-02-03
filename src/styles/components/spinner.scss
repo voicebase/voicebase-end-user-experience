@@ -157,13 +157,22 @@
   margin-top: 7px;
 }
 
-.spinner-remove_item .spinner {
+.spinner-item {
   position: absolute;
   right: 0;
   top: 50%;
   width: auto;
   height: 19px;
+}
+
+.spinner-item .spinner {
+  @extend .spinner-item;
   margin: -15px 5px 5px;
+}
+
+.spinner-small_item .spinner {
+  @extend .spinner-item;
+  margin: -10px 5px 5px;
 }
 
 .spinner-media_item .spinner,

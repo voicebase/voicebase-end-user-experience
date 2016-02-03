@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import {Panel, Collapse, Button, ListGroup, Alert} from 'react-bootstrap'
 import SpottingGroupItem from './SpottingGroupItem'
 import Spinner from '../Spinner'
+import SpottingGroupItemForm from './SpottingGroupItemForm'
 
 export class SpottingGroups extends React.Component {
   static propTypes = {
@@ -13,24 +14,69 @@ export class SpottingGroups extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      open: false,
+      openCreate: false
+    };
+  }
+
+  toggleList() {
+    this.setState({ open: !this.state.open });
+  }
+
+  expandCreateForm(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.setState({
+      open: true,
+      openCreate: true
+    });
+  }
+
+  collapseCreateForm() {
+    this.setState({
+      openCreate: false
+    });
+  }
+
+  addGroup(values) {
+    let keywords = values.keywords.split(',');
+    let newGroup = {
+      name: values.name,
+      keywords
+    };
+    this.collapseCreateForm();
+    this.props.actions.addGroup(this.props.token, newGroup);
   }
 
   getHeader() {
     return (
-      <div className="panel-heading-inner" onClick={ () => this.setState({ open: !this.state.open })}>
+      <div className="panel-heading-inner" onClick={this.toggleList.bind(this)}>
         <h3 className="panel-title pull-left">
           Phrase Spotting Groups <small>{this.props.groupsState.groupIds.length}</small>
         </h3>
-        <Button bsStyle="link" className="pull-right no-padding">
-          <i className="fa fa-plus"/> Add phrase spotting group
-        </Button>
+        {this.props.groupsState.isAddPending && <div className="spinner-small_item"><Spinner/></div>}
+        {
+          !this.props.groupsState.isAddPending &&
+          <Button bsStyle="link" className="pull-right no-padding" onClick={this.expandCreateForm.bind(this)}>
+            <i className="fa fa-plus"/> Add phrase spotting group
+          </Button>
+        }
       </div>
     )
   }
 
   render() {
     let groupsState = this.props.groupsState;
+
+    let initialValueForAdd = {
+      name: '',
+      description: '',
+      isDefault: false,
+      keywords: ''
+    };
+    let keywordsSelectValueForAdd = [];
+
     return (
       <div>
         { groupsState.isGetPending && <Spinner /> }
@@ -43,8 +89,20 @@ export class SpottingGroups extends React.Component {
         {
           !groupsState.isGetPending &&
           <Panel className="panel panel-default panel-settings" header={this.getHeader()}>
-            <Collapse in={this.state.open}>
+            <Collapse id="list-collapse-group" in={this.state.open}>
               <ListGroup>
+
+                <Collapse id="add-collapse-group" in={this.state.openCreate}>
+                  <div>
+                    <SpottingGroupItemForm formKey={'add-group'}
+                                           keywordsSelectValue={keywordsSelectValueForAdd}
+                                           initialValues={initialValueForAdd}
+                                           onSubmit={this.addGroup.bind(this)}
+                                           onCancel={this.collapseCreateForm.bind(this)}
+                    />
+                  </div>
+                </Collapse>
+
                 {
                   groupsState.groupIds.map(groupId => {
                     return (

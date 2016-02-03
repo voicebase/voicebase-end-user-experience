@@ -8,6 +8,7 @@ import GroupsApi from '../../api/groupsApi'
 export const GET_GROUPS = 'GET_GROUPS';
 export const DELETE_GROUP = 'DELETE_GROUP';
 export const EDIT_GROUP = 'EDIT_GROUP';
+export const ADD_GROUP = 'ADD_GROUP';
 
 /*
  * Actions
@@ -38,10 +39,20 @@ export const editGroup = createAction(EDIT_GROUP, (token, groupId, newGroup) => 
   }
 });
 
+export const addGroup = createAction(ADD_GROUP, (token, newGroup) => {
+  return {
+    data: {
+      token
+    },
+    promise: GroupsApi.createGroup(token, null, newGroup)
+  }
+});
+
 export const actions = {
   getGroups,
   deleteGroup,
-  editGroup
+  editGroup,
+  addGroup
 };
 
 /*
@@ -182,6 +193,48 @@ export default handleActions({
           keywords,
           isEditPending: false,
           editError: ''
+        }
+      }
+    };
+  },
+
+  [ADD_GROUP + '_PENDING']: (state, { payload }) => {
+    return {
+      ...state,
+      isAddPending: true
+    };
+  },
+
+  [ADD_GROUP + '_REJECTED']: (state, { payload }) => {
+    return {
+      ...state,
+      isAddPending: false,
+      addError: ''
+    };
+  },
+
+  [ADD_GROUP + '_FULFILLED']: (state, { payload }) => {
+    let id = new Date().getTime();
+
+    let keywordIds = [];
+    let keywords = {};
+    payload.data.keywords.forEach((keyword, i) => {
+      keywordIds.push(i);
+      keywords[i] = keyword;
+    });
+
+    return {
+      ...state,
+      isAddPending: false,
+      addError: '',
+      groupIds: state.groupIds.concat(id),
+      groups: {
+        ...state.groups,
+        [id]: {
+          id,
+          name: payload.data.name,
+          keywordIds,
+          keywords
         }
       }
     };

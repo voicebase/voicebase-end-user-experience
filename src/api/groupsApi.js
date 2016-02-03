@@ -58,9 +58,10 @@ export default {
     })
     .catch(error => {
       if (error.data && error.data.errors) {
-        error = error.data.errors.error;
+        error = error.data.errors[0].error;
       }
-      return Promise.reject({error})
+      alert(error);
+      return Promise.reject({groupId, error})
     });
   }
 

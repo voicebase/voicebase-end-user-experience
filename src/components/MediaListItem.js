@@ -76,7 +76,7 @@ export class MediaListItem extends React.Component {
           <h4 className="list-group-item-heading">{this.getTitle()}</h4>
           <p className="list-group-item-text">Uploaded Jan 5, 2010 | Length 00:05:16</p>
           <input type="checkbox" className="listing__checkbox" checked={checked} onChange={this.selectMedia.bind(this)} />
-          {media.deletePending && <div className="spinner-remove_item"><Spinner/></div>}
+          {media.deletePending && <div className="spinner-item"><Spinner/></div>}
           {!media.deletePending && <a href="#" className="listing__delete" onClick={this.deleteMedia.bind(this)}><i className="fa fa-trash"/></a>}
 
         </div>

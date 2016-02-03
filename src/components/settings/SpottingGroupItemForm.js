@@ -11,9 +11,7 @@ class SpottingGroupItemForm extends React.Component {
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     resetForm: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    errorMessage: PropTypes.string,
-    isPending: PropTypes.bool
+    onCancel: PropTypes.func.isRequired
   };
 
   cancel () {
