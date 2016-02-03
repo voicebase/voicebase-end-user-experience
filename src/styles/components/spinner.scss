@@ -165,12 +165,12 @@
   height: 19px;
 }
 
-.spinner-item .spinner {
+.spinner.item-medium {
   @extend .spinner-item;
   margin: -15px 5px 5px;
 }
 
-.spinner-small_item .spinner {
+.spinner.item-small {
   @extend .spinner-item;
   margin: -10px 5px 5px;
 }

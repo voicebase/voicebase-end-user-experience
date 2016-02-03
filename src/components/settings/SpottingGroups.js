@@ -55,7 +55,7 @@ export class SpottingGroups extends React.Component {
         <h3 className="panel-title pull-left">
           Phrase Spotting Groups <small>{this.props.groupsState.groupIds.length}</small>
         </h3>
-        {this.props.groupsState.isAddPending && <div className="spinner-small_item"><Spinner/></div>}
+        {this.props.groupsState.isAddPending && <Spinner isSmallItem/>}
         {
           !this.props.groupsState.isAddPending &&
           <Button bsStyle="link" className="pull-right no-padding" onClick={this.expandCreateForm.bind(this)}>

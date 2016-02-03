@@ -76,7 +76,7 @@ export class SpottingGroupItem extends React.Component {
               }
             </p>
           </Col>
-          { (group.isDeletePending || group.isEditPending) && <div className="spinner-small_item"><Spinner/></div> }
+          { (group.isDeletePending || group.isEditPending) && <Spinner isSmallItem/> }
           {
             !group.isDeletePending && !group.isEditPending &&
             <Button bsStyle="link" className="btn-delete" onClick={this.deleteGroup.bind(this)}>
