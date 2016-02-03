@@ -3,6 +3,7 @@ import {Col, Button, ListGroupItem, Collapse} from 'react-bootstrap'
 import Spinner from '../Spinner'
 import PredictionForm from './PredictionForm'
 import DetectionForm from './DetectionForm'
+import NumbersForm from './NumbersForm'
 
 export class SettingsListItem extends React.Component {
   static propTypes = {
@@ -75,6 +76,14 @@ export class SettingsListItem extends React.Component {
                              initialValues={initialValue}
                              onSubmit={this.editItem.bind(this)}
                              onCancel={this.collapseForm.bind(this)}
+              />
+            }
+            {
+              type === 'numbers' &&
+              <NumbersForm formKey={type + item.id}
+                           initialValues={initialValue}
+                           onSubmit={this.editItem.bind(this)}
+                           onCancel={this.collapseForm.bind(this)}
               />
             }
           </div>

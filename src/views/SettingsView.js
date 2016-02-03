@@ -4,6 +4,7 @@ import actions from '../redux/rootActions'
 import SpottingGroups from '../components/settings/SpottingGroups'
 import Predictions from '../components/settings/Predictions'
 import Detections from '../components/settings/Detections'
+import Numbers from '../components/settings/Numbers'
 
 export class AllView extends React.Component {
   static propTypes = {
@@ -16,6 +17,7 @@ export class AllView extends React.Component {
     this.props.actions.getGroups(this.props.state.auth.token);
     this.props.actions.getItems(this.props.state.auth.token, 'predictions');
     this.props.actions.getItems(this.props.state.auth.token, 'detection');
+    this.props.actions.getItems(this.props.state.auth.token, 'numbers');
   }
 
   render () {
@@ -35,8 +37,12 @@ export class AllView extends React.Component {
                        actions={this.props.actions}/>
 
           <Detections token={this.props.state.auth.token}
-                       state={state.settings.detection}
-                       actions={this.props.actions}/>
+                      state={state.settings.detection}
+                      actions={this.props.actions}/>
+
+          <Numbers token={this.props.state.auth.token}
+                   state={state.settings.numbers}
+                   actions={this.props.actions}/>
         </div>
       </div>
     )

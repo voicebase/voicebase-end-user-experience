@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions'
 import _ from 'lodash'
 import PredictionsApi from '../../api/predictionsApi'
 import DetectionsApi from '../../api/detectionsApi'
+import NumbersApi from '../../api/numbersApi'
 
 /*
  * Constants
@@ -25,9 +26,9 @@ const getApi = function (type) {
   else if (type === 'detection') {
     api = DetectionsApi;
   }
-  //else if (type === 'numbers') {
-  //  api = NumbersApi;
-  //}
+  else if (type === 'numbers') {
+    api = NumbersApi;
+  }
   return api;
 };
 
@@ -116,7 +117,9 @@ export const initialState = {
   numbers: {
     view: {
       title: 'Number Formats',
-      addButtonLabel: 'Add number format'
+      addButtonLabel: 'Add number format',
+      isExpandList: false,
+      isExpandCreateForm: false
     },
     itemIds: [],
     items: {},

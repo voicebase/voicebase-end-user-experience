@@ -5,6 +5,7 @@ import SettingsListHeader from './SettingsListHeader'
 import SettingsListItem from './SettingsListItem'
 import PredictionForm from './PredictionForm'
 import DetectionForm from './DetectionForm'
+import NumbersForm from './NumbersForm'
 
 export class SettingsList extends React.Component {
   static propTypes = {
@@ -81,6 +82,13 @@ export class SettingsList extends React.Component {
                       <DetectionForm formKey={'add-' + type}
                                      onSubmit={this.addItem.bind(this)}
                                      onCancel={this.collapseCreateForm.bind(this)}
+                      />
+                    }
+                    {
+                      type === 'numbers' &&
+                      <NumbersForm formKey={'add-' + type}
+                                   onSubmit={this.addItem.bind(this)}
+                                   onCancel={this.collapseCreateForm.bind(this)}
                       />
                     }
                   </div>
