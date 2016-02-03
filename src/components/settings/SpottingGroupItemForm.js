@@ -10,10 +10,16 @@ class SpottingGroupItemForm extends React.Component {
     keywordsSelectValue: PropTypes.array.isRequired,
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
+    resetForm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
     isPending: PropTypes.bool
   };
+
+  cancel () {
+    this.props.resetForm();
+    this.props.onCancel();
+  }
 
   render () {
     const {
@@ -42,7 +48,7 @@ class SpottingGroupItemForm extends React.Component {
           <Input type="checkbox" name="isDefault" label="Default phrase spotting group" {...isDefault} />
           <div className="buttons">
             <Button type="submit" bsStyle="success">Save</Button>
-            <Button onClick={this.props.onCancel}>Cancel</Button>
+            <Button onClick={this.cancel.bind(this)}>Cancel</Button>
           </div>
         </form>
       </div>
