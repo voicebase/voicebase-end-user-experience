@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import {Col, Button, ListGroupItem, Collapse} from 'react-bootstrap'
+import {Col, Button, ListGroupItem, Collapse, Label} from 'react-bootstrap'
 import Spinner from '../Spinner'
 import PredictionForm from './PredictionForm'
 import DetectionForm from './DetectionForm'
@@ -48,7 +48,8 @@ export class SettingsListItem extends React.Component {
         <ListGroupItem href="javascript:void(0)" onClick={ () => this.setState({ open: !this.state.open })}>
           <Col sm={11}>
             <h4 className="list-group-item-heading">
-              {item.name}
+              { item.name }
+              { item.isDefault && <Label bsStyle="primary">Default</Label> }
             </h4>
           </Col>
           { (item.isDeletePending || item.isEditPending) && <Spinner isSmallItem/> }

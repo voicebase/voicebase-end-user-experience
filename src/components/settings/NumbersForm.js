@@ -7,6 +7,7 @@ class NumbersForm extends React.Component {
   static propTypes = {
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
+    pristine: PropTypes.bool.isRequired,
     resetForm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   };
@@ -19,7 +20,8 @@ class NumbersForm extends React.Component {
   render () {
     const {
       fields: { name, description, isDefault },
-      handleSubmit
+      handleSubmit,
+      pristine
     } = this.props;
 
     return (
@@ -31,7 +33,7 @@ class NumbersForm extends React.Component {
           <Input type="textarea" name="description" placeholder="Description (Optional)" {...description} />
           <Input type="checkbox" name="isDefault" label="Default number format" {...isDefault} />
           <div className="buttons">
-            <Button type="submit" bsStyle="success">Save</Button>
+            <Button type="submit" bsStyle="success" disabled={pristine}>Save</Button>
             <Button onClick={this.cancel.bind(this)}>Cancel</Button>
           </div>
         </form>

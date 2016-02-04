@@ -53,13 +53,13 @@ export class SpottingGroups extends React.Component {
     return (
       <div className="panel-heading-inner" onClick={this.toggleList.bind(this)}>
         <h3 className="panel-title pull-left">
-          Phrase Spotting Groups <small>{this.props.groupsState.groupIds.length}</small>
+          Phrase Groups <small>{this.props.groupsState.groupIds.length}</small>
         </h3>
         {this.props.groupsState.isAddPending && <Spinner isSmallItem/>}
         {
           !this.props.groupsState.isAddPending &&
           <Button bsStyle="link" className="pull-right no-padding" onClick={this.expandCreateForm.bind(this)}>
-            <i className="fa fa-plus"/> Add phrase spotting group
+            <i className="fa fa-plus"/> Add phrase group
           </Button>
         }
       </div>

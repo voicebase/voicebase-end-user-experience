@@ -10,6 +10,7 @@ class SpottingGroupItemForm extends React.Component {
     keywordsSelectValue: PropTypes.array.isRequired,
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
+    pristine: PropTypes.bool.isRequired,
     resetForm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
   };
@@ -22,7 +23,8 @@ class SpottingGroupItemForm extends React.Component {
   render () {
     const {
       fields: { name, description, isDefault, keywords },
-      handleSubmit
+      handleSubmit,
+      pristine
     } = this.props;
 
     return (
@@ -33,6 +35,7 @@ class SpottingGroupItemForm extends React.Component {
 
           <div className="form-group">
             <Select name="keywords"
+                    placeholder="Add a word or phrase"
                     multi
                     allowCreate
                     options={this.props.keywordsSelectValue}
@@ -43,9 +46,9 @@ class SpottingGroupItemForm extends React.Component {
           {keywords.visited && keywords.error && <div className="login-field-error">{keywords.error}</div>}
 
           <Input type="textarea" name="description" placeholder="Description (Optional)" {...description} />
-          <Input type="checkbox" name="isDefault" label="Default phrase spotting group" {...isDefault} />
+          <Input type="checkbox" name="isDefault" label="Default phrase group" {...isDefault} />
           <div className="buttons">
-            <Button type="submit" bsStyle="success">Save</Button>
+            <Button type="submit" bsStyle="success" disabled={pristine}>Save</Button>
             <Button onClick={this.cancel.bind(this)}>Cancel</Button>
           </div>
         </form>

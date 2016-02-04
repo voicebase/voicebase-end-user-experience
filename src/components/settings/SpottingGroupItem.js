@@ -61,12 +61,12 @@ export class SpottingGroupItem extends React.Component {
         <ListGroupItem href="javascript:void(0)" onClick={ () => this.setState({ open: !this.state.open })}>
           <Col sm={4}>
             <h4 className="list-group-item-heading">
-              {group.name}
+              { group.name }
+              { group.isDefault && <Label bsStyle="primary">Default</Label> }
             </h4>
           </Col>
           <Col sm={7} className="overflow-hidden">
             <p className="list-group-item-labels">
-              <Label bsStyle="primary">Default</Label>
               {
                 group.keywordIds.map(keywordId => {
                   let keywordName = group.keywords[keywordId];
