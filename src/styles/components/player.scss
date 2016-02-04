@@ -11,6 +11,15 @@
   border-left-color: transparent !important;
 }
 
+.player__buttons .fa-topleft {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -13px;
+  margin-top: -9px;
+  font-size: 11px;
+}
+
 .player__timeline {
   flex: 1;
   margin: 0 10px;

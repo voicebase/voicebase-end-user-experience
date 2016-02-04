@@ -3,6 +3,7 @@ import VbsReactPlayer from './react-player/VbsReactPlayer'
 import { ButtonGroup, Button, Popover, OverlayTrigger } from 'react-bootstrap'
 import Spinner from '../Spinner';
 import VolumeSlider from './VolumeSlider';
+import { parseTime } from '../../common/Common';
 
 export class Player extends React.Component {
   static propTypes = {
@@ -146,7 +147,6 @@ export class Player extends React.Component {
   }
 
   onVolumeChange(value) {
-    console.log(value);
     this.setState({
       volume: value
     });
@@ -189,10 +189,15 @@ export class Player extends React.Component {
       );
     }
 
-    let sliderValue = (!this.state.seeking) ? (playerState.played * 100) : (this.state.seekValue * 100);
+    let duration = this.props.playerState.duration;
+    let timePercentValue = (!this.state.seeking) ? (playerState.played) : (this.state.seekValue)
+    let sliderValue = timePercentValue * 100;
     let sliderStyles = {left: sliderValue + '%'};
     let progressStyles = {width: sliderValue + '%'};
     let bufferStyles = {width: (playerState.loaded * 100) + '%'};
+
+    let parsedDuration = parseTime(duration);
+    let parsedPlayedTime = parseTime(duration * timePercentValue);
 
     return (
       <div className="vbs-player">
@@ -203,7 +208,8 @@ export class Player extends React.Component {
               {!playerState.playing && <i className="fa fa-fw fa-play" />}
             </Button>
             <Button onClick={this.seekToNextMarker.bind(this)}>
-              <i className="fa fa-fw fa-share" />
+              <i className="fa fa-fw fa-play fa-rotate-270" />
+              <i className="fa fa-share fa-topleft" />
             </Button>
           </ButtonGroup>
 
@@ -231,6 +237,10 @@ export class Player extends React.Component {
               </div>
             </div>
 
+          </div>
+
+          <div className="player__time">
+            {parsedPlayedTime} / {parsedDuration}
           </div>
 
           <ButtonGroup className="player__buttons">
