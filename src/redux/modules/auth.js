@@ -37,10 +37,13 @@ export default handleActions({
     return {
       ...state,
       isPending: false,
+      isRemember: true,
       errorMessage: '',
-      lock: response.lock,
       token: response.token,
-      profile: response.profile
+      email: response.profile.email,
+      name: response.profile.nickname,
+      userId: response.profile.user_id,
+      picture: response.profile.picture
     };
   }
 }, initialState);

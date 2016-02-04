@@ -27,7 +27,7 @@ export class ApiKeyView extends React.Component {
             Image:
           </td>
           <td>
-            <img src={this.props.state.auth.profile.picture}></img>
+            <img src={this.props.state.auth.picture}></img>
           </td>
         </tr>
         <tr>
@@ -35,7 +35,7 @@ export class ApiKeyView extends React.Component {
             Email:
           </td>
           <td>
-            {this.props.state.auth.profile.email}
+            {this.props.state.auth.email}
           </td>
         </tr>
         <tr>
@@ -43,7 +43,7 @@ export class ApiKeyView extends React.Component {
             Name:
           </td>
           <td>
-            {this.props.state.auth.profile.nickname}
+            {this.props.state.auth.name}
           </td>
         </tr>
         <tr>
@@ -51,7 +51,7 @@ export class ApiKeyView extends React.Component {
             User id:
           </td>
           <td>
-            {this.props.state.auth.profile.user_id}
+            {this.props.state.auth.userId}
           </td>
         </tr>
         <tr>
