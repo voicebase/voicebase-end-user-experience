@@ -1,0 +1,45 @@
+.listings .listing--processing {
+  background: #f5f5f5 !important;
+  cursor: default;
+}
+
+.listings .listing--processing .list-group-item-heading {
+  color: #555;
+}
+
+.listings .listing--processing .progress {
+  margin: 10px 0 0;
+  background: #eee;
+  height: 24px;
+  display: flex;
+}
+
+.listings .listing--processing .progress__step {
+  flex: 1;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  height: 24px;
+  line-height: 24px;
+  color: #aaa;
+  margin-right: 1px;
+}
+
+.listings .listing--processing .progress__step.done {
+  background-color: #85d04a;
+  color: white;
+}
+
+.listings .listing--processing .progress__step.active {
+  background-color: #85d04a;
+  color: white;
+  -webkit-animation: progress-bar-stripes 2s linear infinite;
+  -o-animation: progress-bar-stripes 2s linear infinite;
+  animation: progress-bar-stripes 2s linear infinite;
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  -webkit-background-size: 40px 40px;
+  background-size: 40px 40px;
+}

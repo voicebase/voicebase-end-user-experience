@@ -1,0 +1,32 @@
+.listing__detection__items {
+  list-style: none;
+  margin: 0;
+  padding: 15px 20px;
+}
+
+.listing__detection__item {
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 24px;
+  padding-left: 50px;
+  position: relative;
+}
+
+.listing__detection__item:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 36px;
+  height: 3px;
+  top: 50%;
+  margin-top: -2px;
+  background: #eee;
+}
+
+.listing__detection__item.green:before {
+  background: #85d04a;
+}
+
+.listing__detection__item.red:before {
+  background: #d9534f;
+}
