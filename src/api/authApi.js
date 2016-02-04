@@ -14,7 +14,7 @@ export default {
         if (error.data && error.data.errors) {
           error = error.data.errors.error;
         }
-        return Promise.reject(error)
+        return Promise.reject(error);
       });
   }
 }

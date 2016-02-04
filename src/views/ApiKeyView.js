@@ -21,7 +21,39 @@ export class ApiKeyView extends React.Component {
     return (
      <div>
       <p>Happy days are here again, buddy!</p>
-      <table width='100%' border='1'>
+      <table>
+        <tr>
+          <td>
+            Image:
+          </td>
+          <td>
+            <img src={this.props.state.auth.profile.picture}></img>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Email:
+          </td>
+          <td>
+            {this.props.state.auth.profile.email}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Name:
+          </td>
+          <td>
+            {this.props.state.auth.profile.nickname}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            User id:
+          </td>
+          <td>
+            {this.props.state.auth.profile.user_id}
+          </td>
+        </tr>
         <tr>
           <td>
             User key:
