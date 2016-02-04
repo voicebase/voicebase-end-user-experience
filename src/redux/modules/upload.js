@@ -1,4 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
+import _ from 'lodash'
 
 /*
  * Constants
@@ -18,15 +19,28 @@ export const actions = {
  * State
  * */
 export const initialState = {
+  fileIds: [],
+  files: {}
 };
 
 /*
  * Reducers
  * */
 export default handleActions({
-  [createAction]: (state, { payload }) => {
+  [ADD_FILES]: (state, { payload: files }) => {
+    let fileIds = [];
+    let filesObj = {};
+    files.forEach(file => {
+      let id = _.uniqueId('file-');
+      fileIds.push(id);
+      filesObj[id] = {
+        file: file
+      }
+    });
     return {
-      ...state
+      ...state,
+      fileIds,
+      files: filesObj
     };
   }
 }, initialState);
