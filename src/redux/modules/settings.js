@@ -258,7 +258,12 @@ export default handleActions({
         ...state[type],
         items: {
           ...state[type].items,
-          [id]: data
+          [id]: {
+            ...state[type].items[id],
+            ...data,
+            isEditPending: false,
+            editError: ''
+          }
         }
       }
     };
