@@ -17,7 +17,10 @@ export default {
           'fake_mediaId': {
             mediaId: 'fake_mediaId',
             status: 'finished',
-            metadata: {title: 'Fake Media For Testing'}
+            metadata: {
+              title: 'Fake Media For Testing',
+              duration: 360
+            }
           }
         };
         response.data.media.forEach(mediaItem => {

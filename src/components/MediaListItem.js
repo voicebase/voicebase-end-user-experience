@@ -3,6 +3,7 @@ import {Collapse, Alert, Row, Col} from 'react-bootstrap'
 import classnames from 'classnames';
 import Spinner from './Spinner';
 import VbsPlayerApp from './player/VbsPlayerApp';
+import { parseTime } from '../common/Common';
 
 export class MediaListItem extends React.Component {
   static propTypes = {
@@ -70,11 +71,17 @@ export class MediaListItem extends React.Component {
     let mediaData = mediaState.mediaData.data[this.props.mediaId];
     let checked = media.checked;
 
+    let duration = media.metadata.duration;
+    let parsedDuration = parseTime(duration)
+
     return (
       <div>
         <div className={itemClasses} onClick={this.toggle.bind(this)}>
           <h4 className="list-group-item-heading">{this.getTitle()}</h4>
-          <p className="list-group-item-text">Uploaded Jan 5, 2010 | Length 00:05:16</p>
+          <p className="list-group-item-text">
+            Uploaded Jan 5, 2010
+            { duration && <span> | Length {parsedDuration}</span> }
+          </p>
           <input type="checkbox" className="listing__checkbox" checked={checked} onChange={this.selectMedia.bind(this)} />
           {media.deletePending && <Spinner isMediumItem/>}
           {!media.deletePending && <a href="#" className="listing__delete" onClick={this.deleteMedia.bind(this)}><i className="fa fa-trash"/></a>}
