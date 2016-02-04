@@ -4,7 +4,7 @@ import axios from 'axios'
 const baseUrl = 'http://localhost:8080/auth0demo/api/token';
 
 export default {
-  createKey(token) {
+  createKey: function (token) {
     let url = `${baseUrl}`;
     return axios.get(url, {
       headers: {
@@ -12,7 +12,9 @@ export default {
       }
     })
     .then(response => {
-      return response.data;
+      const apiKey = response.data.apiToken;
+      const returnedObject = { apiKey };
+      return returnedObject;
     })
     .catch(error => {
       if (error.data && error.data.errors) {

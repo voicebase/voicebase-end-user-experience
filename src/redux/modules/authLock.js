@@ -26,10 +26,10 @@ export const actions = {
  * */
 export const initialState = {
   isRemember: false,
-  isPending: false
-  //lock: '',
-  //token: '',
-  //profile: ''
+  isPending: false,
+  lock: '',
+  token: '',
+  profile: ''
 };
 
 /*
@@ -42,8 +42,8 @@ export default handleActions({
       isPending: false,
       errorMessage: '',
       lock: response.lock,
-      token: response.token
-      //profile: response.profile
+      token: response.token,
+      profile: response.profile
     };
   }
 }, initialState);

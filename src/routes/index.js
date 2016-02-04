@@ -16,7 +16,7 @@ export default function (store, history) {
       replaceState(null, '/login');
     }
     else {
-      replaceState(null, '/all');
+      replaceState(null, '/apikeys');
     }
   };
 
