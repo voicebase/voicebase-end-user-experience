@@ -6,6 +6,7 @@ import {actions as playerActions} from '../redux/modules/media/player'
 import {actions as markersActions} from '../redux/modules/media/markers'
 import {actions as groupsActions} from '../redux/modules/groups'
 import {actions as settingsActions} from '../redux/modules/settings'
+import {actions as uploadActions} from '../redux/modules/upload'
 
 export default Object.assign(
   authActions,
@@ -15,5 +16,6 @@ export default Object.assign(
   playerActions,
   markersActions,
   groupsActions,
-  settingsActions
+  settingsActions,
+  uploadActions
 )

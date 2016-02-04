@@ -6,6 +6,7 @@ import media from './modules/media.index';
 import search from './modules/search';
 import groups from './modules/groups';
 import settings from './modules/settings';
+import upload from './modules/upload';
 
 export default combineReducers({
   form: formReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   media,
   search,
   groups,
-  settings
+  settings,
+  upload
 })

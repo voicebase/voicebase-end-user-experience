@@ -1,0 +1,241 @@
+/*
+  Empty mesage
+*/
+.empty-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.empty-overlay:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: 30px;
+  border: 2px dashed #ccc;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.empty-overlay__message {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  margin-top: -100px;
+  color: #777;
+}
+
+.empty-overlay__message i {
+  font-size: 100px;
+  line-height: 1;
+  margin-bottom: 5px;
+  opacity: 0.2;
+  transition: all 0.3s ease;
+}
+
+.empty-overlay__message h2 {
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.empty-overlay__message h2, .empty-overlay__message p {
+  margin: 0;
+  line-height: 30px;
+  margin-bottom: 10px;
+}
+
+.empty-overlay:hover:before {
+  border-color: #aaa;
+  background: white;
+}
+
+.empty-overlay:hover .empty-overlay__message i {
+  color: #85d04a;
+  opacity: 1;
+}
+
+.empty-overlay:hover .empty-overlay__message h2 {
+  color: #0079c0;
+}
+
+/*
+  Uploads
+*/
+.upload-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 999;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.upload-overlay__message {
+  color: white;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  margin-top: -30px;
+}
+
+.upload-overlay__message:before {
+  content: '';
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: 30px;
+  border: 2px dashed rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+}
+
+.upload-overlay__message h2 {
+  font-weight: bold;
+}
+
+.upload-overlay__message h2, .upload-overlay__message p {
+  margin: 0;
+  line-height: 30px;
+}
+
+.upload-overlay__progress {
+  padding-top: 50px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.upload-overlay__progress__tabs {
+  background: #2a3e49;
+}
+
+.upload-overlay__progress__tabs .btn {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 0;
+  border: 0;
+  font-weight: bold;
+  color: #67899b;
+  opacity: 1;
+  background: transparent !important;
+}
+
+.upload-overlay__progress__tabs .btn.active {
+  background: white !important;
+  color: #333;
+  box-shadow: none;
+}
+
+.upload-overlay__progress .panel {
+  border: 0;
+  overflow: hidden;
+}
+
+.upload-overlay__progress .panel .list-group-item {
+  padding: 15px;
+}
+
+.upload-overlay__progress .panel .list-group-item:first-child {
+  border-top: 0;
+}
+
+.upload-overlay__progress .panel .list-group-item h4 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.upload-overlay__progress .panel .list-group-item .video {
+  float: left;
+  width: 100px;
+  height: 57px;
+  position: relative;
+  margin-right: 15px;
+  text-align: center;
+}
+
+.upload-overlay__progress .panel .list-group-item .video a {
+  opacity: 0;
+  transition: all 0.3s ease;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  line-height: 57px;
+  color: white;
+}
+
+.upload-overlay__progress .panel .list-group-item .video:hover a {
+  opacity: 1;
+}
+
+.upload-overlay__progress .panel .list-group-item .video-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: black;
+}
+
+.upload-overlay__progress .panel .list-group-item .player .btn-delete {
+  margin-left: 10px;
+}
+
+.upload-overlay__progress .panel .panel-footer {
+  padding: 15px;
+}
+
+.upload-overlay__progress .panel .panel-footer:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.upload-overlay__progress .panel .panel-footer .btn-success {
+  font-weight: bold;
+}
+
+.upload-overlay__progress .upload-options .form-group {
+  position: relative;
+}
+
+.upload-overlay__progress .upload-options .control-label {
+  display: block;
+}
+
+.upload-overlay__progress .upload-options .dropdown .btn {
+  text-align: left;
+  width: 100%;
+}
+
+.upload-overlay__progress .upload-options .dropdown .btn i {
+  float: right;
+  line-height: 20px;
+}
+
+.upload-overlay__progress .upload-options .dropdown-menu {
+  width: 100%;
+}
+
+.upload-overlay__progress .upload-options .dropdown-menu > li > a {
+  padding: 3px 12px;
+}
+
+.upload-overlay__progress .upload-options .flag {
+  width: 16px;
+  margin-right: 6px;
+  margin-top: -1px;
+}

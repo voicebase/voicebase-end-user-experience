@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
 import connectWrapper from '../redux/utils/connect'
-import {actions as authActions} from '../redux/modules/auth'
+import actions from '../redux/rootActions'
+import UploadZone from '../components/upload/UploadZone'
 
-export class AllView extends React.Component {
+export class UploadView extends React.Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
     state: PropTypes.object.isRequired,
@@ -12,10 +13,12 @@ export class AllView extends React.Component {
   render () {
     return (
       <div className='container text-center'>
-        <h1>Upload View</h1>
+        <UploadZone state={this.props.state}
+                  actions={this.props.actions}
+        />
       </div>
     )
   }
 }
 
-export default connectWrapper(authActions, AllView)
+export default connectWrapper(actions, UploadView)
