@@ -4,7 +4,6 @@ import NotificationSystem from 'react-notification-system'
 
 export default class UploadZone extends React.Component {
   static propTypes = {
-    state: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
 
@@ -57,7 +56,7 @@ export default class UploadZone extends React.Component {
   render () {
     return (
       <div>
-        <Dropzone className="upload-dropzone" ref="dropzone" onDrop={this.onDrop.bind(this)}>
+        <Dropzone className="upload-dropzone" ref="dropzone" onDrop={this.onDrop.bind(this)} activeClassName="upload-dropzone--active">
           <div className="empty-overlay">
             <div className="empty-overlay__message">
               <i className="fa fa-cloud-upload" />
