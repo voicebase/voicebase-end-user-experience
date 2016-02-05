@@ -29,6 +29,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.9.0",
+    "bootstrap": "^3.3.6",
     "classnames": "^2.2.3",
     "debug": "^2.2.0",
     "dotenv": "^1.2.0",
