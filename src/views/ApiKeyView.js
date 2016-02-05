@@ -20,8 +20,8 @@ export class ApiKeyView extends React.Component {
   render () {
     return (
      <div>
-      <p>Happy days are here again, buddy!</p>
       <table>
+        <tbody>
         <tr>
           <td>
             Image:
@@ -59,7 +59,7 @@ export class ApiKeyView extends React.Component {
             User key:
           </td>
           <td>
-            <textarea rows='4' cols='100'>{this.props.state.auth.token}</textarea>
+            <textarea rows='4' cols='100' readOnly='true' value={this.props.state.auth.token}/>
           </td>
         </tr>
         <tr>
@@ -67,9 +67,10 @@ export class ApiKeyView extends React.Component {
             API key:
           </td>
           <td>
-            <textarea rows='4' cols='100'>{this.props.state.apiKeys.apiKey}</textarea>
+            <textarea rows='4' cols='100' readOnly='true' value={this.props.state.apiKeys.apiKey}/>
           </td>
         </tr>
+        </tbody>
       </table>
      </div>
     )

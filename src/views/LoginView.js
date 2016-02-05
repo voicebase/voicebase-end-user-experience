@@ -21,8 +21,8 @@ export class LoginView extends React.Component {
     }
   }
 
-  showLock() {
-    this.props.actions.showLock(window.Auth0Lock);
+  signIn() {
+    this.props.actions.signIn(window.Auth0Lock);
   }
 
   render() {
@@ -31,7 +31,7 @@ export class LoginView extends React.Component {
         <div className="login-content">
           <img src={Logo} className="img-responsive"/>
           <Panel>
-            <a onClick={this.showLock.bind(this)} className="btn btn-primary btn-lg btn-login btn-block">I Dare You to Sign In</a>
+            <a onClick={this.signIn.bind(this)} className="btn btn-primary btn-lg btn-login btn-block">Sign In</a>
           </Panel>
         </div>
       </div>
