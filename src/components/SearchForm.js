@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import {Row, Col, Input, Button} from 'react-bootstrap'
 import DatePicker from './DatePicker'
-import OrderDropdown from './OrderDropdown'
+import DropdownList from './DropdownList'
 
 export class SearchForm extends React.Component {
   static propTypes = {
@@ -59,9 +59,11 @@ export class SearchForm extends React.Component {
 
           <Col sm={3}>
             <div className="pull-right">
-              <OrderDropdown onSelectOrder={this.onSelectOrder.bind(this)}
-                             selectedOrderId={this.props.state.selectedOrderId}
-                             orderList={this.props.state.order} />
+              <DropdownList onSelect={this.onSelectOrder.bind(this)}
+                            dropdownKey="sort-list-dropdown"
+                            items={this.props.state.order}
+                            activeItemId={this.props.state.selectedOrderId}
+              />
             </div>
           </Col>
 

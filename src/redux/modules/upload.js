@@ -6,6 +6,8 @@ import _ from 'lodash'
  * */
 export const ADD_FILES = 'ADD_FILES';
 export const REMOVE_FILE = 'REMOVE_FILE';
+export const SET_LANGUAGE = 'SET_LANGUAGE';
+export const SET_PRIORITY = 'SET_PRIORITY';
 export const CANCEL_UPLOAD = 'CANCEL_UPLOAD';
 export const CHOOSE_TAB = 'CHOOSE_TAB';
 export const FILES_PREVIEW_TAB = 1;
@@ -16,6 +18,8 @@ export const OPTIONS_TAB = 2;
  * */
 export const addFiles = createAction(ADD_FILES, (files) => files);
 export const removeFile = createAction(REMOVE_FILE, (id) => id);
+export const setLanguage = createAction(SET_LANGUAGE, (language) => language);
+export const setPriority = createAction(SET_PRIORITY, (priority) => priority);
 
 // view
 export const cancelUpload = createAction(CANCEL_UPLOAD);
@@ -24,6 +28,8 @@ export const chooseTab = createAction(CHOOSE_TAB, (tabId) => tabId);
 export const actions = {
   addFiles,
   removeFile,
+  setLanguage,
+  setPriority,
   cancelUpload,
   chooseTab
 };
@@ -37,7 +43,8 @@ export const initialState = {
     activeTab: FILES_PREVIEW_TAB
   },
   fileIds: [],
-  files: {}
+  files: {},
+  options: {}
 };
 
 /*
@@ -79,7 +86,8 @@ export default handleActions({
       ...state,
       view: {
         ...state.view,
-        showModalForm: false
+        showModalForm: false,
+        activeTab: FILES_PREVIEW_TAB
       }
     }
   },
@@ -90,6 +98,26 @@ export default handleActions({
       view: {
         ...state.view,
         activeTab: tabId
+      }
+    }
+  },
+
+  [SET_LANGUAGE]: (state, { payload: language }) => {
+    return {
+      ...state,
+      options: {
+        ...state.options,
+        language
+      }
+    }
+  },
+
+  [SET_PRIORITY]: (state, { payload: priority }) => {
+    return {
+      ...state,
+      options: {
+        ...state.options,
+        priority
       }
     }
   }

@@ -126,6 +126,50 @@ export const initialState = {
       isExpandList: false,
       isExpandCreateForm: false
     }
+  },
+  languages: {
+    itemIds: ['fr', 'de', 'it', 'pt', 'us'],
+    items: {
+      de: {
+        id: 'de',
+        name: 'German'
+      },
+      fr: {
+        id: 'fr',
+        name: 'French'
+      },
+      it: {
+        id: 'it',
+        name: 'Italian'
+      },
+      pt: {
+        id: 'pt',
+        name: 'Portugese'
+      },
+      us: {
+        id: 'us',
+        name: 'US English'
+      }
+    },
+    defaultLanguage: 'us'
+  },
+  priority: {
+    itemIds: ['high', 'medium', 'low'],
+    items: {
+      high: {
+        id: 'high',
+        name: 'High Priority'
+      },
+      medium: {
+        id: 'medium',
+        name: 'Medium Priority'
+      },
+      low: {
+        id: 'low',
+        name: 'Low Priority'
+      }
+    },
+    defaultPriority: 'high'
   }
 };
 

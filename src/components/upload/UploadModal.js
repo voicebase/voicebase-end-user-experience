@@ -41,7 +41,9 @@ export default class UploadZone extends React.Component {
                 />
               </Tab>
               <Tab eventKey={OPTIONS_TAB} title="Processing options">
-                <UploadOptions uploadState={uploadState}
+                <UploadOptions token={this.props.state.auth.token}
+                               uploadState={uploadState}
+                               settingsState={this.props.state.settings}
                                actions={this.props.actions}
                 />
               </Tab>

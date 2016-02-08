@@ -159,6 +159,50 @@
   }
 }
 
+.upload-options {
+  margin: 15px;
+}
+
+.upload-options .form-group {
+  position: relative;
+}
+
+.upload-options .control-label {
+  display: block;
+}
+
+.upload-options .dropdown .btn {
+  text-align: left;
+  width: 100%;
+}
+
+.upload-options .dropdown .btn .caret {
+  display: none;
+}
+
+.upload-options .dropdown .btn i {
+  float: right;
+  line-height: 20px;
+}
+
+.upload-options .dropdown-menu {
+  width: 100%;
+}
+
+.upload-options .dropdown-menu > li > a {
+  padding: 3px 12px;
+}
+
+.upload-options .flag {
+  width: 16px;
+  margin-right: 6px;
+  margin-top: -1px;
+}
+
+.dropdown-full-width .dropdown {
+  width: 100%;
+}
+
 /*
   Uploads
 */
@@ -299,34 +343,3 @@
   font-weight: bold;
 }
 
-.upload-overlay__progress .upload-options .form-group {
-  position: relative;
-}
-
-.upload-overlay__progress .upload-options .control-label {
-  display: block;
-}
-
-.upload-overlay__progress .upload-options .dropdown .btn {
-  text-align: left;
-  width: 100%;
-}
-
-.upload-overlay__progress .upload-options .dropdown .btn i {
-  float: right;
-  line-height: 20px;
-}
-
-.upload-overlay__progress .upload-options .dropdown-menu {
-  width: 100%;
-}
-
-.upload-overlay__progress .upload-options .dropdown-menu > li > a {
-  padding: 3px 12px;
-}
-
-.upload-overlay__progress .upload-options .flag {
-  width: 16px;
-  margin-right: 6px;
-  margin-top: -1px;
-}
