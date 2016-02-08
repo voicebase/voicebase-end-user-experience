@@ -11,6 +11,7 @@ export const SET_PRIORITY = 'SET_PRIORITY';
 export const SET_PREDICTION = 'SET_PREDICTION';
 export const SET_DETECTION = 'SET_DETECTION';
 export const SET_NUMBERS = 'SET_NUMBERS';
+export const SET_GROUPS = 'SET_GROUPS';
 export const CANCEL_UPLOAD = 'CANCEL_UPLOAD';
 export const CHOOSE_TAB = 'CHOOSE_TAB';
 export const FILES_PREVIEW_TAB = 1;
@@ -26,6 +27,7 @@ export const setPriority = createAction(SET_PRIORITY, (priority) => priority);
 export const setPrediction = createAction(SET_PREDICTION, (predictionIds) => predictionIds);
 export const setDetection = createAction(SET_DETECTION, (detectionIds) => detectionIds);
 export const setNumbers = createAction(SET_NUMBERS, (numberIds) => numberIds);
+export const setGroups = createAction(SET_GROUPS, (groupIds) => groupIds);
 
 // view
 export const cancelUpload = createAction(CANCEL_UPLOAD);
@@ -39,6 +41,7 @@ export const actions = {
   setPrediction,
   setDetection,
   setNumbers,
+  setGroups,
   cancelUpload,
   chooseTab
 };
@@ -49,7 +52,7 @@ export const actions = {
 export const initialState = {
   view: {
     showModalForm: false,
-    activeTab: OPTIONS_TAB
+    activeTab: FILES_PREVIEW_TAB
   },
   fileIds: [],
   files: {},
@@ -157,6 +160,16 @@ export default handleActions({
       options: {
         ...state.options,
         numbers: numberIds
+      }
+    }
+  },
+
+  [SET_GROUPS]: (state, { payload: groupIds }) => {
+    return {
+      ...state,
+      options: {
+        ...state.options,
+        groups: groupIds
       }
     }
   }

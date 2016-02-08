@@ -51,6 +51,10 @@ export default class UploadPreview extends React.Component {
       let defaultItems = this.getDefaultIds(settingsState.items.numbers.items);
       this.props.actions.setNumbers(defaultItems);
     }
+    if (settingsState.groups.groupIds.length > 0 && !uploadState.options.groups) {
+      let defaultItems = this.getDefaultIds(settingsState.groups.groups);
+      this.props.actions.setGroups(defaultItems);
+    }
   }
 
   getDefaultIds(items) {
@@ -77,15 +81,18 @@ export default class UploadPreview extends React.Component {
     this.props.actions.setNumbers(newValue.split(','));
   }
 
-  getSelectValue(key) {
+  onChangeGroups(newValue) {
+    this.props.actions.setGroups(newValue.split(','));
+  }
+
+  getSelectValue(key, items) {
     let uploadState = this.props.uploadState;
-    let settingsState = this.props.settingsState;
     let defaultValue = [];
     let selectValue = [];
     if (uploadState.options[key]) {
       defaultValue = uploadState.options[key];
-      selectValue = settingsState.items[key].itemIds.map(id => {
-        let item = settingsState.items[key].items[id];
+      selectValue = Object.keys(items).map(id => {
+        let item = items[id];
         return {
           value: item.id,
           label: item.name
@@ -103,13 +110,16 @@ export default class UploadPreview extends React.Component {
     let activePriority = uploadState.options.priority;
 
     let predictions = settingsState.items.predictions;
-    let predictionsValue = this.getSelectValue('predictions');
+    let predictionsValue = this.getSelectValue('predictions', predictions.items);
 
     let detection = settingsState.items.detection;
-    let detectionValue = this.getSelectValue('detection');
+    let detectionValue = this.getSelectValue('detection', detection.items);
 
     let numbers = settingsState.items.numbers;
-    let numbersValue = this.getSelectValue('numbers');
+    let numbersValue = this.getSelectValue('numbers', numbers.items);
+
+    let groups = settingsState.groups;
+    let groupsValue = this.getSelectValue('groups', groups.groups);
 
     return (
       <div>
@@ -148,7 +158,7 @@ export default class UploadPreview extends React.Component {
                       multi
                       value={predictionsValue.defaultValue.join(',')}
                       options={predictionsValue.selectValue}
-                      onChange={this.onChangeDetection.bind(this)}
+                      onChange={this.onChangePrediction.bind(this)}
                       onBlur={() => {}}
               />
             </div>
@@ -162,7 +172,7 @@ export default class UploadPreview extends React.Component {
                       multi
                       value={detectionValue.defaultValue.join(',')}
                       options={detectionValue.selectValue}
-                      onChange={this.onChangePrediction.bind(this)}
+                      onChange={this.onChangeDetection.bind(this)}
                       onBlur={() => {}}
               />
             </div>
@@ -176,7 +186,21 @@ export default class UploadPreview extends React.Component {
                       multi
                       value={numbersValue.defaultValue.join(',')}
                       options={numbersValue.selectValue}
-                      onChange={this.onChangePrediction.bind(this)}
+                      onChange={this.onChangeNumbers.bind(this)}
+                      onBlur={() => {}}
+              />
+            </div>
+          }
+
+          {
+            !groups.isGetPending && !groups.errorMessage &&
+            <div className="form-group">
+              <label className="control-label">Pick 1 or more phrase groups</label>
+              <Select placeholder="Pick 1 or more phrase groups"
+                      multi
+                      value={groupsValue.defaultValue.join(',')}
+                      options={groupsValue.selectValue}
+                      onChange={this.onChangeGroups.bind(this)}
                       onBlur={() => {}}
               />
             </div>
