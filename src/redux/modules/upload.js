@@ -8,6 +8,9 @@ export const ADD_FILES = 'ADD_FILES';
 export const REMOVE_FILE = 'REMOVE_FILE';
 export const SET_LANGUAGE = 'SET_LANGUAGE';
 export const SET_PRIORITY = 'SET_PRIORITY';
+export const SET_PREDICTION = 'SET_PREDICTION';
+export const SET_DETECTION = 'SET_DETECTION';
+export const SET_NUMBERS = 'SET_NUMBERS';
 export const CANCEL_UPLOAD = 'CANCEL_UPLOAD';
 export const CHOOSE_TAB = 'CHOOSE_TAB';
 export const FILES_PREVIEW_TAB = 1;
@@ -20,6 +23,9 @@ export const addFiles = createAction(ADD_FILES, (files) => files);
 export const removeFile = createAction(REMOVE_FILE, (id) => id);
 export const setLanguage = createAction(SET_LANGUAGE, (language) => language);
 export const setPriority = createAction(SET_PRIORITY, (priority) => priority);
+export const setPrediction = createAction(SET_PREDICTION, (predictionIds) => predictionIds);
+export const setDetection = createAction(SET_DETECTION, (detectionIds) => detectionIds);
+export const setNumbers = createAction(SET_NUMBERS, (numberIds) => numberIds);
 
 // view
 export const cancelUpload = createAction(CANCEL_UPLOAD);
@@ -30,6 +36,9 @@ export const actions = {
   removeFile,
   setLanguage,
   setPriority,
+  setPrediction,
+  setDetection,
+  setNumbers,
   cancelUpload,
   chooseTab
 };
@@ -40,7 +49,7 @@ export const actions = {
 export const initialState = {
   view: {
     showModalForm: false,
-    activeTab: FILES_PREVIEW_TAB
+    activeTab: OPTIONS_TAB
   },
   fileIds: [],
   files: {},
@@ -118,6 +127,36 @@ export default handleActions({
       options: {
         ...state.options,
         priority
+      }
+    }
+  },
+
+  [SET_PREDICTION]: (state, { payload: predictionIds }) => {
+    return {
+      ...state,
+      options: {
+        ...state.options,
+        predictions: predictionIds
+      }
+    }
+  },
+
+  [SET_DETECTION]: (state, { payload: detectionIds }) => {
+    return {
+      ...state,
+      options: {
+        ...state.options,
+        detection: detectionIds
+      }
+    }
+  },
+
+  [SET_NUMBERS]: (state, { payload: numberIds }) => {
+    return {
+      ...state,
+      options: {
+        ...state.options,
+        numbers: numberIds
       }
     }
   }
