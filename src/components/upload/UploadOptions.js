@@ -105,7 +105,8 @@ export default class UploadPreview extends React.Component {
   render () {
     let uploadState = this.props.uploadState;
     let settingsState = this.props.settingsState;
-    let activeLanguageId = (uploadState.options.language) ? uploadState.options.language : settingsState.items.languages.defaultLanguage;
+    let activeLanguageId = uploadState.options.language;
+
     let priorities = settingsState.items.priority;
     let activePriority = uploadState.options.priority;
 
@@ -126,13 +127,16 @@ export default class UploadPreview extends React.Component {
         <form className="upload-options">
           <Row>
             <Col sm={6}>
-              <div className="form-group dropdown-full-width">
-                <label className="control-label">What languages are spoken in the files?</label>
-                <LanguageDropdown languages={settingsState.items.languages.items}
-                                  activeLanguageId={activeLanguageId}
-                                  onSelect={this.onSelectLanguage.bind(this)}
-                />
-              </div>
+              {
+                activeLanguageId &&
+                <div className="form-group dropdown-full-width">
+                  <label className="control-label">What languages are spoken in the files?</label>
+                  <LanguageDropdown languages={settingsState.items.languages.items}
+                                    activeLanguageId={activeLanguageId}
+                                    onSelect={this.onSelectLanguage.bind(this)}
+                  />
+                </div>
+              }
             </Col>
 
             <Col sm={6}>
