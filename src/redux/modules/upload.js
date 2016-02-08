@@ -7,6 +7,9 @@ import _ from 'lodash'
 export const ADD_FILES = 'ADD_FILES';
 export const REMOVE_FILE = 'REMOVE_FILE';
 export const CANCEL_UPLOAD = 'CANCEL_UPLOAD';
+export const CHOOSE_TAB = 'CHOOSE_TAB';
+export const FILES_PREVIEW_TAB = 1;
+export const OPTIONS_TAB = 2;
 
 /*
  * Actions
@@ -16,11 +19,13 @@ export const removeFile = createAction(REMOVE_FILE, (id) => id);
 
 // view
 export const cancelUpload = createAction(CANCEL_UPLOAD);
+export const chooseTab = createAction(CHOOSE_TAB, (tabId) => tabId);
 
 export const actions = {
   addFiles,
   removeFile,
-  cancelUpload
+  cancelUpload,
+  chooseTab
 };
 
 /*
@@ -28,7 +33,8 @@ export const actions = {
  * */
 export const initialState = {
   view: {
-    showModalForm: false
+    showModalForm: false,
+    activeTab: FILES_PREVIEW_TAB
   },
   fileIds: [],
   files: {}
@@ -74,6 +80,16 @@ export default handleActions({
       view: {
         ...state.view,
         showModalForm: false
+      }
+    }
+  },
+
+  [CHOOSE_TAB]: (state, { payload: tabId }) => {
+    return {
+      ...state,
+      view: {
+        ...state.view,
+        activeTab: tabId
       }
     }
   }

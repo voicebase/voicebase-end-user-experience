@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react'
 import {Modal, ModalBody, ModalFooter, Button, Tabs, Tab} from 'react-bootstrap'
+import {OPTIONS_TAB, FILES_PREVIEW_TAB} from '../../redux/modules/upload'
 import UploadPreview from './UploadPreview'
+import UploadOptions from './UploadOptions'
 
 export default class UploadZone extends React.Component {
   static propTypes = {
@@ -12,6 +14,17 @@ export default class UploadZone extends React.Component {
     this.props.actions.cancelUpload();
   }
 
+  handleSelectTab(key) {
+    this.props.actions.chooseTab(key);
+  }
+
+  nextTab() {
+    let uploadState = this.props.state.upload;
+    if (uploadState.view.activeTab === FILES_PREVIEW_TAB) {
+      this.props.actions.chooseTab(OPTIONS_TAB);
+    }
+  }
+
   render () {
     let uploadState = this.props.state.upload;
     let playerState = this.props.state.media.player;
@@ -20,20 +33,23 @@ export default class UploadZone extends React.Component {
       <div>
         <Modal show={uploadState.view.showModalForm} onHide={this.closeModal.bind(this)} dialogClassName="upload-dialog">
           <ModalBody>
-            <Tabs className="dialod-tabs">
-              <Tab eventKey={1} title="Select files">
+            <Tabs activeKey={uploadState.view.activeTab} onSelect={this.handleSelectTab.bind(this)} className="dialod-tabs">
+              <Tab eventKey={FILES_PREVIEW_TAB} title="Select files">
                 <UploadPreview playerState={playerState}
                                uploadState={uploadState}
                                actions={this.props.actions}
                 />
               </Tab>
-              <Tab eventKey={2} title="Processing options">
-                2 tab
+              <Tab eventKey={OPTIONS_TAB} title="Processing options">
+                <UploadOptions uploadState={uploadState}
+                               actions={this.props.actions}
+                />
               </Tab>
             </Tabs>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={this.closeModal.bind(this)}>Cancel</Button>
+            <Button onClick={this.nextTab.bind(this)} bsStyle="success" className="pull-left">Next</Button>
+            <Button onClick={this.closeModal.bind(this)} className="pull-right">Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>

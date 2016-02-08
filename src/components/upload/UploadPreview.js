@@ -69,6 +69,3 @@ export default class UploadPreview extends React.Component {
     )
   }
 }
-
-/*
-*/
