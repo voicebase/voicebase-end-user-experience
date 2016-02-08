@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
-import {Panel, Collapse, Button, ListGroup, Alert} from 'react-bootstrap'
+import {Panel, Collapse, ListGroup, Alert} from 'react-bootstrap'
+import SettingsListHeader from './SettingsListHeader'
 import SpottingGroupItem from './SpottingGroupItem'
 import Spinner from '../Spinner'
 import SpottingGroupItemForm from './SpottingGroupItemForm'
@@ -51,18 +52,13 @@ export class SpottingGroups extends React.Component {
 
   getHeader() {
     return (
-      <div className="panel-heading-inner" onClick={this.toggleList.bind(this)}>
-        <h3 className="panel-title pull-left">
-          Phrase Groups <small>{this.props.groupsState.groupIds.length}</small>
-        </h3>
-        {this.props.groupsState.isAddPending && <Spinner isSmallItem/>}
-        {
-          !this.props.groupsState.isAddPending &&
-          <Button bsStyle="link" className="pull-right no-padding" onClick={this.expandCreateForm.bind(this)}>
-            <i className="fa fa-plus"/> Add phrase group
-          </Button>
-        }
-      </div>
+      <SettingsListHeader title={this.props.groupsState.view.title}
+                          addButtonLabel={this.props.groupsState.view.addButtonLabel}
+                          length={this.props.groupsState.groupIds.length}
+                          isAddPending={this.props.groupsState.isAddPending}
+                          handleClickHeader={this.toggleList.bind(this)}
+                          handleClickAdd={this.expandCreateForm.bind(this)}
+      />
     )
   }
 

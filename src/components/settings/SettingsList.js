@@ -40,11 +40,11 @@ export class SettingsList extends React.Component {
   getHeader() {
     return (
       <SettingsListHeader title={this.props.state.view.title}
-                  addButtonLabel={this.props.state.view.addButtonLabel}
-                  length={this.props.state.itemIds.length}
-                  isAddPending={this.props.state.isAddPending}
-                  handleClickHeader={this.toggleList.bind(this)}
-                  handleClickAdd={this.expandCreateForm.bind(this)}
+                          addButtonLabel={this.props.state.view.addButtonLabel}
+                          length={this.props.state.itemIds.length}
+                          isAddPending={this.props.state.isAddPending}
+                          handleClickHeader={this.toggleList.bind(this)}
+                          handleClickAdd={this.expandCreateForm.bind(this)}
       />
     )
   }

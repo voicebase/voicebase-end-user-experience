@@ -1,4 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
+import { combineReducers } from 'redux'
+import groups from './groups';
+
 import _ from 'lodash'
 import PredictionsApi from '../../api/predictionsApi'
 import DetectionsApi from '../../api/detectionsApi'
@@ -87,65 +90,68 @@ export const actions = {
 /*
  * State
  * */
+const itemInitialState = {
+  view: {},
+  itemIds: [],
+  items: {},
+  isGetPending: false,
+  isAddPending: false,
+  errorMessage: ''
+};
+
 export const initialState = {
   predictions: {
+    ...itemInitialState,
     view: {
       title: 'Prediction Models',
       addButtonLabel: 'Add prediction model',
       isExpandList: false,
       isExpandCreateForm: false
-    },
-    itemIds: [],
-    items: {},
-    isGetPending: false,
-    isAddPending: false,
-    errorMessage: ''
+    }
   },
   detection: {
+    ...itemInitialState,
     view: {
       title: 'Detection Models',
       addButtonLabel: 'Add detection model',
       isExpandList: false,
       isExpandCreateForm: false
-    },
-    itemIds: [],
-    items: {},
-    isGetPending: false,
-    isAddPending: false,
-    errorMessage: ''
+    }
   },
   numbers: {
+    ...itemInitialState,
     view: {
       title: 'Number Formats',
       addButtonLabel: 'Add number format',
       isExpandList: false,
       isExpandCreateForm: false
-    },
-    itemIds: [],
-    items: {},
-    isGetPending: false,
-    isAddPending: false,
-    errorMessage: ''
+    }
   }
 };
 
 /*
  * Reducers
  * */
-export default handleActions({
+export const settings = handleActions({
   [GET_ITEMS + '_PENDING']: (state, { payload }) => {
     return {
       ...state,
-      isGetPending: true,
-      errorMessage: ''
+      [payload.type]: {
+        ...state[payload.type],
+        isGetPending: true,
+        errorMessage: ''
+      }
     };
   },
 
   [GET_ITEMS + '_REJECTED']: (state, { payload }) => {
     return {
       ...state,
-      isGetPending: false,
-      errorMessage: payload.error
+      [payload.type]: {
+        ...state[payload.type],
+        isGetPending: false,
+        errorMessage: payload.error
+      }
     };
   },
 
@@ -338,3 +344,8 @@ export default handleActions({
   }
 
 }, initialState);
+
+export default combineReducers({
+  items: settings,
+  groups
+});

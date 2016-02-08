@@ -29,19 +29,19 @@ export class AllView extends React.Component {
         </div>
         <div className="content__body">
           <SpottingGroups token={this.props.state.auth.token}
-                          groupsState={state.groups}
+                          groupsState={state.settings.groups}
                           actions={this.props.actions}/>
 
           <Predictions token={this.props.state.auth.token}
-                       state={state.settings.predictions}
+                       state={state.settings.items.predictions}
                        actions={this.props.actions}/>
 
           <Detections token={this.props.state.auth.token}
-                      state={state.settings.detection}
+                      state={state.settings.items.detection}
                       actions={this.props.actions}/>
 
           <Numbers token={this.props.state.auth.token}
-                   state={state.settings.numbers}
+                   state={state.settings.items.numbers}
                    actions={this.props.actions}/>
         </div>
       </div>

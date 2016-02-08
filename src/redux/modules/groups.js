@@ -59,9 +59,16 @@ export const actions = {
  * State
  * */
 export const initialState = {
+  view: {
+    title: 'Phrase Groups',
+    addButtonLabel: 'Add phrase group',
+    isExpandList: false,
+    isExpandCreateForm: false
+  },
   groupIds: [],
   groups: {},
   isGetPending: false,
+  isAddPending: false,
   errorMessage: ''
 };
 
@@ -103,6 +110,7 @@ export default handleActions({
       };
     });
     return {
+      ...state,
       groupIds: groupIds,
       groups: groups,
       isGetPending: false,
