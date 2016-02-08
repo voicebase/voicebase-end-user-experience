@@ -16,7 +16,7 @@ export class UploadView extends React.Component {
     return (
       <div className='container text-center'>
         <UploadZone actions={this.props.actions} />
-        <UploadModal uploadState={state.upload}
+        <UploadModal state={state}
                      actions={this.props.actions}
         />
       </div>

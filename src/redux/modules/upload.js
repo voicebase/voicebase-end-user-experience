@@ -5,18 +5,21 @@ import _ from 'lodash'
  * Constants
  * */
 export const ADD_FILES = 'ADD_FILES';
+export const REMOVE_FILE = 'REMOVE_FILE';
 export const CANCEL_UPLOAD = 'CANCEL_UPLOAD';
 
 /*
  * Actions
  * */
 export const addFiles = createAction(ADD_FILES, (files) => files);
+export const removeFile = createAction(REMOVE_FILE, (id) => id);
 
 // view
 export const cancelUpload = createAction(CANCEL_UPLOAD);
 
 export const actions = {
   addFiles,
+  removeFile,
   cancelUpload
 };
 
@@ -54,6 +57,15 @@ export default handleActions({
         showModalForm: true
       }
     };
+  },
+
+  [REMOVE_FILE]: (state, { payload: id }) => {
+    let fileIds = state.fileIds.filter(fileId => fileId !== id)
+    return {
+      ...state,
+      fileIds,
+      files: _.pick(state.files, fileIds)
+    }
   },
 
   [CANCEL_UPLOAD]: (state) => {

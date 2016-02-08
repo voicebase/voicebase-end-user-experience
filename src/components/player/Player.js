@@ -9,9 +9,11 @@ export class Player extends React.Component {
   static propTypes = {
     mediaId: PropTypes.string.isRequired,
     playerType: PropTypes.string.isRequired,
-    mediaState: PropTypes.object.isRequired,
+    mediaState: PropTypes.object,
     markersState: PropTypes.object,
     playerState: PropTypes.object.isRequired,
+    hasNextKeywordButton: PropTypes.bool.isRequired,
+    hasDownloadButton: PropTypes.bool.isRequired,
     actions: PropTypes.object.isRequired
   };
 
@@ -25,6 +27,9 @@ export class Player extends React.Component {
   }
 
   componentWillMount() {
+    if (!this.props.mediaState) {
+      return false;
+    }
     let duration = this.props.mediaState.data.metadata.duration;
     if (duration) {
       this.onDuration(duration);
@@ -196,8 +201,10 @@ export class Player extends React.Component {
     let progressStyles = {width: sliderValue + '%'};
     let bufferStyles = {width: (playerState.loaded * 100) + '%'};
 
-    let parsedDuration = parseTime(duration);
+    let parsedDuration = (duration) ? parseTime(duration) : '--:--';
     let parsedPlayedTime = parseTime(duration * timePercentValue);
+
+    let volume = (this.props.playerType === 'JwPlayer') ? this.state.volume : this.state.volume / 100;
 
     return (
       <div className="vbs-player">
@@ -207,10 +214,13 @@ export class Player extends React.Component {
               {playerState.playing && <i className="fa fa-fw fa-pause" />}
               {!playerState.playing && <i className="fa fa-fw fa-play" />}
             </Button>
-            <Button onClick={this.seekToNextMarker.bind(this)}>
-              <i className="fa fa-fw fa-play fa-rotate-270" />
-              <i className="fa fa-share fa-topleft" />
-            </Button>
+            {
+              this.props.hasNextKeywordButton &&
+              <Button onClick={this.seekToNextMarker.bind(this)}>
+                <i className="fa fa-fw fa-play fa-rotate-270" />
+                <i className="fa fa-share fa-topleft" />
+              </Button>
+            }
           </ButtonGroup>
 
           <div className="player__timeline show-keywords">
@@ -247,7 +257,7 @@ export class Player extends React.Component {
             <OverlayTrigger trigger="click" placement="bottom" overlay={this.getSlider()}>
               <Button><i className="fa fa-fw fa-volume-up"/></Button>
             </OverlayTrigger>
-            <Button><i className="fa fa-fw fa-cloud-download" /></Button>
+            { this.props.hasDownloadButton && <Button><i className="fa fa-fw fa-cloud-download" /></Button> }
           </ButtonGroup>
         </div>
 
@@ -259,7 +269,7 @@ export class Player extends React.Component {
           url={playerState.url}
           playing={playerState.playing}
           onPlay={this.onPlay.bind(this)}
-          volume={this.state.volume}
+          volume={volume}
           onProgress={this.onProgress.bind(this)}
           onEnded={this.onPause.bind(this)}
           onDuration={this.onDuration.bind(this)}

@@ -29,6 +29,8 @@ export class VbsPlayerApp extends React.Component {
                 mediaState={mediaData}
                 markersState={mediaState.markers[this.props.mediaId]}
                 playerState={playerState.players[this.props.mediaId] || {loading: true}}
+                hasNextKeywordButton
+                hasDownloadButton
                 actions={this.props.actions} />
 
         <Tabs className="listing__tabs">

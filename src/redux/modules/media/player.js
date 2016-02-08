@@ -5,6 +5,7 @@ import _ from 'lodash'
  * Constants
  * */
 export const CREATE_PLAYER = 'CREATE_PLAYER';
+export const DESTROY_PLAYER = 'DESTROY_PLAYER';
 export const PLAY = 'PLAY';
 export const PAUSE = 'PAUSE';
 export const SET_POSITION = 'SET_POSITION';
@@ -17,6 +18,7 @@ export const SET_DURATION = 'SET_DURATION';
 export const createPlayer = createAction(CREATE_PLAYER, (id, url) => {
   return {id, url};
 });
+export const destroyPlayer = createAction(DESTROY_PLAYER, id => id);
 export const play = createAction(PLAY, (id) => id);
 export const pause = createAction(PAUSE, (id) => id);
 export const setPosition = createAction(SET_POSITION, (id, pos) => {
@@ -31,6 +33,7 @@ export const setDuration = createAction(SET_DURATION, (id, duration) => {
 
 export const actions = {
   createPlayer,
+  destroyPlayer,
   play,
   pause,
   setPosition,
@@ -71,6 +74,15 @@ export default handleActions({
         }
       }
     };
+  },
+
+  [DESTROY_PLAYER]: (state, { payload: id }) => {
+    let playerIds = state.playerIds.filter(playerId => playerId !== id)
+    return {
+      ...state,
+      playerIds,
+      players: _.pick(state.players, playerIds)
+    }
   },
 
   [PLAY]: (state, {payload: id}) => {

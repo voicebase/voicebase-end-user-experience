@@ -125,6 +125,39 @@
   }
 }
 
+.preview-players-list {
+  margin-bottom: 0;
+
+  .list-group-item {
+    padding: 15px;
+
+    &:first-child {
+      border-top: 0;
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    h4 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .btn-delete {
+      margin-left: 10px;
+    }
+  }
+}
+
+.preview-player-row {
+  display: flex;
+
+  .player-wrapper {
+    flex: 1;
+  }
+}
 
 /*
   Uploads
@@ -251,9 +284,6 @@
   background: black;
 }
 
-.upload-overlay__progress .panel .list-group-item .player .btn-delete {
-  margin-left: 10px;
-}
 
 .upload-overlay__progress .panel .panel-footer {
   padding: 15px;

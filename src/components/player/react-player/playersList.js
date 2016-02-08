@@ -1,4 +1,4 @@
-import FilePlayer from 'react-player/lib/players/FilePlayer'
 import JwPlayer from './JwPlayer'
+import FileInputPlayer from './FileInputPlayer'
 
-export default [FilePlayer, JwPlayer]
+export default [FileInputPlayer, JwPlayer]
