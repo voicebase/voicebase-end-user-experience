@@ -24,6 +24,13 @@ export default class UploadContainer extends React.Component {
     if (uploadState.view.activeTab === FILES_PREVIEW_TAB) {
       this.onSelectTab(OPTIONS_TAB);
     }
+    if (uploadState.view.activeTab === OPTIONS_TAB) {
+      let options = uploadState.options;
+      uploadState.fileIds.forEach(fileId => {
+        let file = uploadState.files[fileId].file;
+        this.props.actions.postFile(this.props.state.auth.token, fileId, file, options);
+      });
+    }
   }
 
   getTabs() {

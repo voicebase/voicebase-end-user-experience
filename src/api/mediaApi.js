@@ -1,4 +1,5 @@
 import axios from 'axios'
+import $ from 'jquery'
 import fakeJson from './fakeData'
 
 const baseUrl = 'https://apis.voicebase.com/v2-beta';
@@ -87,5 +88,36 @@ export default {
         return Promise.reject({error})
       });
     }
+  },
+
+  postMedia(token, fileId, file, options) {
+    return new Promise((resolve, reject) => {
+      let data = new FormData();
+      data.append('media', file);
+
+      let jobConf = {executor: 'v2'};
+      let conf = {
+        configuration: jobConf
+      };
+      data.append('configuration', JSON.stringify(conf));
+
+      $.ajax({
+        url: baseUrl + '/media',
+        type: 'POST',
+        contentType: false,
+        processData: false,
+        data: data,
+        headers: {
+          'Authorization': 'Bearer ' + token
+        },
+        success: function (data) {
+          resolve({fileId, data});
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(errorThrown + ': Error ' + jqXHR.status);
+          reject({fileId, error: 'Upload is failed'})
+        }
+      });
+    })
   }
 }

@@ -23,7 +23,6 @@ export class MediaList extends React.Component {
                                   mediaState={state}
                                   actions={this.props.actions} />
           })
-
         }
       </div>
     )

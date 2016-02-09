@@ -1,11 +1,13 @@
 import { createAction, handleActions } from 'redux-actions'
 import _ from 'lodash'
+import MediaApi from '../../api/mediaApi'
 
 /*
  * Constants
  * */
 export const ADD_FILES = 'ADD_FILES';
 export const REMOVE_FILE = 'REMOVE_FILE';
+export const POST_FILE = 'POST_FILE';
 export const SET_LANGUAGE = 'SET_LANGUAGE';
 export const SET_PRIORITY = 'SET_PRIORITY';
 export const SET_PREDICTION = 'SET_PREDICTION';
@@ -22,6 +24,12 @@ export const OPTIONS_TAB = 2;
  * */
 export const addFiles = createAction(ADD_FILES, (files) => files);
 export const removeFile = createAction(REMOVE_FILE, (id) => id);
+export const postFile = createAction(POST_FILE, (token, fileId, file, options) => {
+  return {
+    data: {fileId},
+    promise: MediaApi.postMedia(token, fileId, file, options)
+  }
+});
 export const setLanguage = createAction(SET_LANGUAGE, (language) => language);
 export const setPriority = createAction(SET_PRIORITY, (priority) => priority);
 export const setPrediction = createAction(SET_PREDICTION, (predictionIds) => predictionIds);
@@ -36,6 +44,7 @@ export const chooseTab = createAction(CHOOSE_TAB, (tabId) => tabId);
 export const actions = {
   addFiles,
   removeFile,
+  postFile,
   setLanguage,
   setPriority,
   setPrediction,
@@ -91,6 +100,53 @@ export default handleActions({
       fileIds,
       files: _.pick(state.files, fileIds)
     }
+  },
+
+  [POST_FILE + '_PENDING']: (state, {payload}) => {
+    return {
+      ...state,
+      files: {
+        ...state.files,
+        [payload.fileId]: {
+          ...state.files[payload.fileId],
+          isPostPending: true,
+          errorMessage: ''
+        }
+      },
+      view: {
+        ...state.view,
+        showForm: false
+      }
+    };
+  },
+
+  [POST_FILE + '_REJECTED']: (state, {payload: {fileId, error}}) => {
+    return {
+      ...state,
+      files: {
+        ...state.files,
+        [fileId]: {
+          ...state.files[fileId],
+          isPostPending: false,
+          errorMessage: error
+        }
+      }
+    };
+  },
+
+  [POST_FILE + '_FULFILLED']: (state, {payload: {fileId, data}}) => {
+    return {
+      ...state,
+      files: {
+        ...state.files,
+        [fileId]: {
+          ...state.files[fileId],
+          isPostPending: false,
+          isPostComplete: true,
+          isProcessing: true
+        }
+      }
+    };
   },
 
   [CANCEL_UPLOAD]: (state) => {
