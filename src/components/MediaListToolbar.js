@@ -25,6 +25,7 @@ export class MediaListToolbar extends React.Component {
   render () {
     let countIds = this.props.selectedMediaIds.length;
     let style = {
+      opacity: countIds > 0 ? 1 : 0,
       maxHeight: countIds > 0 ? '50px' : 0,
       padding: countIds > 0 ? '0 20px 20px' : '0 20px'
     };
