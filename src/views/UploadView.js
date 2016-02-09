@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import connectWrapper from '../redux/utils/connect'
 import actions from '../redux/rootActions'
 import UploadZone from '../components/upload/UploadZone'
-import UploadModal from '../components/upload/UploadModal'
 
 export class UploadView extends React.Component {
   static propTypes = {
@@ -11,14 +10,14 @@ export class UploadView extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
+  onAddFiles() {
+    this.props.history.pushState(null, '/all');
+  }
+
   render () {
-    let state = this.props.state;
     return (
       <div className='container text-center'>
-        <UploadZone actions={this.props.actions} />
-        <UploadModal state={state}
-                     actions={this.props.actions}
-        />
+        <UploadZone actions={this.props.actions} onAddFiles={this.onAddFiles.bind(this)} />
       </div>
     )
   }

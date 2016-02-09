@@ -87,7 +87,40 @@
   }
 }
 
-.dialod-tabs {
+.upload-panel {
+  margin-bottom: -1px;
+  border-bottom: 0;
+  background: #f5f5f5;
+
+  .panel-body {
+    padding: 0;
+  }
+
+  .preview-players-list .list-group-item {
+    border-left: 0;
+    border-right: 0;
+    background: #f5f5f5;
+  }
+
+  .dialog-tabs .nav-tabs {
+    li a {
+      border-radius: 0;
+    }
+
+    li.active a {
+      background-color: #f5f5f5;
+    }
+
+  }
+
+  .upload-panel__footer {
+    display: table;
+    width: 100%;
+    padding: 15px;
+  }
+}
+
+.dialog-tabs {
   .nav-tabs {
     background: #2a3e49;
     border: 0;

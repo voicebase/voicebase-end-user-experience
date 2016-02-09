@@ -15,6 +15,9 @@ export default class UploadPreview extends React.Component {
   };
 
   componentWillMount() {
+    if (this.props.uploadState.fileIds.length === 0) {
+      return false;
+    }
     let settingsState = this.props.settingsState;
     if (settingsState.groups.groupIds.length === 0) {
       this.props.actions.getGroups(this.props.token);

@@ -51,7 +51,7 @@ export const actions = {
  * */
 export const initialState = {
   view: {
-    showModalForm: false,
+    showForm: false,
     activeTab: FILES_PREVIEW_TAB
   },
   fileIds: [],
@@ -79,7 +79,7 @@ export default handleActions({
       files: filesObj,
       view: {
         ...state.view,
-        showModalForm: true
+        showForm: true
       }
     };
   },
@@ -98,9 +98,10 @@ export default handleActions({
       ...state,
       view: {
         ...state.view,
-        showModalForm: false,
+        showForm: false,
         activeTab: FILES_PREVIEW_TAB
-      }
+      },
+      options: {}
     }
   },
 

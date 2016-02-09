@@ -4,7 +4,8 @@ import NotificationSystem from 'react-notification-system'
 
 export default class UploadZone extends React.Component {
   static propTypes = {
-    actions: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired,
+    onAddFiles: PropTypes.func.isRequired
   };
 
   showError(message) {
@@ -50,6 +51,7 @@ export default class UploadZone extends React.Component {
     let isValid = this.validate(files);
     if (isValid) {
       this.props.actions.addFiles(files);
+      this.props.onAddFiles();
     }
   }
 

@@ -5,6 +5,7 @@ import CounterLabel from '../components/CounterLabel'
 import SearchForm from '../components/SearchForm'
 import MediaListToolbar from '../components/MediaListToolbar'
 import MediaList from '../components/MediaList'
+import UploadContainer from '../components/upload/UploadContainer'
 import Spinner from '../components/Spinner'
 
 export class AllView extends React.Component {
@@ -39,6 +40,10 @@ export class AllView extends React.Component {
             <SearchForm state={state.search} actions={this.props.actions}/>
             <MediaListToolbar token={state.auth.token} selectedMediaIds={mediaList.selectedMediaIds}
                               actions={this.props.actions}/>
+            <UploadContainer state={state}
+                             isModal={false}
+                             actions={this.props.actions}
+            />
             <MediaList token={state.auth.token} state={state.media} actions={this.props.actions}/>
           </div>
         }
