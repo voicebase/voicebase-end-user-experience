@@ -3,6 +3,7 @@ import {OPTIONS_TAB, FILES_PREVIEW_TAB} from '../../redux/modules/upload'
 import UploadModal from './UploadModal'
 import UploadPanel from './UploadPanel'
 import UploadTabs from './UploadTabs'
+import UploadProgress from './UploadProgress'
 
 export default class UploadContainer extends React.Component {
   static propTypes = {
@@ -50,6 +51,8 @@ export default class UploadContainer extends React.Component {
     let state = this.props.state;
     let uploadState = state.upload;
 
+    let pendingFileIds = uploadState.fileIds.filter(id => uploadState.files[id].isPostPending);
+
     return (
       <div>
         {
@@ -72,6 +75,13 @@ export default class UploadContainer extends React.Component {
             { this.getTabs() }
           </UploadPanel>
         }
+        {
+          pendingFileIds.length > 0 &&
+          <UploadProgress uploadState={uploadState}
+                          pendingFileIds={pendingFileIds}
+          />
+        }
+
       </div>
     )
   }

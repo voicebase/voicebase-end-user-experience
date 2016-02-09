@@ -142,8 +142,7 @@ export default handleActions({
         [fileId]: {
           ...state.files[fileId],
           isPostPending: false,
-          isPostComplete: true,
-          isProcessing: true
+          isPostComplete: true
         }
       }
     };
