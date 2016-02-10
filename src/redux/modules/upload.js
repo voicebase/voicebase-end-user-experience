@@ -152,6 +152,8 @@ export default handleActions({
   [CANCEL_UPLOAD]: (state) => {
     return {
       ...state,
+      fileIds: [],
+      files: {},
       view: {
         ...state.view,
         showForm: false,

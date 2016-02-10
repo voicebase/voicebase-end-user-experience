@@ -36,6 +36,9 @@ export default class UploadPreview extends React.Component {
   componentDidUpdate() {
     let settingsState = this.props.settingsState;
     let uploadState = this.props.uploadState;
+    if (uploadState.fileIds.length === 0) {
+      return false;
+    }
     if (settingsState.items.languages.items && !uploadState.options.language) {
       this.props.actions.setLanguage(settingsState.items.languages.defaultLanguage);
     }
