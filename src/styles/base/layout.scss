@@ -82,3 +82,7 @@ body .container-fluid > .row > div {
 .modal-backdrop.in {
   opacity: 0.75;
 }
+
+.dropdown--custom-caret .btn .caret {
+  display: none;
+}

@@ -17,7 +17,7 @@ export default class LanguageDropdown extends React.Component {
     let items = this.props.items;
     let activeItem = items[this.props.activeItemId];
     return (
-      <Dropdown id={this.props.dropdownKey + '-dropdown'} onSelect={this.onSelectItem.bind(this)}>
+      <Dropdown id={this.props.dropdownKey + '-dropdown'} onSelect={this.onSelectItem.bind(this)} className="dropdown--custom-caret">
         <Dropdown.Toggle>
           { activeItem.name }
           <i className="fa fa-caret-down"/>
