@@ -6,6 +6,7 @@ import CounterLabel from '../components/CounterLabel'
 export class SidebarMenu extends React.Component {
   static propTypes = {
     state: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
 
@@ -21,7 +22,7 @@ export class SidebarMenu extends React.Component {
     let content = null;
     let mediaIds = this.props.state.media.mediaList.mediaIds;
     if (mediaIds.length > 0) {
-      content = <NavItem href="/all" active={this.isItemActive('/all')}>
+      content = <NavItem active={this.isItemActive('/all')} onClick={this.redirect.bind(this, '/all')}>
         All My Files
         <CounterLabel value={mediaIds.length}/>
       </NavItem>
@@ -33,12 +34,16 @@ export class SidebarMenu extends React.Component {
     let content = null;
     let lastUploadedIds = this.props.state.media.mediaList.lastUploadedIds;
     if (lastUploadedIds.length > 0) {
-      content = <NavItem href="/last-upload" active={this.isItemActive('/last-upload')}>
+      content = <NavItem active={this.isItemActive('/last-upload')} onClick={this.redirect.bind(this, '/last-upload')}>
         Last Upload
         <CounterLabel value={lastUploadedIds.length}/>
       </NavItem>
     }
     return content;
+  }
+
+  redirect(path) {
+    this.props.history.pushState(null, path);
   }
 
   render () {
@@ -49,7 +54,7 @@ export class SidebarMenu extends React.Component {
         </div>
 
         <Nav stacked>
-          <NavItem href="/upload" active={this.isItemActive('/upload')} className="upload-files">
+          <NavItem active={this.isItemActive('/upload')} className="upload-files" onClick={this.redirect.bind(this, '/upload')}>
             Upload Files
           </NavItem>
           {this.getAllItem()}
@@ -57,9 +62,9 @@ export class SidebarMenu extends React.Component {
         </Nav>
 
         <Nav stacked className="bottom">
-          <NavItem href="/account" active={this.isItemActive('/account')}>My Account</NavItem>
-          <NavItem href="/settings" active={this.isItemActive('/settings')}>Settings</NavItem>
-          <NavItem href="#" onClick={this.signOut.bind(this)}>Logout</NavItem>
+          <NavItem active={this.isItemActive('/account')} onClick={this.redirect.bind(this, '/account')}>My Account</NavItem>
+          <NavItem active={this.isItemActive('/settings')} onClick={this.redirect.bind(this, '/settings')}>Settings</NavItem>
+          <NavItem onClick={this.signOut.bind(this)}>Logout</NavItem>
         </Nav>
       </div>
     )

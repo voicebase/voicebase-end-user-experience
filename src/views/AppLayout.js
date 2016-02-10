@@ -36,7 +36,7 @@ export class AppLayout extends React.Component {
       <Grid fluid>
         <Row>
           <Col xs={2} className="sidebar">
-            <SidebarMenu state={state} actions={this.props.actions}/>
+            <SidebarMenu state={state} history={this.props.history} actions={this.props.actions}/>
           </Col>
           <Col xs={10} className="content">
             {this.props.children}

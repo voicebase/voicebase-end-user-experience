@@ -6,7 +6,7 @@ import Predictions from '../components/settings/Predictions'
 import Detections from '../components/settings/Detections'
 import Numbers from '../components/settings/Numbers'
 
-export class AllView extends React.Component {
+export class SettingsView extends React.Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
     state: PropTypes.object.isRequired,
@@ -49,4 +49,4 @@ export class AllView extends React.Component {
   }
 }
 
-export default connectWrapper(actions, AllView)
+export default connectWrapper(actions, SettingsView)
