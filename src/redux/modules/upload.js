@@ -142,7 +142,8 @@ export default handleActions({
         [fileId]: {
           ...state.files[fileId],
           isPostPending: false,
-          isPostComplete: true
+          isPostComplete: true,
+          mediaId: data.mediaId
         }
       }
     };

@@ -84,6 +84,7 @@ export default handleActions({
           activeSpeaker: parsedResult.activeSpeaker,
           transcript: parsedResult.transcript,
           predictions: parsedResult.predictions,
+          jobTasks: parsedResult.jobTasks,
           getPending: false,
           getError: ''
         }
@@ -122,7 +123,7 @@ const parseMediaData = function (data) {
     }
   }
 
-  if (data.topics && data.topics.latest && data.topics.latest.topics) {
+  if (data.topics && data.topics.latest && data.topics.latest.topics && Array.isArray(data.topics.latest.topics)) {
     data.topics.latest.topics.forEach((topic, i) => {
       topicsIds.push(i + 1);
       let parseKeywordsResult = parseKeywords(topic.keywords);
@@ -155,6 +156,13 @@ const parseMediaData = function (data) {
     }
   }
 
+  let jobTasks = null;
+  if (data.job && data.job.progress && data.job.progress.tasks) {
+    jobTasks = {
+      ...data.job.progress.tasks
+    }
+  }
+
   return {
     status: data.status,
     activeTopic: (topics[0]) ? 0 : null,
@@ -163,7 +171,8 @@ const parseMediaData = function (data) {
     topicsIds,
     topics,
     transcript,
-    predictions
+    predictions,
+    jobTasks
   }
 };
 

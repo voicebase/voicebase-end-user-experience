@@ -6,6 +6,7 @@ import SearchForm from '../components/SearchForm'
 import MediaListToolbar from '../components/MediaListToolbar'
 import MediaList from '../components/MediaList'
 import UploadContainer from '../components/upload/UploadContainer'
+import ProcessingList from '../components/upload/ProcessingList'
 import Spinner from '../components/Spinner'
 
 export class AllView extends React.Component {
@@ -44,6 +45,10 @@ export class AllView extends React.Component {
                              isModal={false}
                              actions={this.props.actions}
             />
+            <ProcessingList state={state}
+                            actions={this.props.actions}
+            />
+
             <MediaList token={state.auth.token} state={state.media} actions={this.props.actions}/>
           </div>
         }

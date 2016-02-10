@@ -9,7 +9,7 @@ export default class UploadProgress extends React.Component {
   render () {
     let uploadState = this.props.uploadState;
     return (
-      <div className="list-group listings listing--processing__list-group" componentClass="ul">
+      <div className="list-group listings listing--processing__list-group">
         {
           this.props.pendingFileIds.map(id => {
             let file = uploadState.files[id];

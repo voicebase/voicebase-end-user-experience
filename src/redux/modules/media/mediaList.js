@@ -7,6 +7,7 @@ import MediaApi from '../../../api/mediaApi'
  * Constants
  * */
 export const GET_MEDIA = 'GET_MEDIA';
+export const ADD_MEDIA = 'ADD_MEDIA';
 export const EXPAND_MEDIA = 'EXPAND_MEDIA';
 export const COLLAPSE_MEDIA = 'COLLAPSE_MEDIA';
 export const SELECT_MEDIA = 'SELECT_MEDIA';
@@ -23,6 +24,7 @@ export const getMedia = createAction(GET_MEDIA, (token) => {
     promise: MediaApi.getMedia(token)
   }
 });
+export const addMedia = createAction(ADD_MEDIA, (mediaData) => mediaData);
 export const expandMedia = createAction(EXPAND_MEDIA, (mediaId) => mediaId);
 export const collapseMedia = createAction(COLLAPSE_MEDIA, (mediaId) => mediaId);
 export const selectMedia = createAction(SELECT_MEDIA, (mediaId) => mediaId);
@@ -41,6 +43,7 @@ export const deleteMedia = createAction(DELETE_MEDIA, (token, mediaId) => {
 
 export const actions = {
   getMedia,
+  addMedia,
   expandMedia,
   collapseMedia,
   selectMedia,
@@ -94,6 +97,19 @@ export default handleActions({
       errorMessage: '',
       mediaIds: response.mediaIds,
       media: response.media
+    };
+  },
+
+  [ADD_MEDIA]: (state, { payload: mediaData }) => {
+    return {
+      ...state,
+      mediaIds: [mediaData.mediaId].concat(state.mediaIds),
+      media: {
+        ...state.media,
+        [mediaData.mediaId]: {
+          ...mediaData
+        }
+      }
     };
   },
 
