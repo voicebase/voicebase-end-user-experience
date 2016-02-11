@@ -82,6 +82,19 @@
   bottom: 0;
 }
 
+.player__timeline__speakers {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.player__timeline__speaker {
+  position: absolute;
+  height: 100%;
+}
+
 .player__time {
   line-height: 30px;
   margin-right: 10px;

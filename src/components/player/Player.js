@@ -3,6 +3,7 @@ import VbsReactPlayer from './react-player/VbsReactPlayer'
 import { ButtonGroup, Button, Popover, OverlayTrigger } from 'react-bootstrap'
 import Spinner from '../Spinner';
 import VolumeSlider from './VolumeSlider';
+import PlayerSpeakers from './PlayerSpeakers';
 import { parseTime } from '../../common/Common';
 
 export class Player extends React.Component {
@@ -77,8 +78,8 @@ export class Player extends React.Component {
     return ((clickLeftOffset - timelineLeftOffset)) / timelineWidth;
   }
 
-  calcMarkerOffset(time) {
-    let timelineWidth = this.refs.timeline.clientWidth;
+  calcTimeOffset(time) {
+    let timelineWidth = this.refs.timeline && this.refs.timeline.clientWidth || 0;
     let duration = this.props.playerState.duration;
     if (!duration) return 0;
 
@@ -174,7 +175,7 @@ export class Player extends React.Component {
 
     return markersState.markerIds.map(markerId => {
       let marker = markersState.markers[markerId];
-      let position = this.calcMarkerOffset(marker.time);
+      let position = this.calcTimeOffset(marker.time);
       let offsetStyle = {left: position + 'px'};
       return (
         <a href="#"
@@ -194,6 +195,7 @@ export class Player extends React.Component {
       );
     }
 
+    let mediaState = this.props.mediaState;
     let duration = this.props.playerState.duration;
     let timePercentValue = (!this.state.seeking) ? (playerState.played) : (this.state.seekValue)
     let sliderValue = timePercentValue * 100;
@@ -205,6 +207,13 @@ export class Player extends React.Component {
     let parsedPlayedTime = parseTime(duration * timePercentValue);
 
     let volume = (this.props.playerType === 'JwPlayer') ? this.state.volume : this.state.volume / 100;
+
+    let speakers = null;
+    let transcriptSpeakers = null;
+    if ((mediaState && mediaState.transcriptSpeakers.length > 0)) {
+      speakers = mediaState.speakers;
+      transcriptSpeakers = mediaState.transcriptSpeakers;
+    }
 
     return (
       <div className="vbs-player">
@@ -231,7 +240,18 @@ export class Player extends React.Component {
               <div ref="timeline" className="player__timeline__progress">
                 <div className="player__timeline__progress__bg">
                   <div className="player__timeline__buffer" style={bufferStyles}></div>
-                  <div className="player__timeline__progress__fg" style={progressStyles}></div>
+                  {
+                    !speakers &&
+                    <div className="player__timeline__progress__fg" style={progressStyles}></div>
+                  }
+                  {
+                    speakers &&
+                    <PlayerSpeakers speakers={speakers}
+                                    transcriptSpeakers={transcriptSpeakers}
+                                    calcTimeOffset={this.calcTimeOffset.bind(this)}
+                                    duration={duration}
+                    />
+                  }
                 </div>
               </div>
             </div>

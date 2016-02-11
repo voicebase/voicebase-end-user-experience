@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
-import _ from 'lodash'
+import { getClearWordFromTranscript, getRandomColor } from '../../../common/Common'
 
 import MediaApi from '../../../api/mediaApi'
 
@@ -80,6 +80,7 @@ export default handleActions({
           topicsIds: parsedResult.topicsIds,
           topics: parsedResult.topics,
           speakers: parsedResult.speakers,
+          transcriptSpeakers: parsedResult.transcriptSpeakers,
           activeTopic: parsedResult.activeTopic,
           activeSpeaker: parsedResult.activeSpeaker,
           transcript: parsedResult.transcript,
@@ -110,12 +111,12 @@ export default handleActions({
 const parseMediaData = function (data) {
   let topicsIds = [];
   let topics = {};
-  let speakers = [];
+  let speakers = {};
   if (data.keywords && data.keywords.latest && data.keywords.latest.words) {
     let allKeywords = data.keywords.latest.words;
     topicsIds.push(0);
     let parseKeywordsResult = parseKeywords(allKeywords);
-    speakers = _.concat(speakers, parseKeywordsResult.speakers);
+    speakers = Object.assign({}, speakers, parseKeywordsResult.speakers);
     topics[0] = {
       name: 'ALL TOPICS',
       type: 'category',
@@ -127,7 +128,7 @@ const parseMediaData = function (data) {
     data.topics.latest.topics.forEach((topic, i) => {
       topicsIds.push(i + 1);
       let parseKeywordsResult = parseKeywords(topic.keywords);
-      speakers = _.uniq(_.concat(speakers, parseKeywordsResult.speakers));
+      speakers = Object.assign({}, speakers, parseKeywordsResult.speakers);
       topics[i + 1] = {
         ...topic,
         keywordsIds: parseKeywordsResult.keywordsIds,
@@ -140,8 +141,15 @@ const parseMediaData = function (data) {
     wordIds: [],
     words: {}
   };
+
+  let transcriptSpeakers = [];
   if (data.transcripts && data.transcripts.latest && data.transcripts.latest.words) {
     data.transcripts.latest.words.forEach((word, i) => {
+      if (word.m && word.m === 'turn') {
+        let clearSpeakerName = getClearWordFromTranscript(word.w);
+        speakers = addSpeaker(speakers, [clearSpeakerName]);
+        transcriptSpeakers.push({start: word.s, name: clearSpeakerName});
+      }
       transcript.wordIds.push(i);
       transcript.words[i] = {
         ...word
@@ -163,11 +171,14 @@ const parseMediaData = function (data) {
     }
   }
 
+  let activeSpeakerId = (transcriptSpeakers.length > 0) ? transcriptSpeakers[0].name : Object.keys(speakers)[0];
+
   return {
     status: data.status,
     activeTopic: (topics[0]) ? 0 : null,
-    activeSpeaker: speakers[0],
+    activeSpeaker: activeSpeakerId,
     speakers,
+    transcriptSpeakers,
     topicsIds,
     topics,
     transcript,
@@ -179,11 +190,23 @@ const parseMediaData = function (data) {
 const parseKeywords = function (keywordsArr) {
   let keywordsIds = [];
   let keywords = {};
-  let speakers = [];
+  let speakers = {};
   keywordsArr.forEach((keyword, i) => {
     keywordsIds.push(i);
     keywords[i] = keyword;
-    speakers = _.uniq(_.concat(speakers, Object.keys(keyword.t)));
+    speakers = addSpeaker(speakers, Object.keys(keyword.t));
   });
   return {keywordsIds, keywords, speakers}
+};
+
+const addSpeaker = function (speakersObject, newSpeakersNames) {
+  newSpeakersNames.forEach(speakerName => {
+    if (!speakersObject[speakerName]) {
+      speakersObject[speakerName] = {
+        name: speakerName,
+        color: getRandomColor()
+      }
+    }
+  });
+  return speakersObject;
 };

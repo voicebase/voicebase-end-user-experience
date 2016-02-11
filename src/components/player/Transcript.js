@@ -58,7 +58,7 @@ export class Transcript extends React.Component {
       <div className="listing__transcript">
         <div className="listing__transcript__content" ref="transcript" onMouseEnter={this.onHoverTranscript.bind(this)} onMouseLeave={this.onBlurTranscript.bind(this)}>
           {
-            transcript.wordIds.map((wordId) => {
+            transcript.wordIds.map((wordId, i) => {
               let word = transcript.words[wordId];
               let wordTimeInSec = word.s / 1000;
 
@@ -75,7 +75,7 @@ export class Transcript extends React.Component {
               });
 
               return (
-                <span key={word.p} className={highlightClass} ref={currentWordsCounter === 1 ? 'current' : null}>
+                <span key={'word-' + i} className={highlightClass} ref={currentWordsCounter === 1 ? 'current' : null}>
                   {(word.m === 'punc') ? word.w : ' ' + word.w}
                 </span>
               )
