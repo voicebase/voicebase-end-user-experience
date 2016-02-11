@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react'
 import $ from 'jquery'
+import _ from 'lodash';
 import classnames from 'classnames';
+import { DETECTION_TAB } from '../../redux/modules/media/mediaData'
 import {getClearWordFromTranscript} from '../../common/Common';
 
 export class Transcript extends React.Component {
@@ -14,6 +16,11 @@ export class Transcript extends React.Component {
 
   transcriptHighlight = 10;
   isHoverTranscript = false;
+
+  constructor(props) {
+    super(props);
+    this.state = {hoverUtterance: null};
+  }
 
   componentDidUpdate() {
     if (this.refs.current && !this.isHoverTranscript) {
@@ -32,6 +39,31 @@ export class Transcript extends React.Component {
 
   onBlurTranscript() {
     this.isHoverTranscript = false;
+  }
+
+  findDetectionSegment(start) {
+    let utterances = this.props.mediaState.utterances;
+    let findUtterance = null;
+    for (let id of utterances.itemIds) {
+      let utterance = utterances.items[id];
+      let res = _.findIndex(utterance.segments, segment => start > segment.s && start < segment.e)
+      if (res > -1) {
+        findUtterance = {...utterance, segmentIndex: res};
+        break;
+      }
+    }
+    return findUtterance;
+  }
+
+  onHoverDetectionSegment(utterance) {
+    if (utterance) {
+      console.log(utterance);
+      this.setState({hoverUtterance: utterance});
+    }
+  }
+
+  onBlurDetectionSegment() {
+    this.setState({hoverUtterance: null});
   }
 
   render() {
@@ -80,17 +112,39 @@ export class Transcript extends React.Component {
                 wordStyle['color'] = speakerColor;
               }
 
+              // highlight utterances phrase
+              let utterance = null;
+              if (mediaState.view.activeTab === DETECTION_TAB) {
+                utterance = this.findDetectionSegment(word.s);
+                if (utterance && !isSpeaker) {
+                  if (this.state.hoverUtterance &&
+                      utterance.id === this.state.hoverUtterance.id &&
+                      utterance.segmentIndex === this.state.hoverUtterance.segmentIndex)
+                  {
+                    wordStyle['color'] = '#fff';
+                    wordStyle['backgroundColor'] = utterance.color;
+                  }
+                  else {
+                    wordStyle['color'] = utterance.color;
+                    wordStyle['backgroundColor'] = 'inherit';
+                  }
+                }
+              }
+
               let highlightClass = classnames({
                 current: isCurrent,
-                'highlighted green': isFindingKeyword,
-                'word--speaker': isSpeaker
+                'highlighted': isFindingKeyword || isSpeaker || utterance,
+                'green': isFindingKeyword
               });
 
               return (
                 <span key={'word-' + i}
                       className={highlightClass}
                       style={wordStyle}
-                      ref={currentWordsCounter === 1 ? 'current' : null}>
+                      ref={currentWordsCounter === 1 ? 'current' : null}
+                      onMouseEnter={this.onHoverDetectionSegment.bind(this, utterance)}
+                      onMouseLeave={this.onBlurDetectionSegment.bind(this)}
+                >
                   {(word.m === 'punc') ? word.w : ' ' + word.w}
                 </span>
               )

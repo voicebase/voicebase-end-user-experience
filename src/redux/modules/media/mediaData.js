@@ -207,6 +207,7 @@ const parseMediaData = function (data) {
       utterances.itemIds.push(i);
       utterances.items[i] = {
         ...utterance,
+        id: i,
         color: getRandomColor()
       };
     })
