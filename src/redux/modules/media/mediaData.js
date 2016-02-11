@@ -8,6 +8,12 @@ import MediaApi from '../../../api/mediaApi'
  * */
 export const GET_DATA_FOR_MEDIA = 'GET_DATA_FOR_MEDIA';
 export const SET_ACTIVE_TOPIC = 'SET_ACTIVE_TOPIC';
+export const CHOOSE_PLAYER_APP_TAB = 'CHOOSE_PLAYER_APP_TAB';
+
+//view
+export const KEYWORDS_TAB = 1;
+export const DETECTION_TAB = 2;
+export const PREDICTION_TAB = 3;
 
 /*
  * Actions
@@ -24,10 +30,14 @@ export const getDataForMedia = createAction(GET_DATA_FOR_MEDIA, (token, mediaId)
 export const setActiveTopic = createAction(SET_ACTIVE_TOPIC, (mediaId, topicId) => {
   return {mediaId, topicId};
 });
+export const choosePlayerAppTab = createAction(CHOOSE_PLAYER_APP_TAB, (mediaId, tabId) => {
+  return {mediaId, tabId};
+});
 
 export const actions = {
   getDataForMedia,
-  setActiveTopic
+  setActiveTopic,
+  choosePlayerAppTab
 };
 
 /*
@@ -35,6 +45,10 @@ export const actions = {
  * */
 export const initialState = {
   data: {}
+};
+
+export const initialViewState = {
+  activeTab: KEYWORDS_TAB
 };
 
 /*
@@ -48,7 +62,8 @@ export default handleActions({
         ...state.data,
         [payload.mediaId]: {
           ...state.data[payload.mediaId],
-          getPending: true
+          getPending: true,
+          view: initialViewState
         }
       }
     };
@@ -79,15 +94,16 @@ export default handleActions({
           status: parsedResult.status,
           topicsIds: parsedResult.topicsIds,
           topics: parsedResult.topics,
+          activeTopic: parsedResult.activeTopic,
           speakers: parsedResult.speakers,
           transcriptSpeakers: parsedResult.transcriptSpeakers,
-          activeTopic: parsedResult.activeTopic,
           activeSpeaker: parsedResult.activeSpeaker,
           transcript: parsedResult.transcript,
           predictions: parsedResult.predictions,
           jobTasks: parsedResult.jobTasks,
           getPending: false,
-          getError: ''
+          getError: '',
+          view: initialViewState
         }
       }
     };
@@ -104,6 +120,22 @@ export default handleActions({
         }
       }
     }
+  },
+
+  [CHOOSE_PLAYER_APP_TAB]: (state, { payload: {tabId, mediaId} }) => {
+    return {
+      ...state,
+      data: {
+        ...state.data,
+        [mediaId]: {
+          ...state.data[mediaId],
+          view: {
+            ...state.data[mediaId].view,
+            activeTab: tabId
+          }
+        }
+      }
+    };
   }
 
 }, initialState);

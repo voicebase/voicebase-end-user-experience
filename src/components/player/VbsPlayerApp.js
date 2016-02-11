@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react'
 import Player from './Player';
 import { Tabs, Tab } from 'react-bootstrap';
-import KeywordsTabContent from './KeywordsTabContent'
+import { KEYWORDS_TAB, DETECTION_TAB, PREDICTION_TAB } from '../../redux/modules/media/mediaData'
+import Keywords from './Keywords'
+import Transcript from './Transcript'
 import Predictions from './Predictions'
 
 export class VbsPlayerApp extends React.Component {
@@ -17,10 +19,15 @@ export class VbsPlayerApp extends React.Component {
     this.props.actions.createPlayer(this.props.mediaId, url);
   }
 
+  selectTab(key) {
+    this.props.actions.choosePlayerAppTab(this.props.mediaId, key);
+  }
+
   render () {
     let mediaState = this.props.mediaState;
     let playerState = mediaState.player;
     let mediaData = mediaState.mediaData.data[this.props.mediaId];
+    let activeTab = mediaData.view.activeTab;
 
     return (
       <div className="vbs-player-app">
@@ -33,22 +40,36 @@ export class VbsPlayerApp extends React.Component {
                 hasDownloadButton
                 actions={this.props.actions} />
 
-        <Tabs className="listing__tabs">
-          <Tab eventKey={1} title="Keywords">
-            <KeywordsTabContent mediaId={this.props.mediaId}
-                                mediaState={mediaData}
-                                playerState={playerState.players[this.props.mediaId] || {}}
-                                markersState={mediaState.markers[this.props.mediaId]}
-                                actions={this.props.actions} />
+        <Tabs className="listing__tabs" activeKey={activeTab} onSelect={this.selectTab.bind(this)}>
+          <Tab eventKey={KEYWORDS_TAB} title="Keywords">
+            <Keywords mediaId={this.props.mediaId}
+                      mediaState={mediaData}
+                      actions={this.props.actions}
+            />
           </Tab>
-          <Tab eventKey={2} title="Detection">Tab 2 content</Tab>
-          {mediaData.predictions && <Tab eventKey={3} title="Prediction">
-            <Predictions mediaId={this.props.mediaId}
-                         predictionsState={mediaData.predictions}
-                         actions={this.props.actions} />
-          </Tab>}
+          <Tab eventKey={DETECTION_TAB} title="Detection">
+            Tab 2 content
+          </Tab>
+          {
+            mediaData.predictions &&
+            <Tab eventKey={PREDICTION_TAB} title="Prediction">
+              <Predictions mediaId={this.props.mediaId}
+                           predictionsState={mediaData.predictions}
+                           actions={this.props.actions}
+              />
+            </Tab>
+          }
         </Tabs>
 
+        {
+          (activeTab === KEYWORDS_TAB || activeTab === DETECTION_TAB) &&
+          <Transcript mediaId={this.props.mediaId}
+                      playerState={playerState.players[this.props.mediaId] || {}}
+                      mediaState={mediaData}
+                      markersState={mediaState.markers[this.props.mediaId]}
+                      actions={this.props.actions}
+          />
+        }
       </div>
     )
   }
