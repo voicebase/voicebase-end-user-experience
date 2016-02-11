@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import $ from 'jquery'
 import classnames from 'classnames';
+import {getClearWordFromTranscript} from '../../common/Common';
 
 export class Transcript extends React.Component {
   static propTypes = {
@@ -21,7 +22,7 @@ export class Transcript extends React.Component {
       let scrollTop = $current.offset().top - $transcriptDom.offset().top + $transcriptDom.scrollTop() - ($transcriptDom.height()) / 2;
       $transcriptDom.animate({
         scrollTop: scrollTop
-      }, 400);
+      }, 300);
     }
   }
 
@@ -61,6 +62,7 @@ export class Transcript extends React.Component {
             transcript.wordIds.map((wordId, i) => {
               let word = transcript.words[wordId];
               let wordTimeInSec = word.s / 1000;
+              let wordStyle = {};
 
               // highlight for current position of playing
               let isCurrent = (wordTimeInSec > bottomHighlightBound && wordTimeInSec < topHighlightBound);
@@ -69,13 +71,26 @@ export class Transcript extends React.Component {
               // hightlight for keywords
               let isFindingKeyword = (markers[word.s]);
 
+              // highlight speaker
+              let isSpeaker = (word.m && word.m === 'turn');
+              if (isSpeaker) {
+                let speakerName = getClearWordFromTranscript(word.w);
+                let speaker = mediaState.speakers[speakerName];
+                let speakerColor = (speaker) ? speaker.color : null;
+                wordStyle['color'] = speakerColor;
+              }
+
               let highlightClass = classnames({
                 current: isCurrent,
-                'highlighted green': isFindingKeyword
+                'highlighted green': isFindingKeyword,
+                'word--speaker': isSpeaker
               });
 
               return (
-                <span key={'word-' + i} className={highlightClass} ref={currentWordsCounter === 1 ? 'current' : null}>
+                <span key={'word-' + i}
+                      className={highlightClass}
+                      style={wordStyle}
+                      ref={currentWordsCounter === 1 ? 'current' : null}>
                   {(word.m === 'punc') ? word.w : ' ' + word.w}
                 </span>
               )
