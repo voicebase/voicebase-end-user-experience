@@ -12,8 +12,7 @@
   position: relative;
 }
 
-.listing__detection__item:before {
-  content: '';
+.listing__detection__item__line {
   position: absolute;
   left: 0;
   width: 36px;
@@ -23,10 +22,3 @@
   background: #eee;
 }
 
-.listing__detection__item.green:before {
-  background: #85d04a;
-}
-
-.listing__detection__item.red:before {
-  background: #d9534f;
-}

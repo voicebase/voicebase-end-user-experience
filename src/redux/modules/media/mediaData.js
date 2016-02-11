@@ -100,6 +100,7 @@ export default handleActions({
           activeSpeaker: parsedResult.activeSpeaker,
           transcript: parsedResult.transcript,
           predictions: parsedResult.predictions,
+          utterances: parsedResult.utterances,
           jobTasks: parsedResult.jobTasks,
           getPending: false,
           getError: '',
@@ -196,6 +197,21 @@ const parseMediaData = function (data) {
     }
   }
 
+  let utterances = null;
+  if (data.utterances && data.utterances.latest && data.utterances.latest.utterances) {
+    utterances = {
+      itemIds: [],
+      items: {}
+    };
+    data.utterances.latest.utterances.forEach((utterance, i) => {
+      utterances.itemIds.push(i);
+      utterances.items[i] = {
+        ...utterance,
+        color: getRandomColor()
+      };
+    })
+  }
+
   let jobTasks = null;
   if (data.job && data.job.progress && data.job.progress.tasks) {
     jobTasks = {
@@ -215,6 +231,7 @@ const parseMediaData = function (data) {
     topics,
     transcript,
     predictions,
+    utterances,
     jobTasks
   }
 };

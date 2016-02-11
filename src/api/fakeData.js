@@ -10527,8 +10527,26 @@ export default {
         "churn" : 85,
         "appointment": false
       }
+    },
+    "utterances": {
+      "latest": {
+        "utterances": [
+          {
+            "name": 'PCI',
+            "segments": [
+              {"s": 0, "e": 1000}
+            ]
+          },
+          {
+            "name": 'Sentiment',
+            "segments": [
+              {"s": 3000, "e": 15000},
+              {"s": 180000, "e": 185000}
+            ]
+          }
+        ]
+      }
     }
-
   }
 }
 /*eslint-enable */

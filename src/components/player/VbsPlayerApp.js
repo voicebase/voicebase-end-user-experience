@@ -5,6 +5,7 @@ import { KEYWORDS_TAB, DETECTION_TAB, PREDICTION_TAB } from '../../redux/modules
 import Keywords from './Keywords'
 import Transcript from './Transcript'
 import Predictions from './Predictions'
+import DetectionList from './DetectionList'
 
 export class VbsPlayerApp extends React.Component {
   static propTypes = {
@@ -47,9 +48,15 @@ export class VbsPlayerApp extends React.Component {
                       actions={this.props.actions}
             />
           </Tab>
-          <Tab eventKey={DETECTION_TAB} title="Detection">
-            Tab 2 content
-          </Tab>
+          {
+            mediaData.utterances &&
+            <Tab eventKey={DETECTION_TAB} title="Detection">
+              <DetectionList mediaId={this.props.mediaId}
+                             utterances={mediaData.utterances}
+                             actions={this.props.actions}
+              />
+            </Tab>
+          }
           {
             mediaData.predictions &&
             <Tab eventKey={PREDICTION_TAB} title="Prediction">
