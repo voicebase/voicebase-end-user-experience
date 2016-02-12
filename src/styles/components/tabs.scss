@@ -1,36 +1,26 @@
+.listing__tabs {
+  font-size: 13px;
+  background: white;
+}
+
 .listing__tabs .nav {
   padding-left: 20px;
-  border-bottom: 0;
 }
 
 .listing__tabs .nav > li > a {
-  font-size: 12px;
-  padding: 8px 0;
-  border-radius: 0;
-  border: 0 !important;
-  border-bottom: 3px solid transparent !important;
-  background: transparent !important;
+  padding: 7px 12px;
 }
 
-.listing__tabs .nav > li {
-  margin-right: 20px;
-
-  a:focus {
-    outline: none;
-  }
-
-}
-
-.listing__tabs .nav > li.active {
-  margin-bottom: 0;
-}
-
-.listing__tabs .nav > li.active > a {
-  background: transparent;
-  border-bottom-color: #ddd !important;
+.listing__tabs .nav > li > a:focus {
+  outline: none;
 }
 
 .listing__tabs__content {
   padding: 10px 20px;
-  background: #f5f5f5;
 }
+
+.listing__tab-content {
+  font-size: 13px;
+  background: white;
+}
+

@@ -34,7 +34,7 @@ export class Keywords extends React.Component {
     return (
       <div className="listing__keywords">
         <Row>
-          <Col sm={3}>
+          <Col sm={3} className="listing__keywords__topics__container">
             <ul className="listing__keywords__topics">
               {
                 mediaState.topicsIds.map(topicId => {
@@ -50,7 +50,7 @@ export class Keywords extends React.Component {
               }
             </ul>
           </Col>
-          <Col sm={9}>
+          <Col sm={9} className="listing__keywords__container">
             <ul className="listing__keywords-of-topic">
               {
                 activeTopic.keywordsIds.map(keywordId => {

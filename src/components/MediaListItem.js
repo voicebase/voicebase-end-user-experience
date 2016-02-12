@@ -88,7 +88,7 @@ export class MediaListItem extends React.Component {
 
         </div>
         <Collapse in={this.props.isExpanded}>
-          <div>
+          <div className="listing__body">
             {this.isGettingMediaData(mediaData) && <div className="spinner-media_item"><Spinner/></div>}
             {
               mediaData && mediaData.status === 'failed' &&
