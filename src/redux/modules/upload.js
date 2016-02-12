@@ -88,7 +88,8 @@ export default handleActions({
       files: filesObj,
       view: {
         ...state.view,
-        showForm: true
+        showForm: true,
+        activeTab: FILES_PREVIEW_TAB
       }
     };
   },

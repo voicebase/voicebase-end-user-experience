@@ -159,63 +159,71 @@ export default class UploadPreview extends React.Component {
               }
             </Col>
           </Row>
+          <Row>
+            <Col sm={6}>
+              {
+                !predictions.isGetPending && !predictions.errorMessage &&
+                <div className="form-group">
+                  <label className="control-label">Enable 1 or more prediction models (Optional)</label>
+                  <Select placeholder="Pick a prediction model"
+                          multi
+                          value={predictionsValue.defaultValue.join(',')}
+                          options={predictionsValue.selectValue}
+                          onChange={this.onChangePrediction.bind(this)}
+                          onBlur={() => {}}
+                  />
+                </div>
+              }
+            </Col>
+            <Col sm={6}>
+              {
+                !detection.isGetPending && !detection.errorMessage &&
+                <div className="form-group">
+                  <label className="control-label">Enable 1 or more detection models (Optional)</label>
+                  <Select placeholder="Pick a detection model"
+                          multi
+                          value={detectionValue.defaultValue.join(',')}
+                          options={detectionValue.selectValue}
+                          onChange={this.onChangeDetection.bind(this)}
+                          onBlur={() => {}}
+                  />
+                </div>
+              }
+            </Col>
+          </Row>
 
-          {
-            !predictions.isGetPending && !predictions.errorMessage &&
-            <div className="form-group">
-              <label className="control-label">Enable 1 or more prediction models (Optional)</label>
-              <Select placeholder="Pick a prediction model"
-                      multi
-                      value={predictionsValue.defaultValue.join(',')}
-                      options={predictionsValue.selectValue}
-                      onChange={this.onChangePrediction.bind(this)}
-                      onBlur={() => {}}
-              />
-            </div>
-          }
-
-          {
-            !detection.isGetPending && !detection.errorMessage &&
-            <div className="form-group">
-              <label className="control-label">Enable 1 or more detection models (Optional)</label>
-              <Select placeholder="Pick a detection model"
-                      multi
-                      value={detectionValue.defaultValue.join(',')}
-                      options={detectionValue.selectValue}
-                      onChange={this.onChangeDetection.bind(this)}
-                      onBlur={() => {}}
-              />
-            </div>
-          }
-
-          {
-            !numbers.isGetPending && !numbers.errorMessage &&
-            <div className="form-group">
-              <label className="control-label">Enable 1 or more number formats (Optional)</label>
-              <Select placeholder="Pick a number format"
-                      multi
-                      value={numbersValue.defaultValue.join(',')}
-                      options={numbersValue.selectValue}
-                      onChange={this.onChangeNumbers.bind(this)}
-                      onBlur={() => {}}
-              />
-            </div>
-          }
-
-          {
-            !groups.isGetPending && !groups.errorMessage &&
-            <div className="form-group">
-              <label className="control-label">Enable 1 or more phrase groups (Optional)</label>
-              <Select placeholder="Pick 1 or more phrase groups"
-                      multi
-                      value={groupsValue.defaultValue.join(',')}
-                      options={groupsValue.selectValue}
-                      onChange={this.onChangeGroups.bind(this)}
-                      onBlur={() => {}}
-              />
-            </div>
-          }
-
+          <Row>
+            <Col sm={6}>
+              {
+                !numbers.isGetPending && !numbers.errorMessage &&
+                <div className="form-group">
+                  <label className="control-label">Enable 1 or more number formats (Optional)</label>
+                  <Select placeholder="Pick a number format"
+                          multi
+                          value={numbersValue.defaultValue.join(',')}
+                          options={numbersValue.selectValue}
+                          onChange={this.onChangeNumbers.bind(this)}
+                          onBlur={() => {}}
+                  />
+                </div>
+              }
+            </Col>
+            <Col sm={6}>
+              {
+                !groups.isGetPending && !groups.errorMessage &&
+                <div className="form-group">
+                  <label className="control-label">Enable 1 or more phrase groups (Optional)</label>
+                  <Select placeholder="Pick 1 or more phrase groups"
+                          multi
+                          value={groupsValue.defaultValue.join(',')}
+                          options={groupsValue.selectValue}
+                          onChange={this.onChangeGroups.bind(this)}
+                          onBlur={() => {}}
+                  />
+                </div>
+              }
+            </Col>
+          </Row>
         </form>
       </div>
     )

@@ -5,7 +5,6 @@ import CounterLabel from '../components/CounterLabel'
 import SearchForm from '../components/SearchForm'
 import MediaListToolbar from '../components/MediaListToolbar'
 import MediaList from '../components/MediaList'
-import UploadContainer from '../components/upload/UploadContainer'
 import ProcessingList from '../components/upload/ProcessingList'
 import Spinner from '../components/Spinner'
 
@@ -34,17 +33,14 @@ export class AllView extends React.Component {
           <div>
             <div className="content__heading">
               <h3>
-                All My Files
+                All My Files&nbsp;
                 <CounterLabel value={mediaList.mediaIds.length}/>
               </h3>
             </div>
             <SearchForm state={state.search} actions={this.props.actions}/>
             <MediaListToolbar token={state.auth.token} selectedMediaIds={mediaList.selectedMediaIds}
                               actions={this.props.actions}/>
-            <UploadContainer state={state}
-                             isModal={false}
-                             actions={this.props.actions}
-            />
+
             <ProcessingList state={state}
                             actions={this.props.actions}
             />

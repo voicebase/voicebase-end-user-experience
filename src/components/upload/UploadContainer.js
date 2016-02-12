@@ -3,11 +3,11 @@ import {OPTIONS_TAB, FILES_PREVIEW_TAB} from '../../redux/modules/upload'
 import UploadModal from './UploadModal'
 import UploadPanel from './UploadPanel'
 import UploadTabs from './UploadTabs'
-import UploadProgress from './UploadProgress'
 
 export default class UploadContainer extends React.Component {
   static propTypes = {
     state: PropTypes.object.isRequired,
+    onFinish: PropTypes.func.isRequired,
     isModal: PropTypes.bool.isRequired,
     actions: PropTypes.object.isRequired
   };
@@ -34,6 +34,7 @@ export default class UploadContainer extends React.Component {
         let file = uploadState.files[fileId].file;
         this.props.actions.postFile(this.props.state.auth.token, fileId, file, options);
       });
+      this.props.onFinish();
     }
   }
 
@@ -54,8 +55,9 @@ export default class UploadContainer extends React.Component {
     let state = this.props.state;
     let uploadState = state.upload;
 
-    let pendingFileIds = uploadState.fileIds.filter(id => uploadState.files[id].isPostPending);
-    let nextButtonText = (uploadState.view.activeTab === OPTIONS_TAB) ? 'Finish' : 'Next';
+    var isOptionsTab = uploadState.view.activeTab === OPTIONS_TAB;
+    var isFilePreviewTab = uploadState.view.activeTab === FILES_PREVIEW_TAB;
+    let nextButtonText = (isOptionsTab) ? 'Finish' : 'Next';
 
     return (
       <div>
@@ -72,22 +74,22 @@ export default class UploadContainer extends React.Component {
         }
         {
           !this.props.isModal &&
-          <UploadPanel showForm={uploadState.view.showForm}
-                       nextTab={this.nextTab.bind(this)}
-                       nextButtonText={nextButtonText}
-                       onClose={this.onClose.bind(this)}
-                       onSelectTab={this.onSelectTab.bind(this)}
-          >
-            { this.getTabs() }
-          </UploadPanel>
-        }
-        {
-          pendingFileIds.length > 0 &&
-          <UploadProgress uploadState={uploadState}
-                          pendingFileIds={pendingFileIds}
-          />
-        }
+          <div>
+            <div className="content__heading">
+              {isFilePreviewTab && <h3><span className="text-muted">Step 1 of 2:</span> Select files for upload</h3>}
+              {isOptionsTab && <h3><span className="text-muted">Step 2 of 2:</span> Choose processing options</h3>}
+            </div>
 
+            <UploadPanel showForm={uploadState.view.showForm}
+                         nextTab={this.nextTab.bind(this)}
+                         nextButtonText={nextButtonText}
+                         onClose={this.onClose.bind(this)}
+                         onSelectTab={this.onSelectTab.bind(this)}
+            >
+              { this.getTabs() }
+            </UploadPanel>
+          </div>
+        }
       </div>
     )
   }

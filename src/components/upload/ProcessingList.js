@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import ProcessingListItem from './ProcessingListItem'
+import UploadProgress from './UploadProgress'
 
 export default class ProcessingList extends React.Component {
   static propTypes = {
@@ -13,9 +14,17 @@ export default class ProcessingList extends React.Component {
     let mediaData = state.media.mediaData.data;
 
     let processFileIds = uploadState.fileIds.filter(id => uploadState.files[id].isPostComplete);
+    let pendingFileIds = uploadState.fileIds.filter(id => uploadState.files[id].isPostPending);
 
     return (
       <div>
+        {
+          pendingFileIds.length > 0 &&
+          <UploadProgress uploadState={uploadState}
+                          pendingFileIds={pendingFileIds}
+          />
+        }
+
         {
           processFileIds.length > 0 &&
           <div className="list-group listings listing--processing__list-group">
