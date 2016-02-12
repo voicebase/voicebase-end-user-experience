@@ -213,14 +213,18 @@ export class Player extends React.Component {
 
     let speakers = null;
     let transcriptSpeakers = null;
-    if ((mediaState && mediaState.transcriptSpeakers.length > 0)) {
-      speakers = mediaState.speakers;
-      transcriptSpeakers = mediaState.transcriptSpeakers;
+    let utterances = null;
+    if (mediaState) {
+      if (mediaState.transcriptSpeakers.length > 0) {
+        speakers = mediaState.speakers;
+        transcriptSpeakers = mediaState.transcriptSpeakers;
+      }
+      if (mediaState.utterances) {
+        utterances = mediaState.utterances;
+      }
     }
 
     let hasMarkers = this.props.markersState && this.props.markersState.markerIds && this.props.markersState.markerIds.length > 0;
-
-    let utterances = mediaState.utterances;
 
     return (
       <div className="vbs-player">

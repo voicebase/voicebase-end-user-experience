@@ -51,6 +51,8 @@ export default class UploadPreview extends React.Component {
                             playerState={playerState.players[fileId] || {loading: true}}
                             hasNextKeywordButton={false}
                             hasDownloadButton={false}
+                            isShowDetection={false}
+                            isShowKeywordsMarkers={false}
                             actions={this.props.actions}
                     />
                   </div>
