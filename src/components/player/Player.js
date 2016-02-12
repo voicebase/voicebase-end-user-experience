@@ -218,6 +218,8 @@ export class Player extends React.Component {
       transcriptSpeakers = mediaState.transcriptSpeakers;
     }
 
+    let hasMarkers = this.props.markersState && this.props.markersState.markerIds && this.props.markersState.markerIds.length > 0;
+
     let utterances = mediaState.utterances;
 
     return (
@@ -230,7 +232,7 @@ export class Player extends React.Component {
             </Button>
             {
               this.props.hasNextKeywordButton &&
-              <Button onClick={this.seekToNextMarker.bind(this)}>
+              <Button onClick={this.seekToNextMarker.bind(this)} disabled={!hasMarkers} >
                 <i className="fa fa-fw fa-play fa-rotate-270" />
                 <i className="fa fa-share fa-topleft" />
               </Button>
