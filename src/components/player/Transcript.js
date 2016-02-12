@@ -126,7 +126,6 @@ export class Transcript extends React.Component {
                   }
                   else {
                     wordStyle['color'] = utterance.color;
-                    wordStyle['backgroundColor'] = 'inherit';
                   }
                 }
               }

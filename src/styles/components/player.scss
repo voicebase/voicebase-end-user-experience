@@ -123,7 +123,6 @@
   border-width: 12px 8px;
   margin-left: -4px;
   border-color: transparent;
-  border-bottom-color: #ccc;
   border-bottom-color: #85d04a;
   opacity: 0.75;
 }
@@ -138,11 +137,6 @@
   left: 0;
   right: 0;
   margin-top: 10px;
-  display: none;
-}
-
-.show-detection .player__detection {
-  display: block;
 }
 
 .player__detection__row {

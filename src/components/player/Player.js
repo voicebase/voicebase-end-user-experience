@@ -4,6 +4,7 @@ import { ButtonGroup, Button, Popover, OverlayTrigger } from 'react-bootstrap'
 import Spinner from '../Spinner';
 import VolumeSlider from './VolumeSlider';
 import PlayerSpeakers from './PlayerSpeakers';
+import PlayerDetection from './PlayerDetection';
 import { parseTime } from '../../common/Common';
 
 export class Player extends React.Component {
@@ -15,6 +16,8 @@ export class Player extends React.Component {
     playerState: PropTypes.object.isRequired,
     hasNextKeywordButton: PropTypes.bool.isRequired,
     hasDownloadButton: PropTypes.bool.isRequired,
+    isShowDetection: PropTypes.bool.isRequired,
+    isShowKeywordsMarkers: PropTypes.bool.isRequired,
     actions: PropTypes.object.isRequired
   };
 
@@ -215,6 +218,8 @@ export class Player extends React.Component {
       transcriptSpeakers = mediaState.transcriptSpeakers;
     }
 
+    let utterances = mediaState.utterances;
+
     return (
       <div className="vbs-player">
         <div className="player">
@@ -256,16 +261,20 @@ export class Player extends React.Component {
               </div>
             </div>
 
-            <div className="player__keywords">
-              {this.getMarkers()}
-            </div>
+            {
+              this.props.isShowKeywordsMarkers &&
+              <div className="player__keywords">
+                {this.getMarkers()}
+              </div>
+            }
 
-            <div className="player__detection">
-              <div className="player__detection__row">
-              </div>
-              <div className="player__detection__row">
-              </div>
-            </div>
+            {
+              utterances && this.props.isShowDetection &&
+              <PlayerDetection calcTimeOffset={this.calcTimeOffset.bind(this)}
+                               onSeek={this.onSeekMarker.bind(this)}
+                               utterances={utterances}
+              />
+            }
 
           </div>
 

@@ -39,6 +39,8 @@ export class VbsPlayerApp extends React.Component {
                 playerState={playerState.players[this.props.mediaId] || {loading: true}}
                 hasNextKeywordButton
                 hasDownloadButton
+                isShowDetection={activeTab === DETECTION_TAB}
+                isShowKeywordsMarkers={activeTab === KEYWORDS_TAB}
                 actions={this.props.actions} />
 
         <Tabs className="listing__tabs" activeKey={activeTab} onSelect={this.selectTab.bind(this)}>
