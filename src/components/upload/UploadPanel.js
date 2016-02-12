@@ -5,6 +5,7 @@ export default class UploadPanel extends React.Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
     showForm: PropTypes.bool.isRequired,
+    nextButtonText: PropTypes.string.isRequired,
     nextTab: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     onSelectTab: PropTypes.func.isRequired
@@ -28,7 +29,7 @@ export default class UploadPanel extends React.Component {
         >
           {this.props.children}
           <div className="upload-panel__footer">
-            <Button onClick={this.props.nextTab} bsStyle="success" className="pull-left">Next</Button>
+            <Button onClick={this.props.nextTab} bsStyle="success" className="pull-left">{this.props.nextButtonText}</Button>
             <Button onClick={this.props.onClose} className="pull-right">Cancel</Button>
           </div>
         </Panel>

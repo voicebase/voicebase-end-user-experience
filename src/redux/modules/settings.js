@@ -130,25 +130,13 @@ export const initialState = {
   languages: {
     itemIds: ['fr', 'de', 'it', 'pt', 'us'],
     items: {
-      de: {
-        id: 'de',
-        name: 'German'
-      },
-      fr: {
-        id: 'fr',
-        name: 'French'
-      },
-      it: {
-        id: 'it',
-        name: 'Italian'
-      },
-      pt: {
-        id: 'pt',
-        name: 'Portugese'
-      },
       us: {
         id: 'us',
         name: 'US English'
+      },
+      uk: {
+        id: 'uk',
+        name: 'UK English'
       }
     },
     defaultLanguage: 'us'
@@ -158,18 +146,18 @@ export const initialState = {
     items: {
       high: {
         id: 'high',
-        name: 'High Priority'
+        name: 'High'
       },
       medium: {
         id: 'medium',
-        name: 'Medium Priority'
+        name: 'Normal'
       },
       low: {
         id: 'low',
-        name: 'Low Priority'
+        name: 'Low'
       }
     },
-    defaultPriority: 'high'
+    defaultPriority: 'medium'
   }
 };
 

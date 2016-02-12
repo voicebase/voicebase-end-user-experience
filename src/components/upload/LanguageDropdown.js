@@ -1,10 +1,7 @@
 import React, {PropTypes} from 'react'
 import {Dropdown, MenuItem} from 'react-bootstrap'
-import DeFlag from '../../images/de.png'
-import FrFlag from '../../images/fr.png'
-import ItFlag from '../../images/it.png'
-import PtFlag from '../../images/pt.png'
 import UsFlag from '../../images/us.png'
+import UkFlag from '../../images/uk.png'
 
 export default class LanguageDropdown extends React.Component {
   static propTypes = {
@@ -18,17 +15,8 @@ export default class LanguageDropdown extends React.Component {
   }
 
   getFlag(languageId) {
-    if (languageId === 'de') {
-      return DeFlag;
-    }
-    else if (languageId === 'fr') {
-      return FrFlag;
-    }
-    else if (languageId === 'it') {
-      return ItFlag;
-    }
-    else if (languageId === 'pt') {
-      return PtFlag;
+    if (languageId === 'uk') {
+      return UkFlag;
     }
     else if (languageId === 'us') {
       return UsFlag;
@@ -61,7 +49,7 @@ export default class LanguageDropdown extends React.Component {
   render() {
     let activeLanguage = this.props.languages[this.props.activeLanguageId];
     return (
-      <Dropdown id="languages-dropdown" onSelect={this.onSelectItem.bind(this)}>
+      <Dropdown id="languages-dropdown" onSelect={this.onSelectItem.bind(this)} className="dropdown--custom-caret">
         <Dropdown.Toggle>
           { this.getItemContent(activeLanguage) }
           <i className="fa fa-caret-down"/>

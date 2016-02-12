@@ -163,7 +163,7 @@ export default class UploadPreview extends React.Component {
           {
             !predictions.isGetPending && !predictions.errorMessage &&
             <div className="form-group">
-              <label className="control-label">Pick a prediction model to use</label>
+              <label className="control-label">Enable 1 or more prediction models (Optional)</label>
               <Select placeholder="Pick a prediction model"
                       multi
                       value={predictionsValue.defaultValue.join(',')}
@@ -177,7 +177,7 @@ export default class UploadPreview extends React.Component {
           {
             !detection.isGetPending && !detection.errorMessage &&
             <div className="form-group">
-              <label className="control-label">Pick a detection model to use</label>
+              <label className="control-label">Enable 1 or more detection models (Optional)</label>
               <Select placeholder="Pick a detection model"
                       multi
                       value={detectionValue.defaultValue.join(',')}
@@ -191,7 +191,7 @@ export default class UploadPreview extends React.Component {
           {
             !numbers.isGetPending && !numbers.errorMessage &&
             <div className="form-group">
-              <label className="control-label">Pick a number format to use</label>
+              <label className="control-label">Enable 1 or more number formats (Optional)</label>
               <Select placeholder="Pick a number format"
                       multi
                       value={numbersValue.defaultValue.join(',')}
@@ -205,7 +205,7 @@ export default class UploadPreview extends React.Component {
           {
             !groups.isGetPending && !groups.errorMessage &&
             <div className="form-group">
-              <label className="control-label">Pick 1 or more phrase groups</label>
+              <label className="control-label">Enable 1 or more phrase groups (Optional)</label>
               <Select placeholder="Pick 1 or more phrase groups"
                       multi
                       value={groupsValue.defaultValue.join(',')}

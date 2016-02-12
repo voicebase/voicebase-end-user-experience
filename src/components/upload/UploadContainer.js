@@ -55,6 +55,7 @@ export default class UploadContainer extends React.Component {
     let uploadState = state.upload;
 
     let pendingFileIds = uploadState.fileIds.filter(id => uploadState.files[id].isPostPending);
+    let nextButtonText = (uploadState.view.activeTab === OPTIONS_TAB) ? 'Finish' : 'Next';
 
     return (
       <div>
@@ -62,6 +63,7 @@ export default class UploadContainer extends React.Component {
           this.props.isModal &&
           <UploadModal showForm={uploadState.view.showForm}
                        nextTab={this.nextTab.bind(this)}
+                       nextButtonText={nextButtonText}
                        onClose={this.onClose.bind(this)}
                        onSelectTab={this.onSelectTab.bind(this)}
           >
@@ -72,6 +74,7 @@ export default class UploadContainer extends React.Component {
           !this.props.isModal &&
           <UploadPanel showForm={uploadState.view.showForm}
                        nextTab={this.nextTab.bind(this)}
+                       nextButtonText={nextButtonText}
                        onClose={this.onClose.bind(this)}
                        onSelectTab={this.onSelectTab.bind(this)}
           >
