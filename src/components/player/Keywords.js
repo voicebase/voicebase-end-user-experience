@@ -5,12 +5,21 @@ import classnames from 'classnames';
 export class Keywords extends React.Component {
   static propTypes = {
     mediaId: PropTypes.string.isRequired,
-    mediaState: PropTypes.object.isRequired,
+    type: PropTypes.string.isRequired,
+    activeSpeaker: PropTypes.string.isRequired,
+    activeTopic: PropTypes.string.isRequired,
+    topicsIds: PropTypes.array.isRequired,
+    topics: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
 
   setActiveTopic(topicId) {
-    this.props.actions.setActiveTopic(this.props.mediaId, topicId);
+    if (this.props.type === 'keywords') {
+      this.props.actions.setActiveTopic(this.props.mediaId, topicId);
+    }
+    else if (this.props.type === 'groups') {
+      this.props.actions.setActiveGroup(this.props.mediaId, topicId);
+    }
   }
 
   setMarkers(keyword, activeSpeakerId) {
@@ -26,10 +35,10 @@ export class Keywords extends React.Component {
   }
 
   render () {
-    let mediaState = this.props.mediaState;
-    let activeTopicId = mediaState.activeTopic;
-    let activeTopic = mediaState.topics[activeTopicId];
-    let activeSpeakerId = mediaState.activeSpeaker;
+    let topics = this.props.topics;
+    let activeTopicId = this.props.activeTopic;
+    let activeTopic = topics[activeTopicId];
+    let activeSpeakerId = this.props.activeSpeaker;
 
     return (
       <div className="listing__keywords">
@@ -37,9 +46,9 @@ export class Keywords extends React.Component {
           <Col sm={3} className="listing__keywords__topics__container">
             <ul className="listing__keywords__topics">
               {
-                mediaState.topicsIds.map(topicId => {
-                  let topic = mediaState.topics[topicId];
-                  let activeClass = classnames({active: (activeTopicId === topicId)})
+                this.props.topicsIds.map(topicId => {
+                  let topic = topics[topicId];
+                  let activeClass = classnames({active: (activeTopicId === topicId)});
 
                   return (
                     <li key={'topic-' + topicId} className={activeClass} onClick={this.setActiveTopic.bind(this, topicId)}>

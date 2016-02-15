@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Player from './Player';
 import { Tabs, Tab } from 'react-bootstrap';
-import { KEYWORDS_TAB, DETECTION_TAB, PREDICTION_TAB } from '../../redux/modules/media/mediaData'
+import { KEYWORDS_TAB, DETECTION_TAB, PREDICTION_TAB, GROUPS_TAB } from '../../redux/modules/media/mediaData'
 import Keywords from './Keywords'
 import Transcript from './Transcript'
 import Predictions from './Predictions'
@@ -40,16 +40,33 @@ export class VbsPlayerApp extends React.Component {
                 hasNextKeywordButton
                 hasDownloadButton
                 isShowDetection={activeTab === DETECTION_TAB}
-                isShowKeywordsMarkers={activeTab === KEYWORDS_TAB}
+                isShowKeywordsMarkers={activeTab === KEYWORDS_TAB || activeTab === GROUPS_TAB}
                 actions={this.props.actions} />
 
         <Tabs className="listing__tabs" activeKey={activeTab} onSelect={this.selectTab.bind(this)}>
           <Tab eventKey={KEYWORDS_TAB} title="Keywords">
             <Keywords mediaId={this.props.mediaId}
-                      mediaState={mediaData}
+                      type="keywords"
+                      activeSpeaker={mediaData.activeSpeaker}
+                      activeTopic={mediaData.activeTopic}
+                      topicsIds={mediaData.topicsIds}
+                      topics={mediaData.topics}
                       actions={this.props.actions}
             />
           </Tab>
+          {
+            mediaData.groups &&
+            <Tab eventKey={GROUPS_TAB} title="Phrase Groups">
+              <Keywords mediaId={this.props.mediaId}
+                        type="groups"
+                        activeSpeaker={mediaData.activeSpeaker}
+                        activeTopic={mediaData.activeGroup}
+                        topicsIds={mediaData.groupsIds}
+                        topics={mediaData.groups}
+                        actions={this.props.actions}
+              />
+            </Tab>
+          }
           {
             mediaData.predictions &&
             <Tab eventKey={PREDICTION_TAB} title="Prediction">
@@ -68,7 +85,7 @@ export class VbsPlayerApp extends React.Component {
         </Tabs>
 
         {
-          (activeTab === KEYWORDS_TAB || activeTab === DETECTION_TAB) &&
+          (activeTab === KEYWORDS_TAB || activeTab === DETECTION_TAB || activeTab === GROUPS_TAB) &&
           <Transcript mediaId={this.props.mediaId}
                       playerState={playerState.players[this.props.mediaId] || {}}
                       mediaState={mediaData}

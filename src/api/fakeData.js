@@ -7687,6 +7687,811 @@ export default {
         "groups": {}
       }
     },
+    "groups": {
+      "latest": {
+        "revision": "118a47b5-61cb-4bdb-a9c2-fd45f1143e41",
+        "groups": [
+          {
+            "keywords": [
+              {
+                "internalName": [
+                  "washington created",
+                  "george washington"
+                ],
+                "t": {
+                  "agent": [
+                    "0.71",
+                    "57.31",
+                    "169.61",
+                    "175.75",
+                    "176.46"
+                  ]
+                },
+                "name": "George Washington",
+                "score": "1"
+              },
+              {
+                "internalName": [
+                  "john adams"
+                ],
+                "t": {
+                  "agent": [
+                    "2.64",
+                    "220.89",
+                    "240.26"
+                  ]
+                },
+                "name": "John Adams",
+                "score": 0.509579529533795
+              },
+              {
+                "internalName": [
+                  "jefferson",
+                  "thomas jefferson"
+                ],
+                "t": {
+                  "agent": [
+                    "1.44",
+                    "2.34",
+                    "294.08"
+                  ]
+                },
+                "name": "Thomas Jefferson",
+                "score": 0.501629251641625
+              }
+            ],
+            "similarCategories": [],
+            "name": "George Washington",
+            "score": 48.5805356744953,
+            "subcategories": [],
+            "type": "group",
+            "speakers": [
+              "agent"
+            ]
+          },
+          {
+            "keywords": [
+              {
+                "internalName": [
+                  "wife"
+                ],
+                "t": {
+                  "agent": [
+                    "249.3"
+                  ]
+                },
+                "name": "Wife",
+                "score": "1"
+              },
+              {
+                "internalName": [
+                  "father"
+                ],
+                "t": {
+                  "agent": [
+                    "7.35",
+                    "52.98",
+                    "310.22",
+                    "313.39"
+                  ]
+                },
+                "name": "Father",
+                "score": "1"
+              },
+              {
+                "internalName": [
+                  "parent"
+                ],
+                "t": {
+                  "agent": [
+                    "100.88",
+                    "105.92"
+                  ]
+                },
+                "name": "Parent",
+                "score": "1"
+              }
+            ],
+            "similarCategories": [
+              {
+                "name": "Marriage",
+                "score": 0.0614338194229511
+              }
+            ],
+            "name": "Family",
+            "score": 0.109012847775238,
+            "subcategories": [],
+            "type": "category",
+            "speakers": [
+              "agent"
+            ]
+          },
+          {
+            "keywords": [
+              {
+                "internalName": [
+                  "parent"
+                ],
+                "t": {
+                  "agent": [
+                    "100.88",
+                    "105.92"
+                  ]
+                },
+                "name": "Parent",
+                "score": "1"
+              },
+              {
+                "internalName": [
+                  "father"
+                ],
+                "t": {
+                  "agent": [
+                    "7.35",
+                    "52.98",
+                    "310.22",
+                    "313.39"
+                  ]
+                },
+                "name": "Father",
+                "score": "1"
+              },
+              {
+                "internalName": [
+                  "generation"
+                ],
+                "t": {
+                  "agent": [
+                    "33.57",
+                    "352.18"
+                  ]
+                },
+                "name": "Generation",
+                "score": 0.685050321165201
+              },
+              {
+                "internalName": [
+                  "love"
+                ],
+                "t": {
+                  "agent": [
+                    "264.83",
+                    "280.12"
+                  ]
+                },
+                "name": "Love",
+                "score": 0.629627728707799
+              },
+              {
+                "internalName": [
+                  "belief"
+                ],
+                "t": {
+                  "agent": [
+                    "116.98"
+                  ]
+                },
+                "name": "Belief",
+                "score": 0.559724495225892
+              },
+              {
+                "internalName": [
+                  "nature"
+                ],
+                "t": {
+                  "agent": [
+                    "336.68",
+                    "344.93",
+                    "353.14"
+                  ]
+                },
+                "name": "Nature",
+                "score": 0.556290759945254
+              },
+              {
+                "internalName": [
+                  "eve"
+                ],
+                "t": {
+                  "agent": [
+                    "136.58"
+                  ]
+                },
+                "name": "Eve",
+                "score": 0.555480610506168
+              },
+              {
+                "internalName": [
+                  "book"
+                ],
+                "t": {
+                  "agent": [
+                    "12.73",
+                    "29.83",
+                    "55.81",
+                    "173.71",
+                    "189.22",
+                    "253.67",
+                    "348.18"
+                  ]
+                },
+                "name": "Book",
+                "score": 0.549715044278495
+              },
+              {
+                "internalName": [
+                  "revolutionary"
+                ],
+                "t": {
+                  "agent": [
+                    "32.86",
+                    "351.42"
+                  ]
+                },
+                "name": "Revolutionary",
+                "score": 0.544668394446811
+              },
+              {
+                "internalName": [
+                  "god"
+                ],
+                "t": {
+                  "agent": [
+                    "129.88",
+                    "263.96"
+                  ]
+                },
+                "name": "God",
+                "score": 0.530932374225499
+              }
+            ],
+            "similarCategories": [],
+            "name": "Divorce",
+            "score": 0.0987475538011398,
+            "subcategories": [],
+            "type": "category",
+            "speakers": [
+              "agent"
+            ]
+          },
+          {
+            "keywords": [
+              {
+                "internalName": [
+                  "exploitation"
+                ],
+                "t": {
+                  "agent": [
+                    "325.97"
+                  ]
+                },
+                "name": "Exploitation",
+                "score": "1"
+              },
+              {
+                "internalName": [
+                  "belief"
+                ],
+                "t": {
+                  "agent": [
+                    "116.98"
+                  ]
+                },
+                "name": "Belief",
+                "score": "1"
+              },
+              {
+                "internalName": [
+                  "nature"
+                ],
+                "t": {
+                  "agent": [
+                    "336.68",
+                    "344.93",
+                    "353.14"
+                  ]
+                },
+                "name": "Nature",
+                "score": 0.659597535043629
+              },
+              {
+                "internalName": [
+                  "revolutionary"
+                ],
+                "t": {
+                  "agent": [
+                    "32.86",
+                    "351.42"
+                  ]
+                },
+                "name": "Revolutionary",
+                "score": 0.607714493230354
+              },
+              {
+                "internalName": [
+                  "generation"
+                ],
+                "t": {
+                  "agent": [
+                    "33.57",
+                    "352.18"
+                  ]
+                },
+                "name": "Generation",
+                "score": 0.587399152154493
+              },
+              {
+                "internalName": [
+                  "eve"
+                ],
+                "t": {
+                  "agent": [
+                    "136.58"
+                  ]
+                },
+                "name": "Eve",
+                "score": 0.582373273000035
+              },
+              {
+                "internalName": [
+                  "god"
+                ],
+                "t": {
+                  "agent": [
+                    "129.88",
+                    "263.96"
+                  ]
+                },
+                "name": "God",
+                "score": 0.573793222446261
+              },
+              {
+                "internalName": [
+                  "parent"
+                ],
+                "t": {
+                  "agent": [
+                    "100.88",
+                    "105.92"
+                  ]
+                },
+                "name": "Parent",
+                "score": 0.551549912329103
+              }
+            ],
+            "similarCategories": [],
+            "name": "Socioeconomics",
+            "score": 0.0810233271069133,
+            "subcategories": [],
+            "type": "category",
+            "speakers": [
+              "agent"
+            ]
+          },
+          {
+            "keywords": [
+              {
+                "internalName": [
+                  "eve"
+                ],
+                "t": {
+                  "agent": [
+                    "136.58"
+                  ]
+                },
+                "name": "Eve",
+                "score": "1"
+              },
+              {
+                "internalName": [
+                  "adam"
+                ],
+                "t": {
+                  "agent": [
+                    "3.15",
+                    "221.41",
+                    "240.85",
+                    "250.05",
+                    "259.98"
+                  ]
+                },
+                "name": "Adam",
+                "score": "1"
+              },
+              {
+                "internalName": [
+                  "god"
+                ],
+                "t": {
+                  "agent": [
+                    "129.88",
+                    "263.96"
+                  ]
+                },
+                "name": "God",
+                "score": 0.689780857235287
+              },
+              {
+                "internalName": [
+                  "belief"
+                ],
+                "t": {
+                  "agent": [
+                    "116.98"
+                  ]
+                },
+                "name": "Belief",
+                "score": 0.581088724471466
+              },
+              {
+                "internalName": [
+                  "nature"
+                ],
+                "t": {
+                  "agent": [
+                    "336.68",
+                    "344.93",
+                    "353.14"
+                  ]
+                },
+                "name": "Nature",
+                "score": 0.56235438855784
+              },
+              {
+                "internalName": [
+                  "generation"
+                ],
+                "t": {
+                  "agent": [
+                    "33.57",
+                    "352.18"
+                  ]
+                },
+                "name": "Generation",
+                "score": 0.556643859507316
+              },
+              {
+                "internalName": [
+                  "father"
+                ],
+                "t": {
+                  "agent": [
+                    "7.35",
+                    "52.98",
+                    "310.22",
+                    "313.39"
+                  ]
+                },
+                "name": "Father",
+                "score": 0.549769793137589
+              },
+              {
+                "internalName": [
+                  "parent"
+                ],
+                "t": {
+                  "agent": [
+                    "100.88",
+                    "105.92"
+                  ]
+                },
+                "name": "Parent",
+                "score": 0.545492672104551
+              }
+            ],
+            "similarCategories": [
+              {
+                "name": "Jewish mythology",
+                "score": 0
+              }
+            ],
+            "name": "Burials in Hebron",
+            "score": 0.0464806863159684,
+            "subcategories": [],
+            "type": "category",
+            "speakers": [
+              "agent"
+            ]
+          },
+          {
+            "keywords": [
+              {
+                "internalName": [
+                  "person"
+                ],
+                "t": {
+                  "agent": [
+                    "305.43"
+                  ]
+                },
+                "name": "Person",
+                "score": "1"
+              },
+              {
+                "internalName": [
+                  "love"
+                ],
+                "t": {
+                  "agent": [
+                    "264.83",
+                    "280.12"
+                  ]
+                },
+                "name": "Love",
+                "score": "1"
+              },
+              {
+                "internalName": [
+                  "belief"
+                ],
+                "t": {
+                  "agent": [
+                    "116.98"
+                  ]
+                },
+                "name": "Belief",
+                "score": 0.688908636825826
+              },
+              {
+                "internalName": [
+                  "nature"
+                ],
+                "t": {
+                  "agent": [
+                    "336.68",
+                    "344.93",
+                    "353.14"
+                  ]
+                },
+                "name": "Nature",
+                "score": 0.643402971148231
+              },
+              {
+                "internalName": [
+                  "parent"
+                ],
+                "t": {
+                  "agent": [
+                    "100.88",
+                    "105.92"
+                  ]
+                },
+                "name": "Parent",
+                "score": 0.62614804192668
+              },
+              {
+                "internalName": [
+                  "god"
+                ],
+                "t": {
+                  "agent": [
+                    "129.88",
+                    "263.96"
+                  ]
+                },
+                "name": "God",
+                "score": 0.616473485830829
+              },
+              {
+                "internalName": [
+                  "father"
+                ],
+                "t": {
+                  "agent": [
+                    "7.35",
+                    "52.98",
+                    "310.22",
+                    "313.39"
+                  ]
+                },
+                "name": "Father",
+                "score": 0.610335051326226
+              },
+              {
+                "internalName": [
+                  "book"
+                ],
+                "t": {
+                  "agent": [
+                    "12.73",
+                    "29.83",
+                    "55.81",
+                    "173.71",
+                    "189.22",
+                    "253.67",
+                    "348.18"
+                  ]
+                },
+                "name": "Book",
+                "score": 0.555781887837468
+              },
+              {
+                "internalName": [
+                  "eve"
+                ],
+                "t": {
+                  "agent": [
+                    "136.58"
+                  ]
+                },
+                "name": "Eve",
+                "score": 0.531379803848533
+              }
+            ],
+            "similarCategories": [],
+            "name": "Personal life",
+            "score": 0.0163510162725689,
+            "subcategories": [],
+            "type": "category",
+            "speakers": [
+              "agent"
+            ]
+          },
+          {
+            "keywords": [
+              {
+                "internalName": [
+                  "want"
+                ],
+                "t": {
+                  "agent": [
+                    "61.92",
+                    "68.46",
+                    "163.73"
+                  ]
+                },
+                "name": "Want",
+                "score": "1"
+              },
+              {
+                "internalName": [
+                  "love"
+                ],
+                "t": {
+                  "agent": [
+                    "264.83",
+                    "280.12"
+                  ]
+                },
+                "name": "Love",
+                "score": "1"
+              }
+            ],
+            "similarCategories": [],
+            "name": "Emotion",
+            "score": 0.00225455511640099,
+            "subcategories": [],
+            "type": "category",
+            "speakers": [
+              "agent"
+            ]
+          },
+          {
+            "keywords": [
+              {
+                "internalName": [
+                  "compost"
+                ],
+                "t": {
+                  "agent": [
+                    "214.59"
+                  ]
+                },
+                "name": "Compost",
+                "score": "1"
+              },
+              {
+                "internalName": [
+                  "soil"
+                ],
+                "t": {
+                  "agent": [
+                    "168.53",
+                    "205.29",
+                    "271.49",
+                    "292.37",
+                    "326.65"
+                  ]
+                },
+                "name": "Soil",
+                "score": "1"
+              },
+              {
+                "internalName": [
+                  "manure"
+                ],
+                "t": {
+                  "agent": [
+                    "184.14",
+                    "212.84",
+                    "226.41"
+                  ]
+                },
+                "name": "Manure",
+                "score": 0.778820966163021
+              },
+              {
+                "internalName": [
+                  "garden"
+                ],
+                "t": {
+                  "agent": [
+                    "19.62",
+                    "31.59",
+                    "37.23",
+                    "41.57",
+                    "43.62",
+                    "79.78",
+                    "81.36",
+                    "107.78",
+                    "133.15",
+                    "153.91",
+                    "165.41",
+                    "178.91",
+                    "185.239",
+                    "256.4",
+                    "286.87",
+                    "349.99"
+                  ]
+                },
+                "name": "Garden",
+                "score": 0.679509949625167
+              },
+              {
+                "internalName": [
+                  "nature"
+                ],
+                "t": {
+                  "agent": [
+                    "336.68",
+                    "344.93",
+                    "353.14"
+                  ]
+                },
+                "name": "Nature",
+                "score": 0.604395678729783
+              },
+              {
+                "internalName": [
+                  "sort",
+                  "sorting"
+                ],
+                "t": {
+                  "agent": [
+                    "182.68",
+                    "243.66"
+                  ]
+                },
+                "name": "Sorting",
+                "score": 0.575356969022616
+              },
+              {
+                "internalName": [
+                  "botanic garden",
+                  "botanical garden"
+                ],
+                "t": {
+                  "agent": [
+                    "36.8",
+                    "107.18"
+                  ]
+                },
+                "name": "Botanical garden",
+                "score": 0.533694626303985
+              }
+            ],
+            "similarCategories": [],
+            "name": "Soil",
+            "score": 0,
+            "subcategories": [],
+            "type": "category",
+            "speakers": [
+              "agent"
+            ]
+          }
+        ]
+      }
+    },
     "topics": {
       "latest": {
         "revision": "118a47b5-61cb-4bdb-a9c2-fd45f1143e41",
