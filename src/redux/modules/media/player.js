@@ -11,6 +11,9 @@ export const PAUSE = 'PAUSE';
 export const SET_POSITION = 'SET_POSITION';
 export const SET_BUFFERED = 'SET_BUFFERED';
 export const SET_DURATION = 'SET_DURATION';
+export const SET_TIMELINE_WIDTH = 'SET_TIMELINE_WIDTH';
+export const SET_UTTERANCE_TIME = 'SET_UTTERANCE_TIME';
+export const CLEAR_UTTERANCE_TIME = 'CLEAR_UTTERANCE_TIME';
 
 /*
  * Actions
@@ -30,6 +33,13 @@ export const setBuffered = createAction(SET_BUFFERED, (id, pos) => {
 export const setDuration = createAction(SET_DURATION, (id, duration) => {
   return {id, duration};
 });
+export const setTimelineWidth = createAction(SET_TIMELINE_WIDTH, (id, timelineWidth) => {
+  return {id, timelineWidth};
+});
+export const setUtteranceTime = createAction(SET_UTTERANCE_TIME, (id, time) => {
+  return {id, time};
+});
+export const clearUtteranceTime = createAction(CLEAR_UTTERANCE_TIME, (id) => id);
 
 export const actions = {
   createPlayer,
@@ -38,7 +48,10 @@ export const actions = {
   pause,
   setPosition,
   setBuffered,
-  setDuration
+  setDuration,
+  setTimelineWidth,
+  setUtteranceTime,
+  clearUtteranceTime
 };
 
 /*
@@ -55,6 +68,8 @@ const initialPlayerState = {
   played: 0,
   loaded: 0,
   duration: 0,
+  timelineWidth: null,
+  utteranceTime: null,
   error: ''
 };
 
@@ -145,6 +160,45 @@ export default handleActions({
         [payload.id]: {
           ...state.players[payload.id],
           duration: payload.duration
+        }
+      }
+    };
+  },
+
+  [SET_TIMELINE_WIDTH]: (state, {payload}) => {
+    return {
+      ...state,
+      players: {
+        ...state.players,
+        [payload.id]: {
+          ...state.players[payload.id],
+          timelineWidth: payload.timelineWidth
+        }
+      }
+    };
+  },
+
+  [SET_UTTERANCE_TIME]: (state, {payload}) => {
+    return {
+      ...state,
+      players: {
+        ...state.players,
+        [payload.id]: {
+          ...state.players[payload.id],
+          utteranceTime: payload.time
+        }
+      }
+    };
+  },
+
+  [CLEAR_UTTERANCE_TIME]: (state, {payload: id}) => {
+    return {
+      ...state,
+      players: {
+        ...state.players,
+        [id]: {
+          ...state.players[id],
+          utteranceTime: null
         }
       }
     };

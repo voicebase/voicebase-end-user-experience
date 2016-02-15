@@ -22,3 +22,35 @@
   background: #eee;
 }
 
+.listing__detection__row {
+  padding: 10px 20px;
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+.listing__detection__row:first-child {
+  border-top: 0;
+}
+
+.listing__detection__label {
+  width: 87px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.listing__detection__container {
+  margin-left: 10px;
+  margin-right: 165px;
+  flex: 1;
+  height: 4px;
+  margin-top: 6px;
+  position: relative;
+}
+
+.listing__detection__marker {
+  height: 4px;
+  display: block;
+  position: absolute;
+  top: 0;
+}
+

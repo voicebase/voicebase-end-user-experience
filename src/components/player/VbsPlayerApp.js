@@ -26,7 +26,7 @@ export class VbsPlayerApp extends React.Component {
 
   render () {
     let mediaState = this.props.mediaState;
-    let playerState = mediaState.player;
+    let playerState = mediaState.player.players[this.props.mediaId] || {loading: true};
     let mediaData = mediaState.mediaData.data[this.props.mediaId];
     let activeTab = mediaData.view.activeTab;
 
@@ -36,10 +36,9 @@ export class VbsPlayerApp extends React.Component {
                 playerType="JwPlayer"
                 mediaState={mediaData}
                 markersState={mediaState.markers[this.props.mediaId]}
-                playerState={playerState.players[this.props.mediaId] || {loading: true}}
+                playerState={playerState}
                 hasNextKeywordButton
                 hasDownloadButton
-                isShowDetection={activeTab === DETECTION_TAB}
                 isShowKeywordsMarkers={activeTab === KEYWORDS_TAB || activeTab === GROUPS_TAB}
                 actions={this.props.actions} />
 
@@ -78,6 +77,7 @@ export class VbsPlayerApp extends React.Component {
             <Tab eventKey={DETECTION_TAB} title="Detection">
               <DetectionList mediaId={this.props.mediaId}
                              utterances={mediaData.utterances}
+                             playerState={playerState}
                              actions={this.props.actions}
               />
             </Tab>
@@ -87,7 +87,7 @@ export class VbsPlayerApp extends React.Component {
         {
           (activeTab === KEYWORDS_TAB || activeTab === DETECTION_TAB || activeTab === GROUPS_TAB) &&
           <Transcript mediaId={this.props.mediaId}
-                      playerState={playerState.players[this.props.mediaId] || {}}
+                      playerState={playerState}
                       mediaState={mediaData}
                       markersState={mediaState.markers[this.props.mediaId]}
                       actions={this.props.actions}

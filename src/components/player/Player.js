@@ -4,7 +4,6 @@ import { ButtonGroup, Button, Popover, OverlayTrigger } from 'react-bootstrap'
 import Spinner from '../Spinner';
 import VolumeSlider from './VolumeSlider';
 import PlayerSpeakers from './PlayerSpeakers';
-import PlayerDetection from './PlayerDetection';
 import { parseTime } from '../../common/Common';
 
 export class Player extends React.Component {
@@ -16,7 +15,6 @@ export class Player extends React.Component {
     playerState: PropTypes.object.isRequired,
     hasNextKeywordButton: PropTypes.bool.isRequired,
     hasDownloadButton: PropTypes.bool.isRequired,
-    isShowDetection: PropTypes.bool.isRequired,
     isShowKeywordsMarkers: PropTypes.bool.isRequired,
     actions: PropTypes.object.isRequired
   };
@@ -44,6 +42,15 @@ export class Player extends React.Component {
     let markersState = this.props.markersState;
     if (markersState && markersState.justCreated) {
       this.seekToFirstMarker(markersState);
+    }
+    // save timeline width for player
+    let playerState = this.props.playerState;
+    if (playerState && !playerState.timelineWidth && this.refs.timeline) {
+      this.props.actions.setTimelineWidth(this.props.mediaId, this.refs.timeline.clientWidth);
+    }
+    // move to actve utterance
+    if (playerState && playerState.utteranceTime !== null) {
+      this.seekToUtterance(playerState.utteranceTime);
     }
   }
 
@@ -144,6 +151,13 @@ export class Player extends React.Component {
     }
   }
 
+  seekToUtterance(time) {
+    this.props.actions.clearUtteranceTime(this.props.mediaId);
+    setTimeout(() => {
+      this.onSeekMarker(time);
+    }, 0);
+  }
+
   /*
   * position is a percent value / 100
   * */
@@ -213,14 +227,10 @@ export class Player extends React.Component {
 
     let speakers = null;
     let transcriptSpeakers = null;
-    let utterances = null;
     if (mediaState) {
       if (mediaState.transcriptSpeakers.length > 0) {
         speakers = mediaState.speakers;
         transcriptSpeakers = mediaState.transcriptSpeakers;
-      }
-      if (mediaState.utterances) {
-        utterances = mediaState.utterances;
       }
     }
 
@@ -273,15 +283,6 @@ export class Player extends React.Component {
                 {this.getMarkers()}
               </div>
             }
-
-            {
-              utterances && this.props.isShowDetection &&
-              <PlayerDetection calcTimeOffset={this.calcTimeOffset.bind(this)}
-                               onSeek={this.onSeekMarker.bind(this)}
-                               utterances={utterances}
-              />
-            }
-
           </div>
 
           <div className="player__time">
