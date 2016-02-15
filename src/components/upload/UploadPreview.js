@@ -21,6 +21,15 @@ export default class UploadPreview extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    let fileIds = this.props.uploadState.fileIds;
+    if (fileIds.length > 0) {
+      fileIds.forEach(id => {
+        this.props.actions.destroyPlayer(id);
+      });
+    }
+  }
+
   removeFile(id) {
     this.props.actions.removeFile(id);
     this.props.actions.destroyPlayer(id);

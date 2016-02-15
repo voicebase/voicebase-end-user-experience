@@ -45,7 +45,7 @@ export class Player extends React.Component {
     }
     // save timeline width for player
     let playerState = this.props.playerState;
-    if (playerState && !playerState.timelineWidth && this.refs.timeline) {
+    if (playerState && !playerState.timelineWidth && this.refs.timeline && this.refs.timeline.clientWidth) {
       this.props.actions.setTimelineWidth(this.props.mediaId, this.refs.timeline.clientWidth);
     }
     // move to actve utterance

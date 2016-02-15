@@ -13,12 +13,17 @@ export default class ProcessingListItem extends React.Component {
   processingInterval = null;
 
   componentWillMount() {
-    console.log(this.props.mediaDataState);
+    console.log('Upload interval');
     if (!this.props.mediaDataState) {
       this.processingInterval = setInterval(() => {
         this.getMediaData();
       }, 5000)
     }
+  }
+
+  componentWillUnmount() {
+    console.log('Clear upload interval');
+    clearInterval(this.processingInterval);
   }
 
   getMediaData() {
