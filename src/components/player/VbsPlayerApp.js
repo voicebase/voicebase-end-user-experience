@@ -51,20 +51,17 @@ export class VbsPlayerApp extends React.Component {
             />
           </Tab>
           {
+            mediaData.predictions &&
+            <Tab eventKey={PREDICTION_TAB} title="Prediction">
+              <Predictions predictionsState={mediaData.predictions} />
+            </Tab>
+          }
+          {
             mediaData.utterances &&
             <Tab eventKey={DETECTION_TAB} title="Detection">
               <DetectionList mediaId={this.props.mediaId}
                              utterances={mediaData.utterances}
                              actions={this.props.actions}
-              />
-            </Tab>
-          }
-          {
-            mediaData.predictions &&
-            <Tab eventKey={PREDICTION_TAB} title="Prediction">
-              <Predictions mediaId={this.props.mediaId}
-                           predictionsState={mediaData.predictions}
-                           actions={this.props.actions}
               />
             </Tab>
           }

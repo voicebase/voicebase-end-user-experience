@@ -1,48 +1,20 @@
-.listing__prediction__charts {
-  padding: 15px 20px;
+.listing__prediction {
+  padding: 20px;
 }
 
-.listing__prediction__charts h4, .listing__prediction__charts h5 {
-  font-size: 14px;
+.listing__prediction__heading {
+  font-size: 15px;
+  line-height: 1.3;
   margin: 0 0 5px;
   text-align: center;
   font-weight: bold;
 }
 
-.listing__prediction__charts h5 {
-  font-weight: normal;
-  color: #777;
-}
-
-.listing__prediction__charts i {
-  line-height: 100px;
-  display: block;
+.listing__prediction__value {
+  font-size: 50px;
   text-align: center;
-  font-size: 90px;
-}
-
-.listing__prediction__charts .circliful-chart,
-.listing__prediction__charts canvas[style] {
-  width: 100% !important;
-  height: auto !important;
-  max-width: 100px;
-  margin: 0 auto;
-}
-
-.listing__prediction__charts .circle-text {
-  line-height: 1 !important;
-  top: 50%;
-  margin-top: -14px;
-  font-weight: bold;
-  color: #999;
-}
-
-.listing__prediction__charts .circliful-chart.green .circle-text {
-  color: #85d04a;
-}
-
-.listing__prediction__charts .circliful-chart.amber .circle-text {
-  color: #e59242;
+  font-weight: 300;
+  margin: 0 0 5px;
 }
 
 .icon-success {
