@@ -55,7 +55,7 @@ export class VbsPlayerApp extends React.Component {
             />
           </Tab>
           {
-            mediaData.groups &&
+            mediaData.groupsIds && mediaData.groupsIds.length > 0 &&
             <Tab eventKey={GROUPS_TAB} title="Phrase Groups">
               <Keywords mediaId={this.props.mediaId}
                         type="groups"
