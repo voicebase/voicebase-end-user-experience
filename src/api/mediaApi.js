@@ -13,6 +13,8 @@ export default {
       }
     })
       .then(response => {
+        let processingIds = [];
+        let processingMedia = {};
         let mediaIds = ['fake_mediaId'];
         let media = {
           'fake_mediaId': {
@@ -25,12 +27,20 @@ export default {
           }
         };
         response.data.media.forEach(mediaItem => {
-          mediaIds.push(mediaItem.mediaId);
-          media[mediaItem.mediaId] = mediaItem;
+          if (mediaItem.status === 'failed' || mediaItem.status === 'finished') {
+            mediaIds.push(mediaItem.mediaId);
+            media[mediaItem.mediaId] = mediaItem;
+          }
+          else if (mediaItem.status === 'accepted' || mediaItem.status === 'running') {
+            processingIds.push(mediaItem.mediaId);
+            processingMedia[mediaItem.mediaId] = mediaItem;
+          }
         });
         return {
           mediaIds,
-          media
+          media,
+          processingIds,
+          processingMedia
         };
       })
       .catch(error => {
@@ -100,6 +110,15 @@ export default {
         configuration: jobConf
       };
       data.append('configuration', JSON.stringify(conf));
+
+      let metadata = {
+        metadata: {
+          external: {
+            title: file.name
+          }
+        }
+      };
+      data.append('metadata', JSON.stringify(metadata));
 
       $.ajax({
         url: baseUrl + '/media',

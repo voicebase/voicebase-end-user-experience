@@ -4,8 +4,7 @@ import classnames from 'classnames'
 export default class ProcessingListItem extends React.Component {
   static propTypes = {
     token: PropTypes.string.isRequired,
-    fileId: PropTypes.string.isRequired,
-    fileState: PropTypes.object.isRequired,
+    mediaId: PropTypes.string.isRequired,
     mediaDataState: PropTypes.object,
     actions: PropTypes.object.isRequired
   };
@@ -28,15 +27,14 @@ export default class ProcessingListItem extends React.Component {
 
   getMediaData() {
     let mediaDataState = this.props.mediaDataState;
-    this.props.actions.getDataForMedia(this.props.token, this.props.fileState.mediaId);
+    this.props.actions.getDataForMedia(this.props.token, this.props.mediaId);
     if (mediaDataState && mediaDataState.status === 'finished' && this.processingInterval) {
       clearInterval(this.processingInterval);
       this.processingInterval = null;
       setTimeout(() => {
-        this.props.actions.removeFile(this.props.fileId);
-        this.props.actions.destroyPlayer(this.props.fileId);
+        this.props.actions.removeProcessingMedia(this.props.mediaId);
         this.props.actions.addMedia({
-          mediaId: mediaDataState.data.mediaId,
+          mediaId: this.props.mediaId,
           status: mediaDataState.data.status,
           metadata: mediaDataState.data.metadata
         });
@@ -73,7 +71,6 @@ export default class ProcessingListItem extends React.Component {
   }
 
   render() {
-    let file = this.props.fileState;
     let mediaDataState = this.props.mediaDataState;
 
     let fileStatus, keywordsStatus;
@@ -94,7 +91,7 @@ export default class ProcessingListItem extends React.Component {
 
     return (
       <div className="list-group-item listing listing--processing">
-        <h4 className="list-group-item-heading">{file.file.name}</h4>
+        <h4 className="list-group-item-heading">{this.props.mediaId}</h4>
           {
             (!mediaDataState || (mediaDataState && !mediaDataState.jobTasks)) &&
             <div className="progress">

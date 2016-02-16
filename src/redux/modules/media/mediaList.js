@@ -8,6 +8,8 @@ import MediaApi from '../../../api/mediaApi'
  * */
 export const GET_MEDIA = 'GET_MEDIA';
 export const ADD_MEDIA = 'ADD_MEDIA';
+export const ADD_PROCESSING_MEDIA = 'ADD_PROCESSING_MEDIA';
+export const REMOVE_PROCESSING_MEDIA = 'REMOVE_PROCESSING_MEDIA';
 export const EXPAND_MEDIA = 'EXPAND_MEDIA';
 export const COLLAPSE_MEDIA = 'COLLAPSE_MEDIA';
 export const SELECT_MEDIA = 'SELECT_MEDIA';
@@ -25,6 +27,8 @@ export const getMedia = createAction(GET_MEDIA, (token) => {
   }
 });
 export const addMedia = createAction(ADD_MEDIA, (mediaData) => mediaData);
+export const addProcessingMedia = createAction(ADD_PROCESSING_MEDIA, (mediaData) => mediaData);
+export const removeProcessingMedia = createAction(REMOVE_PROCESSING_MEDIA, (mediaId) => mediaId);
 export const expandMedia = createAction(EXPAND_MEDIA, (mediaId) => mediaId);
 export const collapseMedia = createAction(COLLAPSE_MEDIA, (mediaId) => mediaId);
 export const selectMedia = createAction(SELECT_MEDIA, (mediaId) => mediaId);
@@ -44,6 +48,8 @@ export const deleteMedia = createAction(DELETE_MEDIA, (token, mediaId) => {
 export const actions = {
   getMedia,
   addMedia,
+  addProcessingMedia,
+  removeProcessingMedia,
   expandMedia,
   collapseMedia,
   selectMedia,
@@ -59,6 +65,8 @@ export const actions = {
 export const initialState = {
   mediaIds: [],
   media: {},
+  processingIds: [],
+  processingMedia: {},
   isGetPending: false,
   isGetCompleted: false,
   errorMessage: '',
@@ -96,7 +104,9 @@ export default handleActions({
       isGetCompleted: true,
       errorMessage: '',
       mediaIds: response.mediaIds,
-      media: response.media
+      media: response.media,
+      processingIds: response.processingIds,
+      processingMedia: response.processingMedia
     };
   },
 
@@ -110,6 +120,28 @@ export default handleActions({
           ...mediaData
         }
       }
+    };
+  },
+
+  [ADD_PROCESSING_MEDIA]: (state, { payload: mediaData }) => {
+    return {
+      ...state,
+      processingIds: [mediaData.mediaId].concat(state.processingIds),
+      processingMedia: {
+        ...state.processingMedia,
+        [mediaData.mediaId]: {
+          ...mediaData
+        }
+      }
+    };
+  },
+
+  [REMOVE_PROCESSING_MEDIA]: (state, { payload: mediaId }) => {
+    let processingIds = state.processingIds.filter(id => id !== mediaId);
+    return {
+      ...state,
+      processingIds,
+      processingMedia: _.pick(state.processingMedia, processingIds)
     };
   },
 

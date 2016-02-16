@@ -144,7 +144,8 @@ export default handleActions({
           ...state.files[fileId],
           isPostPending: false,
           isPostComplete: true,
-          mediaId: data.mediaId
+          mediaId: data.mediaId,
+          data
         }
       }
     };
