@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import $ from 'jquery'
 import _ from 'lodash';
+import Fuse from 'fuse.js';
 import classnames from 'classnames';
 import { DETECTION_TAB } from '../../redux/modules/media/mediaData'
 import {getClearWordFromTranscript} from '../../common/Common';
@@ -19,7 +20,10 @@ export class Transcript extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {hoverUtterance: null};
+    this.state = {
+      hoverUtterance: null,
+      hoverKeyword: null
+    };
   }
 
   componentDidUpdate() {
@@ -55,15 +59,44 @@ export class Transcript extends React.Component {
     return findUtterance;
   }
 
-  onHoverDetectionSegment(utterance) {
+  onHoverDetectionSegment(utterance, keyword) {
     if (utterance) {
-      console.log(utterance);
       this.setState({hoverUtterance: utterance});
+    }
+    else if (keyword) {
+      this.setState({hoverKeyword: keyword.keywordId});
     }
   }
 
   onBlurDetectionSegment() {
-    this.setState({hoverUtterance: null});
+    this.setState({hoverUtterance: null, hoverKeyword: null});
+  }
+
+  checkPhrase (findingKeyword, words, index) {
+    let endPhraseWords = {
+      [words[index].p]: {
+        keywordId: findingKeyword.id
+      }
+    };
+    let splitMarker = findingKeyword.keywordName.split(' ');
+    if (splitMarker.length > 0) {
+      let fuseModel = new Fuse(splitMarker, {threshold: 0.2});
+      let phrase = '';
+      for (let j = 0; j < splitMarker.length; j++) {
+        let nextWord = words[index + j];
+        phrase += nextWord.w + ' ';
+      }
+      let fuseResult = fuseModel.search(phrase);
+      if (fuseResult.length >= splitMarker.length) {
+        for (let j = 1; j < splitMarker.length; j++) {
+          let nextWord = words[index + j];
+          endPhraseWords[nextWord.p] = {
+            keywordId: findingKeyword.id
+          };
+        }
+      }
+    }
+    return endPhraseWords;
   }
 
   render() {
@@ -80,10 +113,12 @@ export class Transcript extends React.Component {
 
     // Prepare markers highlight
     let markers = {};
+    let endPhraseWords = {};
     if (markersState) {
       markersState.markerIds.forEach(markerId => {
         let marker = markersState.markers[markerId];
-        markers[marker.time * 1000] = marker;
+        let startTime = parseInt(marker.time * 1000, 10);
+        markers[startTime] = marker;
       });
     }
 
@@ -101,7 +136,22 @@ export class Transcript extends React.Component {
               currentWordsCounter = (isCurrent) ? currentWordsCounter + 1 : currentWordsCounter;
 
               // hightlight for keywords
-              let isFindingKeyword = (markers[word.s]);
+              let findingKeyword = (markers[word.s]);
+              let isFindingKeyword = false;
+              if (findingKeyword) {
+                let phraseWords = this.checkPhrase(findingKeyword, transcript.words, i);
+                endPhraseWords = Object.assign({}, endPhraseWords, phraseWords);
+              }
+              if (endPhraseWords[word.p]) {
+                isFindingKeyword = true;
+                if (this.state.hoverKeyword !== null && endPhraseWords[word.p].keywordId === this.state.hoverKeyword) {
+                  wordStyle['color'] = '#fff';
+                  wordStyle['backgroundColor'] = '#55a01a';
+                }
+                else {
+                  wordStyle['color'] = '#55a01a';
+                }
+              }
 
               // highlight speaker
               let isSpeaker = (word.m && word.m === 'turn');
@@ -132,8 +182,7 @@ export class Transcript extends React.Component {
 
               let highlightClass = classnames({
                 current: isCurrent,
-                'highlighted': isFindingKeyword || isSpeaker || utterance,
-                'green': isFindingKeyword
+                'highlighted': isFindingKeyword || isSpeaker || utterance
               });
 
               return (
@@ -141,7 +190,7 @@ export class Transcript extends React.Component {
                       className={highlightClass}
                       style={wordStyle}
                       ref={currentWordsCounter === 1 ? 'current' : null}
-                      onMouseEnter={this.onHoverDetectionSegment.bind(this, utterance)}
+                      onMouseEnter={this.onHoverDetectionSegment.bind(this, utterance, endPhraseWords[word.p])}
                       onMouseLeave={this.onBlurDetectionSegment.bind(this)}
                 >
                   {(word.m === 'punc') ? word.w : ' ' + word.w}

@@ -39,6 +39,7 @@ export default handleActions({
       markerIds = markerIds.concat(i);
       markers[i] = {
         ...initialMarkerState,
+        id: i,
         time: marker.time,
         keywordName: marker.keywordName
       }
