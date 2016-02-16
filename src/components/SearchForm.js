@@ -36,6 +36,7 @@ export class SearchForm extends React.Component {
   }
 
   render() {
+    let state = this.props.state.toJS();
     return (
       <form className="form--filters">
         <Row>
@@ -44,15 +45,15 @@ export class SearchForm extends React.Component {
               <i className="fa fa-search"/>
               <Input type="text"
                      placeholder="Search transcripts..."
-                     value={this.props.state.searchString}
+                     value={state.searchString}
                      buttonAfter={this.searchButtonAddon()}
                      onInput={this.changeSearchText.bind(this)}/>
             </div>
           </Col>
 
           <Col sm={4}>
-            <DatePicker dateFrom={this.props.state.dateFrom}
-                        dateTo={this.props.state.dateTo}
+            <DatePicker dateFrom={state.dateFrom}
+                        dateTo={state.dateTo}
                         applyDate={this.applyDate.bind(this)}
                         clearDate={this.clearDate.bind(this)}/>
           </Col>
@@ -61,8 +62,8 @@ export class SearchForm extends React.Component {
             <div className="pull-right">
               <DropdownList onSelect={this.onSelectOrder.bind(this)}
                             dropdownKey="sort-list-dropdown"
-                            items={this.props.state.order}
-                            activeItemId={this.props.state.selectedOrderId}
+                            items={state.order}
+                            activeItemId={state.selectedOrderId}
               />
             </div>
           </Col>

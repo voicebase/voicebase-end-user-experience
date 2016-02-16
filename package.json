@@ -35,6 +35,7 @@
     "dotenv": "^1.2.0",
     "font-awesome": "^4.5.0",
     "history": "^1.17.0",
+    "immutable": "^3.7.6",
     "jquery": "^1.10",
     "koa": "^2.0.0-alpha.3",
     "koa-connect-history-api-fallback": "^0.3.0",

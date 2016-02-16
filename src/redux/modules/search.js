@@ -1,4 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
+import { Map } from 'immutable';
 
 /*
  * Constants
@@ -29,7 +30,7 @@ export const actions = {
 /*
  * State
  * */
-export const initialState = {
+export const initialState = Map({
   dateFrom: '',
   dateTo: '',
   searchString: '',
@@ -48,40 +49,30 @@ export const initialState = {
       name: 'Order by Oldest'
     }
   }
-};
+});
 
 /*
  * Reducers
  * */
 export default handleActions({
   [APPLY_DATE]: (state, { payload: dateObj }) => {
-    return {
-      ...state,
-      dateFrom: dateObj.dateFrom,
-      dateTo: dateObj.dateTo
-    };
+    return state
+      .set('dateFrom', dateObj.dateFrom)
+      .set('dateTo', dateObj.dateTo)
   },
 
   [CLEAR_DATE]: (state) => {
-    return {
-      ...state,
-      dateFrom: '',
-      dateTo: ''
-    };
+    return state
+      .set('dateFrom', '')
+      .set('dateTo', '')
   },
 
   [SELECT_ORDER]: (state, { payload: orderId }) => {
-    return {
-      ...state,
-      selectedOrderId: orderId
-    };
+    return state.set('selectedOrderId', orderId)
   },
 
   [SET_SEARCH_STRING]: (state, { payload: text }) => {
-    return {
-      ...state,
-      searchString: text
-    };
+    return state.set('searchString', text)
   }
 
 }, initialState);
