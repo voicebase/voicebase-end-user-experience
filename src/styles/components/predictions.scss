@@ -24,3 +24,14 @@
 .icon-fail {
   color: #d9534f;
 }
+
+@media (max-width: 768px) {
+  .listing__prediction__heading {
+    font-size: 14px;
+    height: 50px;
+  }
+
+  .listing__prediction__value {
+    font-size: 40px;
+  }
+}

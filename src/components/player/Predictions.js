@@ -25,7 +25,7 @@ export class Predictions extends React.Component {
             <h6 className="listing__prediction__value text-success">{predictions['directions']}</h6>
           </Col>
           <Col sm={2}>
-            <h5 className="listing__prediction__heading">Asked about<br/>Employment</h5>
+            <h5 className="listing__prediction__heading">Asked About<br/>Employment</h5>
             <h6 className="listing__prediction__value text-muted">{predictions['employment']}</h6>
           </Col>
           <Col sm={2}>
