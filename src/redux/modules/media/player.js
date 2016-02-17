@@ -14,6 +14,7 @@ export const SET_DURATION = 'SET_DURATION';
 export const SET_TIMELINE_WIDTH = 'SET_TIMELINE_WIDTH';
 export const SET_UTTERANCE_TIME = 'SET_UTTERANCE_TIME';
 export const CLEAR_UTTERANCE_TIME = 'CLEAR_UTTERANCE_TIME';
+export const SET_FULLSCREEN = 'SET_FULLSCREEN';
 
 /*
  * Actions
@@ -40,6 +41,9 @@ export const setUtteranceTime = createAction(SET_UTTERANCE_TIME, (id, time) => {
   return {id, time};
 });
 export const clearUtteranceTime = createAction(CLEAR_UTTERANCE_TIME, (id) => id);
+export const setFullscreen = createAction(SET_FULLSCREEN, (id, isFullscreen) => {
+  return {id, isFullscreen};
+});
 
 export const actions = {
   createPlayer,
@@ -51,7 +55,8 @@ export const actions = {
   setDuration,
   setTimelineWidth,
   setUtteranceTime,
-  clearUtteranceTime
+  clearUtteranceTime,
+  setFullscreen
 };
 
 /*
@@ -71,6 +76,7 @@ const initialPlayerState = {
   duration: 0,
   timelineWidth: null,
   utteranceTime: null,
+  isFullscreen: false,
   error: ''
 };
 
@@ -201,6 +207,19 @@ export default handleActions({
         [id]: {
           ...state.players[id],
           utteranceTime: null
+        }
+      }
+    };
+  },
+
+  [SET_FULLSCREEN]: (state, {payload: { id, isFullscreen }}) => {
+    return {
+      ...state,
+      players: {
+        ...state.players,
+        [id]: {
+          ...state.players[id],
+          isFullscreen
         }
       }
     };

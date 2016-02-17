@@ -66,7 +66,7 @@ export default class UploadPreview extends React.Component {
                   </div>
                   {
                     playerState.players[fileId] &&
-                    <Button bsStyle="danger" bsSize="small" className="btn-delete" onClick={this.removeFile.bind(this, fileId)}>
+                    <Button bsStyle="danger" className="btn-delete" onClick={this.removeFile.bind(this, fileId)}>
                       <i className="fa fa-fw fa-times"/>
                     </Button>
                   }

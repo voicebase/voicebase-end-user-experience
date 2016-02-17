@@ -181,6 +181,7 @@
 
     .btn-delete {
       margin-left: 10px;
+      height: 34px;
     }
   }
 
@@ -198,21 +199,6 @@
   .player-wrapper {
     flex: 1;
   }
-}
-
-.vbs-player_original--video {
-  float: left;
-  width: 105px;
-  height: 62px;
-  position: relative;
-  margin-right: 15px;
-  margin-top: -25px;
-  text-align: center;
-}
-
-.vbs-player_original--audio {
-  width: 0;
-  height: 0;
 }
 
 .upload-options {

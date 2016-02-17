@@ -205,6 +205,14 @@ export class Player extends React.Component {
     })
   }
 
+  fullscreenPlayer() {
+    this.props.actions.setFullscreen(this.props.mediaId, true);
+  }
+
+  exitFullscreen() {
+    this.props.actions.setFullscreen(this.props.mediaId, false);
+  }
+
   render () {
     let playerState = this.props.playerState;
     if (!playerState || playerState.loading) {
@@ -213,9 +221,13 @@ export class Player extends React.Component {
       );
     }
 
-    let playerOriginalClasses = classnames('vbs-player_original', {
-      'vbs-player_original--video': playerState.type === 'video',
-      'vbs-player_original--audio': playerState.type === 'audio'
+    let playerClases = classnames('vbs-player', {
+      'vbs-player--fullscreen': playerState.isFullscreen
+    });
+
+    let playerOriginalClasses = classnames('vbs-player__original', {
+      'vbs-player__original--video': playerState.type === 'video',
+      'vbs-player__original--audio': playerState.type === 'audio'
     });
 
     let mediaState = this.props.mediaState;
@@ -243,7 +255,7 @@ export class Player extends React.Component {
     let hasMarkers = this.props.markersState && this.props.markersState.markerIds && this.props.markersState.markerIds.length > 0;
 
     return (
-      <div className="vbs-player">
+      <div className={playerClases}>
         <div className={playerOriginalClasses}>
           <VbsReactPlayer
             ref='player'
@@ -258,6 +270,10 @@ export class Player extends React.Component {
             onEnded={this.onPause.bind(this)}
             onDuration={this.onDuration.bind(this)}
           />
+          {
+            playerState.type === 'video' && !playerState.isFullscreen &&
+            <a href="#" className="vbs-player__original__fullscreen-btn" onClick={this.fullscreenPlayer.bind(this)}><i className="fa fa-arrows-alt"/></a>
+          }
         </div>
         <div className="player">
           <ButtonGroup className="player__buttons">
@@ -311,10 +327,11 @@ export class Player extends React.Component {
           </div>
 
           <ButtonGroup className="player__buttons">
-            <OverlayTrigger trigger="click" placement="bottom" overlay={this.getSlider()}>
+            <OverlayTrigger trigger="click" placement={playerState.isFullscreen ? 'top' : 'bottom'} overlay={this.getSlider()}>
               <Button><i className="fa fa-fw fa-volume-up"/></Button>
             </OverlayTrigger>
             { this.props.hasDownloadButton && <Button><i className="fa fa-fw fa-cloud-download" /></Button> }
+            { playerState.isFullscreen && <Button onClick={this.exitFullscreen.bind(this)}>Exit</Button> }
           </ButtonGroup>
         </div>
       </div>
