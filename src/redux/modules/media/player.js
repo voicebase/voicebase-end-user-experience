@@ -18,8 +18,8 @@ export const CLEAR_UTTERANCE_TIME = 'CLEAR_UTTERANCE_TIME';
 /*
  * Actions
  * */
-export const createPlayer = createAction(CREATE_PLAYER, (id, url) => {
-  return {id, url};
+export const createPlayer = createAction(CREATE_PLAYER, (id, url, type) => {
+  return {id, url, type};
 });
 export const destroyPlayer = createAction(DESTROY_PLAYER, id => id);
 export const play = createAction(PLAY, (id) => id);
@@ -64,6 +64,7 @@ export const initialState = {
 
 const initialPlayerState = {
   url: '',
+  type: 'audio',
   playing: false,
   played: 0,
   loaded: 0,
@@ -85,7 +86,8 @@ export default handleActions({
         ...state.players,
         [payload.id]: {
           ...initialPlayerState,
-          url: payload.url
+          url: payload.url,
+          type: payload.type
         }
       }
     };

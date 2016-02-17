@@ -27,3 +27,13 @@ export const getRandomColor = function () {
   }
   return color;
 };
+
+export const getFileType = function (file) {
+  if (file.type.indexOf('audio') > -1) {
+    return 'audio';
+  }
+  else if (file.type.indexOf('video') > -1) {
+    return 'video';
+  }
+  else return 'unknown';
+};

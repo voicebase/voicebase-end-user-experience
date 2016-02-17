@@ -17,7 +17,7 @@ export class VbsPlayerApp extends React.Component {
 
   componentWillMount() {
     let url = 'http://demo.voicsebasejwplayer.dev4.sibers.com/media/washington.mp3';
-    this.props.actions.createPlayer(this.props.mediaId, url);
+    this.props.actions.createPlayer(this.props.mediaId, url, 'audio');
   }
 
   selectTab(key) {

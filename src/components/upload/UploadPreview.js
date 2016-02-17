@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import classnames from 'classnames'
 import { ListGroup, ListGroupItem, Button } from 'react-bootstrap'
 import Player from '../player/Player';
 
@@ -14,8 +15,8 @@ export default class UploadPreview extends React.Component {
     if (fileIds.length > 0) {
       fileIds.forEach(id => {
         if (!this.props.playerState[id]) {
-          let file = this.props.uploadState.files[id].file;
-          this.props.actions.createPlayer(id, URL.createObjectURL(file));
+          let file = this.props.uploadState.files[id];
+          this.props.actions.createPlayer(id, URL.createObjectURL(file.file), file.type);
         }
       });
     }
@@ -43,10 +44,15 @@ export default class UploadPreview extends React.Component {
       <ListGroup className="preview-players-list">
         {
           uploadState.fileIds.map(fileId => {
-            let file = uploadState.files[fileId].file;
+            let file = uploadState.files[fileId];
+            let itemClasses = classnames({
+              'preview-player-item--video': file.type === 'video',
+              'preview-player-item--audio': file.type === 'audio'
+            });
+
             return (
-              <ListGroupItem key={'preview' + fileId}>
-                <h4>{file.name}</h4>
+              <ListGroupItem key={'preview' + fileId} className={itemClasses}>
+                <h4>{file.file.name}</h4>
                 <div className="preview-player-row">
                   <div className="player-wrapper">
                     <Player mediaId={fileId}

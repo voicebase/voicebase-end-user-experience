@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import _ from 'lodash'
+import { getFileType } from '../../common/Common'
 import MediaApi from '../../api/mediaApi'
 
 /*
@@ -77,9 +78,11 @@ export default handleActions({
     let filesObj = {};
     files.forEach(file => {
       let id = _.uniqueId('file-');
+      let type = getFileType(file);
       fileIds.push(id);
       filesObj[id] = {
-        file: file
+        file: file,
+        type: type
       }
     });
     return {

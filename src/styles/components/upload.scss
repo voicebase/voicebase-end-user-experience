@@ -183,6 +183,13 @@
       margin-left: 10px;
     }
   }
+
+  .preview-player-item--video {
+    h4 {
+      margin-left: 120px;
+    }
+
+  }
 }
 
 .preview-player-row {
@@ -191,6 +198,21 @@
   .player-wrapper {
     flex: 1;
   }
+}
+
+.vbs-player_original--video {
+  float: left;
+  width: 105px;
+  height: 62px;
+  position: relative;
+  margin-right: 15px;
+  margin-top: -25px;
+  text-align: center;
+}
+
+.vbs-player_original--audio {
+  width: 0;
+  height: 0;
 }
 
 .upload-options {

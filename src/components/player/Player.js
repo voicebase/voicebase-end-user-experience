@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import classnames from 'classnames'
 import VbsReactPlayer from './react-player/VbsReactPlayer'
 import { ButtonGroup, Button, Popover, OverlayTrigger } from 'react-bootstrap'
 import Spinner from '../Spinner';
@@ -212,6 +213,11 @@ export class Player extends React.Component {
       );
     }
 
+    let playerOriginalClasses = classnames('vbs-player_original', {
+      'vbs-player_original--video': playerState.type === 'video',
+      'vbs-player_original--audio': playerState.type === 'audio'
+    });
+
     let mediaState = this.props.mediaState;
     let duration = this.props.playerState.duration;
     let timePercentValue = (!this.state.seeking) ? (playerState.played) : (this.state.seekValue)
@@ -238,6 +244,21 @@ export class Player extends React.Component {
 
     return (
       <div className="vbs-player">
+        <div className={playerOriginalClasses}>
+          <VbsReactPlayer
+            ref='player'
+            activePlayer={this.props.playerType}
+            width='100%'
+            height='100%'
+            url={playerState.url}
+            playing={playerState.playing}
+            onPlay={this.onPlay.bind(this)}
+            volume={volume}
+            onProgress={this.onProgress.bind(this)}
+            onEnded={this.onPause.bind(this)}
+            onDuration={this.onDuration.bind(this)}
+          />
+        </div>
         <div className="player">
           <ButtonGroup className="player__buttons">
             <Button bsStyle="primary" onClick={this.togglePlay.bind(this)}>
@@ -296,20 +317,6 @@ export class Player extends React.Component {
             { this.props.hasDownloadButton && <Button><i className="fa fa-fw fa-cloud-download" /></Button> }
           </ButtonGroup>
         </div>
-
-        <VbsReactPlayer
-          ref='player'
-          activePlayer={this.props.playerType}
-          width={0}
-          height={0}
-          url={playerState.url}
-          playing={playerState.playing}
-          onPlay={this.onPlay.bind(this)}
-          volume={volume}
-          onProgress={this.onProgress.bind(this)}
-          onEnded={this.onPause.bind(this)}
-          onDuration={this.onDuration.bind(this)}
-        />
       </div>
     )
   }
