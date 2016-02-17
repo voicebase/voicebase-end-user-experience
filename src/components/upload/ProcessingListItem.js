@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
+import NotificationSystem from 'react-notification-system'
 
 export default class ProcessingListItem extends React.Component {
   static propTypes = {
@@ -28,16 +29,24 @@ export default class ProcessingListItem extends React.Component {
   getMediaData() {
     let mediaDataState = this.props.mediaDataState;
     this.props.actions.getDataForMedia(this.props.token, this.props.mediaId);
-    if (mediaDataState && mediaDataState.status === 'finished' && this.processingInterval) {
+    if (mediaDataState && (mediaDataState.status === 'finished' || mediaDataState.status === 'failed') && this.processingInterval) {
       clearInterval(this.processingInterval);
       this.processingInterval = null;
       setTimeout(() => {
         this.props.actions.removeProcessingMedia(this.props.mediaId);
-        this.props.actions.addMedia({
-          mediaId: this.props.mediaId,
-          status: mediaDataState.data.status,
-          metadata: mediaDataState.data.metadata
-        });
+        if (mediaDataState.status === 'finished') {
+          this.props.actions.addMedia({
+            mediaId: this.props.mediaId,
+            status: mediaDataState.data.status,
+            metadata: mediaDataState.data.metadata
+          });
+        }
+        else {
+          this.refs.notificationSystem.addNotification({
+            message: 'Upload was failed',
+            level: 'error'
+          });
+        }
       });
     }
   }
@@ -92,22 +101,23 @@ export default class ProcessingListItem extends React.Component {
     return (
       <div className="list-group-item listing listing--processing">
         <h4 className="list-group-item-heading">{this.props.mediaId}</h4>
-          {
-            (!mediaDataState || (mediaDataState && !mediaDataState.jobTasks)) &&
-            <div className="progress">
-              <div className="progress__step active">Processing</div>
-            </div>
-          }
-          {
-            (mediaDataState && mediaDataState.jobTasks) &&
-            <div className="progress">
-              <div className={this.getClasses(fileStatus)}>File processing</div>
-              <div className={this.getClasses(keywordsStatus)}>Analytics</div>
-              <div className="progress__step done">Prediction/detection</div>
-              <div className={resultClasses}>Results</div>
-            </div>
-          }
-        </div>
+        {
+          (!mediaDataState || (mediaDataState && !mediaDataState.jobTasks)) &&
+          <div className="progress">
+            <div className="progress__step active">Processing</div>
+          </div>
+        }
+        {
+          (mediaDataState && mediaDataState.jobTasks) &&
+          <div className="progress">
+            <div className={this.getClasses(fileStatus)}>File processing</div>
+            <div className={this.getClasses(keywordsStatus)}>Analytics</div>
+            <div className="progress__step done">Prediction/detection</div>
+            <div className={resultClasses}>Results</div>
+          </div>
+        }
+        <NotificationSystem ref="notificationSystem" />
+      </div>
     )
   }
 }
