@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
-import { Map } from 'immutable';
+import { fromJS } from 'immutable';
 
 /*
  * Constants
@@ -30,7 +30,7 @@ export const actions = {
 /*
  * State
  * */
-export const initialState = Map({
+export const initialState = fromJS({
   dateFrom: '',
   dateTo: '',
   searchString: '',

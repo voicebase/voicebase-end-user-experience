@@ -51,11 +51,12 @@ export class SpottingGroups extends React.Component {
   }
 
   getHeader() {
+    let groupsState = this.props.groupsState.toJS();
     return (
-      <SettingsListHeader title={this.props.groupsState.view.title}
-                          addButtonLabel={this.props.groupsState.view.addButtonLabel}
-                          length={this.props.groupsState.groupIds.length}
-                          isAddPending={this.props.groupsState.isAddPending}
+      <SettingsListHeader title={groupsState.view.title}
+                          addButtonLabel={groupsState.view.addButtonLabel}
+                          length={groupsState.groupIds.length}
+                          isAddPending={groupsState.isAddPending}
                           handleClickHeader={this.toggleList.bind(this)}
                           handleClickAdd={this.expandCreateForm.bind(this)}
       />
@@ -63,7 +64,7 @@ export class SpottingGroups extends React.Component {
   }
 
   render() {
-    let groupsState = this.props.groupsState;
+    let groupsState = this.props.groupsState.toJS();
 
     let initialValueForAdd = {
       name: '',
@@ -104,7 +105,7 @@ export class SpottingGroups extends React.Component {
                     return (
                       <SpottingGroupItem key={'group' + groupId}
                                          token={this.props.token}
-                                         group={this.props.groupsState.groups[groupId]}
+                                         group={groupsState.groups[groupId]}
                                          actions={this.props.actions}/>
                     )
                   })

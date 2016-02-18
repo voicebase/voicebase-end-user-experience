@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import _ from 'lodash'
+import { fromJS } from 'immutable';
 import GroupsApi from '../../api/groupsApi'
 
 /*
@@ -58,7 +59,7 @@ export const actions = {
 /*
  * State
  * */
-export const initialState = {
+export const initialState = fromJS({
   view: {
     title: 'Phrase Groups',
     addButtonLabel: 'Add phrase group',
@@ -70,25 +71,21 @@ export const initialState = {
   isGetPending: false,
   isAddPending: false,
   errorMessage: ''
-};
+});
 
 /*
  * Reducers
  * */
 export default handleActions({
   [GET_GROUPS + '_PENDING']: (state, { payload }) => {
-    return {
-      ...state,
+    return state.merge({
       isGetPending: true,
       errorMessage: ''
-    };
+    });
   },
 
   [GET_GROUPS + '_REJECTED']: (state, { payload }) => {
-    return {
-      ...state,
-      errorMessage: payload.error
-    };
+    return state.set('errorMessage', payload.error)
   },
 
   [GET_GROUPS + '_FULFILLED']: (state, { payload: response }) => {
@@ -106,16 +103,15 @@ export default handleActions({
         name: group.name,
         keywordIds,
         keywords,
-        id: i
+        id: i.toString()
       };
     });
-    return {
-      ...state,
+    return state.merge({
       groupIds: groupIds,
       groups: groups,
       isGetPending: false,
       errorMessage: ''
-    };
+    });
   },
 
   [DELETE_GROUP + '_PENDING']: (state, { payload }) => {
@@ -155,17 +151,10 @@ export default handleActions({
   },
 
   [EDIT_GROUP + '_PENDING']: (state, { payload }) => {
-    return {
-      ...state,
-      groups: {
-        ...state.groups,
-        [payload.groupId]: {
-          ...state.groups[payload.groupId],
-          isEditPending: true,
-          editError: ''
-        }
-      }
-    };
+    return state.mergeIn(['groups', payload.groupId], {
+      isEditPending: true,
+      editError: ''
+    });
   },
 
   [EDIT_GROUP + '_REJECTED']: (state, { payload }) => {
@@ -189,21 +178,13 @@ export default handleActions({
       keywordIds.push(i);
       keywords[i] = keyword;
     });
-
-    return {
-      ...state,
-      groups: {
-        ...state.groups,
-        [payload.groupId]: {
-          ...state.groups[payload.groupId],
-          name: payload.data.name,
-          keywordIds,
-          keywords,
-          isEditPending: false,
-          editError: ''
-        }
-      }
-    };
+    return state.mergeIn(['groups', payload.groupId], {
+      name: payload.data.name,
+      keywordIds,
+      keywords,
+      isEditPending: false,
+      editError: ''
+    });
   },
 
   [ADD_GROUP + '_PENDING']: (state, { payload }) => {
