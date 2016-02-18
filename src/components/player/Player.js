@@ -55,14 +55,6 @@ export class Player extends React.Component {
     }
   }
 
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  handleResize() {
-    this.render();
-  }
-
   togglePlay() {
     (this.props.playerState.playing) ? this.onPause() : this.onPlay();
   }
@@ -219,6 +211,7 @@ export class Player extends React.Component {
 
   exitFullscreen() {
     this.props.actions.setFullscreen(this.props.mediaId, false);
+    setTimeout(() => this.forceUpdate(), 100); // for re-rendering markers
   }
 
   render () {
