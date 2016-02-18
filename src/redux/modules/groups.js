@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import _ from 'lodash'
+import { normalize } from '../../common/Normalize'
 import GroupsApi from '../../api/groupsApi'
 
 /*
@@ -92,27 +93,20 @@ export default handleActions({
   },
 
   [GET_GROUPS + '_FULFILLED']: (state, { payload: response }) => {
-    let groupIds = [];
-    let groups = {};
-    response.groups.forEach((group, i) => {
-      groupIds.push(i);
-      let keywordIds = [];
-      let keywords = {};
-      group.keywords.forEach((keyword, i) => {
-        keywordIds.push(i);
-        keywords[i] = keyword;
-      });
-      groups[i] = {
+    let groupsResult = normalize(response.groups, (group, i) => {
+      let result = normalize(group.keywords);
+      return {
         name: group.name,
-        keywordIds,
-        keywords,
-        id: i
-      };
+        keywordIds: result.ids,
+        keywords: result.entities,
+        id: i.toString()
+      }
     });
+
     return {
       ...state,
-      groupIds: groupIds,
-      groups: groups,
+      groupIds: groupsResult.ids,
+      groups: groupsResult.entities,
       isGetPending: false,
       errorMessage: ''
     };
@@ -183,12 +177,7 @@ export default handleActions({
   },
 
   [EDIT_GROUP + '_FULFILLED']: (state, { payload }) => {
-    let keywordIds = [];
-    let keywords = {};
-    payload.data.keywords.forEach((keyword, i) => {
-      keywordIds.push(i);
-      keywords[i] = keyword;
-    });
+    let result = normalize(payload.data.keywords);
 
     return {
       ...state,
@@ -197,8 +186,8 @@ export default handleActions({
         [payload.groupId]: {
           ...state.groups[payload.groupId],
           name: payload.data.name,
-          keywordIds,
-          keywords,
+          keywordIds: result.ids,
+          keywords: result.entities,
           isEditPending: false,
           editError: ''
         }
@@ -223,13 +212,7 @@ export default handleActions({
 
   [ADD_GROUP + '_FULFILLED']: (state, { payload }) => {
     let id = new Date().getTime();
-
-    let keywordIds = [];
-    let keywords = {};
-    payload.data.keywords.forEach((keyword, i) => {
-      keywordIds.push(i);
-      keywords[i] = keyword;
-    });
+    let result = normalize(payload.data.keywords);
 
     return {
       ...state,
@@ -241,8 +224,8 @@ export default handleActions({
         [id]: {
           id,
           name: payload.data.name,
-          keywordIds,
-          keywords
+          keywordIds: result.ids,
+          keywords: result.entities
         }
       }
     };

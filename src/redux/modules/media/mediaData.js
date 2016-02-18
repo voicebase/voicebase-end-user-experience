@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { getClearWordFromTranscript, getRandomColor } from '../../../common/Common'
-import uniqueId from 'lodash/uniqueId'
+import { normalize } from '../../../common/Normalize'
 import MediaApi from '../../../api/mediaApi'
 
 /*
@@ -206,17 +206,16 @@ const parseMediaData = function (data) {
 
   let transcriptSpeakers = [];
   if (data.transcripts && data.transcripts.latest && data.transcripts.latest.words) {
-    data.transcripts.latest.words.forEach((word, i) => {
+    let result = normalize(data.transcripts.latest.words, word => {
       if (word.m && word.m === 'turn') {
         let clearSpeakerName = getClearWordFromTranscript(word.w);
         speakers = addSpeaker(speakers, [clearSpeakerName]);
         transcriptSpeakers.push({start: word.s, name: clearSpeakerName});
       }
-      transcript.wordIds.push(i);
-      transcript.words[i] = {
-        ...word
-      };
+      return word;
     });
+    transcript.wordIds = result.ids;
+    transcript.words = result.entities;
   }
 
   let predictions = null;
@@ -228,18 +227,17 @@ const parseMediaData = function (data) {
 
   let utterances = null;
   if (data.utterances && data.utterances.latest && data.utterances.latest.utterances) {
-    utterances = {
-      itemIds: [],
-      items: {}
-    };
-    data.utterances.latest.utterances.forEach((utterance, i) => {
-      utterances.itemIds.push(i);
-      utterances.items[i] = {
+    let result = normalize(data.utterances.latest.utterances, (utterance, i) => {
+      return {
         ...utterance,
-        id: i,
+        id: i.toString(),
         color: getRandomColor()
       };
-    })
+    });
+    utterances = {
+      itemIds: result.ids,
+      items: result.entities
+    };
   }
 
   let jobTasks = null;
@@ -270,38 +268,35 @@ const parseMediaData = function (data) {
 };
 
 const parseKeywords = function (keywordsArr) {
-  let keywordsIds = [];
-  let keywords = {};
   let speakers = {};
-  keywordsArr.forEach((keyword, i) => {
-    keywordsIds.push(i);
-    keywords[i] = keyword;
+  let result = normalize(keywordsArr, keyword => {
     speakers = addSpeaker(speakers, Object.keys(keyword.t));
+    return keyword;
   });
+  let keywordsIds = result.ids;
+  let keywords = result.entities;
   return {keywordsIds, keywords, speakers}
 };
 
 const parseTopics = function (topicsArr) {
-  let topicsIds = [];
-  let topics = {};
   let activeTopic = null;
   let speakers = {};
 
-  topicsArr.forEach((topic, i) => {
-    let key = uniqueId('topic-');
+  let result = normalize(topicsArr, (topic, i) => {
     if (i === 0) {
-      activeTopic = key;
+      activeTopic = i.toString();
     }
-    topicsIds.push(key);
     let parseKeywordsResult = parseKeywords(topic.keywords);
     speakers = Object.assign({}, speakers, parseKeywordsResult.speakers);
-    topics[key] = {
+    return {
       ...topic,
-      key,
+      key: i.toString(),
       keywordsIds: parseKeywordsResult.keywordsIds,
       keywords: parseKeywordsResult.keywords
     }
   });
+  let topicsIds = result.ids;
+  let topics = result.entities;
 
   return {topicsIds, topics, activeTopic, speakers}
 };

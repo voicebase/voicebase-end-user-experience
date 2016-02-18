@@ -1,4 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
+import { normalize } from '../../../common/Normalize'
 
 /*
  * Constants
@@ -33,13 +34,10 @@ export const initialMarkerState = {
  * */
 export default handleActions({
   [SET_MARKERS]: (state, {payload}) => {
-    let markerIds = [];
-    let markers = {};
-    payload.markers.forEach((marker, i) => {
-      markerIds = markerIds.concat(i);
-      markers[i] = {
+    let result = normalize(payload.markers, (marker, i) => {
+      return {
         ...initialMarkerState,
-        id: i,
+        id: i.toString(),
         time: marker.time,
         keywordName: marker.keywordName
       }
@@ -49,8 +47,8 @@ export default handleActions({
       ...state,
       [payload.mediaId]: {
         ...state[payload.mediaId],
-        markerIds,
-        markers,
+        markerIds: result.ids,
+        markers: result.entities,
         justCreated: true
       }
     };

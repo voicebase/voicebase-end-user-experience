@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import _ from 'lodash'
+import { normalize } from '../../common/Normalize'
 import { getFileType } from '../../common/Common'
 import MediaApi from '../../api/mediaApi'
 
@@ -74,21 +75,15 @@ export const initialState = {
  * */
 export default handleActions({
   [ADD_FILES]: (state, { payload: files }) => {
-    let fileIds = [];
-    let filesObj = {};
-    files.forEach(file => {
-      let id = _.uniqueId('file-');
+    let result = normalize(files, file => {
       let type = getFileType(file);
-      fileIds.push(id);
-      filesObj[id] = {
-        file: file,
-        type: type
-      }
+      return { file, type }
     });
+
     return {
       ...state,
-      fileIds,
-      files: filesObj,
+      fileIds: result.ids,
+      files: result.entities,
       view: {
         ...state.view,
         showForm: true,
