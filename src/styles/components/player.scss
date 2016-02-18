@@ -183,8 +183,6 @@
   width: 105px;
   height: 62px;
   position: relative;
-  margin-right: 15px;
-  margin-top: -25px;
   text-align: center;
 }
 
@@ -197,6 +195,19 @@
   margin-right: 0;
   margin-left: 20px;
   margin-top: -13px;
+}
+
+/* Video player for upload preview */
+.preview-player-item--video {
+  .vbs-player--video {
+    padding: 0;
+  }
+
+  .vbs-player--video .vbs-player__original--video {
+    margin-right: 15px;
+    margin-top: -25px;
+    margin-left: 0;
+  }
 }
 
 /* PLAYER FULLSCREEN */
