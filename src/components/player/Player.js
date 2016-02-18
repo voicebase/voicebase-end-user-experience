@@ -55,6 +55,14 @@ export class Player extends React.Component {
     }
   }
 
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  handleResize() {
+    this.render();
+  }
+
   togglePlay() {
     (this.props.playerState.playing) ? this.onPause() : this.onPlay();
   }

@@ -168,14 +168,6 @@
   opacity: 1 !important; // fix empty place for player
 }
 
-.jwlogo {
-  display: none;
-}
-
-.jwcontrolbar {
-  display: none !important;
-}
-
 .volume-slider .arrow {
   display: none;
 }
@@ -205,10 +197,6 @@
   margin-right: 0;
   margin-left: 20px;
   margin-top: -13px;
-
-  .jwdisplayIcon {
-    display: none !important;
-  }
 }
 
 /* PLAYER FULLSCREEN */
@@ -240,7 +228,7 @@
 
   .vbs-player__original--video {
     width: 100%;
-    height: 90%;
+    height: calc(100% - 50px);
   }
 
   .player {

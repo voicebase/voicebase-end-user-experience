@@ -10,13 +10,12 @@
 }
 
 .listing__keywords > .row {
-  height: 100%;
+  display: flex;
 }
 
 .listing__keywords > .row > div {
   overflow-x: hidden;
   overflow-y: auto;
-  height: 100%;
 }
 
 .listing__keywords ul {
