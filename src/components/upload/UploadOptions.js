@@ -108,7 +108,7 @@ export default class UploadPreview extends React.Component {
     return {defaultValue, selectValue}
   }
 
-  render () {
+  render() {
     let uploadState = this.props.uploadState;
     let settingsState = this.props.settingsState;
     let activeLanguageId = uploadState.options.language;
@@ -160,7 +160,7 @@ export default class UploadPreview extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col sm={6}>
+            <Col sm={12}>
               {
                 !predictions.isGetPending && !predictions.errorMessage &&
                 <div className="form-group">
@@ -175,7 +175,9 @@ export default class UploadPreview extends React.Component {
                 </div>
               }
             </Col>
-            <Col sm={6}>
+          </Row>
+          <Row>
+            <Col sm={12}>
               {
                 !detection.isGetPending && !detection.errorMessage &&
                 <div className="form-group">
@@ -191,9 +193,8 @@ export default class UploadPreview extends React.Component {
               }
             </Col>
           </Row>
-
           <Row>
-            <Col sm={6}>
+            <Col sm={12}>
               {
                 !numbers.isGetPending && !numbers.errorMessage &&
                 <div className="form-group">
@@ -208,7 +209,9 @@ export default class UploadPreview extends React.Component {
                 </div>
               }
             </Col>
-            <Col sm={6}>
+          </Row>
+          <Row>
+            <Col sm={12}>
               {
                 !groups.isGetPending && !groups.errorMessage &&
                 <div className="form-group">

@@ -14,12 +14,13 @@ export const SET_DURATION = 'SET_DURATION';
 export const SET_TIMELINE_WIDTH = 'SET_TIMELINE_WIDTH';
 export const SET_UTTERANCE_TIME = 'SET_UTTERANCE_TIME';
 export const CLEAR_UTTERANCE_TIME = 'CLEAR_UTTERANCE_TIME';
+export const SET_FULLSCREEN = 'SET_FULLSCREEN';
 
 /*
  * Actions
  * */
-export const createPlayer = createAction(CREATE_PLAYER, (id, url) => {
-  return {id, url};
+export const createPlayer = createAction(CREATE_PLAYER, (id, url, type) => {
+  return {id, url, type};
 });
 export const destroyPlayer = createAction(DESTROY_PLAYER, id => id);
 export const play = createAction(PLAY, (id) => id);
@@ -40,6 +41,9 @@ export const setUtteranceTime = createAction(SET_UTTERANCE_TIME, (id, time) => {
   return {id, time};
 });
 export const clearUtteranceTime = createAction(CLEAR_UTTERANCE_TIME, (id) => id);
+export const setFullscreen = createAction(SET_FULLSCREEN, (id, isFullscreen) => {
+  return {id, isFullscreen};
+});
 
 export const actions = {
   createPlayer,
@@ -51,7 +55,8 @@ export const actions = {
   setDuration,
   setTimelineWidth,
   setUtteranceTime,
-  clearUtteranceTime
+  clearUtteranceTime,
+  setFullscreen
 };
 
 /*
@@ -64,12 +69,14 @@ export const initialState = {
 
 const initialPlayerState = {
   url: '',
+  type: 'audio',
   playing: false,
   played: 0,
   loaded: 0,
   duration: 0,
   timelineWidth: null,
   utteranceTime: null,
+  isFullscreen: false,
   error: ''
 };
 
@@ -85,7 +92,8 @@ export default handleActions({
         ...state.players,
         [payload.id]: {
           ...initialPlayerState,
-          url: payload.url
+          url: payload.url,
+          type: payload.type
         }
       }
     };
@@ -199,6 +207,19 @@ export default handleActions({
         [id]: {
           ...state.players[id],
           utteranceTime: null
+        }
+      }
+    };
+  },
+
+  [SET_FULLSCREEN]: (state, {payload: { id, isFullscreen }}) => {
+    return {
+      ...state,
+      players: {
+        ...state.players,
+        [id]: {
+          ...state.players[id],
+          isFullscreen
         }
       }
     };

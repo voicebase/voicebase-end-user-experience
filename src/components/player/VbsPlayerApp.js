@@ -16,8 +16,14 @@ export class VbsPlayerApp extends React.Component {
   };
 
   componentWillMount() {
-    let url = 'http://demo.voicsebasejwplayer.dev4.sibers.com/media/washington.mp3';
-    this.props.actions.createPlayer(this.props.mediaId, url);
+    if (this.props.mediaId === 'fake_video_media') {
+      let url = 'http://demo.voicsebasejwplayer.dev4.sibers.com/media/dual.mp4';
+      this.props.actions.createPlayer(this.props.mediaId, url, 'video');
+    }
+    else {
+      let url = 'http://demo.voicsebasejwplayer.dev4.sibers.com/media/washington.mp3';
+      this.props.actions.createPlayer(this.props.mediaId, url, 'audio');
+    }
   }
 
   selectTab(key) {

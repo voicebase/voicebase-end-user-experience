@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import MediaListItem from './MediaListItem'
+import ProcessingListItem from './upload/ProcessingListItem'
 
 export class MediaList extends React.Component {
   static propTypes = {
@@ -14,6 +15,19 @@ export class MediaList extends React.Component {
 
     return (
       <div className="list-group listings">
+        {
+          mediaList.processingIds.map(mediaId => {
+            return (
+              <ProcessingListItem key={'upload-progress-' + mediaId}
+                                  token={this.props.token}
+                                  mediaId={mediaId}
+                                  mediaDataState={state.mediaData.data[mediaId]}
+                                  actions={this.props.actions}
+              />
+            )
+          })
+        }
+
         {
           mediaList.mediaIds.map(mediaId => {
             return <MediaListItem key={mediaId}

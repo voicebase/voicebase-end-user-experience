@@ -11325,11 +11325,11 @@ export default {
     },
     "predictions" : {
       "latest" : {
-        "sales-lead": 0.025,
+        "sales-lead": 3,
         "request-quote": 5.5,
         "directions" : 3.3,
         "employment" : 0,
-        "churn" : 85,
+        "churn" : 100,
         "appointment": false
       }
     },

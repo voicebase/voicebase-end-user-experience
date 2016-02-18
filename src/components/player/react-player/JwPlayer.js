@@ -21,7 +21,11 @@ export default class JwPlayer extends VbsBase {
       file: url,
       primary: 'html5',
       width: this.props.width,
-      height: this.props.height
+      height: this.props.height,
+      controls: false,
+      logo: {
+        hide: true
+      }
     });
     this.player.onReady(() => {
       this.isReady = true;

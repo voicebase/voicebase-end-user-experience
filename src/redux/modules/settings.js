@@ -3,6 +3,7 @@ import { combineReducers } from 'redux'
 import groups from './groups';
 
 import _ from 'lodash'
+import { normalize } from '../../common/Normalize'
 import PredictionsApi from '../../api/predictionsApi'
 import DetectionsApi from '../../api/detectionsApi'
 import NumbersApi from '../../api/numbersApi'
@@ -188,22 +189,19 @@ export const settings = handleActions({
   },
 
   [GET_ITEMS + '_FULFILLED']: (state, { payload: {type, data} }) => {
-    let itemIds = [];
-    let items = {};
-    data.forEach((item, i) => {
-      itemIds.push(i);
-      items[i] = {
+    let result = normalize(data, (item, i) => {
+      return {
         ...item,
-        id: i
-      };
+        id: i.toString()
+      }
     });
 
     return {
       ...state,
       [type]: {
         ...state[type],
-        itemIds,
-        items,
+        itemIds: result.ids,
+        items: result.entities,
         isGetPending: false,
         errorMessage: ''
       }
