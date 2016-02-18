@@ -117,7 +117,7 @@ export class Transcript extends React.Component {
     if (markersState) {
       markersState.markerIds.forEach(markerId => {
         let marker = markersState.markers[markerId];
-        let startTime = parseInt(marker.time * 1000, 10);
+        let startTime = marker.time.toFixed(2);
         markers[startTime] = marker;
       });
     }
@@ -136,7 +136,7 @@ export class Transcript extends React.Component {
               currentWordsCounter = (isCurrent) ? currentWordsCounter + 1 : currentWordsCounter;
 
               // hightlight for keywords
-              let findingKeyword = (markers[word.s]);
+              let findingKeyword = markers[(word.s / 1000).toFixed(2)];
               let isFindingKeyword = false;
               if (findingKeyword) {
                 let phraseWords = this.checkPhrase(findingKeyword, transcript.words, i);
