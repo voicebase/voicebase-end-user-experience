@@ -1,6 +1,7 @@
 import axios from 'axios'
 import $ from 'jquery'
 import fakeJson from './fakeData'
+import fakeDataVideoJson from './fakeDataVideo'
 
 const baseUrl = 'https://apis.voicebase.com/v2-beta';
 
@@ -15,7 +16,7 @@ export default {
       .then(response => {
         let processingIds = [];
         let processingMedia = {};
-        let mediaIds = ['fake_mediaId'];
+        let mediaIds = ['fake_mediaId', 'fake_video_media'];
         let media = {
           'fake_mediaId': {
             mediaId: 'fake_mediaId',
@@ -23,6 +24,14 @@ export default {
             metadata: {
               title: 'Fake Media For Testing',
               duration: 360
+            }
+          },
+          'fake_video_media': {
+            'mediaId': 'fake_video_media',
+            'status': 'finished',
+            'metadata': {
+              title: 'Fake Media For Testing Video',
+              duration: 214
             }
           }
         };
@@ -78,6 +87,13 @@ export default {
         }, 500)
       })
     }
+    else if (mediaId === 'fake_video_media') {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(fakeDataVideoJson.media);
+        }, 500)
+      })
+    }
     else {
       let url = `${baseUrl}/media/${mediaId}`;
       return axios.get(url, {
@@ -86,9 +102,6 @@ export default {
         }
       })
       .then(response => {
-        if (mediaId === 'fake_mediaId') {
-          response.data.media.mediaId = 'fake_mediaId';
-        }
         return response.data.media;
       })
       .catch(error => {

@@ -222,6 +222,7 @@ export class Player extends React.Component {
     }
 
     let playerClases = classnames('vbs-player', {
+      'vbs-player--video': playerState.type === 'video',
       'vbs-player--fullscreen': playerState.isFullscreen
     });
 
