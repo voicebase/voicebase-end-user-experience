@@ -10,7 +10,8 @@ export default {
     "status": "finished",
     "metadata": {
       title: 'Fake Media For Testing',
-      duration: 360
+      duration: 360,
+      type: 'audio'
     },
     "transcripts": {
       "latest": {

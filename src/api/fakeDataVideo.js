@@ -10,7 +10,8 @@ export default {
     "status": "finished",
     "metadata": {
       title: 'Fake Media For Testing Video',
-      duration: 214
+      duration: 214,
+      type: 'video'
     },
     "transcripts": {
       "latest": {
