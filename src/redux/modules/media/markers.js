@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { normalize } from '../../../common/Normalize'
+import { fromJS } from 'immutable';
 
 /*
  * Constants
@@ -23,11 +24,7 @@ export const actions = {
 /*
  * State
  * */
-export const initialState = {};
-export const initialMarkerState = {
-  time: 0,
-  keywordName: ''
-};
+export const initialState = fromJS({});
 
 /*
  * Reducers
@@ -36,31 +33,20 @@ export default handleActions({
   [SET_MARKERS]: (state, {payload}) => {
     let result = normalize(payload.markers, (marker, i) => {
       return {
-        ...initialMarkerState,
         id: i.toString(),
         time: marker.time,
         keywordName: marker.keywordName
       }
     });
 
-    return {
-      ...state,
-      [payload.mediaId]: {
-        ...state[payload.mediaId],
-        markerIds: result.ids,
-        markers: result.entities,
-        justCreated: true
-      }
-    };
+    return state.mergeIn([payload.mediaId], {
+      markerIds: result.ids,
+      markers: result.entities,
+      justCreated: true
+    });
   },
 
   [CLEAR_JUST_CREATED_MARKERS]: (state, {payload: mediaId}) => {
-    return {
-      ...state,
-      [mediaId]: {
-        ...state[mediaId],
-        justCreated: false
-      }
-    };
+    return state.setIn([mediaId, 'justCreated'], false);
   }
 }, initialState);

@@ -29,13 +29,14 @@ export class VbsPlayerApp extends React.Component {
     let playerState = mediaState.player.players[this.props.mediaId] || {loading: true};
     let mediaData = mediaState.mediaData.data[this.props.mediaId];
     let activeTab = mediaData.view.activeTab;
+    var markers = mediaState.markers.toJS();
 
     return (
       <div className="vbs-player-app">
         <Player mediaId={this.props.mediaId}
                 playerType="JwPlayer"
                 mediaState={mediaData}
-                markersState={mediaState.markers[this.props.mediaId]}
+                markersState={markers[this.props.mediaId]}
                 playerState={playerState}
                 hasNextKeywordButton
                 hasDownloadButton
@@ -89,7 +90,7 @@ export class VbsPlayerApp extends React.Component {
           <Transcript mediaId={this.props.mediaId}
                       playerState={playerState}
                       mediaState={mediaData}
-                      markersState={mediaState.markers[this.props.mediaId]}
+                      markersState={markers[this.props.mediaId]}
                       actions={this.props.actions}
           />
         }
