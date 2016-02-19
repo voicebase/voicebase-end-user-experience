@@ -119,8 +119,20 @@ export default {
       data.append('media', file);
 
       let jobConf = {executor: 'v2'};
+
+      let groupsConf = {};
+      if (options.groups.length > 0) {
+        groupsConf = {
+          keywords: {
+            groups: options.groups
+          }
+        };
+      }
+
+      let sumConf = Object.assign({}, jobConf, groupsConf);
+
       let conf = {
-        configuration: jobConf
+        configuration: sumConf
       };
       data.append('configuration', JSON.stringify(conf));
 
