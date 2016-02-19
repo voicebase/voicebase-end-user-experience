@@ -68,7 +68,10 @@ export default {
       }
     })
       .then(response => {
-        return response.data;
+        if (response.status === 204) {
+          return { mediaId };
+        }
+        else throw (new Error('Can\'t remove media'));
       })
       .catch(error => {
         if (error.data && error.data.errors) {

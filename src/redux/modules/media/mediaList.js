@@ -251,7 +251,8 @@ export default handleActions({
     return {
       ...state,
       mediaIds: mediaIds,
-      media: _.pick(state.media, mediaIds)
+      media: _.pick(state.media, mediaIds),
+      selectedMediaIds: _.filter(state.selectedMediaIds, id => id !== response.mediaId)
     };
   }
 }, initialState);
