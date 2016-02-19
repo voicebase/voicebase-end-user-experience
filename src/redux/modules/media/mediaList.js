@@ -186,8 +186,10 @@ export default handleActions({
 
   [`${DELETE_MEDIA}_FULFILLED`]: (state, { payload: response }) => {
     let mediaIds = state.get('mediaIds').filter(mediaId => response.mediaId !== mediaId);
+    let selectedMediaIds = state.get('selectedMediaIds').filter(id => id !== response.mediaId);
     return state
       .set('mediaIds', mediaIds)
+      .set('selectedMediaIds', selectedMediaIds)
       .deleteIn(['media', response.mediaId]);
   }
 }, initialState);
