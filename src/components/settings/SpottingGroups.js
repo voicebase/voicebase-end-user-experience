@@ -51,7 +51,7 @@ export class SpottingGroups extends React.Component {
   }
 
   getHeader() {
-    let groupsState = this.props.groupsState.toJS();
+    let groupsState = this.props.groupsState;
     return (
       <SettingsListHeader title={groupsState.view.title}
                           addButtonLabel={groupsState.view.addButtonLabel}
@@ -64,7 +64,7 @@ export class SpottingGroups extends React.Component {
   }
 
   render() {
-    let groupsState = this.props.groupsState.toJS();
+    let groupsState = this.props.groupsState;
 
     let initialValueForAdd = {
       name: '',

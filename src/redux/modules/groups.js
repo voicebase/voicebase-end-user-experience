@@ -85,7 +85,10 @@ export default handleActions({
   },
 
   [GET_GROUPS + '_REJECTED']: (state, { payload }) => {
-    return state.set('errorMessage', payload.error)
+    return state.merge({
+      isGetPending: false,
+      errorMessage: payload.error
+    });
   },
 
   [GET_GROUPS + '_FULFILLED']: (state, { payload: response }) => {

@@ -29,19 +29,19 @@ export class SettingsView extends React.Component {
         </div>
         <div className="content__body">
           <SpottingGroups token={this.props.state.auth.token}
-                          groupsState={state.settings.groups}
+                          groupsState={state.settings.groups.toJS()}
                           actions={this.props.actions}/>
 
           <Predictions token={this.props.state.auth.token}
-                       state={state.settings.items.predictions}
+                       state={state.settings.items.get('predictions').toJS()}
                        actions={this.props.actions}/>
 
           <Detections token={this.props.state.auth.token}
-                      state={state.settings.items.detection}
+                      state={state.settings.items.get('detection').toJS()}
                       actions={this.props.actions}/>
 
           <Numbers token={this.props.state.auth.token}
-                   state={state.settings.items.numbers}
+                   state={state.settings.items.get('numbers').toJS()}
                    actions={this.props.actions}/>
         </div>
       </div>

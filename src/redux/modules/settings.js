@@ -2,7 +2,7 @@ import { createAction, handleActions } from 'redux-actions'
 import { combineReducers } from 'redux'
 import groups from './groups';
 
-import _ from 'lodash'
+import { fromJS } from 'immutable'
 import { normalize } from '../../common/Normalize'
 import PredictionsApi from '../../api/predictionsApi'
 import DetectionsApi from '../../api/detectionsApi'
@@ -100,7 +100,7 @@ const itemInitialState = {
   errorMessage: ''
 };
 
-export const initialState = {
+export const initialState = fromJS({
   predictions: {
     ...itemInitialState,
     view: {
@@ -160,32 +160,24 @@ export const initialState = {
     },
     defaultPriority: 'medium'
   }
-};
+});
 
 /*
  * Reducers
  * */
 export const settings = handleActions({
   [GET_ITEMS + '_PENDING']: (state, { payload }) => {
-    return {
-      ...state,
-      [payload.type]: {
-        ...state[payload.type],
-        isGetPending: true,
-        errorMessage: ''
-      }
-    };
+    return state.mergeIn([payload.type], {
+      isGetPending: true,
+      errorMessage: ''
+    });
   },
 
   [GET_ITEMS + '_REJECTED']: (state, { payload }) => {
-    return {
-      ...state,
-      [payload.type]: {
-        ...state[payload.type],
-        isGetPending: false,
-        errorMessage: payload.error
-      }
-    };
+    return state.mergeIn([payload.type], {
+      isGetPending: false,
+      errorMessage: payload.error
+    });
   },
 
   [GET_ITEMS + '_FULFILLED']: (state, { payload: {type, data} }) => {
@@ -196,181 +188,90 @@ export const settings = handleActions({
       }
     });
 
-    return {
-      ...state,
-      [type]: {
-        ...state[type],
-        itemIds: result.ids,
-        items: result.entities,
-        isGetPending: false,
-        errorMessage: ''
-      }
-    };
+    return state.mergeIn([type], {
+      itemIds: result.ids,
+      items: result.entities,
+      isGetPending: false,
+      errorMessage: ''
+    });
   },
 
   [DELETE_ITEM + '_PENDING']: (state, { payload: {type, id} }) => {
-    return {
-      ...state,
-      [type]: {
-        ...state[type],
-        items: {
-          ...state[type].items,
-          [id]: {
-            ...state[type].items[id],
-            isDeletePending: true
-          }
-        }
-      }
-    };
+    return state.setIn([type, 'items', id, 'isDeletePending'], true);
   },
 
   [DELETE_ITEM + '_REJECTED']: (state, { payload: {type, id, error} }) => {
-    return {
-      ...state,
-      [type]: {
-        ...state[type],
-        items: {
-          ...state[type].items,
-          [id]: {
-            ...state[type].items[id],
-            isDeletePending: false,
-            deleteError: error
-          }
-        }
-      }
-    };
+    return state.mergeIn([type, 'items', id, 'isDeletePending'], {
+      isDeletePending: false,
+      deleteError: error
+    });
   },
 
   [DELETE_ITEM + '_FULFILLED']: (state, { payload: {type, id} }) => {
-    let itemIds = state[type].itemIds.filter(_id => id !== _id);
-    return {
-      ...state,
-      [type]: {
-        ...state[type],
-        itemIds: itemIds,
-        items: _.pick(state[type].items, itemIds)
-      }
-    };
+    let itemIds = state.getIn([type, 'itemIds']).filter(_id => id !== _id);
+    return state
+      .setIn([type, 'itemIds'], itemIds)
+      .deleteIn([type, 'items', id]);
   },
 
   [EDIT_ITEM + '_PENDING']: (state, { payload: {type, id} }) => {
-    return {
-      ...state,
-      [type]: {
-        ...state[type],
-        items: {
-          ...state[type].items,
-          [id]: {
-            ...state[type].items[id],
-            isEditPending: true,
-            editError: ''
-          }
-        }
-      }
-    };
+    return state.mergeIn([type, 'items', id], {
+      isEditPending: true,
+      editError: ''
+    });
   },
 
   [EDIT_ITEM + '_REJECTED']: (state, { payload: {type, id, error} }) => {
-    return {
-      ...state,
-      [type]: {
-        ...state[type],
-        items: {
-          ...state[type].items,
-          [id]: {
-            ...state[type].items[id],
-            isEditPending: false,
-            editError: error
-          }
-        }
-      }
-    };
+    return state.mergeIn([type, 'items', id], {
+      isEditPending: false,
+      editError: error
+    });
   },
 
   [EDIT_ITEM + '_FULFILLED']: (state, { payload: {type, id, data} }) => {
-    return {
-      ...state,
-      [type]: {
-        ...state[type],
-        items: {
-          ...state[type].items,
-          [id]: {
-            ...state[type].items[id],
-            ...data,
-            isEditPending: false,
-            editError: ''
-          }
-        }
-      }
-    };
+    return state.mergeIn([type, 'items', id], {
+      ...data,
+      isEditPending: false,
+      editError: ''
+    });
   },
 
   [ADD_ITEM + '_PENDING']: (state, { payload: {type, id} }) => {
-    return {
-      ...state,
-      [type]: {
-        ...state[type],
-        isAddPending: true
-      }
-    };
+    return state.setIn([type, 'isAddPending'], true);
   },
 
   [ADD_ITEM + '_REJECTED']: (state, { payload: {type, error} }) => {
-    return {
-      ...state,
-      [type]: {
-        ...state[type],
-        isAddPending: false,
-        addError: error
-      }
-    };
+    return state.mergeIn([type], {
+      isAddPending: false,
+      addError: error
+    });
   },
 
   [ADD_ITEM + '_FULFILLED']: (state, { payload: {type, data} }) => {
     let id = new Date().getTime();
-    return {
-      ...state,
-      [type]: {
-        ...state[type],
+    let itemIds = state.getIn([type, 'itemIds']).concat(id);
+
+    return state
+      .mergeIn([type], {
         isAddPending: false,
         addError: '',
-        itemIds: state[type].itemIds.concat(id),
-        items: {
-          ...state[type].items,
-          [id]: {
-            ...data,
-            id
-          }
-        }
-      }
-    };
+        itemIds
+      })
+      .mergeIn([type, 'items', id], {
+        ...data,
+        id
+      });
   },
 
   // View
   [TOGGLE_LIST]: (state, { payload: {type, value} }) => {
-    return {
-      ...state,
-      [type]: {
-        ...state[type],
-        view: {
-          ...state[type].view,
-          isExpandList: (typeof value !== 'undefined') ? value : !state[type].view.isExpandList
-        }
-      }
-    }
+    let isExpandList = (typeof value !== 'undefined') ? value : !state.getIn([type, 'view', 'isExpandList']);
+    return state.setIn([type, 'view', 'isExpandList'], isExpandList);
   },
 
   [TOGGLE_CREATE_FORM]: (state, { payload: {type, value} }) => {
-    return {
-      ...state,
-      [type]: {
-        ...state[type],
-        view: {
-          ...state[type].view,
-          isExpandCreateForm: (typeof value !== 'undefined') ? value : !state[type].view.isExpandCreateForm
-        }
-      }
-    }
+    let isExpandCreateForm = (typeof value !== 'undefined') ? value : !state.getIn([type, 'view', 'isExpandCreateForm']);
+    return state.setIn([type, 'view', 'isExpandCreateForm'], isExpandCreateForm);
   }
 
 }, initialState);
