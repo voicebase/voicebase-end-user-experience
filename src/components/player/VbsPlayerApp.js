@@ -26,7 +26,7 @@ export class VbsPlayerApp extends React.Component {
 
   render () {
     let mediaState = this.props.mediaState;
-    let playerState = mediaState.player.players[this.props.mediaId] || {loading: true};
+    let playerState = mediaState.player.toJS().players[this.props.mediaId] || {loading: true};
     let mediaData = mediaState.mediaData.data[this.props.mediaId];
     let activeTab = mediaData.view.activeTab;
     var markers = mediaState.markers.toJS();

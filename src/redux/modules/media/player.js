@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
-import _ from 'lodash'
+import { fromJS } from 'immutable';
 
 /*
  * Constants
@@ -62,10 +62,10 @@ export const actions = {
 /*
  * State
  * */
-export const initialState = {
+export const initialState = fromJS({
   playerIds: [],
   players: {}
-};
+});
 
 const initialPlayerState = {
   url: '',
@@ -85,144 +85,57 @@ const initialPlayerState = {
  * */
 export default handleActions({
   [CREATE_PLAYER]: (state, {payload}) => {
-    return {
-      ...state,
-      playerIds: _.concat(state.playerIds, payload.id),
-      players: {
-        ...state.players,
-        [payload.id]: {
-          ...initialPlayerState,
-          url: payload.url,
-          type: payload.type
-        }
-      }
-    };
+    let playerIds = state.get('playerIds').concat(payload.id);
+    return state
+      .set('playerIds', playerIds)
+      .mergeIn(['players', payload.id], {
+        ...initialPlayerState,
+        url: payload.url,
+        type: payload.type
+      });
   },
 
   [DESTROY_PLAYER]: (state, { payload: id }) => {
-    let playerIds = state.playerIds.filter(playerId => playerId !== id)
-    return {
-      ...state,
-      playerIds,
-      players: _.pick(state.players, playerIds)
-    }
+    let playerIds = state.get('playerIds').filter(playerId => playerId !== id)
+    return state
+      .set('playerIds', playerIds)
+      .deleteIn(['players', id]);
   },
 
   [PLAY]: (state, {payload: id}) => {
-    return {
-      ...state,
-      players: {
-        ...state.players,
-        [id]: {
-          ...state.players[id],
-          playing: true
-        }
-      }
-    };
+    return state.setIn(['players', id, 'playing'], true);
   },
 
   [PAUSE]: (state, {payload: id}) => {
-    return {
-      ...state,
-      players: {
-        ...state.players,
-        [id]: {
-          ...state.players[id],
-          playing: false
-        }
-      }
-    };
+    return state.setIn(['players', id, 'playing'], false);
   },
 
   [SET_POSITION]: (state, {payload}) => {
-    return {
-      ...state,
-      players: {
-        ...state.players,
-        [payload.id]: {
-          ...state.players[payload.id],
-          played: payload.pos
-        }
-      }
-    };
+    return state.setIn(['players', payload.id, 'played'], payload.pos);
   },
 
   [SET_BUFFERED]: (state, {payload}) => {
-    return {
-      ...state,
-      players: {
-        ...state.players,
-        [payload.id]: {
-          ...state.players[payload.id],
-          loaded: payload.pos
-        }
-      }
-    };
+    return state.setIn(['players', payload.id, 'loaded'], payload.pos);
   },
 
   [SET_DURATION]: (state, {payload}) => {
-    return {
-      ...state,
-      players: {
-        ...state.players,
-        [payload.id]: {
-          ...state.players[payload.id],
-          duration: payload.duration
-        }
-      }
-    };
+    return state.setIn(['players', payload.id, 'duration'], payload.duration);
   },
 
   [SET_TIMELINE_WIDTH]: (state, {payload}) => {
-    return {
-      ...state,
-      players: {
-        ...state.players,
-        [payload.id]: {
-          ...state.players[payload.id],
-          timelineWidth: payload.timelineWidth
-        }
-      }
-    };
+    return state.setIn(['players', payload.id, 'timelineWidth'], payload.timelineWidth);
   },
 
   [SET_UTTERANCE_TIME]: (state, {payload}) => {
-    return {
-      ...state,
-      players: {
-        ...state.players,
-        [payload.id]: {
-          ...state.players[payload.id],
-          utteranceTime: payload.time
-        }
-      }
-    };
+    return state.setIn(['players', payload.id, 'utteranceTime'], payload.time);
   },
 
   [CLEAR_UTTERANCE_TIME]: (state, {payload: id}) => {
-    return {
-      ...state,
-      players: {
-        ...state.players,
-        [id]: {
-          ...state.players[id],
-          utteranceTime: null
-        }
-      }
-    };
+    return state.setIn(['players', id, 'utteranceTime'], null);
   },
 
   [SET_FULLSCREEN]: (state, {payload: { id, isFullscreen }}) => {
-    return {
-      ...state,
-      players: {
-        ...state.players,
-        [id]: {
-          ...state.players[id],
-          isFullscreen
-        }
-      }
-    };
+    return state.setIn(['players', id, 'isFullscreen'], isFullscreen);
   }
 
 }, initialState);

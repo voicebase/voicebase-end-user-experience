@@ -45,7 +45,7 @@ export default class UploadContainer extends React.Component {
     return (
       <UploadTabs token={state.auth.token}
                   uploadState={state.upload.toJS()}
-                  playerState={state.media.player}
+                  playerState={state.media.player.toJS()}
                   settingsState={state.settings}
                   onSelectTab={this.onSelectTab.bind(this)}
                   actions={this.props.actions}
