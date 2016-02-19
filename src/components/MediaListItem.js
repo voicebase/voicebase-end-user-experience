@@ -10,13 +10,14 @@ export class MediaListItem extends React.Component {
     token: PropTypes.string.isRequired,
     mediaId: PropTypes.string.isRequired,
     isExpanded: PropTypes.bool.isRequired,
+    listItemState: PropTypes.object.isRequired,
     mediaState: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
 
   getTitle() {
     let title = this.props.mediaId;
-    let metadata = this.props.mediaState.mediaList.getIn(['media', this.props.mediaId, 'metadata']).toJS();
+    let metadata = this.props.listItemState.metadata;
     if (metadata && metadata.external && metadata.external.id) {
       title = metadata.external.id;
     }
@@ -64,7 +65,7 @@ export class MediaListItem extends React.Component {
   render () {
     let itemClasses = classnames('list-group-item', 'listing', {collapsed: !this.props.isExpanded});
     let mediaState = this.props.mediaState;
-    let media = mediaState.mediaList.getIn(['media', this.props.mediaId]).toJS();
+    let media = this.props.listItemState;
     let mediaData = mediaState.mediaData.data[this.props.mediaId];
     let checked = media.checked;
 
