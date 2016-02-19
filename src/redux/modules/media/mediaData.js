@@ -7,6 +7,7 @@ import MediaApi from '../../../api/mediaApi'
  * Constants
  * */
 export const GET_DATA_FOR_MEDIA = 'GET_DATA_FOR_MEDIA';
+export const GET_MEDIA_URL = 'GET_MEDIA_URL';
 export const SET_ACTIVE_TOPIC = 'SET_ACTIVE_TOPIC';
 export const SET_ACTIVE_GROUP = 'SET_ACTIVE_GROUP';
 export const CHOOSE_PLAYER_APP_TAB = 'CHOOSE_PLAYER_APP_TAB';
@@ -29,6 +30,14 @@ export const getDataForMedia = createAction(GET_DATA_FOR_MEDIA, (token, mediaId)
     promise: MediaApi.getDataForMedia(token, mediaId)
   }
 });
+export const getMediaUrl = createAction(GET_MEDIA_URL, (token, mediaId) => {
+  return {
+    data: {
+      mediaId
+    },
+    promise: MediaApi.getMediaUrl(token, mediaId)
+  }
+});
 export const setActiveTopic = createAction(SET_ACTIVE_TOPIC, (mediaId, topicId) => {
   return {mediaId, topicId};
 });
@@ -41,6 +50,7 @@ export const choosePlayerAppTab = createAction(CHOOSE_PLAYER_APP_TAB, (mediaId, 
 
 export const actions = {
   getDataForMedia,
+  getMediaUrl,
   setActiveTopic,
   setActiveGroup,
   choosePlayerAppTab
@@ -96,6 +106,7 @@ export default handleActions({
       data: {
         ...state.data,
         [response.mediaId]: {
+          ...state.data[response.mediaId],
           data: response,
           status: parsedResult.status,
           topicsIds: parsedResult.topicsIds,
@@ -114,6 +125,48 @@ export default handleActions({
           getPending: false,
           getError: '',
           view: initialViewState
+        }
+      }
+    };
+  },
+
+  [GET_MEDIA_URL + '_PENDING']: (state, { payload }) => {
+    return {
+      ...state,
+      data: {
+        ...state.data,
+        [payload.mediaId]: {
+          ...state.data[payload.mediaId],
+          getUrlPending: true
+        }
+      }
+    };
+  },
+
+  [GET_MEDIA_URL + '_REJECTED']: (state, { payload }) => {
+    return {
+      ...state,
+      data: {
+        ...state.data,
+        [payload.mediaId]: {
+          ...state.data[payload.mediaId],
+          getUrlPending: false,
+          getUrlError: payload.error
+        }
+      }
+    };
+  },
+
+  [GET_MEDIA_URL + '_FULFILLED']: (state, { payload }) => {
+    return {
+      ...state,
+      data: {
+        ...state.data,
+        [payload.mediaId]: {
+          ...state.data[payload.mediaId],
+          mediaUrl: payload.url,
+          getUrlPending: false,
+          getUrlError: ''
         }
       }
     };

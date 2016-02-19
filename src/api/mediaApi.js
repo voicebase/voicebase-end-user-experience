@@ -113,6 +113,45 @@ export default {
     }
   },
 
+  getMediaUrl(token, mediaId) {
+    if (mediaId === 'fake_video_media') {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            url: 'http://demo.voicsebasejwplayer.dev4.sibers.com/media/dual.mp4',
+            mediaId
+          });
+        }, 500)
+      });
+    }
+    else if (mediaId === 'fake_mediaId') {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            url: 'http://demo.voicsebasejwplayer.dev4.sibers.com/media/washington.mp3',
+            mediaId
+          });
+        }, 500)
+      });
+    }
+    else {
+      let url = `${baseUrl}/media/${mediaId}/streams?access_token=${token}`;
+      return axios.get(url)
+        .then(response => {
+          return {
+            url: response.data.streams.original,
+            mediaId
+          };
+        })
+        .catch(error => {
+          if (error.data && error.data.errors) {
+            error = error.data.errors.error;
+          }
+          return Promise.reject(error)
+        });
+    }
+  },
+
   postMedia(token, fileId, file, options) {
     return new Promise((resolve, reject) => {
       let data = new FormData();

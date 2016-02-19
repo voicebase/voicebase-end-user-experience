@@ -14,10 +14,6 @@ export class MediaListItem extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   getTitle() {
     let title = this.props.mediaId;
     let metadata = this.props.mediaState.mediaList.media[this.props.mediaId].metadata;
@@ -36,6 +32,7 @@ export class MediaListItem extends React.Component {
     if (!this.props.isExpanded) {
       this.props.mediaState.activeMediaId && this.props.actions.collapseMedia(this.props.mediaState.activeMediaId);
       if (!this.props.mediaState.mediaData.data[this.props.mediaId]) {
+        this.props.actions.getMediaUrl(this.props.token, this.props.mediaId);
         this.props.actions.getDataForMedia(this.props.token, this.props.mediaId);
       }
       this.props.actions.expandMedia(this.props.mediaId);
@@ -61,7 +58,7 @@ export class MediaListItem extends React.Component {
   }
 
   isGettingMediaData(mediaData) {
-    return (!mediaData || (mediaData && mediaData.getPending));
+    return (mediaData && (mediaData.getPending || mediaData.getUrlPending));
   }
 
   render () {
@@ -72,7 +69,7 @@ export class MediaListItem extends React.Component {
     let checked = media.checked;
 
     let duration = media.metadata.duration;
-    let parsedDuration = parseTime(duration)
+    let parsedDuration = parseTime(duration);
 
     return (
       <div>
