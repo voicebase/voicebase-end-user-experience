@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
-import _ from 'lodash'
+import { fromJS } from 'immutable';
 import { normalize } from '../../common/Normalize'
 import { getFileType } from '../../common/Common'
 import MediaApi from '../../api/mediaApi'
@@ -60,7 +60,7 @@ export const actions = {
 /*
  * State
  * */
-export const initialState = {
+export const initialState = fromJS({
   view: {
     showForm: false,
     activeTab: FILES_PREVIEW_TAB
@@ -68,7 +68,7 @@ export const initialState = {
   fileIds: [],
   files: {},
   options: {}
-};
+});
 
 /*
  * Reducers
@@ -80,156 +80,86 @@ export default handleActions({
       return { file, type }
     });
 
-    return {
-      ...state,
-      fileIds: result.ids,
-      files: result.entities,
-      view: {
-        ...state.view,
+    return state
+      .merge({
+        fileIds: result.ids,
+        files: result.entities
+      })
+      .mergeIn(['view'], {
         showForm: true,
         activeTab: FILES_PREVIEW_TAB
-      }
-    };
+      });
   },
 
   [REMOVE_FILE]: (state, { payload: id }) => {
-    let fileIds = state.fileIds.filter(fileId => fileId !== id)
-    return {
-      ...state,
-      fileIds,
-      files: _.pick(state.files, fileIds)
-    }
+    let fileIds = state.get('fileIds').filter(fileId => fileId !== id);
+    return state
+      .set('fileIds', fileIds)
+      .deleteIn(['files', id]);
   },
 
   [POST_FILE + '_PENDING']: (state, {payload}) => {
-    return {
-      ...state,
-      files: {
-        ...state.files,
-        [payload.fileId]: {
-          ...state.files[payload.fileId],
-          isPostPending: true,
-          errorMessage: ''
-        }
-      },
-      view: {
-        ...state.view,
-        showForm: false
-      }
-    };
+    return state
+      .mergeIn(['files', payload.fileId], {
+        isPostPending: true,
+        errorMessage: ''
+      })
+      .setIn(['view', 'showForm'], false);
   },
 
   [POST_FILE + '_REJECTED']: (state, {payload: {fileId, error}}) => {
-    return {
-      ...state,
-      files: {
-        ...state.files,
-        [fileId]: {
-          ...state.files[fileId],
-          isPostPending: false,
-          errorMessage: error
-        }
-      }
-    };
+    return state.mergeIn(['files', fileId], {
+      isPostPending: false,
+      errorMessage: error
+    });
   },
 
   [POST_FILE + '_FULFILLED']: (state, {payload: {fileId, data}}) => {
-    return {
-      ...state,
-      files: {
-        ...state.files,
-        [fileId]: {
-          ...state.files[fileId],
-          isPostPending: false,
-          isPostComplete: true,
-          mediaId: data.mediaId,
-          data
-        }
-      }
-    };
+    return state.mergeIn(['files', fileId], {
+      isPostPending: false,
+      isPostComplete: true,
+      mediaId: data.mediaId,
+      data
+    });
   },
 
   [CANCEL_UPLOAD]: (state) => {
-    return {
-      ...state,
+    return state.merge({
       fileIds: [],
       files: {},
       view: {
-        ...state.view,
         showForm: false,
         activeTab: FILES_PREVIEW_TAB
       },
       options: {}
-    }
+    });
   },
 
   [CHOOSE_TAB]: (state, { payload: tabId }) => {
-    return {
-      ...state,
-      view: {
-        ...state.view,
-        activeTab: tabId
-      }
-    }
+    return state.setIn(['view', 'activeTab'], tabId);
   },
 
   [SET_LANGUAGE]: (state, { payload: language }) => {
-    return {
-      ...state,
-      options: {
-        ...state.options,
-        language
-      }
-    }
+    return state.setIn(['options', 'language'], language);
   },
 
   [SET_PRIORITY]: (state, { payload: priority }) => {
-    return {
-      ...state,
-      options: {
-        ...state.options,
-        priority
-      }
-    }
+    return state.setIn(['options', 'priority'], priority);
   },
 
   [SET_PREDICTION]: (state, { payload: predictionIds }) => {
-    return {
-      ...state,
-      options: {
-        ...state.options,
-        predictions: predictionIds
-      }
-    }
+    return state.setIn(['options', 'predictions'], predictionIds);
   },
 
   [SET_DETECTION]: (state, { payload: detectionIds }) => {
-    return {
-      ...state,
-      options: {
-        ...state.options,
-        detection: detectionIds
-      }
-    }
+    return state.setIn(['options', 'detection'], detectionIds);
   },
 
   [SET_NUMBERS]: (state, { payload: numberIds }) => {
-    return {
-      ...state,
-      options: {
-        ...state.options,
-        numbers: numberIds
-      }
-    }
+    return state.setIn(['options', 'numbers'], numberIds);
   },
 
   [SET_GROUPS]: (state, { payload: groupIds }) => {
-    return {
-      ...state,
-      options: {
-        ...state.options,
-        groups: groupIds
-      }
-    }
+    return state.setIn(['options', 'groups'], groupIds);
   }
 }, initialState);

@@ -16,16 +16,16 @@ export class UploadView extends React.Component {
   }
 
   render () {
-    let uploadState = this.props.state.upload;
+    let fileIds = this.props.state.upload.get('fileIds');
 
     return (
       <div>
         {
-          uploadState.fileIds.length === 0 &&
+          fileIds.size === 0 &&
           <UploadZone actions={this.props.actions} />
         }
         {
-          uploadState.fileIds.length > 0 &&
+          fileIds.size > 0 &&
           <UploadContainer state={this.props.state}
                            isModal={false}
                            onFinish={this.onFinish.bind(this)}

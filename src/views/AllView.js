@@ -41,7 +41,7 @@ export class AllView extends React.Component {
             <MediaListToolbar token={state.auth.token} selectedMediaIds={mediaList.selectedMediaIds}
                               actions={this.props.actions}/>
 
-            <UploadProgressList uploadState={state.upload}
+            <UploadProgressList uploadState={state.upload.toJS()}
                                 actions={this.props.actions}
             />
 

@@ -19,16 +19,18 @@ export default class UploadPreview extends React.Component {
       return false;
     }
     let settingsState = this.props.settingsState;
-    if (settingsState.groups.groupIds.length === 0) {
+    let groups = settingsState.groups.toJS();
+    let items = settingsState.items.toJS();
+    if (groups.groupIds.length === 0) {
       this.props.actions.getGroups(this.props.token);
     }
-    if (settingsState.items.predictions.itemIds.length === 0) {
+    if (items.predictions.itemIds.length === 0) {
       this.props.actions.getItems(this.props.token, 'predictions');
     }
-    if (settingsState.items.detection.itemIds.length === 0) {
+    if (items.detection.itemIds.length === 0) {
       this.props.actions.getItems(this.props.token, 'detection');
     }
-    if (settingsState.items.numbers.itemIds.length === 0) {
+    if (items.numbers.itemIds.length === 0) {
       this.props.actions.getItems(this.props.token, 'numbers');
     }
   }
@@ -39,26 +41,28 @@ export default class UploadPreview extends React.Component {
     if (uploadState.fileIds.length === 0) {
       return false;
     }
-    if (settingsState.items.languages.items && !uploadState.options.language) {
-      this.props.actions.setLanguage(settingsState.items.languages.defaultLanguage);
+    let groups = settingsState.groups.toJS();
+    let items = settingsState.items.toJS();
+    if (items.languages.items && !uploadState.options.language) {
+      this.props.actions.setLanguage(items.languages.defaultLanguage);
     }
-    if (settingsState.items.priority.items && !uploadState.options.priority) {
-      this.props.actions.setPriority(settingsState.items.priority.defaultPriority);
+    if (items.priority.items && !uploadState.options.priority) {
+      this.props.actions.setPriority(items.priority.defaultPriority);
     }
-    if (settingsState.items.predictions.itemIds.length > 0 && !uploadState.options.predictions) {
-      let defaultItems = this.getDefaultIds(settingsState.items.predictions.items);
+    if (items.predictions.itemIds.length > 0 && !uploadState.options.predictions) {
+      let defaultItems = this.getDefaultIds(items.predictions.items);
       this.props.actions.setPrediction(defaultItems);
     }
-    if (settingsState.items.detection.itemIds.length > 0 && !uploadState.options.detection) {
-      let defaultItems = this.getDefaultIds(settingsState.items.detection.items);
+    if (items.detection.itemIds.length > 0 && !uploadState.options.detection) {
+      let defaultItems = this.getDefaultIds(items.detection.items);
       this.props.actions.setDetection(defaultItems);
     }
-    if (settingsState.items.numbers.itemIds.length > 0 && !uploadState.options.numbers) {
-      let defaultItems = this.getDefaultIds(settingsState.items.numbers.items);
+    if (items.numbers.itemIds.length > 0 && !uploadState.options.numbers) {
+      let defaultItems = this.getDefaultIds(items.numbers.items);
       this.props.actions.setNumbers(defaultItems);
     }
-    if (settingsState.groups.groupIds.length > 0 && !uploadState.options.groups) {
-      let defaultItems = this.getDefaultIds(settingsState.groups.groups);
+    if (groups.groupIds.length > 0 && !uploadState.options.groups) {
+      let defaultItems = this.getDefaultIds(groups.groups);
       this.props.actions.setGroups(defaultItems);
     }
   }
@@ -111,21 +115,22 @@ export default class UploadPreview extends React.Component {
   render() {
     let uploadState = this.props.uploadState;
     let settingsState = this.props.settingsState;
+    var items = settingsState.items.toJS();
     let activeLanguageId = uploadState.options.language;
 
-    let priorities = settingsState.items.priority;
+    let priorities = items.priority;
     let activePriority = uploadState.options.priority;
 
-    let predictions = settingsState.items.predictions;
+    let predictions = items.predictions;
     let predictionsValue = this.getSelectValue('predictions', predictions.items);
 
-    let detection = settingsState.items.detection;
+    let detection = items.detection;
     let detectionValue = this.getSelectValue('detection', detection.items);
 
-    let numbers = settingsState.items.numbers;
+    let numbers = items.numbers;
     let numbersValue = this.getSelectValue('numbers', numbers.items);
 
-    let groups = settingsState.groups;
+    let groups = settingsState.groups.toJS();
     let groupsValue = this.getSelectValue('groups', groups.groups);
 
     return (
@@ -137,7 +142,7 @@ export default class UploadPreview extends React.Component {
                 activeLanguageId &&
                 <div className="form-group dropdown-full-width">
                   <label className="control-label">What languages are spoken in the files?</label>
-                  <LanguageDropdown languages={settingsState.items.languages.items}
+                  <LanguageDropdown languages={items.languages.items}
                                     activeLanguageId={activeLanguageId}
                                     onSelect={this.onSelectLanguage.bind(this)}
                   />

@@ -13,7 +13,7 @@ export default class UploadContainer extends React.Component {
   };
 
   onClose() {
-    this.props.state.upload.fileIds.forEach(id => {
+    this.props.state.upload.get('fileIds').forEach(id => {
       this.props.actions.destroyPlayer(id);
     });
     this.props.actions.cancelUpload();
@@ -24,7 +24,7 @@ export default class UploadContainer extends React.Component {
   }
 
   nextTab() {
-    let uploadState = this.props.state.upload;
+    let uploadState = this.props.state.upload.toJS();
     if (uploadState.view.activeTab === FILES_PREVIEW_TAB) {
       this.onSelectTab(OPTIONS_TAB);
     }
@@ -42,7 +42,7 @@ export default class UploadContainer extends React.Component {
     let state = this.props.state;
     return (
       <UploadTabs token={state.auth.token}
-                  uploadState={state.upload}
+                  uploadState={state.upload.toJS()}
                   playerState={state.media.player}
                   settingsState={state.settings}
                   onSelectTab={this.onSelectTab.bind(this)}
@@ -53,7 +53,7 @@ export default class UploadContainer extends React.Component {
 
   render () {
     let state = this.props.state;
-    let uploadState = state.upload;
+    let uploadState = state.upload.toJS();
 
     var isOptionsTab = uploadState.view.activeTab === OPTIONS_TAB;
     var isFilePreviewTab = uploadState.view.activeTab === FILES_PREVIEW_TAB;
