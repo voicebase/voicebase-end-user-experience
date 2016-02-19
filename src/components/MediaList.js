@@ -11,7 +11,7 @@ export class MediaList extends React.Component {
 
   render () {
     let state = this.props.state;
-    let mediaList = state.mediaList;
+    let mediaList = state.mediaList.toJS();
 
     return (
       <div className="list-group listings">

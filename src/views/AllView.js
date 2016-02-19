@@ -17,7 +17,7 @@ export class AllView extends React.Component {
 
   componentWillMount(nextProps) {
     let mediaList = this.props.state.media.mediaList;
-    if (mediaList.isGetCompleted && mediaList.mediaIds.length === 0) {
+    if (mediaList.get('isGetCompleted') && mediaList.get('mediaIds').size === 0) {
       this.props.history.pushState(null, '/upload');
     }
   }
@@ -27,18 +27,18 @@ export class AllView extends React.Component {
     let mediaList = state.media.mediaList;
     return (
       <div>
-        {mediaList.isGetPending && <Spinner />}
+        {mediaList.get('isGetPending') && <Spinner />}
         {
-          !mediaList.isGetPending &&
+          !mediaList.get('isGetPending') &&
           <div>
             <div className="content__heading">
               <h3>
                 All My Files&nbsp;
-                <CounterLabel value={mediaList.mediaIds.length}/>
+                <CounterLabel value={mediaList.get('mediaIds').size}/>
               </h3>
             </div>
             <SearchForm state={state.search} actions={this.props.actions}/>
-            <MediaListToolbar token={state.auth.token} selectedMediaIds={mediaList.selectedMediaIds}
+            <MediaListToolbar token={state.auth.token} selectedMediaIds={mediaList.get('selectedMediaIds').toJS()}
                               actions={this.props.actions}/>
 
             <UploadProgressList uploadState={state.upload.toJS()}

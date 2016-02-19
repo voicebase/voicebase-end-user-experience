@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
-import _ from 'lodash'
+import { fromJS } from 'immutable';
 
 import MediaApi from '../../../api/mediaApi'
 
@@ -62,7 +62,7 @@ export const actions = {
 /*
  * State
  * */
-export const initialState = {
+export const initialState = fromJS({
   mediaIds: [],
   media: {},
   processingIds: [],
@@ -73,33 +73,30 @@ export const initialState = {
   lastUploadedIds: [],
   activeMediaId: '',
   selectedMediaIds: []
-};
+});
 
 /*
  * Reducers
  * */
 export default handleActions({
-  [`${GET_MEDIA}_PENDING`]: (state, { payload }) => {
-    return {
-      ...state,
+  [`${GET_MEDIA}_PENDING`]: (state) => {
+    return state.merge({
       isGetPending: true,
       isGetCompleted: false,
       errorMessage: ''
-    };
+    });
   },
 
   [`${GET_MEDIA}_REJECTED`]: (state, { payload: error }) => {
-    return {
-      ...state,
+    return state.merge({
       isGetPending: false,
       isGetCompleted: false,
       errorMessage: error
-    };
+    });
   },
 
   [`${GET_MEDIA}_FULFILLED`]: (state, { payload: response }) => {
-    return {
-      ...state,
+    return state.merge({
       isGetPending: false,
       isGetCompleted: true,
       errorMessage: '',
@@ -107,151 +104,90 @@ export default handleActions({
       media: response.media,
       processingIds: response.processingIds,
       processingMedia: response.processingMedia
-    };
+    });
   },
 
   [ADD_MEDIA]: (state, { payload: mediaData }) => {
-    return {
-      ...state,
-      mediaIds: [mediaData.mediaId].concat(state.mediaIds),
-      media: {
-        ...state.media,
-        [mediaData.mediaId]: {
-          ...mediaData
-        }
-      }
-    };
+    let mediaIds = state.get('mediaIds').concat(mediaData.mediaId);
+    return state
+      .set('mediaIds', mediaIds)
+      .mergeIn(['media', mediaData.mediaId], {
+        ...mediaData
+      });
   },
 
   [ADD_PROCESSING_MEDIA]: (state, { payload: mediaData }) => {
-    return {
-      ...state,
-      processingIds: [mediaData.mediaId].concat(state.processingIds),
-      processingMedia: {
-        ...state.processingMedia,
-        [mediaData.mediaId]: {
-          ...mediaData
-        }
-      }
-    };
+    let processingIds = state.get('processingIds').concat(mediaData.mediaId);
+    return state
+      .set('processingIds', processingIds)
+      .mergeIn(['processingMedia', mediaData.mediaId], {
+        ...mediaData
+      });
   },
 
   [REMOVE_PROCESSING_MEDIA]: (state, { payload: mediaId }) => {
-    let processingIds = state.processingIds.filter(id => id !== mediaId);
-    return {
-      ...state,
-      processingIds,
-      processingMedia: _.pick(state.processingMedia, processingIds)
-    };
+    let processingIds = state.get('processingIds').filter(id => id !== mediaId);
+    return state
+      .set('processingIds', processingIds)
+      .deleteIn(['processingMedia', mediaId]);
   },
 
   [EXPAND_MEDIA]: (state, { payload: mediaId }) => {
-    return {
-      ...state,
-      activeMediaId: mediaId
-    }
+    return state.set('activeMediaId', mediaId);
   },
 
   [COLLAPSE_MEDIA]: (state, { payload: mediaId }) => {
-    return {
-      ...state,
-      activeMediaId: (state.activeMediaId === mediaId) ? '' : state.activeMediaId
-    }
+    let activeMediaId = (state.activeMediaId === mediaId) ? '' : state.activeMediaId;
+    return state.set('activeMediaId', activeMediaId);
   },
 
   [SELECT_MEDIA]: (state, { payload: mediaId }) => {
-    return {
-      ...state,
-      media: {
-        ...state.media,
-        [mediaId]: {
-          ...state.media[mediaId],
-          checked: true
-        }
-      },
-      selectedMediaIds: _.concat(state.selectedMediaIds, mediaId)
-    }
+    let selectedMediaIds = state.get('selectedMediaIds').concat(mediaId);
+    return state
+      .set('selectedMediaIds', selectedMediaIds)
+      .setIn(['media', mediaId, 'checked'], true);
   },
 
   [UNSELECT_MEDIA]: (state, { payload: mediaId }) => {
-    return {
-      ...state,
-      media: {
-        ...state.media,
-        [mediaId]: {
-          ...state.media[mediaId],
-          checked: false
-        }
-      },
-      selectedMediaIds: _.filter(state.selectedMediaIds, id => id !== mediaId)
-    }
+    let selectedMediaIds = state.get('selectedMediaIds').filter(id => id !== mediaId);
+    return state
+      .set('selectedMediaIds', selectedMediaIds)
+      .setIn(['media', mediaId, 'checked'], false);
   },
 
   [SELECT_ALL_MEDIA]: (state) => {
-    let selectedMediaIds = [];
-    let media = _.mapValues(state.media, function(mediaItem) {
-      selectedMediaIds = _.concat(selectedMediaIds, mediaItem.mediaId);
-      return {
-        ...mediaItem,
-        checked: true
-      }
-    });
+    let selectedMediaIds = state.get('mediaIds');
+    let media = state.get('media').map(mediaItem => mediaItem.set('checked', true));
 
-    return {
-      ...state,
-      media: media,
-      selectedMediaIds: selectedMediaIds
-    }
+    return state
+      .set('selectedMediaIds', selectedMediaIds)
+      .set('media', media);
   },
 
   [UNSELECT_ALL_MEDIA]: (state) => {
-    let media = _.mapValues(state.media, function(mediaItem) {
-      return {
-        ...mediaItem,
-        checked: false
-      }
-    });
+    let selectedMediaIds = state.get('selectedMediaIds').clear();
+    let media = state.get('media').map(mediaItem => mediaItem.set('checked', false));
 
-    return {
-      ...state,
-      media: media,
-      selectedMediaIds: []
-    }
+    return state
+      .set('selectedMediaIds', selectedMediaIds)
+      .set('media', media);
   },
 
   [`${DELETE_MEDIA}_PENDING`]: (state, { payload }) => {
-    return {
-      ...state,
-      media: {
-        ...state.media,
-        [payload.mediaId]: {
-          ...state.media[payload.mediaId],
-          deletePending: true
-        }
-      }
-    };
+    return state.setIn(['media', payload.mediaId, 'deletePending'], true);
   },
 
   [`${DELETE_MEDIA}_REJECTED`]: (state, { payload }) => {
-    return {
-      ...state,
-      media: {
-        ...state.media,
-        [payload.mediaId]: {
-          ...state.media[payload.mediaId],
-          deletePending: false,
-          deleteError: payload.error
-        }
-      }
-    };
+    return state.mergeIn(['media', payload.mediaId], {
+      deletePending: false,
+      deleteError: payload.error
+    });
   },
 
   [`${DELETE_MEDIA}_FULFILLED`]: (state, { payload: response }) => {
-    let mediaIds = state.mediaIds.filter(mediaId => response.mediaId !== mediaId);
-    return {
-      ...state,
-      mediaIds: mediaIds,
-      media: _.pick(state.media, mediaIds)
-    };
+    let mediaIds = state.get('mediaIds').filter(mediaId => response.mediaId !== mediaId);
+    return state
+      .set('mediaIds', mediaIds)
+      .deleteIn(['media', response.mediaId]);
   }
 }, initialState);

@@ -20,11 +20,11 @@ export class SidebarMenu extends React.Component {
 
   getAllItem() {
     let content = null;
-    let mediaIds = this.props.state.media.mediaList.mediaIds;
-    if (mediaIds.length > 0) {
+    let mediaIds = this.props.state.media.mediaList.get('mediaIds');
+    if (mediaIds.size > 0) {
       content = <NavItem active={this.isItemActive('/all')} onClick={this.redirect.bind(this, '/all')}>
         All My Files
-        <CounterLabel value={mediaIds.length}/>
+        <CounterLabel value={mediaIds.size}/>
       </NavItem>
     }
     return content;
@@ -32,11 +32,11 @@ export class SidebarMenu extends React.Component {
 
   getLastUploadedItem() {
     let content = null;
-    let lastUploadedIds = this.props.state.media.mediaList.lastUploadedIds;
-    if (lastUploadedIds.length > 0) {
+    let lastUploadedIds = this.props.state.media.mediaList.get('lastUploadedIds');
+    if (lastUploadedIds.size > 0) {
       content = <NavItem active={this.isItemActive('/last-upload')} onClick={this.redirect.bind(this, '/last-upload')}>
         Last Upload
-        <CounterLabel value={lastUploadedIds.length}/>
+        <CounterLabel value={lastUploadedIds.size}/>
       </NavItem>
     }
     return content;

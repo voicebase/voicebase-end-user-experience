@@ -16,7 +16,7 @@ export class MediaListItem extends React.Component {
 
   getTitle() {
     let title = this.props.mediaId;
-    let metadata = this.props.mediaState.mediaList.media[this.props.mediaId].metadata;
+    let metadata = this.props.mediaState.mediaList.getIn(['media', this.props.mediaId, 'metadata']).toJS();
     if (metadata && metadata.external && metadata.external.id) {
       title = metadata.external.id;
     }
@@ -64,7 +64,7 @@ export class MediaListItem extends React.Component {
   render () {
     let itemClasses = classnames('list-group-item', 'listing', {collapsed: !this.props.isExpanded});
     let mediaState = this.props.mediaState;
-    let media = mediaState.mediaList.media[this.props.mediaId];
+    let media = mediaState.mediaList.getIn(['media', this.props.mediaId]).toJS();
     let mediaData = mediaState.mediaData.data[this.props.mediaId];
     let checked = media.checked;
 
