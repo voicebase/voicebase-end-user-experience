@@ -1,5 +1,4 @@
 import { createAction, handleActions } from 'redux-actions'
-import _ from 'lodash'
 import { normalize } from '../../common/Normalize'
 import { fromJS } from 'immutable';
 import GroupsApi from '../../api/groupsApi'
@@ -109,39 +108,21 @@ export default handleActions({
   },
 
   [DELETE_GROUP + '_PENDING']: (state, { payload }) => {
-    return {
-      ...state,
-      groups: {
-        ...state.groups,
-        [payload.groupId]: {
-          ...state.groups[payload.groupId],
-          isDeletePending: true
-        }
-      }
-    };
+    return state.setIn(['groups', payload.groupId, 'isDeletePending'], true);
   },
 
   [DELETE_GROUP + '_REJECTED']: (state, { payload }) => {
-    return {
-      ...state,
-      groups: {
-        ...state.groups,
-        [payload.groupId]: {
-          ...state.groups[payload.groupId],
-          isDeletePending: false,
-          deleteError: payload.error
-        }
-      }
-    };
+    return state.mergeIn(['groups', payload.groupId], {
+      isDeletePending: false,
+      deleteError: payload.error
+    });
   },
 
   [DELETE_GROUP + '_FULFILLED']: (state, { payload }) => {
-    let groupIds = state.groupIds.filter(groupId => payload.groupId !== groupId);
-    return {
-      ...state,
-      groupIds,
-      groups: _.pick(state.groups, groupIds)
-    };
+    let groupIds = state.get('groupIds').filter(groupId => payload.groupId !== groupId);
+    return state
+      .set('groupIds', groupIds)
+      .deleteIn(['groups', payload.groupId]);
   },
 
   [EDIT_GROUP + '_PENDING']: (state, { payload }) => {
@@ -152,17 +133,10 @@ export default handleActions({
   },
 
   [EDIT_GROUP + '_REJECTED']: (state, { payload }) => {
-    return {
-      ...state,
-      groups: {
-        ...state.groups,
-        [payload.groupId]: {
-          ...state.groups[payload.groupId],
-          isEditPending: false,
-          editError: payload.error
-        }
-      }
-    };
+    return state.mergeIn(['groups', payload.groupId], {
+      isEditPending: false,
+      editError: payload.error
+    });
   },
 
   [EDIT_GROUP + '_FULFILLED']: (state, { payload }) => {
@@ -178,39 +152,33 @@ export default handleActions({
   },
 
   [ADD_GROUP + '_PENDING']: (state, { payload }) => {
-    return {
-      ...state,
-      isAddPending: true
-    };
+    return state.set('isAddPending', true);
   },
 
   [ADD_GROUP + '_REJECTED']: (state, { payload }) => {
-    return {
-      ...state,
+    return state.merge({
       isAddPending: false,
       addError: ''
-    };
+    });
   },
 
   [ADD_GROUP + '_FULFILLED']: (state, { payload }) => {
-    let id = new Date().getTime();
+    let id = new Date().getTime().toString();
     let result = normalize(payload.data.keywords);
 
-    return {
-      ...state,
-      isAddPending: false,
-      addError: '',
-      groupIds: state.groupIds.concat(id),
-      groups: {
-        ...state.groups,
-        [id]: {
-          id,
-          name: payload.data.name,
-          keywordIds: result.ids,
-          keywords: result.entities
-        }
-      }
-    };
+    let groupIds = state.get('groupIds').concat(id);
+    return state
+      .merge({
+        isAddPending: false,
+        addError: '',
+        groupIds
+      })
+      .mergeIn(['groups', id], {
+        id,
+        name: payload.data.name,
+        keywordIds: result.ids,
+        keywords: result.entities
+      });
   }
 
 }, initialState);
