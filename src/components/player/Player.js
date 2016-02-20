@@ -60,7 +60,7 @@ export class Player extends React.Component {
   }
 
   onDuration(duration) {
-    if (duration && duration > 0) {
+    if (duration && duration > 0 && this.props.playerState.duration !== duration) {
       this.props.actions.setDuration(this.props.mediaId, duration);
     }
   }
