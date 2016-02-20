@@ -59,9 +59,7 @@ export const actions = {
 /*
  * State
  * */
-export const initialState = {
-  data: {}
-};
+export const initialState = {};
 
 export const initialViewState = {
   activeTab: KEYWORDS_TAB
@@ -74,13 +72,10 @@ export default handleActions({
   [GET_DATA_FOR_MEDIA + '_PENDING']: (state, { payload }) => {
     return {
       ...state,
-      data: {
-        ...state.data,
-        [payload.mediaId]: {
-          ...state.data[payload.mediaId],
-          getPending: true,
-          view: initialViewState
-        }
+      [payload.mediaId]: {
+        ...state[payload.mediaId],
+        getPending: true,
+        view: initialViewState
       }
     };
   },
@@ -88,13 +83,10 @@ export default handleActions({
   [GET_DATA_FOR_MEDIA + '_REJECTED']: (state, { payload }) => {
     return {
       ...state,
-      data: {
-        ...state.data,
-        [payload.mediaId]: {
-          ...state.data[payload.mediaId],
-          getPending: false,
-          getError: payload.error
-        }
+      [payload.mediaId]: {
+        ...state[payload.mediaId],
+        getPending: false,
+        getError: payload.error
       }
     };
   },
@@ -103,29 +95,26 @@ export default handleActions({
     let parsedResult = parseMediaData(response);
     return {
       ...state,
-      data: {
-        ...state.data,
-        [response.mediaId]: {
-          ...state.data[response.mediaId],
-          data: response,
-          status: parsedResult.status,
-          topicsIds: parsedResult.topicsIds,
-          topics: parsedResult.topics,
-          activeTopic: parsedResult.activeTopic,
-          groupsIds: parsedResult.groupsIds,
-          groups: parsedResult.groups,
-          activeGroup: parsedResult.activeGroup,
-          speakers: parsedResult.speakers,
-          transcriptSpeakers: parsedResult.transcriptSpeakers,
-          activeSpeaker: parsedResult.activeSpeaker,
-          transcript: parsedResult.transcript,
-          predictions: parsedResult.predictions,
-          utterances: parsedResult.utterances,
-          jobTasks: parsedResult.jobTasks,
-          getPending: false,
-          getError: '',
-          view: initialViewState
-        }
+      [response.mediaId]: {
+        ...state[response.mediaId],
+        data: response,
+        status: parsedResult.status,
+        topicsIds: parsedResult.topicsIds,
+        topics: parsedResult.topics,
+        activeTopic: parsedResult.activeTopic,
+        groupsIds: parsedResult.groupsIds,
+        groups: parsedResult.groups,
+        activeGroup: parsedResult.activeGroup,
+        speakers: parsedResult.speakers,
+        transcriptSpeakers: parsedResult.transcriptSpeakers,
+        activeSpeaker: parsedResult.activeSpeaker,
+        transcript: parsedResult.transcript,
+        predictions: parsedResult.predictions,
+        utterances: parsedResult.utterances,
+        jobTasks: parsedResult.jobTasks,
+        getPending: false,
+        getError: '',
+        view: initialViewState
       }
     };
   },
@@ -133,12 +122,9 @@ export default handleActions({
   [GET_MEDIA_URL + '_PENDING']: (state, { payload }) => {
     return {
       ...state,
-      data: {
-        ...state.data,
-        [payload.mediaId]: {
-          ...state.data[payload.mediaId],
-          getUrlPending: true
-        }
+      [payload.mediaId]: {
+        ...state[payload.mediaId],
+        getUrlPending: true
       }
     };
   },
@@ -146,13 +132,10 @@ export default handleActions({
   [GET_MEDIA_URL + '_REJECTED']: (state, { payload }) => {
     return {
       ...state,
-      data: {
-        ...state.data,
-        [payload.mediaId]: {
-          ...state.data[payload.mediaId],
-          getUrlPending: false,
-          getUrlError: payload.error
-        }
+      [payload.mediaId]: {
+        ...state[payload.mediaId],
+        getUrlPending: false,
+        getUrlError: payload.error
       }
     };
   },
@@ -160,14 +143,11 @@ export default handleActions({
   [GET_MEDIA_URL + '_FULFILLED']: (state, { payload }) => {
     return {
       ...state,
-      data: {
-        ...state.data,
-        [payload.mediaId]: {
-          ...state.data[payload.mediaId],
-          mediaUrl: payload.url,
-          getUrlPending: false,
-          getUrlError: ''
-        }
+      [payload.mediaId]: {
+        ...state[payload.mediaId],
+        mediaUrl: payload.url,
+        getUrlPending: false,
+        getUrlError: ''
       }
     };
   },
@@ -175,12 +155,9 @@ export default handleActions({
   [SET_ACTIVE_TOPIC]: (state, { payload }) => {
     return {
       ...state,
-      data: {
-        ...state.data,
-        [payload.mediaId]: {
-          ...state.data[payload.mediaId],
-          activeTopic: payload.topicId
-        }
+      [payload.mediaId]: {
+        ...state[payload.mediaId],
+        activeTopic: payload.topicId
       }
     }
   },
@@ -188,12 +165,9 @@ export default handleActions({
   [SET_ACTIVE_GROUP]: (state, { payload }) => {
     return {
       ...state,
-      data: {
-        ...state.data,
-        [payload.mediaId]: {
-          ...state.data[payload.mediaId],
-          activeGroup: payload.topicId
-        }
+      [payload.mediaId]: {
+        ...state[payload.mediaId],
+        activeGroup: payload.topicId
       }
     }
   },
@@ -201,14 +175,11 @@ export default handleActions({
   [CHOOSE_PLAYER_APP_TAB]: (state, { payload: {tabId, mediaId} }) => {
     return {
       ...state,
-      data: {
-        ...state.data,
-        [mediaId]: {
-          ...state.data[mediaId],
-          view: {
-            ...state.data[mediaId].view,
-            activeTab: tabId
-          }
+      [mediaId]: {
+        ...state[mediaId],
+        view: {
+          ...state[mediaId].view,
+          activeTab: tabId
         }
       }
     };

@@ -21,7 +21,7 @@ export class MediaList extends React.Component {
               <ProcessingListItem key={'upload-progress-' + mediaId}
                                   token={this.props.token}
                                   mediaId={mediaId}
-                                  mediaDataState={state.mediaData.data[mediaId]}
+                                  mediaDataState={state.mediaData[mediaId]}
                                   actions={this.props.actions}
               />
             )
