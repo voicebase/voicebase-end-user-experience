@@ -11,12 +11,14 @@ export class VbsPlayerApp extends React.Component {
   static propTypes = {
     token: PropTypes.string.isRequired,
     mediaId: PropTypes.string.isRequired,
-    mediaState: PropTypes.object.isRequired,
+    mediaDataState: PropTypes.object.isRequired,
+    playerState: PropTypes.object.isRequired,
+    markersState: PropTypes.object,
     actions: PropTypes.object.isRequired
   };
 
   componentWillMount() {
-    let mediaData = this.props.mediaState.mediaData.data[this.props.mediaId];
+    let mediaData = this.props.mediaDataState;
     this.props.actions.createPlayer(this.props.mediaId, mediaData.mediaUrl, mediaData.data.metadata.type || 'audio');
   }
 
@@ -29,18 +31,17 @@ export class VbsPlayerApp extends React.Component {
   }
 
   render () {
-    let mediaState = this.props.mediaState;
-    let playerState = mediaState.player.toJS().players[this.props.mediaId] || {loading: true};
-    let mediaData = mediaState.mediaData.data[this.props.mediaId];
+    let playerState = this.props.playerState;
+    let mediaData = this.props.mediaDataState;
     let activeTab = mediaData.view.activeTab;
-    var markers = mediaState.markers.toJS();
+    let markersState = this.props.markersState;
 
     return (
       <div className="vbs-player-app">
         <Player mediaId={this.props.mediaId}
                 playerType="JwPlayer"
                 mediaState={mediaData}
-                markersState={markers[this.props.mediaId]}
+                markersState={markersState}
                 playerState={playerState}
                 hasNextKeywordButton
                 hasDownloadButton
@@ -94,7 +95,7 @@ export class VbsPlayerApp extends React.Component {
           <Transcript mediaId={this.props.mediaId}
                       playerState={playerState}
                       mediaState={mediaData}
-                      markersState={markers[this.props.mediaId]}
+                      markersState={markersState}
                       actions={this.props.actions}
           />
         }

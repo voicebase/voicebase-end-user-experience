@@ -62,6 +62,30 @@ export class MediaListItem extends React.Component {
     return (mediaData && (mediaData.getPending || mediaData.getUrlPending));
   }
 
+  getPlayerApp() {
+    let state = this.props.mediaState;
+    let mediaId = this.props.mediaId;
+    let playerState = state.player.hasIn(['players', mediaId])
+      ? state.player.getIn(['players', mediaId]).toJS()
+      : {loading: true};
+
+    let mediaDataState = state.mediaData.data[mediaId];
+
+    let markersState = state.markers.has(mediaId)
+      ? state.markers.get(mediaId).toJS()
+      : null;
+
+    return (
+      <VbsPlayerApp token={this.props.token}
+                    mediaId={this.props.mediaId}
+                    playerState={playerState}
+                    mediaDataState={mediaDataState}
+                    markersState={markersState}
+                    actions={this.props.actions}
+      />
+    );
+  }
+
   render () {
     let itemClasses = classnames('list-group-item', 'listing', {collapsed: !this.props.isExpanded});
     let mediaState = this.props.mediaState;
@@ -100,10 +124,7 @@ export class MediaListItem extends React.Component {
             }
             {
               !this.isGettingMediaData(mediaData) && mediaData && mediaData.data && mediaData.status === 'finished' &&
-              <VbsPlayerApp token={this.props.token}
-                            mediaId={this.props.mediaId}
-                            mediaState={mediaState}
-                            actions={this.props.actions}/>
+              this.getPlayerApp()
             }
           </div>
         </Collapse>
