@@ -98,7 +98,7 @@ export class MediaListItem extends React.Component {
               </Row>
             }
             {
-              mediaData && mediaData.data && mediaData.status === 'finished' &&
+              !this.isGettingMediaData(mediaData) && mediaData && mediaData.data && mediaData.status === 'finished' &&
               <VbsPlayerApp token={this.props.token}
                             mediaId={this.props.mediaId}
                             mediaState={mediaState}
