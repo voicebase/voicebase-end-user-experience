@@ -32,7 +32,7 @@ export class MediaListItem extends React.Component {
 
     if (!this.props.isExpanded) {
       this.props.mediaState.activeMediaId && this.props.actions.collapseMedia(this.props.mediaState.activeMediaId);
-      if (!this.props.mediaState.mediaData[this.props.mediaId]) {
+      if (!this.props.mediaState.mediaData.has(this.props.mediaId)) {
         this.props.actions.getMediaUrl(this.props.token, this.props.mediaId);
         this.props.actions.getDataForMedia(this.props.token, this.props.mediaId);
       }
@@ -69,7 +69,9 @@ export class MediaListItem extends React.Component {
       ? state.player.getIn(['players', mediaId]).toJS()
       : {loading: true};
 
-    let mediaDataState = state.mediaData[mediaId];
+    let mediaDataState = state.mediaData.has(this.props.mediaId)
+      ? state.mediaData.get(this.props.mediaId).toJS()
+      : null;
 
     let markersState = state.markers.has(mediaId)
       ? state.markers.get(mediaId).toJS()
@@ -90,7 +92,10 @@ export class MediaListItem extends React.Component {
     let itemClasses = classnames('list-group-item', 'listing', {collapsed: !this.props.isExpanded});
     let mediaState = this.props.mediaState;
     let media = this.props.listItemState;
-    let mediaData = mediaState.mediaData[this.props.mediaId];
+    let mediaData = mediaState.mediaData.has(this.props.mediaId)
+      ? mediaState.mediaData.get(this.props.mediaId).toJS()
+      : null;
+
     let checked = media.checked;
 
     let duration = media.metadata.duration;

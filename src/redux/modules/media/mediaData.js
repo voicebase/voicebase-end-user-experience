@@ -1,6 +1,8 @@
 import { createAction, handleActions } from 'redux-actions'
 import { getClearWordFromTranscript, getRandomColor } from '../../../common/Common'
 import { normalize } from '../../../common/Normalize'
+import { fromJS } from 'immutable';
+
 import MediaApi from '../../../api/mediaApi'
 
 /*
@@ -59,7 +61,7 @@ export const actions = {
 /*
  * State
  * */
-export const initialState = {};
+export const initialState = fromJS({});
 
 export const initialViewState = {
   activeTab: KEYWORDS_TAB
@@ -70,119 +72,74 @@ export const initialViewState = {
  * */
 export default handleActions({
   [GET_DATA_FOR_MEDIA + '_PENDING']: (state, { payload }) => {
-    return {
-      ...state,
-      [payload.mediaId]: {
-        ...state[payload.mediaId],
-        getPending: true,
-        view: initialViewState
-      }
-    };
+    return state.mergeIn([payload.mediaId], {
+      getPending: true,
+      view: initialViewState
+    });
   },
 
   [GET_DATA_FOR_MEDIA + '_REJECTED']: (state, { payload }) => {
-    return {
-      ...state,
-      [payload.mediaId]: {
-        ...state[payload.mediaId],
-        getPending: false,
-        getError: payload.error
-      }
-    };
+    return state.mergeIn([payload.mediaId], {
+      getPending: false,
+      getError: payload.error
+    });
   },
 
   [GET_DATA_FOR_MEDIA + '_FULFILLED']: (state, { payload: response }) => {
     let parsedResult = parseMediaData(response);
-    return {
-      ...state,
-      [response.mediaId]: {
-        ...state[response.mediaId],
-        data: response,
-        status: parsedResult.status,
-        topicsIds: parsedResult.topicsIds,
-        topics: parsedResult.topics,
-        activeTopic: parsedResult.activeTopic,
-        groupsIds: parsedResult.groupsIds,
-        groups: parsedResult.groups,
-        activeGroup: parsedResult.activeGroup,
-        speakers: parsedResult.speakers,
-        transcriptSpeakers: parsedResult.transcriptSpeakers,
-        activeSpeaker: parsedResult.activeSpeaker,
-        transcript: parsedResult.transcript,
-        predictions: parsedResult.predictions,
-        utterances: parsedResult.utterances,
-        jobTasks: parsedResult.jobTasks,
-        getPending: false,
-        getError: '',
-        view: initialViewState
-      }
-    };
+    return state.mergeIn([response.mediaId], {
+      data: response,
+      status: parsedResult.status,
+      topicsIds: parsedResult.topicsIds,
+      topics: parsedResult.topics,
+      activeTopic: parsedResult.activeTopic,
+      groupsIds: parsedResult.groupsIds,
+      groups: parsedResult.groups,
+      activeGroup: parsedResult.activeGroup,
+      speakers: parsedResult.speakers,
+      transcriptSpeakers: parsedResult.transcriptSpeakers,
+      activeSpeaker: parsedResult.activeSpeaker,
+      transcript: parsedResult.transcript,
+      predictions: parsedResult.predictions,
+      utterances: parsedResult.utterances,
+      jobTasks: parsedResult.jobTasks,
+      getPending: false,
+      getError: '',
+      view: initialViewState
+    });
   },
 
   [GET_MEDIA_URL + '_PENDING']: (state, { payload }) => {
-    return {
-      ...state,
-      [payload.mediaId]: {
-        ...state[payload.mediaId],
-        getUrlPending: true
-      }
-    };
+    return state.mergeIn([payload.mediaId], {
+      getUrlPending: true
+    });
   },
 
   [GET_MEDIA_URL + '_REJECTED']: (state, { payload }) => {
-    return {
-      ...state,
-      [payload.mediaId]: {
-        ...state[payload.mediaId],
-        getUrlPending: false,
-        getUrlError: payload.error
-      }
-    };
+    return state.mergeIn([payload.mediaId], {
+      getUrlPending: false,
+      getUrlError: payload.error
+    });
   },
 
   [GET_MEDIA_URL + '_FULFILLED']: (state, { payload }) => {
-    return {
-      ...state,
-      [payload.mediaId]: {
-        ...state[payload.mediaId],
-        mediaUrl: payload.url,
-        getUrlPending: false,
-        getUrlError: ''
-      }
-    };
+    return state.mergeIn([payload.mediaId], {
+      mediaUrl: payload.url,
+      getUrlPending: false,
+      getUrlError: ''
+    });
   },
 
   [SET_ACTIVE_TOPIC]: (state, { payload }) => {
-    return {
-      ...state,
-      [payload.mediaId]: {
-        ...state[payload.mediaId],
-        activeTopic: payload.topicId
-      }
-    }
+    return state.setIn([payload.mediaId, 'activeTopic'], payload.topicId);
   },
 
   [SET_ACTIVE_GROUP]: (state, { payload }) => {
-    return {
-      ...state,
-      [payload.mediaId]: {
-        ...state[payload.mediaId],
-        activeGroup: payload.topicId
-      }
-    }
+    return state.setIn([payload.mediaId, 'activeGroup'], payload.topicId);
   },
 
   [CHOOSE_PLAYER_APP_TAB]: (state, { payload: {tabId, mediaId} }) => {
-    return {
-      ...state,
-      [mediaId]: {
-        ...state[mediaId],
-        view: {
-          ...state[mediaId].view,
-          activeTab: tabId
-        }
-      }
-    };
+    return state.setIn([mediaId, 'view', 'activeTab'], tabId);
   }
 
 }, initialState);

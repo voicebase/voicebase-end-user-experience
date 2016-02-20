@@ -108,7 +108,7 @@ export default handleActions({
   },
 
   [ADD_MEDIA]: (state, { payload: mediaData }) => {
-    let mediaIds = state.get('mediaIds').concat(mediaData.mediaId);
+    let mediaIds = state.get('mediaIds').unshift(mediaData.mediaId);
     return state
       .set('mediaIds', mediaIds)
       .mergeIn(['media', mediaData.mediaId], {

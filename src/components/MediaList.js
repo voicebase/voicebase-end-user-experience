@@ -17,11 +17,15 @@ export class MediaList extends React.Component {
       <div className="list-group listings">
         {
           mediaList.processingIds.map(mediaId => {
+            let mediaDataState = state.mediaData.has(mediaId)
+              ? state.mediaData.get(mediaId).toJS()
+              : null;
+
             return (
               <ProcessingListItem key={'upload-progress-' + mediaId}
                                   token={this.props.token}
                                   mediaId={mediaId}
-                                  mediaDataState={state.mediaData[mediaId]}
+                                  mediaDataState={mediaDataState}
                                   actions={this.props.actions}
               />
             )
