@@ -5,11 +5,11 @@ export default {
     let data = [{
       name: 'First detection model',
       description: 'test22',
-      isDefault: true
+      isDefault: false
     }, {
       name: 'Second detection model',
       description: 'test22',
-      isDefault: true
+      isDefault: false
     }, {
       name: 'Third detection model',
       description: 'test22',

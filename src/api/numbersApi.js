@@ -5,11 +5,11 @@ export default {
     let data = [{
       name: 'First number',
       description: 'test',
-      isDefault: true
+      isDefault: false
     }, {
       name: 'Phone',
       description: 'test',
-      isDefault: true
+      isDefault: false
     }, {
       name: 'test number',
       description: 'test',

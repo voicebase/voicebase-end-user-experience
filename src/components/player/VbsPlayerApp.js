@@ -20,6 +20,10 @@ export class VbsPlayerApp extends React.Component {
     this.props.actions.createPlayer(this.props.mediaId, mediaData.mediaUrl, mediaData.data.metadata.type || 'audio');
   }
 
+  componentWillUnmount() {
+    this.props.actions.destroyPlayer(this.props.mediaId);
+  }
+
   selectTab(key) {
     this.props.actions.choosePlayerAppTab(this.props.mediaId, key);
   }
