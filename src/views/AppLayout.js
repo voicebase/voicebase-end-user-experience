@@ -20,7 +20,7 @@ export class AppLayout extends React.Component {
     }
   }
 
-  componentWillUpdate() {
+  componentDidUpdate() {
     this.redirectIfNotLoggedIn();
   }
 
