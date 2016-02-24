@@ -25,6 +25,7 @@ const karmaConfig = {
   browsers: ['PhantomJS'],
   webpack: {
     devtool: 'inline-source-map',
+    entry:{},
     resolve: webpackConfig.resolve,
     plugins: webpackConfig.plugins
       .filter(plugin => !plugin.__KARMA_IGNORE__),
