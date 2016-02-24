@@ -65,6 +65,9 @@ export class Keywords extends React.Component {
                 activeTopic.keywordsIds.map(keywordId => {
                   let keyword = activeTopic.keywords[keywordId];
                   let times = keyword.t[activeSpeakerId];
+                  if (!times) { // no times - no keyword.
+                    return null;
+                  }
                   return (
                     <li key={'keyword-' + keywordId}>
                       <a href="javascript:void(0)" onClick={this.setMarkers.bind(this, keyword, activeSpeakerId)}>
