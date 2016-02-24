@@ -51,7 +51,6 @@ class LoginForm extends React.Component {
           <Button type="submit" bsStyle="primary" className="pull-left" disabled={this.props.isPending} onClick={handleSubmit}>
             {this.props.isPending ? 'Signing In...' : 'Sign In'}
           </Button>
-          <Button bsStyle="link" className="pull-right">Forgot details</Button>
         </form>
       </div>
     )
