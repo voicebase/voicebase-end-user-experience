@@ -80,19 +80,27 @@ export default class UploadPreview extends React.Component {
   }
 
   onChangePrediction(newValue) {
-    this.props.actions.setPrediction(newValue.split(','));
+    let value = this.parseSelectValue(newValue);
+    this.props.actions.setPrediction(value);
   }
 
   onChangeDetection(newValue) {
-    this.props.actions.setDetection(newValue.split(','));
+    let value = this.parseSelectValue(newValue);
+    this.props.actions.setDetection(value);
   }
 
   onChangeNumbers(newValue) {
-    this.props.actions.setNumbers(newValue.split(','));
+    let value = this.parseSelectValue(newValue);
+    this.props.actions.setNumbers(value);
   }
 
   onChangeGroups(newValue) {
-    this.props.actions.setGroups(newValue.split(','));
+    let value = this.parseSelectValue(newValue);
+    this.props.actions.setGroups(value);
+  }
+
+  parseSelectValue(value) {
+    return (value) ? value.split(',') : [];
   }
 
   getSelectValue(key, items) {
