@@ -176,7 +176,6 @@ export default {
         predictionsConf = {
           predictions: options.predictions
         };
-
       }
 
       let sumConf = Object.assign({}, jobConf, groupsConf, predictionsConf);
