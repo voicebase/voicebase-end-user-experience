@@ -3,15 +3,18 @@ let TYPE = 'numbers';
 export default {
   getItems(token) {
     let data = [{
-      name: 'First number',
+      name: 'first',
+      displayName: 'First number',
       description: 'test',
       isDefault: false
     }, {
-      name: 'Phone',
+      name: 'phone',
+      displayName: 'Phone',
       description: 'test',
       isDefault: false
     }, {
-      name: 'test number',
+      name: 'test',
+      displayName: 'test number',
       description: 'test',
       isDefault: false
     }];

@@ -1,29 +1,28 @@
-let TYPE = 'predictions';
+import axios from 'axios'
+
+const baseUrl = 'https://apis.voicebase.com/v2-beta';
+const TYPE = 'predictions';
 
 export default {
   getItems(token) {
-    let data = [{
-      name: 'First prediction model',
-      description: 'test',
-      isDefault: false
-    }, {
-      name: 'Second prediction model',
-      description: 'test',
-      isDefault: false
-    }, {
-      name: 'Third prediction model',
-      description: 'test',
-      isDefault: false
-    }];
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          type: TYPE,
-          data
-        });
-      }, 500)
+    let url = `${baseUrl}/definitions/predictions/models`;
+    return axios.get(url, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
     })
+    .then(response => {
+      return {
+        type: TYPE,
+        data: response.data.models
+      }
+    })
+    .catch(error => {
+      if (error.data && error.data.errors) {
+        error = error.data.errors.error;
+      }
+      return Promise.reject(error)
+    });
   },
 
   deleteItem(id) {

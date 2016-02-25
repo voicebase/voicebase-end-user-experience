@@ -109,7 +109,7 @@ export default class UploadPreview extends React.Component {
         let item = items[id];
         return {
           value: item.id,
-          label: item.name
+          label: item.displayName || item.name
         }
       });
     }

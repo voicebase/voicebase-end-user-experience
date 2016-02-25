@@ -48,7 +48,7 @@ export class SettingsListItem extends React.Component {
         <ListGroupItem href="javascript:void(0)" onClick={ () => this.setState({ open: !this.state.open })}>
           <Col sm={11}>
             <h4 className="list-group-item-heading">
-              { item.name }
+              { item.displayName }
               { item.isDefault && <Label bsStyle="primary">Default</Label> }
             </h4>
           </Col>
