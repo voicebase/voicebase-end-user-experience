@@ -6,6 +6,12 @@ export const parseTime = function (seconds) {
 };
 
 export const padLeft = function (string, total) {
+  if (typeof string !== 'string') {
+    throw new Error('First parameter must be a string');
+  }
+  if (typeof total !== 'number') {
+    throw new Error('Second parameter must be a integer');
+  }
   return new Array(total - string.length + 1).join('0') + string;
 };
 
