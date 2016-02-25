@@ -59,7 +59,7 @@ describe('(Redux Module) upload.js', function () {
     });
 
     describe('POST_FILE', () => {
-      checkActionTypes(actions, 'postFile', POST_FILE);
+      //checkActionTypes(actions, 'postFile', POST_FILE);
     });
 
     describe('SET_LANGUAGE', () => {
@@ -113,28 +113,30 @@ describe('(Redux Module) upload.js', function () {
       type: 'video'
     }];
 
-    it('ADD_FILES reducer', function () {
-      let expectedRes = fromJS({
-        ...initialJsState,
-        view: {
-          showForm: true,
-          activeTab: FILES_PREVIEW_TAB
+    let addFilesState = fromJS({
+      ...initialJsState,
+      view: {
+        showForm: true,
+        activeTab: FILES_PREVIEW_TAB
+      },
+      fileIds: ['0', '1'],
+      files: {
+        0: {
+          file: {...files[0]},
+          type: files[0].type
         },
-        fileIds: ['0', '1'],
-        files: {
-          0: {
-            file: {...files[0]},
-            type: files[0].type
-          },
-          1: {
-            file: {...files[1]},
-            type: files[1].type
-          }
+        1: {
+          file: {...files[1]},
+          type: files[1].type
         }
-      });
+      }
+    });
+
+    it('ADD_FILES reducer', function () {
+      let expectedRes = addFilesState;
 
       let action = {
-        type: "ADD_FILES",
+        type: 'ADD_FILES',
         payload: files
       };
       let reducerRes = uploadReducer(initialState, action);
@@ -143,34 +145,208 @@ describe('(Redux Module) upload.js', function () {
     });
 
     it('REMOVE_FILE reducer', function () {
-      let expectedRes = fromJS({
-        ...initialJsState,
-        view: {
-          showForm: true,
-          activeTab: FILES_PREVIEW_TAB
-        },
-        fileIds: ['0'],
-        files: {
-          0: {
-            file: {...files[0]},
-            type: files[0].type
-          }
-        }
-      });
+      let expectedRes = addFilesState.set('fileIds', fromJS(['0'])).deleteIn(['files', '1']);
 
       // Add two files
       let addRes = uploadReducer(initialState, {
-        type: "ADD_FILES",
+        type: 'ADD_FILES',
         payload: files
       });
 
-      // Remove two files
+      // Remove file
       let deleteRes = uploadReducer(addRes, {
-        type: "REMOVE_FILE",
+        type: 'REMOVE_FILE',
         payload: '1'
       });
 
       assert.isTrue(Immutable.is(expectedRes, deleteRes));
+    });
+
+    it('POST_FILE_PENDING reducer', function () {
+      let expectedRes = addFilesState
+        .setIn(['view', 'showForm'], false)
+        .mergeIn(['files', '0'], {
+          isPostPending: true,
+          errorMessage: ''
+        });
+
+      // Add two files
+      let addRes = uploadReducer(initialState, {
+        type: 'ADD_FILES',
+        payload: files
+      });
+
+      let postPendingRes = uploadReducer(addRes, {
+        type: POST_FILE + '_PENDING',
+        payload: {fileId: '0'}
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, postPendingRes));
+    });
+
+    it('POST_FILE_REJECTED reducer', function () {
+      let expectedRes = addFilesState
+        .mergeIn(['files', '0'], {
+          isPostPending: false,
+          errorMessage: 'error'
+        });
+
+      // Add two files
+      let addRes = uploadReducer(initialState, {
+        type: 'ADD_FILES',
+        payload: files
+      });
+
+      let postRemoveRes = uploadReducer(addRes, {
+        type: POST_FILE + '_REJECTED',
+        payload: {
+          fileId: '0',
+          error: 'error'
+        }
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, postRemoveRes));
+    });
+
+    it('POST_FILE_FULFILLED reducer', function () {
+      let mediaId = 'mediaId';
+      let fileId = '0';
+      let expectedRes = addFilesState
+        .setIn(['view', 'showForm'], false)
+        .mergeIn(['files', fileId], {
+          isPostPending: false,
+          isPostComplete: true,
+          errorMessage: '',
+          mediaId: mediaId,
+          data: {
+            mediaId: mediaId
+          }
+        });
+
+      // Add two files
+      let addRes = uploadReducer(initialState, {
+        type: 'ADD_FILES',
+        payload: files
+      });
+
+      // Pending
+      let postPendingRes = uploadReducer(addRes, {
+        type: POST_FILE + '_PENDING',
+        payload: {fileId: fileId}
+      });
+
+      // post success
+      let postRes = uploadReducer(postPendingRes, {
+        type: POST_FILE + '_FULFILLED',
+        payload: {
+          fileId: fileId,
+          data: {
+            mediaId: mediaId
+          }
+        }
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, postRes));
+    });
+
+    it('CANCEL_UPLOAD reducer', function () {
+      let expectedRes = initialState;
+
+      // Add two files
+      let addRes = uploadReducer(initialState, {
+        type: 'ADD_FILES',
+        payload: files
+      });
+
+      // Pending
+      let cancelRes = uploadReducer(addRes, {
+        type: 'CANCEL_UPLOAD'
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, cancelRes));
+    });
+
+    it('CHOOSE_TAB reducer', function () {
+      let expectedRes = initialState.setIn(['view', 'activeTab'], OPTIONS_TAB);
+
+      let res = uploadReducer(initialState, {
+        type: 'CHOOSE_TAB',
+        payload: OPTIONS_TAB
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it('SET_LANGUAGE reducer', function () {
+      let lang = 'uk';
+      let expectedRes = initialState.setIn(['options', 'language'], lang);
+
+      let res = uploadReducer(initialState, {
+        type: 'SET_LANGUAGE',
+        payload: lang
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it('SET_PRIORITY reducer', function () {
+      let priority = '1';
+      let expectedRes = initialState.setIn(['options', 'priority'], priority);
+
+      let res = uploadReducer(initialState, {
+        type: 'SET_PRIORITY',
+        payload: priority
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it('SET_PREDICTION reducer', function () {
+      let payload = ['1'];
+      let expectedRes = initialState.setIn(['options', 'predictions'], payload);
+
+      let res = uploadReducer(initialState, {
+        type: 'SET_PREDICTION',
+        payload: payload
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it('SET_DETECTION reducer', function () {
+      let payload = ['1'];
+      let expectedRes = initialState.setIn(['options', 'detection'], payload);
+
+      let res = uploadReducer(initialState, {
+        type: 'SET_DETECTION',
+        payload: payload
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it('SET_NUMBERS reducer', function () {
+      let payload = ['1'];
+      let expectedRes = initialState.setIn(['options', 'numbers'], payload);
+
+      let res = uploadReducer(initialState, {
+        type: 'SET_NUMBERS',
+        payload: payload
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it('SET_GROUPS reducer', function () {
+      let payload = ['1'];
+      let expectedRes = initialState.setIn(['options', 'groups'], payload);
+
+      let res = uploadReducer(initialState, {
+        type: 'SET_GROUPS',
+        payload: payload
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
     });
 
   });
