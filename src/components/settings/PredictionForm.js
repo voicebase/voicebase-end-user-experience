@@ -19,7 +19,7 @@ class PredictionForm extends React.Component {
 
   render () {
     const {
-      fields: { name, description, isDefault },
+      fields: { displayName, description, isDefault },
       handleSubmit,
       pristine
     } = this.props;
@@ -27,8 +27,8 @@ class PredictionForm extends React.Component {
     return (
       <div>
         <form className="form-settings" onSubmit={handleSubmit}>
-          <Input type="text" name="name" placeholder="Prediction Name" {...name} />
-          {name.touched && name.error && <div className="login-field-error">{name.error}</div>}
+          <Input type="text" name="name" placeholder="Prediction Name" {...displayName} />
+          {displayName.touched && displayName.error && <div className="login-field-error">{displayName.error}</div>}
 
           <Input type="textarea" name="description" placeholder="Description (Optional)" {...description} />
           <Input type="checkbox" name="isDefault" label="Default prediction model" {...isDefault} />
@@ -44,15 +44,15 @@ class PredictionForm extends React.Component {
 
 const validate = values => {
   const errors = {};
-  if (!values.name) {
-    errors.name = 'Prediction name is required';
+  if (!values.displayName) {
+    errors.displayName = 'Prediction name is required';
   }
   return errors;
 };
 
 PredictionForm = reduxForm({
   form: 'prediction',
-  fields: ['name', 'description', 'isDefault'],
+  fields: ['displayName', 'description', 'isDefault'],
   validate: validate
 })(PredictionForm);
 

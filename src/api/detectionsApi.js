@@ -3,15 +3,18 @@ let TYPE = 'detection';
 export default {
   getItems(token) {
     let data = [{
-      name: 'First detection model',
+      name: 'first',
+      displayName: 'First detection model',
       description: 'test22',
       isDefault: false
     }, {
-      name: 'Second detection model',
+      name: 'second',
+      displayName: 'Second detection model',
       description: 'test22',
       isDefault: false
     }, {
-      name: 'Third detection model',
+      name: 'third',
+      displayName: 'Third detection model',
       description: 'test22',
       isDefault: false
     }];
