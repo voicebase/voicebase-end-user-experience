@@ -163,7 +163,7 @@ export default {
       let jobConf = {executor: 'v2'};
 
       let groupsConf = {};
-      if (options.groups.length > 0) {
+      if (options.groups && options.groups.length > 0) {
         groupsConf = {
           keywords: {
             groups: options.groups
@@ -172,7 +172,7 @@ export default {
       }
 
       let predictionsConf = {};
-      if (options.predictions.length > 0) {
+      if (options.predictions && options.predictions.length > 0) {
         predictionsConf = {
           predictions: options.predictions
         };
