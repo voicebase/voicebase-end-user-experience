@@ -201,7 +201,7 @@ export const settings = handleActions({
   },
 
   [DELETE_ITEM + '_REJECTED']: (state, { payload: {type, id, error} }) => {
-    return state.mergeIn([type, 'items', id, 'isDeletePending'], {
+    return state.mergeIn([type, 'items', id], {
       isDeletePending: false,
       deleteError: error
     });
@@ -236,7 +236,7 @@ export const settings = handleActions({
     });
   },
 
-  [ADD_ITEM + '_PENDING']: (state, { payload: {type, id} }) => {
+  [ADD_ITEM + '_PENDING']: (state, { payload: {type} }) => {
     return state.setIn([type, 'isAddPending'], true);
   },
 
