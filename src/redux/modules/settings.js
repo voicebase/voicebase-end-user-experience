@@ -91,7 +91,7 @@ export const actions = {
 /*
  * State
  * */
-const itemInitialState = {
+export const itemInitialState = {
   view: {},
   itemIds: [],
   items: {},

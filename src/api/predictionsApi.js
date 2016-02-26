@@ -32,7 +32,7 @@ export default {
           type: TYPE,
           id
         });
-      }, 500)
+      }, 0)
     })
   },
 
@@ -44,7 +44,7 @@ export default {
           id,
           data: newItem
         });
-      }, 500)
+      }, 0)
     })
   }
 }

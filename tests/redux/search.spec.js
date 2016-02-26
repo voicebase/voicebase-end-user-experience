@@ -9,7 +9,6 @@ import {
   default as searchReducer
 } from '../../src/redux/modules/search'
 
-import { createAction } from 'redux-actions'
 import Immutable, { fromJS } from 'immutable'
 import { checkActionTypes, checkCreatingAction } from '../../src/common/Test'
 

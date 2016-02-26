@@ -17,13 +17,12 @@ import {
   default as uploadReducer
 } from '../../src/redux/modules/upload'
 
-import { createAction, handleActions } from 'redux-actions'
 import configureMockStore from 'redux-mock-store';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 
 import Immutable, { fromJS } from 'immutable'
-import { checkActionTypes, checkCreatingAction } from '../../src/common/Test'
+import { checkActionTypes, checkCreatingAction, checkIsFunction, checkApiAction } from '../../src/common/Test'
 
 describe('(Redux Module) upload.js', function () {
 
@@ -63,62 +62,14 @@ describe('(Redux Module) upload.js', function () {
     });
 
     describe('POST_FILE', () => {
-      it(`Should be exported POST_FILE action as a function.`, function () {
-        expect(actions.postFile).to.be.a('function')
-      });
+      checkIsFunction(actions, 'postFile');
 
       it('check POST_FILE_FULFILLED when call action postFile', (done) => {
-        // Create request interceptor
-        let xhr = sinon.useFakeXMLHttpRequest();
-        var requests = [];
-
-        xhr.onCreate = function (xhr) {
-          requests.push(xhr);
-        };
-
-        const middlewares = [thunk, promiseMiddleware()];
-        const mockStore = configureMockStore(middlewares);
-
-        // create actions callback
-        const pendingAction = (incomingAction) => {
-          expect(incomingAction.type).to.equal(POST_FILE + '_PENDING');
-          requests[0].respond(200);
-        };
-        const successAction = (incomingAction) => {
-          expect(incomingAction.type).to.equal(POST_FILE + '_FULFILLED');
-        };
-
-        // create mock store
-        const store = mockStore(undefined, [pendingAction, successAction], done);
-        // call action;
-        store.dispatch(actions.postFile('token', 'fileId', {}, {}));
+        checkApiAction(actions, 'postFile', POST_FILE, ['token', 'fileId', {}, {}], false, done);
       });
 
       it('check POST_FILE_REJECTED when call action postFile', (done) => {
-        // Create request interceptor
-        let xhr = sinon.useFakeXMLHttpRequest();
-        var requests = [];
-
-        xhr.onCreate = function (xhr) {
-          requests.push(xhr);
-        };
-
-        const middlewares = [thunk, promiseMiddleware()];
-        const mockStore = configureMockStore(middlewares);
-
-        // create actions callback
-        const pendingAction = (incomingAction) => {
-          expect(incomingAction.type).to.equal(POST_FILE + '_PENDING');
-          requests[0].respond(500);
-        };
-        const successAction = (incomingAction) => {
-          expect(incomingAction.type).to.equal(POST_FILE + '_REJECTED');
-        };
-
-        // create mock store
-        const store = mockStore(undefined, [pendingAction, successAction], done);
-        // call action;
-        store.dispatch(actions.postFile('token', 'fileId', {}, {}));
+        checkApiAction(actions, 'postFile', POST_FILE, ['token', 'fileId', {}, {}], true, done);
       });
     });
 
