@@ -9,7 +9,7 @@ export default {
     "mediaId": "fake_video_media",
     "status": "finished",
     "metadata": {
-      title: 'Fake Media For Testing Video',
+      title: '* New Technology Review - Web Conferencing',
       duration: 214,
       type: 'video'
     },

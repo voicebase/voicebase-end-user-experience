@@ -22,7 +22,7 @@ export default {
             mediaId: 'fake_mediaId',
             status: 'finished',
             metadata: {
-              title: 'Fake Media For Testing',
+              title: '* Andrea Wulf Book Review',
               duration: 360
             }
           },
@@ -30,7 +30,7 @@ export default {
             'mediaId': 'fake_video_media',
             'status': 'finished',
             'metadata': {
-              title: 'Fake Media For Testing Video',
+              title: '* New Technology Review - Web Conferencing',
               duration: 214
             }
           }

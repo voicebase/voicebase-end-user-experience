@@ -9,7 +9,7 @@ export default {
     "mediaId": "fake_mediaId",
     "status": "finished",
     "metadata": {
-      title: 'Fake Media For Testing',
+      title: '* Andrea Wulf Book Review',
       duration: 360,
       type: 'audio'
     },
@@ -22,7 +22,7 @@ export default {
             "c": 0.1,
             "s": 0,
             "e": 50220,
-            "w": "agent: ",
+            "w": "Speaker 1: ",
             "m": "turn"
           },
           {
@@ -7316,7 +7316,7 @@ export default {
             "e": 356890,
             "s": 356860,
             "c": 0.501,
-            "w": "caller: ",
+            "w": "Speaker 2: ",
             "m": "turn"
           },
           {
@@ -7386,7 +7386,7 @@ export default {
         "words": [
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "0.71",
                 "57.31",
                 "169.61",
@@ -7398,7 +7398,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "25.1",
                 "130.21",
                 "151.17"
@@ -7409,7 +7409,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "3.5",
                 "300.77",
                 "307.83"
@@ -7420,7 +7420,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "2.64",
                 "220.89",
                 "240.26"
@@ -7431,7 +7431,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "30.84",
                 "349.24"
               ]
@@ -7441,7 +7441,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "100.88",
                 "105.92"
               ]
@@ -7451,7 +7451,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "159.64",
                 "161.94"
               ]
@@ -7461,7 +7461,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "32.86",
                 "351.42"
               ]
@@ -7471,7 +7471,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "21.96",
                 "346.82"
               ]
@@ -7481,7 +7481,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "132.69",
                 "178.43"
               ]
@@ -7491,7 +7491,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "129.24",
                 "164.58"
               ]
@@ -7501,7 +7501,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "19.62",
                 "31.59",
                 "37.23",
@@ -7525,7 +7525,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "132.69",
                 "159.64",
                 "161.94",
@@ -7542,7 +7542,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "19.62",
                 "31.59",
                 "37.23",
@@ -7566,7 +7566,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "2.34",
                 "294.08"
               ]
@@ -7576,7 +7576,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "191.47",
                 "246.62"
               ]
@@ -7586,7 +7586,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "8.67",
                 "27.79",
                 "70.11",
@@ -7601,7 +7601,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "74.76",
                 "85.23"
               ]
@@ -7611,7 +7611,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "17.4",
                 "199.57",
                 "296.46"
@@ -7622,7 +7622,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "316.97",
                 "317.17"
               ]
@@ -7632,7 +7632,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "315.11"
               ]
             },
@@ -7641,7 +7641,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "83.85",
                 "88.28",
                 "104.16",
@@ -7654,7 +7654,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "249.83",
                 "283.8"
               ]
@@ -7664,7 +7664,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "139.4",
                 "142.37"
               ]
@@ -7674,7 +7674,7 @@ export default {
           },
           {
             "t": {
-              "agent": [
+              "Speaker 1": [
                 "7.35",
                 "52.98",
                 "310.22",
@@ -7700,7 +7700,7 @@ export default {
                   "george washington"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "0.71",
                     "57.31",
                     "169.61",
@@ -7716,7 +7716,7 @@ export default {
                   "john adams"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "2.64",
                     "220.89",
                     "240.26"
@@ -7731,7 +7731,7 @@ export default {
                   "thomas jefferson"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "1.44",
                     "2.34",
                     "294.08"
@@ -7747,7 +7747,7 @@ export default {
             "subcategories": [],
             "type": "group",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -7757,7 +7757,7 @@ export default {
                   "wife"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "249.3"
                   ]
                 },
@@ -7769,7 +7769,7 @@ export default {
                   "father"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.35",
                     "52.98",
                     "310.22",
@@ -7784,7 +7784,7 @@ export default {
                   "parent"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "100.88",
                     "105.92"
                   ]
@@ -7804,7 +7804,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -7814,7 +7814,7 @@ export default {
                   "parent"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "100.88",
                     "105.92"
                   ]
@@ -7827,7 +7827,7 @@ export default {
                   "father"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.35",
                     "52.98",
                     "310.22",
@@ -7842,7 +7842,7 @@ export default {
                   "generation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "33.57",
                     "352.18"
                   ]
@@ -7855,7 +7855,7 @@ export default {
                   "love"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "264.83",
                     "280.12"
                   ]
@@ -7868,7 +7868,7 @@ export default {
                   "belief"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "116.98"
                   ]
                 },
@@ -7880,7 +7880,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -7894,7 +7894,7 @@ export default {
                   "eve"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "136.58"
                   ]
                 },
@@ -7906,7 +7906,7 @@ export default {
                   "book"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "12.73",
                     "29.83",
                     "55.81",
@@ -7924,7 +7924,7 @@ export default {
                   "revolutionary"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "32.86",
                     "351.42"
                   ]
@@ -7937,7 +7937,7 @@ export default {
                   "god"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "129.88",
                     "263.96"
                   ]
@@ -7952,7 +7952,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -7962,7 +7962,7 @@ export default {
                   "exploitation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "325.97"
                   ]
                 },
@@ -7974,7 +7974,7 @@ export default {
                   "belief"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "116.98"
                   ]
                 },
@@ -7986,7 +7986,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -8000,7 +8000,7 @@ export default {
                   "revolutionary"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "32.86",
                     "351.42"
                   ]
@@ -8013,7 +8013,7 @@ export default {
                   "generation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "33.57",
                     "352.18"
                   ]
@@ -8026,7 +8026,7 @@ export default {
                   "eve"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "136.58"
                   ]
                 },
@@ -8038,7 +8038,7 @@ export default {
                   "god"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "129.88",
                     "263.96"
                   ]
@@ -8051,7 +8051,7 @@ export default {
                   "parent"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "100.88",
                     "105.92"
                   ]
@@ -8066,7 +8066,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -8076,7 +8076,7 @@ export default {
                   "eve"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "136.58"
                   ]
                 },
@@ -8088,7 +8088,7 @@ export default {
                   "adam"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "3.15",
                     "221.41",
                     "240.85",
@@ -8104,7 +8104,7 @@ export default {
                   "god"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "129.88",
                     "263.96"
                   ]
@@ -8117,7 +8117,7 @@ export default {
                   "belief"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "116.98"
                   ]
                 },
@@ -8129,7 +8129,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -8143,7 +8143,7 @@ export default {
                   "generation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "33.57",
                     "352.18"
                   ]
@@ -8156,7 +8156,7 @@ export default {
                   "father"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.35",
                     "52.98",
                     "310.22",
@@ -8171,7 +8171,7 @@ export default {
                   "parent"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "100.88",
                     "105.92"
                   ]
@@ -8191,7 +8191,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -8201,7 +8201,7 @@ export default {
                   "person"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "305.43"
                   ]
                 },
@@ -8213,7 +8213,7 @@ export default {
                   "love"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "264.83",
                     "280.12"
                   ]
@@ -8226,7 +8226,7 @@ export default {
                   "belief"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "116.98"
                   ]
                 },
@@ -8238,7 +8238,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -8252,7 +8252,7 @@ export default {
                   "parent"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "100.88",
                     "105.92"
                   ]
@@ -8265,7 +8265,7 @@ export default {
                   "god"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "129.88",
                     "263.96"
                   ]
@@ -8278,7 +8278,7 @@ export default {
                   "father"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.35",
                     "52.98",
                     "310.22",
@@ -8293,7 +8293,7 @@ export default {
                   "book"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "12.73",
                     "29.83",
                     "55.81",
@@ -8311,7 +8311,7 @@ export default {
                   "eve"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "136.58"
                   ]
                 },
@@ -8325,7 +8325,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -8335,7 +8335,7 @@ export default {
                   "want"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "61.92",
                     "68.46",
                     "163.73"
@@ -8349,7 +8349,7 @@ export default {
                   "love"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "264.83",
                     "280.12"
                   ]
@@ -8364,7 +8364,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -8374,7 +8374,7 @@ export default {
                   "compost"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "214.59"
                   ]
                 },
@@ -8386,7 +8386,7 @@ export default {
                   "soil"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "168.53",
                     "205.29",
                     "271.49",
@@ -8402,7 +8402,7 @@ export default {
                   "manure"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "184.14",
                     "212.84",
                     "226.41"
@@ -8416,7 +8416,7 @@ export default {
                   "garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "19.62",
                     "31.59",
                     "37.23",
@@ -8443,7 +8443,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -8458,7 +8458,7 @@ export default {
                   "sorting"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "182.68",
                     "243.66"
                   ]
@@ -8472,7 +8472,7 @@ export default {
                   "botanical garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "36.8",
                     "107.18"
                   ]
@@ -8487,7 +8487,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           }
         ]
@@ -8504,7 +8504,7 @@ export default {
                   "mount vernon"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "25.1",
                     "130.21",
                     "151.17"
@@ -8519,7 +8519,7 @@ export default {
                   "george washington (name)"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "0.71",
                     "57.31",
                     "169.61",
@@ -8535,7 +8535,7 @@ export default {
                   "george washington"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "0.71",
                     "57.31",
                     "169.61",
@@ -8551,7 +8551,7 @@ export default {
                   "john adams"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "2.64",
                     "220.89",
                     "240.26"
@@ -8566,7 +8566,7 @@ export default {
                   "thomas jefferson"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "1.44",
                     "2.34",
                     "294.08"
@@ -8582,7 +8582,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -8592,7 +8592,7 @@ export default {
                   "james madison"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "3.5",
                     "300.77",
                     "307.83"
@@ -8607,7 +8607,7 @@ export default {
                   "thomas jefferson"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "1.44",
                     "2.34",
                     "294.08"
@@ -8621,7 +8621,7 @@ export default {
                   "john adams"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "2.64",
                     "220.89",
                     "240.26"
@@ -8636,7 +8636,7 @@ export default {
                   "george washington"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "0.71",
                     "57.31",
                     "169.61",
@@ -8652,7 +8652,7 @@ export default {
                   "founding fathers"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.31",
                     "52.93"
                   ]
@@ -8666,7 +8666,7 @@ export default {
                   "abigail adams"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "249.83",
                     "283.8"
                   ]
@@ -8679,7 +8679,7 @@ export default {
                   "mount vernon"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "25.1",
                     "130.21",
                     "151.17"
@@ -8694,7 +8694,7 @@ export default {
                   "president of the united states"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "191.47",
                     "246.62"
                   ]
@@ -8707,7 +8707,7 @@ export default {
                   "generation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "33.57",
                     "352.18"
                   ]
@@ -8720,7 +8720,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -8745,7 +8745,7 @@ export default {
             ],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -8756,7 +8756,7 @@ export default {
                   "george washington"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "0.71",
                     "57.31",
                     "169.61",
@@ -8772,7 +8772,7 @@ export default {
                   "james madison"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "3.5",
                     "300.77",
                     "307.83"
@@ -8787,7 +8787,7 @@ export default {
                   "thomas jefferson"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "1.44",
                     "2.34",
                     "294.08"
@@ -8801,7 +8801,7 @@ export default {
                   "john adams"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "2.64",
                     "220.89",
                     "240.26"
@@ -8815,7 +8815,7 @@ export default {
                   "founding fathers"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.31",
                     "52.93"
                   ]
@@ -8828,7 +8828,7 @@ export default {
                   "mount vernon"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "25.1",
                     "130.21",
                     "151.17"
@@ -8843,7 +8843,7 @@ export default {
                   "abigail adams"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "249.83",
                     "283.8"
                   ]
@@ -8857,7 +8857,7 @@ export default {
                   "president of the united states"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "191.47",
                     "246.62"
                   ]
@@ -8885,7 +8885,7 @@ export default {
             "subcategories": [],
             "type": "subcategory",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -8896,7 +8896,7 @@ export default {
                   "abigail adams"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "249.83",
                     "283.8"
                   ]
@@ -8909,7 +8909,7 @@ export default {
                   "john adams"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "2.64",
                     "220.89",
                     "240.26"
@@ -8923,7 +8923,7 @@ export default {
                   "founding fathers"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.31",
                     "52.93"
                   ]
@@ -8936,7 +8936,7 @@ export default {
                   "james madison"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "3.5",
                     "300.77",
                     "307.83"
@@ -8951,7 +8951,7 @@ export default {
                   "thomas jefferson"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "1.44",
                     "2.34",
                     "294.08"
@@ -8966,7 +8966,7 @@ export default {
                   "george washington"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "0.71",
                     "57.31",
                     "169.61",
@@ -8982,7 +8982,7 @@ export default {
                   "mount vernon"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "25.1",
                     "130.21",
                     "151.17"
@@ -8997,7 +8997,7 @@ export default {
                   "president of the united states"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "191.47",
                     "246.62"
                   ]
@@ -9010,7 +9010,7 @@ export default {
                   "eve"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "136.58"
                   ]
                 },
@@ -9034,7 +9034,7 @@ export default {
             ],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -9045,7 +9045,7 @@ export default {
                   "president of the united states"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "191.47",
                     "246.62"
                   ]
@@ -9058,7 +9058,7 @@ export default {
                   "presidency"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "191.47",
                     "246.62"
                   ]
@@ -9072,7 +9072,7 @@ export default {
                   "george washington"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "0.71",
                     "57.31",
                     "169.61",
@@ -9089,7 +9089,7 @@ export default {
                   "thomas jefferson"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "1.44",
                     "2.34",
                     "294.08"
@@ -9105,7 +9105,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -9120,7 +9120,7 @@ export default {
                   "united states"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "8.67",
                     "27.79",
                     "35.61",
@@ -9147,7 +9147,7 @@ export default {
                   "republic"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "134.15"
                   ]
                 },
@@ -9159,7 +9159,7 @@ export default {
                   "british"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "139.4",
                     "142.37"
                   ]
@@ -9172,7 +9172,7 @@ export default {
                   "james madison"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "3.5",
                     "300.77",
                     "307.83"
@@ -9186,7 +9186,7 @@ export default {
                   "founding fathers"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.31",
                     "52.93"
                   ]
@@ -9200,7 +9200,7 @@ export default {
                   "president of the united states"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "191.47",
                     "246.62"
                   ]
@@ -9213,7 +9213,7 @@ export default {
                   "europe"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "321.31"
                   ]
                 },
@@ -9225,7 +9225,7 @@ export default {
                   "john adams"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "2.64",
                     "220.89",
                     "240.26"
@@ -9240,7 +9240,7 @@ export default {
                   "thomas jefferson"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "1.44",
                     "2.34",
                     "294.08"
@@ -9254,7 +9254,7 @@ export default {
                   "revolutionary"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "32.86",
                     "351.42"
                   ]
@@ -9269,7 +9269,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -9279,7 +9279,7 @@ export default {
                   "john adams"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "2.64",
                     "220.89",
                     "240.26"
@@ -9294,7 +9294,7 @@ export default {
                   "thomas jefferson"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "1.44",
                     "2.34",
                     "294.08"
@@ -9308,7 +9308,7 @@ export default {
                   "james madison"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "3.5",
                     "300.77",
                     "307.83"
@@ -9323,7 +9323,7 @@ export default {
                   "george washington"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "0.71",
                     "57.31",
                     "169.61",
@@ -9339,7 +9339,7 @@ export default {
                   "founding fathers"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.31",
                     "52.93"
                   ]
@@ -9353,7 +9353,7 @@ export default {
                   "abigail adams"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "249.83",
                     "283.8"
                   ]
@@ -9366,7 +9366,7 @@ export default {
                   "mount vernon"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "25.1",
                     "130.21",
                     "151.17"
@@ -9381,7 +9381,7 @@ export default {
                   "president of the united states"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "191.47",
                     "246.62"
                   ]
@@ -9394,7 +9394,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -9415,7 +9415,7 @@ export default {
             ],
             "type": "subcategory",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -9425,7 +9425,7 @@ export default {
                   "revolutionary generation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "32.86",
                     "351.42"
                   ]
@@ -9438,7 +9438,7 @@ export default {
                   "generation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "33.57",
                     "352.18"
                   ]
@@ -9458,7 +9458,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -9468,7 +9468,7 @@ export default {
                   "compost"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "214.59"
                   ]
                 },
@@ -9480,7 +9480,7 @@ export default {
                   "manure"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "184.14",
                     "212.84",
                     "226.41"
@@ -9494,7 +9494,7 @@ export default {
                   "garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "19.62",
                     "31.59",
                     "37.23",
@@ -9522,7 +9522,7 @@ export default {
                   "botanical garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "36.8",
                     "107.18"
                   ]
@@ -9535,7 +9535,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -9549,7 +9549,7 @@ export default {
                   "love"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "264.83",
                     "280.12"
                   ]
@@ -9573,7 +9573,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -9583,7 +9583,7 @@ export default {
                   "authority"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "21.54"
                   ]
                 },
@@ -9595,7 +9595,7 @@ export default {
                   "mores"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "154.64",
                     "296.82",
                     "297.51",
@@ -9611,7 +9611,7 @@ export default {
                   "modernity"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "24.35"
                   ]
                 },
@@ -9623,7 +9623,7 @@ export default {
                   "belief"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "116.98"
                   ]
                 },
@@ -9635,7 +9635,7 @@ export default {
                   "generation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "33.57",
                     "352.18"
                   ]
@@ -9648,7 +9648,7 @@ export default {
                   "father"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.35",
                     "52.98",
                     "310.22",
@@ -9663,7 +9663,7 @@ export default {
                   "god"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "129.88",
                     "263.96"
                   ]
@@ -9676,7 +9676,7 @@ export default {
                   "love"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "264.83",
                     "280.12"
                   ]
@@ -9689,7 +9689,7 @@ export default {
                   "revolutionary"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "32.86",
                     "351.42"
                   ]
@@ -9702,7 +9702,7 @@ export default {
                   "john adams"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "2.64",
                     "220.89",
                     "240.26"
@@ -9718,7 +9718,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -9728,7 +9728,7 @@ export default {
                   "authority"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "21.54"
                   ]
                 },
@@ -9740,7 +9740,7 @@ export default {
                   "belief"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "116.98"
                   ]
                 },
@@ -9752,7 +9752,7 @@ export default {
                   "kindness"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "123.6"
                   ]
                 },
@@ -9764,7 +9764,7 @@ export default {
                   "love"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "264.83",
                     "280.12"
                   ]
@@ -9777,7 +9777,7 @@ export default {
                   "god"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "129.88",
                     "263.96"
                   ]
@@ -9790,7 +9790,7 @@ export default {
                   "parent"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "100.88",
                     "105.92"
                   ]
@@ -9803,7 +9803,7 @@ export default {
                   "father"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.35",
                     "52.98",
                     "310.22",
@@ -9818,7 +9818,7 @@ export default {
                   "book"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "12.73",
                     "29.83",
                     "55.81",
@@ -9837,7 +9837,7 @@ export default {
                   "thomas jefferson"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "1.44",
                     "2.34",
                     "294.08"
@@ -9851,7 +9851,7 @@ export default {
                   "garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "19.62",
                     "31.59",
                     "37.23",
@@ -9880,7 +9880,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -9890,7 +9890,7 @@ export default {
                   "gardening"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "19.62",
                     "31.59",
                     "37.23",
@@ -9917,7 +9917,7 @@ export default {
                   "greenhouse"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "38.09"
                   ]
                 },
@@ -9929,7 +9929,7 @@ export default {
                   "soil"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "168.53",
                     "205.29",
                     "271.49",
@@ -9945,7 +9945,7 @@ export default {
                   "compost"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "214.59"
                   ]
                 },
@@ -9957,7 +9957,7 @@ export default {
                   "garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "19.62",
                     "31.59",
                     "37.23",
@@ -9984,7 +9984,7 @@ export default {
                   "manure"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "184.14",
                     "212.84",
                     "226.41"
@@ -9999,7 +9999,7 @@ export default {
                   "botanical garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "36.8",
                     "107.18"
                   ]
@@ -10012,7 +10012,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -10026,7 +10026,7 @@ export default {
                   "collecting"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "17.4",
                     "199.57",
                     "296.46"
@@ -10042,7 +10042,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -10052,7 +10052,7 @@ export default {
                   "generation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "33.57",
                     "352.18"
                   ]
@@ -10065,7 +10065,7 @@ export default {
                   "species"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "158.41"
                   ]
                 },
@@ -10077,7 +10077,7 @@ export default {
                   "parent"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "100.88",
                     "105.92"
                   ]
@@ -10090,7 +10090,7 @@ export default {
                   "garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "19.62",
                     "31.59",
                     "37.23",
@@ -10118,7 +10118,7 @@ export default {
                   "botanical garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "36.8",
                     "107.18"
                   ]
@@ -10131,7 +10131,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -10145,7 +10145,7 @@ export default {
                   "father"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.35",
                     "52.98",
                     "310.22",
@@ -10160,7 +10160,7 @@ export default {
                   "belief"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "116.98"
                   ]
                 },
@@ -10172,7 +10172,7 @@ export default {
                   "europe"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "321.31"
                   ]
                 },
@@ -10184,7 +10184,7 @@ export default {
                   "eve"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "136.58"
                   ]
                 },
@@ -10198,7 +10198,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -10208,7 +10208,7 @@ export default {
                   "nation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "8.67",
                     "27.79",
                     "70.11",
@@ -10226,7 +10226,7 @@ export default {
                   "map"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "148.08"
                   ]
                 },
@@ -10238,7 +10238,7 @@ export default {
                   "soil"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "168.53",
                     "205.29",
                     "271.49",
@@ -10254,7 +10254,7 @@ export default {
                   "manure"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "184.14",
                     "212.84",
                     "226.41"
@@ -10268,7 +10268,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -10282,7 +10282,7 @@ export default {
                   "garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "19.62",
                     "31.59",
                     "37.23",
@@ -10309,7 +10309,7 @@ export default {
                   "book"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "12.73",
                     "29.83",
                     "55.81",
@@ -10327,7 +10327,7 @@ export default {
                   "belief"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "116.98"
                   ]
                 },
@@ -10340,7 +10340,7 @@ export default {
                   "botanical garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "36.8",
                     "107.18"
                   ]
@@ -10355,7 +10355,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -10365,7 +10365,7 @@ export default {
                   "farm"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "199.87"
                   ]
                 },
@@ -10377,7 +10377,7 @@ export default {
                   "soil"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "168.53",
                     "205.29",
                     "271.49",
@@ -10393,7 +10393,7 @@ export default {
                   "compost"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "214.59"
                   ]
                 },
@@ -10405,7 +10405,7 @@ export default {
                   "manure"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "184.14",
                     "212.84",
                     "226.41"
@@ -10419,7 +10419,7 @@ export default {
                   "garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "19.62",
                     "31.59",
                     "37.23",
@@ -10446,7 +10446,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -10460,7 +10460,7 @@ export default {
                   "generation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "33.57",
                     "352.18"
                   ]
@@ -10474,7 +10474,7 @@ export default {
                   "botanical garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "36.8",
                     "107.18"
                   ]
@@ -10487,7 +10487,7 @@ export default {
                   "father"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.35",
                     "52.98",
                     "310.22",
@@ -10504,7 +10504,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -10514,7 +10514,7 @@ export default {
                   "wife"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "249.3"
                   ]
                 },
@@ -10526,7 +10526,7 @@ export default {
                   "father"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.35",
                     "52.98",
                     "310.22",
@@ -10541,7 +10541,7 @@ export default {
                   "parent"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "100.88",
                     "105.92"
                   ]
@@ -10561,7 +10561,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -10571,7 +10571,7 @@ export default {
                   "parent"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "100.88",
                     "105.92"
                   ]
@@ -10584,7 +10584,7 @@ export default {
                   "father"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.35",
                     "52.98",
                     "310.22",
@@ -10599,7 +10599,7 @@ export default {
                   "generation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "33.57",
                     "352.18"
                   ]
@@ -10612,7 +10612,7 @@ export default {
                   "love"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "264.83",
                     "280.12"
                   ]
@@ -10625,7 +10625,7 @@ export default {
                   "belief"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "116.98"
                   ]
                 },
@@ -10637,7 +10637,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -10651,7 +10651,7 @@ export default {
                   "eve"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "136.58"
                   ]
                 },
@@ -10663,7 +10663,7 @@ export default {
                   "book"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "12.73",
                     "29.83",
                     "55.81",
@@ -10681,7 +10681,7 @@ export default {
                   "revolutionary"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "32.86",
                     "351.42"
                   ]
@@ -10694,7 +10694,7 @@ export default {
                   "god"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "129.88",
                     "263.96"
                   ]
@@ -10709,7 +10709,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -10719,7 +10719,7 @@ export default {
                   "exploitation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "325.97"
                   ]
                 },
@@ -10731,7 +10731,7 @@ export default {
                   "belief"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "116.98"
                   ]
                 },
@@ -10743,7 +10743,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -10757,7 +10757,7 @@ export default {
                   "revolutionary"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "32.86",
                     "351.42"
                   ]
@@ -10770,7 +10770,7 @@ export default {
                   "generation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "33.57",
                     "352.18"
                   ]
@@ -10783,7 +10783,7 @@ export default {
                   "eve"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "136.58"
                   ]
                 },
@@ -10795,7 +10795,7 @@ export default {
                   "god"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "129.88",
                     "263.96"
                   ]
@@ -10808,7 +10808,7 @@ export default {
                   "parent"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "100.88",
                     "105.92"
                   ]
@@ -10823,7 +10823,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -10833,7 +10833,7 @@ export default {
                   "eve"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "136.58"
                   ]
                 },
@@ -10845,7 +10845,7 @@ export default {
                   "adam"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "3.15",
                     "221.41",
                     "240.85",
@@ -10861,7 +10861,7 @@ export default {
                   "god"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "129.88",
                     "263.96"
                   ]
@@ -10874,7 +10874,7 @@ export default {
                   "belief"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "116.98"
                   ]
                 },
@@ -10886,7 +10886,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -10900,7 +10900,7 @@ export default {
                   "generation"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "33.57",
                     "352.18"
                   ]
@@ -10913,7 +10913,7 @@ export default {
                   "father"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.35",
                     "52.98",
                     "310.22",
@@ -10928,7 +10928,7 @@ export default {
                   "parent"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "100.88",
                     "105.92"
                   ]
@@ -10948,7 +10948,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -10958,7 +10958,7 @@ export default {
                   "person"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "305.43"
                   ]
                 },
@@ -10970,7 +10970,7 @@ export default {
                   "love"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "264.83",
                     "280.12"
                   ]
@@ -10983,7 +10983,7 @@ export default {
                   "belief"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "116.98"
                   ]
                 },
@@ -10995,7 +10995,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -11009,7 +11009,7 @@ export default {
                   "parent"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "100.88",
                     "105.92"
                   ]
@@ -11022,7 +11022,7 @@ export default {
                   "god"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "129.88",
                     "263.96"
                   ]
@@ -11035,7 +11035,7 @@ export default {
                   "father"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "7.35",
                     "52.98",
                     "310.22",
@@ -11050,7 +11050,7 @@ export default {
                   "book"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "12.73",
                     "29.83",
                     "55.81",
@@ -11068,7 +11068,7 @@ export default {
                   "eve"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "136.58"
                   ]
                 },
@@ -11082,7 +11082,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -11092,7 +11092,7 @@ export default {
                   "kindness"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "123.6"
                   ]
                 },
@@ -11104,7 +11104,7 @@ export default {
                   "love"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "264.83",
                     "280.12"
                   ]
@@ -11117,7 +11117,7 @@ export default {
                   "seriousness"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "48.12"
                   ]
                 },
@@ -11129,7 +11129,7 @@ export default {
                   "belief"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "116.98"
                   ]
                 },
@@ -11141,7 +11141,7 @@ export default {
                   "parent"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "100.88",
                     "105.92"
                   ]
@@ -11156,7 +11156,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -11166,7 +11166,7 @@ export default {
                   "want"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "61.92",
                     "68.46",
                     "163.73"
@@ -11180,7 +11180,7 @@ export default {
                   "love"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "264.83",
                     "280.12"
                   ]
@@ -11195,7 +11195,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           },
           {
@@ -11205,7 +11205,7 @@ export default {
                   "compost"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "214.59"
                   ]
                 },
@@ -11217,7 +11217,7 @@ export default {
                   "soil"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "168.53",
                     "205.29",
                     "271.49",
@@ -11233,7 +11233,7 @@ export default {
                   "manure"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "184.14",
                     "212.84",
                     "226.41"
@@ -11247,7 +11247,7 @@ export default {
                   "garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "19.62",
                     "31.59",
                     "37.23",
@@ -11274,7 +11274,7 @@ export default {
                   "nature"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "336.68",
                     "344.93",
                     "353.14"
@@ -11289,7 +11289,7 @@ export default {
                   "sorting"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "182.68",
                     "243.66"
                   ]
@@ -11303,7 +11303,7 @@ export default {
                   "botanical garden"
                 ],
                 "t": {
-                  "agent": [
+                  "Speaker 1": [
                     "36.8",
                     "107.18"
                   ]
@@ -11318,7 +11318,7 @@ export default {
             "subcategories": [],
             "type": "category",
             "speakers": [
-              "agent"
+              "Speaker 1"
             ]
           }
         ]
