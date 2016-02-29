@@ -272,10 +272,8 @@ const parseMediaData = function (data) {
   }
 
   let predictions = null;
-  if (data.predictions && data.predictions.latest) {
-    predictions = {
-      ...data.predictions.latest
-    }
+  if (data.predictions && data.predictions.latest && data.predictions.latest.predictions) {
+    predictions = parsePredictions(data.predictions.latest.predictions);
   }
 
   let utterances = null;
@@ -364,4 +362,51 @@ const addSpeaker = function (speakersObject, newSpeakersNames) {
     }
   });
   return speakersObject;
+};
+
+const parsePredictions = function (predictions) {
+  let res = {};
+  predictions.forEach(prediction => {
+    if (prediction.name === 'Hot Sales Lead') {
+      res.sales_lead = {
+        value: Math.round(prediction.score * 10),
+        data: prediction
+      }
+    }
+    else if (prediction.name === 'Request for Quote') {
+      res.request_quote = {
+        value: parseScore(prediction.score),
+        data: prediction
+      }
+    }
+    else if (prediction.name === 'Directions Requested') {
+      res.directions = {
+        value: parseScore(prediction.score),
+        data: prediction
+      }
+    }
+    else if (prediction.name === 'Asked About Employment') {
+      res.employment = {
+        value: parseScore(prediction.score),
+        data: prediction
+      }
+    }
+    else if (prediction.name === 'Churn Risk') {
+      res.churn = {
+        value: prediction.score,
+        data: prediction
+      }
+    }
+    else if (prediction.name === 'Appointment Request') {
+      res.appointment = {
+        value: prediction.score,
+        data: prediction
+      }
+    }
+  });
+  return res;
+};
+
+let parseScore = function (score) {
+  return parseFloat(score.toFixed(1));
 };
