@@ -1,9 +1,38 @@
 import axios from 'axios'
 import $ from 'jquery'
-import fakeJson from './fakeData'
-import fakeDataVideoJson from './fakeDataVideo'
+import fakeJson from './../fakeData/fakeData'
+import fakeDataVideoJson from './../fakeData/fakeDataVideo'
+import cablehotleadJson from './../fakeData/cablehotlead'
+import CallCenter1Json from './../fakeData/CallCenter1'
 
 const baseUrl = 'https://apis.voicebase.com/v2-beta';
+
+const fakeExamples = {
+  'fake_mediaId': {
+    mediaId: 'fake_mediaId',
+    metadata: fakeJson.media.metadata,
+    data: fakeJson.media,
+    url: 'http://demo.voicebase.dev5.sibers.com/washington.mp3'
+  },
+  'fake_video_media': {
+    mediaId: 'fake_video_media',
+    metadata: fakeDataVideoJson.media.metadata,
+    data: fakeDataVideoJson.media,
+    url: 'http://demo.voicebase.dev5.sibers.com/dual.mp4'
+  },
+  'fake_cablehotlead': {
+    mediaId: 'fake_cablehotlead',
+    metadata: cablehotleadJson.media.metadata,
+    data: cablehotleadJson.media,
+    url: 'http://demo.voicebase.dev5.sibers.com/bryonJPTest1.mp3'
+  },
+  'fake_callCenter1': {
+    mediaId: 'fake_callCenter1',
+    metadata: CallCenter1Json.media.metadata,
+    data: CallCenter1Json.media,
+    url: 'http://demo.voicebase.dev5.sibers.com/CallCenter1.mp4'
+  }
+};
 
 export default {
   getMedia(token) {
@@ -16,25 +45,16 @@ export default {
       .then(response => {
         let processingIds = [];
         let processingMedia = {};
-        let mediaIds = ['fake_mediaId', 'fake_video_media'];
-        let media = {
-          'fake_mediaId': {
-            mediaId: 'fake_mediaId',
+        let mediaIds = [].concat(Object.keys(fakeExamples));
+        let media = {};
+        Object.keys(fakeExamples).forEach(id => {
+          let fakeExample = fakeExamples[id];
+          media[id] = {
+            mediaId: id,
             status: 'finished',
-            metadata: {
-              title: '* Andrea Wulf Book Review',
-              duration: 360
-            }
-          },
-          'fake_video_media': {
-            'mediaId': 'fake_video_media',
-            'status': 'finished',
-            'metadata': {
-              title: '* New Technology Review - Web Conferencing',
-              duration: 214
-            }
+            metadata: fakeExample.metadata
           }
-        };
+        });
         response.data.media.forEach(mediaItem => {
           if (mediaItem.status === 'failed' || mediaItem.status === 'finished') {
             mediaIds.push(mediaItem.mediaId);
@@ -83,17 +103,10 @@ export default {
   },
 
   getDataForMedia(token, mediaId) {
-    if (mediaId === 'fake_mediaId') {
-      return new Promise((resolve, reject) => {
+    if (mediaId.indexOf('fake') > -1 && fakeExamples[mediaId]) {
+      return new Promise((resolve) => {
         setTimeout(() => {
-          resolve(fakeJson.media);
-        }, 500)
-      })
-    }
-    else if (mediaId === 'fake_video_media') {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve(fakeDataVideoJson.media);
+          resolve(fakeExamples[mediaId].data);
         }, 500)
       })
     }
@@ -117,21 +130,11 @@ export default {
   },
 
   getMediaUrl(token, mediaId) {
-    if (mediaId === 'fake_video_media') {
+    if (mediaId.indexOf('fake') > -1 && fakeExamples[mediaId]) {
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve({
-            url: 'http://demo.voicsebasejwplayer.dev4.sibers.com/media/dual.mp4',
-            mediaId
-          });
-        }, 500)
-      });
-    }
-    else if (mediaId === 'fake_mediaId') {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({
-            url: 'http://demo.voicsebasejwplayer.dev4.sibers.com/media/washington.mp3',
+            url: fakeExamples[mediaId].url,
             mediaId
           });
         }, 500)
