@@ -17,6 +17,7 @@ export const UNSELECT_MEDIA = 'UNSELECT_MEDIA';
 export const SELECT_ALL_MEDIA = 'SELECT_ALL_MEDIA';
 export const UNSELECT_ALL_MEDIA = 'UNSELECT_ALL_MEDIA';
 export const DELETE_MEDIA = 'DELETE_MEDIA';
+export const CLEAR_MEDIA_LIST_ERROR = 'CLEAR_MEDIA_LIST_ERROR';
 
 /*
  * Actions
@@ -35,6 +36,7 @@ export const selectMedia = createAction(SELECT_MEDIA, (mediaId) => mediaId);
 export const unselectMedia = createAction(UNSELECT_MEDIA, (mediaId) => mediaId);
 export const selectAllMedia = createAction(SELECT_ALL_MEDIA);
 export const unselectAllMedia = createAction(UNSELECT_ALL_MEDIA);
+export const clearMediaListError = createAction(CLEAR_MEDIA_LIST_ERROR);
 export const deleteMedia = createAction(DELETE_MEDIA, (token, mediaId) => {
   return {
     data: {
@@ -56,7 +58,8 @@ export const actions = {
   unselectMedia,
   selectAllMedia,
   unselectAllMedia,
-  deleteMedia
+  deleteMedia,
+  clearMediaListError
 };
 
 /*
@@ -254,5 +257,12 @@ export default handleActions({
       media: _.pick(state.media, mediaIds),
       selectedMediaIds: _.filter(state.selectedMediaIds, id => id !== response.mediaId)
     };
+  },
+
+  [CLEAR_MEDIA_LIST_ERROR]: (state) => {
+    return {
+      ...state,
+      errorMessage: ''
+    }
   }
 }, initialState);

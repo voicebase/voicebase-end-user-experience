@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import connectWrapper from '../redux/utils/connect'
 import {actions as authActions} from '../redux/modules/auth'
+import NotificationSystem from 'react-notification-system'
 import CounterLabel from '../components/CounterLabel'
 import SearchForm from '../components/SearchForm'
 import MediaListToolbar from '../components/MediaListToolbar'
@@ -23,9 +24,17 @@ export class AllView extends React.Component {
   }
 
   componentDidUpdate() {
-    var state = this.props.state;
-    if (state.search.isSearching && state.media.mediaList.isGetCompleted) {
+    let state = this.props.state;
+    let mediaList = state.media.mediaList;
+    if (state.search.isSearching && (mediaList.isGetCompleted || mediaList.errorMessage)) {
       this.props.actions.cancelSearch();
+    }
+    if (mediaList.errorMessage) {
+      this.refs.notificationSystem.addNotification({
+        message: mediaList.errorMessage,
+        level: 'error'
+      });
+      this.props.actions.clearMediaListError();
     }
   }
 
@@ -70,6 +79,7 @@ export class AllView extends React.Component {
             <MediaList token={state.auth.token} state={state.media} actions={this.props.actions}/>
           </div>
         }
+        <NotificationSystem ref="notificationSystem" />
       </div>
     )
   }
