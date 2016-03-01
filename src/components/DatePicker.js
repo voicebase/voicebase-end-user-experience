@@ -68,7 +68,7 @@ export class DatePicker extends React.Component {
       <div className='form-group form-group--date'>
         <DateRangePicker {...settings} onApply={this.saveDate.bind(this)} onCancel={this.cancel.bind(this)}>
           <i className='fa fa-calendar-o'/>
-          <Input type='text' name='daterange' value={dateValue} placeholder='Date range'/>
+          <Input type='text' name='daterange' className="readonly--non-grey" readOnly value={dateValue} placeholder='Date range'/>
         </DateRangePicker>
       </div>
     )

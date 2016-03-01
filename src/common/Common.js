@@ -43,3 +43,7 @@ export const getFileType = function (file) {
   }
   else return 'unknown';
 };
+
+export const dateToIso = function (date) {
+  return new Date(date).toISOString();
+};

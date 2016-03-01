@@ -6,12 +6,16 @@ import DropdownList from './DropdownList'
 export class SearchForm extends React.Component {
   static propTypes = {
     state: PropTypes.object.isRequired,
+    onSearch: PropTypes.func.isRequired,
     actions: PropTypes.object.isRequired
   };
 
   searchButtonAddon() {
+    let isSearching = this.props.state.isSearching;
     return (
-      <Button bsStyle="primary" onClick={this.startSearch.bind(this)}>Search</Button>
+      <Button bsStyle="primary" onClick={this.startSearch.bind(this)} disabled={isSearching}>
+        {isSearching ? 'Searching...' : 'Search'}
+      </Button>
     )
   }
 
@@ -31,8 +35,14 @@ export class SearchForm extends React.Component {
     this.props.actions.setSearchString(event.target.value);
   }
 
+  handleEnterKey(event) {
+    if (event.key === 'Enter') {
+      this.startSearch();
+    }
+  }
+
   startSearch() {
-    this.props.actions.startSearch();
+    this.props.onSearch();
   }
 
   render() {
@@ -47,7 +57,9 @@ export class SearchForm extends React.Component {
                      placeholder="Search transcripts..."
                      value={state.searchString}
                      buttonAfter={this.searchButtonAddon()}
-                     onInput={this.changeSearchText.bind(this)}/>
+                     onKeyPress={this.handleEnterKey.bind(this)}
+                     onChange={this.changeSearchText.bind(this)}
+              />
             </div>
           </Col>
 

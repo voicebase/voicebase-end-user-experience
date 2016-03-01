@@ -17,13 +17,14 @@ export const UNSELECT_MEDIA = 'UNSELECT_MEDIA';
 export const SELECT_ALL_MEDIA = 'SELECT_ALL_MEDIA';
 export const UNSELECT_ALL_MEDIA = 'UNSELECT_ALL_MEDIA';
 export const DELETE_MEDIA = 'DELETE_MEDIA';
+export const CLEAR_MEDIA_LIST_ERROR = 'CLEAR_MEDIA_LIST_ERROR';
 
 /*
  * Actions
  * */
-export const getMedia = createAction(GET_MEDIA, (token) => {
+export const getMedia = createAction(GET_MEDIA, (token, searchOptions) => {
   return {
-    promise: MediaApi.getMedia(token)
+    promise: MediaApi.getMedia(token, searchOptions)
   }
 });
 export const addMedia = createAction(ADD_MEDIA, (mediaData) => mediaData);
@@ -35,6 +36,7 @@ export const selectMedia = createAction(SELECT_MEDIA, (mediaId) => mediaId);
 export const unselectMedia = createAction(UNSELECT_MEDIA, (mediaId) => mediaId);
 export const selectAllMedia = createAction(SELECT_ALL_MEDIA);
 export const unselectAllMedia = createAction(UNSELECT_ALL_MEDIA);
+export const clearMediaListError = createAction(CLEAR_MEDIA_LIST_ERROR);
 export const deleteMedia = createAction(DELETE_MEDIA, (token, mediaId) => {
   return {
     data: {
@@ -56,7 +58,8 @@ export const actions = {
   unselectMedia,
   selectAllMedia,
   unselectAllMedia,
-  deleteMedia
+  deleteMedia,
+  clearMediaListError
 };
 
 /*
@@ -191,5 +194,9 @@ export default handleActions({
       .set('mediaIds', mediaIds)
       .set('selectedMediaIds', selectedMediaIds)
       .deleteIn(['media', response.mediaId]);
+  },
+
+  [CLEAR_MEDIA_LIST_ERROR]: (state) => {
+    return state.set('errorMessage', '');
   }
 }, initialState);

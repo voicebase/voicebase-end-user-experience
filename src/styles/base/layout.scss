@@ -83,3 +83,11 @@ body .container-fluid > .row > div {
 .dropdown--custom-caret .btn .caret {
   display: none;
 }
+
+.readonly--non-grey {
+  background-color: #fff !important;
+}
+
+.media-list__warning {
+  padding: 20px;
+}

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import $ from 'jquery'
+import { dateToIso } from '../common/Common'
 import fakeJson from './../fakeData/fakeData'
 import fakeDataVideoJson from './../fakeData/fakeDataVideo'
 import cablehotleadJson from './../fakeData/cablehotlead'
@@ -8,18 +9,6 @@ import CallCenter1Json from './../fakeData/CallCenter1'
 const baseUrl = 'https://apis.voicebase.com/v2-beta';
 
 const fakeExamples = {
-  'fake_mediaId': {
-    mediaId: 'fake_mediaId',
-    metadata: fakeJson.media.metadata,
-    data: fakeJson.media,
-    url: 'http://demo.voicebase.dev5.sibers.com/washington.mp3'
-  },
-  'fake_video_media': {
-    mediaId: 'fake_video_media',
-    metadata: fakeDataVideoJson.media.metadata,
-    data: fakeDataVideoJson.media,
-    url: 'http://demo.voicebase.dev5.sibers.com/dual.mp4'
-  },
   'fake_cablehotlead': {
     mediaId: 'fake_cablehotlead',
     metadata: cablehotleadJson.media.metadata,
@@ -31,12 +20,39 @@ const fakeExamples = {
     metadata: CallCenter1Json.media.metadata,
     data: CallCenter1Json.media,
     url: 'http://demo.voicebase.dev5.sibers.com/CallCenter1.mp4'
+  },
+  'fake_mediaId': {
+    mediaId: 'fake_mediaId',
+    metadata: fakeJson.media.metadata,
+    data: fakeJson.media,
+    url: 'http://demo.voicebase.dev5.sibers.com/washington.mp3'
+  },
+  'fake_video_media': {
+    mediaId: 'fake_video_media',
+    metadata: fakeDataVideoJson.media.metadata,
+    data: fakeDataVideoJson.media,
+    url: 'http://demo.voicebase.dev5.sibers.com/dual.mp4'
   }
 };
 
 export default {
-  getMedia(token) {
-    let url = `${baseUrl}/media?include=metadata`;
+  getMedia(token, searchOptions = {}) {
+    let filterDateFrom = '';
+    let filterDateTo = '';
+    let filterQuery = '';
+    if (searchOptions.dateFrom) {
+      let isoDate = dateToIso(searchOptions.dateFrom);
+      filterDateFrom = '&filter.created.gte=' + isoDate;
+    }
+    if (searchOptions.dateTo) {
+      let isoDate = dateToIso(searchOptions.dateTo);
+      filterDateTo = '&filter.created.lte=' + isoDate;
+    }
+    if (searchOptions.searchString) {
+      filterQuery = '&query=' + searchOptions.searchString;
+    }
+
+    let url = `${baseUrl}/media?include=metadata${filterDateFrom}${filterDateTo}${filterQuery}`;
     return axios.get(url, {
       headers: {
         Authorization: 'Bearer ' + token

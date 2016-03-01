@@ -7685,12 +7685,6 @@ export default {
             "relevance": "6.30511676015e-16"
           }
         ],
-        "groups": {}
-      }
-    },
-    "groups": {
-      "latest": {
-        "revision": "118a47b5-61cb-4bdb-a9c2-fd45f1143e41",
         "groups": [
           {
             "keywords": [
