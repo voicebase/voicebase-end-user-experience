@@ -22,14 +22,31 @@ export class AllView extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    var state = this.props.state;
+    if (state.search.isSearching && state.media.mediaList.isGetCompleted) {
+      this.props.actions.cancelSearch();
+    }
+  }
+
+  onSearch() {
+    let state = this.props.state;
+    this.props.actions.startSearch();
+    this.props.actions.getMedia(state.auth.token, {
+      dateFrom: state.search.dateFrom,
+      dateTo: state.search.dateTo,
+      searchString: state.search.searchString
+    })
+  }
+
   render () {
     let state = this.props.state;
     let mediaList = state.media.mediaList;
     return (
       <div>
-        {mediaList.isGetPending && <Spinner />}
+        {mediaList.isGetPending && !state.search.isSearching && <Spinner />}
         {
-          !mediaList.isGetPending &&
+          (!mediaList.isGetPending || state.search.isSearching) &&
           <div>
             <div className="content__heading">
               <h3>
@@ -37,9 +54,14 @@ export class AllView extends React.Component {
                 <CounterLabel value={mediaList.mediaIds.length}/>
               </h3>
             </div>
-            <SearchForm state={state.search} actions={this.props.actions}/>
-            <MediaListToolbar token={state.auth.token} selectedMediaIds={mediaList.selectedMediaIds}
-                              actions={this.props.actions}/>
+            <SearchForm state={state.search}
+                        onSearch={this.onSearch.bind(this)}
+                        actions={this.props.actions}
+            />
+            <MediaListToolbar token={state.auth.token}
+                              selectedMediaIds={mediaList.selectedMediaIds}
+                              actions={this.props.actions}
+            />
 
             <UploadProgressList uploadState={state.upload}
                                 actions={this.props.actions}

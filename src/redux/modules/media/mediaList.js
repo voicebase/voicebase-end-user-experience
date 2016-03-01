@@ -21,9 +21,9 @@ export const DELETE_MEDIA = 'DELETE_MEDIA';
 /*
  * Actions
  * */
-export const getMedia = createAction(GET_MEDIA, (token) => {
+export const getMedia = createAction(GET_MEDIA, (token, searchOptions) => {
   return {
-    promise: MediaApi.getMedia(token)
+    promise: MediaApi.getMedia(token, searchOptions)
   }
 });
 export const addMedia = createAction(ADD_MEDIA, (mediaData) => mediaData);

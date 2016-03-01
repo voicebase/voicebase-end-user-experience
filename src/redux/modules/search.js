@@ -8,6 +8,7 @@ export const CLEAR_DATE = 'CLEAR_DATE';
 export const SELECT_ORDER = 'SELECT_ORDER';
 export const SET_SEARCH_STRING = 'SET_SEARCH_STRING';
 export const START_SEARCH = 'START_SEARCH';
+export const CANCEL_SEARCH = 'CANCEL_SEARCH';
 
 /*
  * Actions
@@ -17,13 +18,15 @@ export const clearDate = createAction(CLEAR_DATE);
 export const selectOrder = createAction(SELECT_ORDER, (orderId) => orderId);
 export const setSearchString = createAction(SET_SEARCH_STRING, (text) => text);
 export const startSearch = createAction(START_SEARCH);
+export const cancelSearch = createAction(CANCEL_SEARCH);
 
 export const actions = {
   applyDate,
   clearDate,
   selectOrder,
   setSearchString,
-  startSearch
+  startSearch,
+  cancelSearch
 };
 
 /*
@@ -34,6 +37,7 @@ export const initialState = {
   dateTo: '',
   searchString: '',
   selectedOrderId: '3',
+  isSearching: false,
   order: {
     1: {
       name: 'Order by Title A-Z'
@@ -81,6 +85,20 @@ export default handleActions({
     return {
       ...state,
       searchString: text
+    };
+  },
+
+  [START_SEARCH]: (state) => {
+    return {
+      ...state,
+      isSearching: true
+    };
+  },
+
+  [CANCEL_SEARCH]: (state) => {
+    return {
+      ...state,
+      isSearching: false
     };
   }
 
