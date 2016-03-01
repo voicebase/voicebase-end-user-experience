@@ -221,17 +221,28 @@ const parseMediaData = function (data) {
   let topics = {};
   let activeTopic = null;
   let speakers = {};
-  if (data.keywords && data.keywords.latest && data.keywords.latest.words) {
-    let allKeywords = data.keywords.latest.words;
-    topicsIds.push('ALL_TOPICS');
-    let parseKeywordsResult = parseKeywords(allKeywords);
-    speakers = Object.assign({}, speakers, parseKeywordsResult.speakers);
-    topics['ALL_TOPICS'] = {
-      name: 'ALL TOPICS',
-      type: 'category',
-      ...parseKeywordsResult
-    };
-    activeTopic = 'ALL_TOPICS';
+  let groupsIds = [];
+  let groups = {};
+  let activeGroup = {};
+  if (data.keywords && data.keywords.latest) {
+    if (data.keywords.latest.words) {
+      topicsIds.push('ALL_TOPICS');
+      let parseKeywordsResult = parseKeywords(data.keywords.latest.words);
+      speakers = Object.assign({}, speakers, parseKeywordsResult.speakers);
+      topics['ALL_TOPICS'] = {
+        name: 'ALL TOPICS',
+        type: 'category',
+        ...parseKeywordsResult
+      };
+      activeTopic = 'ALL_TOPICS';
+    }
+    if (data.keywords.latest.groups && Array.isArray(data.keywords.latest.groups)) {
+      let parseGroupsResult = parseTopics(data.keywords.latest.groups);
+      groupsIds = parseGroupsResult.topicsIds;
+      groups = parseGroupsResult.topics;
+      activeGroup = parseGroupsResult.activeTopic;
+      speakers = Object.assign({}, speakers, parseGroupsResult.speakers);
+    }
   }
 
   if (data.topics && data.topics.latest && data.topics.latest.topics && Array.isArray(data.topics.latest.topics)) {
@@ -239,17 +250,6 @@ const parseMediaData = function (data) {
     topicsIds = topicsIds.concat(parseTopicsResult.topicsIds);
     topics = Object.assign({}, topics, parseTopicsResult.topics);
     speakers = Object.assign({}, speakers, parseTopicsResult.speakers);
-  }
-
-  let groupsIds = [];
-  let groups = {};
-  let activeGroup = {};
-  if (data.groups && data.groups.latest && data.groups.latest.groups && Array.isArray(data.groups.latest.groups)) {
-    let parseGroupsResult = parseTopics(data.groups.latest.groups);
-    groupsIds = parseGroupsResult.topicsIds;
-    groups = parseGroupsResult.topics;
-    activeGroup = parseGroupsResult.activeTopic;
-    speakers = Object.assign({}, speakers, parseGroupsResult.speakers);
   }
 
   let transcript = {
