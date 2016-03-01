@@ -11,7 +11,7 @@ export class SearchForm extends React.Component {
   };
 
   searchButtonAddon() {
-    let isSearching = this.props.state.isSearching;
+    let isSearching = this.props.state.get('isSearching');
     return (
       <Button bsStyle="primary" onClick={this.startSearch.bind(this)} disabled={isSearching}>
         {isSearching ? 'Searching...' : 'Search'}

@@ -53,7 +53,7 @@ export class AllView extends React.Component {
     let mediaList = state.media.mediaList;
     return (
       <div>
-        {mediaList.get('isGetPending') & !state.search.get('isSearching') && <Spinner />}
+        {mediaList.get('isGetPending') && !state.search.get('isSearching') && <Spinner />}
         {
           (!mediaList.get('isGetPending') || state.search.get('isSearching')) &&
           <div>
