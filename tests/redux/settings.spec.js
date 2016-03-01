@@ -405,90 +405,78 @@ describe('(Redux Module) settings.js', function () {
     describe(ADD_ITEM + '_FULFILLED reducer', function () {
       types.forEach(type => {
         it(`${ADD_ITEM}_FULFILLED reducer for ${type} type`, function () {
-          //let id = new Date().getTime();
-          //let expectedRes = initialState.mergeIn([type], {
-          //  isAddPending: false,
-          //  addError: '',
-          //  itemsIds: [id],
-          //  items: {[id]: dataState.items[0]}
-          //});
-          //
-          //let res = settings(initialState, {
-          //  type: ADD_ITEM + '_FULFILLED',
-          //  payload: {type, data: dataState.items[0]}
-          //});
-          //console.log('Expected: ', JSON.stringify(expectedRes.toJS()));
-          //console.log('Test: ', JSON.stringify(res.toJS()));
-          //
-          //assert.isTrue(Immutable.is(expectedRes, res));
-        });
-      });
-    });
-
-/*
-    describe(EDIT_ITEM + '_REJECTED reducer', function () {
-      types.forEach(type => {
-        it(`${EDIT_ITEM}_REJECTED reducer for ${type} type`, function () {
-          let expectedRes = initialState
-            .mergeIn([type], {
-              itemIds: dataState.itemIds,
-              items: dataState.items
-            })
-            .mergeIn([type, 'items', '0'], {
-              isEditPending: false,
-              editError: 'error'
-            });
-
-          let getRes = settings(initialState, {
-            type: GET_ITEMS + '_FULFILLED',
-            payload: {type, data: itemsData}
+          let res = settings(initialState, {
+            type: ADD_ITEM + '_FULFILLED',
+            payload: {type, data: dataState.items[0]}
           });
+          let newId = res.getIn([type, 'itemIds', 0]);
 
-          let res = settings(getRes, {
-            type: EDIT_ITEM + '_REJECTED',
-            payload: {type, id: '0', error: 'error'}
+          let expectedRes = initialState.mergeIn([type], {
+            isAddPending: false,
+            addError: '',
+            itemIds: [newId],
+            items: {[newId]: {
+              ...dataState.items[0],
+              id: newId.toString()
+            }}
           });
 
           assert.isTrue(Immutable.is(expectedRes, res));
         });
       });
-
     });
 
-    describe(EDIT_ITEM + '_FULFILLED reducer', function () {
+    describe(TOGGLE_LIST + ' reducer', function () {
       types.forEach(type => {
-        it(`${EDIT_ITEM}_FULFILLED reducer for ${type} type`, function () {
-          let expectedRes = initialState
-            .mergeIn([type], {
-              itemIds: dataState.itemIds,
-              items: dataState.items
-            })
-            .mergeIn([type, 'items', '0'], {
-              isDefault: true,
-              isEditPending: false,
-              editError: ''
-            });
-
-          let getRes = settings(initialState, {
-            type: GET_ITEMS + '_FULFILLED',
-            payload: {type, data: itemsData}
+        it(`TOGGLE_LIST reducer for ${type} type`, function () {
+          let expectedRes = initialState.mergeIn([type, 'view'], {
+            isExpandList: false
           });
-
-          let newItem = getRes.getIn([type, 'items', '0']).merge({
-            isDefault: true
-          }).toJS();
-
-          let res = settings(getRes, {
-            type: EDIT_ITEM + '_FULFILLED',
-            payload: {type, id: '0', data: newItem}
+          let res = settings(initialState, {
+            type: 'TOGGLE_LIST',
+            payload: {type, value: false}
           });
+          assert.isTrue(Immutable.is(expectedRes, res));
+        });
 
+        it(`TOGGLE_LIST reducer for ${type} type without value`, function () {
+          let expectedRes = initialState.mergeIn([type, 'view'], {
+            isExpandList: true
+          });
+          let res = settings(initialState, {
+            type: 'TOGGLE_LIST',
+            payload: {type}
+          });
           assert.isTrue(Immutable.is(expectedRes, res));
         });
       });
-
     });
-*/
+
+    describe(TOGGLE_CREATE_FORM + ' reducer', function () {
+      types.forEach(type => {
+        it(`TOGGLE_CREATE_FORM reducer for ${type} type`, function () {
+          let expectedRes = initialState.mergeIn([type, 'view'], {
+            isExpandCreateForm: false
+          });
+          let res = settings(initialState, {
+            type: 'TOGGLE_CREATE_FORM',
+            payload: {type, value: false}
+          });
+          assert.isTrue(Immutable.is(expectedRes, res));
+        });
+
+        it(`TOGGLE_CREATE_FORM reducer for ${type} type without value`, function () {
+          let expectedRes = initialState.mergeIn([type, 'view'], {
+            isExpandCreateForm: true
+          });
+          let res = settings(initialState, {
+            type: 'TOGGLE_CREATE_FORM',
+            payload: {type}
+          });
+          assert.isTrue(Immutable.is(expectedRes, res));
+        });
+      });
+    });
 
   });
 

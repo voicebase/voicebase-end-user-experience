@@ -248,7 +248,7 @@ export const settings = handleActions({
   },
 
   [ADD_ITEM + '_FULFILLED']: (state, { payload: {type, data} }) => {
-    let id = new Date().getTime();
+    let id = new Date().getTime().toString();
     let itemIds = state.getIn([type, 'itemIds']).concat(id);
 
     return state

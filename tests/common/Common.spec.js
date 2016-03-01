@@ -4,7 +4,8 @@ import {
   replaceAndTrim,
   getClearWordFromTranscript,
   getRandomColor,
-  getFileType
+  getFileType,
+  dateToIso
 } from '../../src/common/Common'
 
 describe('(Common functions) Common.js', function () {
@@ -54,6 +55,12 @@ describe('(Common functions) Common.js', function () {
     expect(getFileType({type: 'audio/mp3'})).to.equal('audio');
     expect(getFileType({type: 'video/mp4'})).to.equal('video');
     expect(getFileType({type: 'mp4'})).to.equal('unknown');
+  });
+
+  it('check dateToIso for YYYY-MM-DD', function () {
+    let date = '2016-02-29';
+    let isoDate = dateToIso(date);
+    expect(new Date(date).toUTCString()).to.equal(new Date(isoDate).toUTCString());
   });
 
 });

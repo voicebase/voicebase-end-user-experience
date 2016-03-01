@@ -4,6 +4,7 @@ import {
   SELECT_ORDER,
   SET_SEARCH_STRING,
   START_SEARCH,
+  CANCEL_SEARCH,
   actions,
   initialState,
   default as searchReducer
@@ -27,7 +28,8 @@ describe('(Redux Module) search.js', function () {
       CLEAR_DATE,
       SELECT_ORDER,
       SET_SEARCH_STRING,
-      START_SEARCH
+      START_SEARCH,
+      CANCEL_SEARCH
     };
 
     Object.keys(constants).forEach(key => {
@@ -62,6 +64,11 @@ describe('(Redux Module) search.js', function () {
     describe('Start Search', () => {
       checkActionTypes(actions, 'startSearch', START_SEARCH);
       checkCreatingAction(actions, 'startSearch', START_SEARCH, []);
+    });
+
+    describe('Cancel Search', () => {
+      checkActionTypes(actions, 'cancelSearch', CANCEL_SEARCH);
+      checkCreatingAction(actions, 'cancelSearch', CANCEL_SEARCH, []);
     });
 
   });
@@ -117,6 +124,34 @@ describe('(Redux Module) search.js', function () {
       let action = {
         type: "SET_SEARCH_STRING",
         payload: 'text'
+      };
+      let reducerRes = searchReducer(initialState, action);
+
+      assert.isTrue(Immutable.is(expectedRes, reducerRes));
+    });
+
+    it('START_SEARCH reducer', function () {
+      let expectedRes = fromJS({
+        ...initialJsState,
+        isSearching: true
+      });
+
+      let action = {
+        type: "START_SEARCH"
+      };
+      let reducerRes = searchReducer(initialState, action);
+
+      assert.isTrue(Immutable.is(expectedRes, reducerRes));
+    });
+
+    it('CANCEL_SEARCH reducer', function () {
+      let expectedRes = fromJS({
+        ...initialJsState,
+        isSearching: false
+      });
+
+      let action = {
+        type: "CANCEL_SEARCH"
       };
       let reducerRes = searchReducer(initialState, action);
 
