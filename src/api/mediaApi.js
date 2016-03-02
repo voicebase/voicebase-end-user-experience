@@ -161,8 +161,12 @@ export default {
       let url = `${baseUrl}/media/${mediaId}/streams?access_token=${token}`;
       return axios.get(url)
         .then(response => {
+          let url = null;
+          if (response.data && response.data.streams && response.data.streams.original) {
+            url = response.data.streams.original;
+          }
           return {
-            url: response.data.streams.original,
+            url: url,
             mediaId
           };
         })

@@ -144,7 +144,7 @@ export default handleActions({
 
 }, initialState);
 
-const parseMediaData = function (data) {
+export const parseMediaData = function (data) {
   let topicsIds = [];
   let topics = {};
   let activeTopic = null;
@@ -157,10 +157,13 @@ const parseMediaData = function (data) {
       topicsIds.push('ALL_TOPICS');
       let parseKeywordsResult = parseKeywords(data.keywords.latest.words);
       speakers = Object.assign({}, speakers, parseKeywordsResult.speakers);
+      let speakersNames = Object.keys(parseKeywordsResult.speakers);
       topics['ALL_TOPICS'] = {
         name: 'ALL TOPICS',
         type: 'category',
-        ...parseKeywordsResult
+        keywordsIds: parseKeywordsResult.keywordsIds,
+        keywords: parseKeywordsResult.keywords,
+        speakers: speakersNames
       };
       activeTopic = 'ALL_TOPICS';
     }
