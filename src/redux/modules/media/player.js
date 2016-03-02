@@ -67,7 +67,7 @@ export const initialState = fromJS({
   players: {}
 });
 
-const initialPlayerState = {
+export const initialPlayerState = {
   url: '',
   type: 'audio',
   playing: false,
