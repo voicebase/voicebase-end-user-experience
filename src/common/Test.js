@@ -27,6 +27,19 @@ export const checkCreatingAction = function (actions, actionName, actionType, pr
   });
 };
 
+export const checkCreatingActionWithMultipleParameters = function (actions, actionName, actionType, props, propNames) {
+  it(`Should create an action to ${actionName}`, () => {
+    let expectedAction = createAction.apply(this, [actionType, function () {
+      let params = {};
+      propNames.forEach((name, i) => {
+        params[name] = props[i];
+      });
+      return params;
+    }]);
+    expect(actions[actionName].apply(this, props)).to.deep.equal(expectedAction.apply(this, props))
+  });
+};
+
 export const checkApiAction = function (actions, actionName, actionType, params, isError, done) {
   let xhr = sinon.useFakeXMLHttpRequest();
   var requests = [];

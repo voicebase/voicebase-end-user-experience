@@ -330,7 +330,7 @@ describe('(Redux Module) groups.js', function () {
       assert.isTrue(Immutable.is(expectedRes, res));
     });
 
-    describe(ADD_GROUP + '_FULFILLED reducer', function () {
+    it(ADD_GROUP + '_FULFILLED reducer', function () {
       let res = groupsReducer(initialState, {
         type: ADD_GROUP + '_FULFILLED',
         payload: {data: groupsResponse.groups["0"]}
