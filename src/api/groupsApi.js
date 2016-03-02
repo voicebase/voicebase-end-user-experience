@@ -60,7 +60,6 @@ export default {
       if (error.data && error.data.errors) {
         error = error.data.errors[0].error;
       }
-      alert(error);
       return Promise.reject({groupId, error})
     });
   }

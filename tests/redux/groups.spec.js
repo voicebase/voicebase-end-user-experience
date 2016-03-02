@@ -132,6 +132,13 @@ describe('(Redux Module) groups.js', function () {
       }
     };
 
+    const getStateWithGroups = function () {
+      return initialState.merge({
+        groupIds: groupsState.groupIds,
+        groups: groupsState.groups
+      });
+    };
+
     it(`${GET_GROUPS}_PENDING reducer `, function () {
       let expectedRes = initialState
         .merge({
@@ -162,10 +169,8 @@ describe('(Redux Module) groups.js', function () {
     });
 
     it(`${GET_GROUPS}_FULFILLED reducer `, function () {
-      let expectedRes = initialState
+      let expectedRes = getStateWithGroups()
         .merge({
-          groupIds: groupsState.groupIds,
-          groups: groupsState.groups,
           isGetPending: false,
           errorMessage: ''
         });
@@ -173,6 +178,175 @@ describe('(Redux Module) groups.js', function () {
       let res = groupsReducer(initialState, {
         type: GET_GROUPS + '_FULFILLED',
         payload: groupsResponse
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it(`${DELETE_GROUP}_PENDING reducer `, function () {
+      let expectedRes = getStateWithGroups()
+        .mergeIn(['groups', '0'], {
+          isDeletePending: true
+        });
+
+      let getRes = groupsReducer(initialState, {
+        type: GET_GROUPS + '_FULFILLED',
+        payload: groupsResponse
+      });
+
+      let res = groupsReducer(getRes, {
+        type: DELETE_GROUP + '_PENDING',
+        payload: {groupId: '0'}
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it(`${DELETE_GROUP}_REJECTED reducer `, function () {
+      let expectedRes = getStateWithGroups()
+        .mergeIn(['groups', '0'], {
+          isDeletePending: false,
+          deleteError: 'error'
+        });
+
+      let getRes = groupsReducer(initialState, {
+        type: GET_GROUPS + '_FULFILLED',
+        payload: groupsResponse
+      });
+
+      let res = groupsReducer(getRes, {
+        type: DELETE_GROUP + '_REJECTED',
+        payload: {groupId: '0', error: 'error'}
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it(`${DELETE_GROUP}_FULFILLED reducer `, function () {
+      let expectedRes = getStateWithGroups()
+        .setIn(['groupIds'], fromJS(['1']))
+        .deleteIn(['groups', '0']);
+
+      let getRes = groupsReducer(initialState, {
+        type: GET_GROUPS + '_FULFILLED',
+        payload: groupsResponse
+      });
+
+      let res = groupsReducer(getRes, {
+        type: DELETE_GROUP + '_FULFILLED',
+        payload: {groupId: '0'}
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it(`${EDIT_GROUP}_PENDING reducer `, function () {
+      let expectedRes = getStateWithGroups()
+        .mergeIn(['groups', '0'], {
+          isEditPending: true,
+          editError: ''
+        });
+
+      let getRes = groupsReducer(initialState, {
+        type: GET_GROUPS + '_FULFILLED',
+        payload: groupsResponse
+      });
+
+      let res = groupsReducer(getRes, {
+        type: EDIT_GROUP + '_PENDING',
+        payload: {groupId: '0'}
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it(`${EDIT_GROUP}_REJECTED reducer `, function () {
+      let expectedRes = getStateWithGroups()
+        .mergeIn(['groups', '0'], {
+          isEditPending: false,
+          editError: 'error'
+        });
+
+      let getRes = groupsReducer(initialState, {
+        type: GET_GROUPS + '_FULFILLED',
+        payload: groupsResponse
+      });
+
+      let res = groupsReducer(getRes, {
+        type: EDIT_GROUP + '_REJECTED',
+        payload: {groupId: '0', error: 'error'}
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it(`${EDIT_GROUP}_FULFILLED reducer `, function () {
+      let expectedRes = getStateWithGroups()
+        .mergeIn(['groups', '0'], {
+          isEditPending: false,
+          editError: '',
+          ...groupsState.groups["1"],
+          id: "0"
+        });
+
+      let getRes = groupsReducer(initialState, {
+        type: GET_GROUPS + '_FULFILLED',
+        payload: groupsResponse
+      });
+
+      let res = groupsReducer(getRes, {
+        type: EDIT_GROUP + '_FULFILLED',
+        payload: {groupId: '0', data: groupsResponse.groups["1"]}
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it(`${ADD_GROUP}_PENDING reducer `, function () {
+      let expectedRes = initialState
+        .merge({
+          isAddPending: true
+        });
+
+      let res = groupsReducer(initialState, {
+        type: ADD_GROUP + '_PENDING'
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it(`${ADD_GROUP}_REJECTED reducer `, function () {
+      let expectedRes = initialState
+        .merge({
+          isAddPending: false,
+          addError: 'error'
+        });
+
+      let res = groupsReducer(initialState, {
+        type: ADD_GROUP + '_REJECTED',
+        payload: {error: 'error'}
+      });
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    describe(ADD_GROUP + '_FULFILLED reducer', function () {
+      let res = groupsReducer(initialState, {
+        type: ADD_GROUP + '_FULFILLED',
+        payload: {data: groupsResponse.groups["0"]}
+      });
+      let newId = res.getIn(['groupIds', 0]);
+
+      let expectedRes = initialState.merge({
+        isAddPending: false,
+        addError: '',
+        groupIds: [newId],
+        groups: {
+          [newId]: {
+            ...groupsState.groups["0"],
+            id: newId
+          }
+        }
       });
 
       assert.isTrue(Immutable.is(expectedRes, res));

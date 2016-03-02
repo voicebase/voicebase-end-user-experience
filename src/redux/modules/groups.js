@@ -161,7 +161,7 @@ export default handleActions({
   [ADD_GROUP + '_REJECTED']: (state, { payload }) => {
     return state.merge({
       isAddPending: false,
-      addError: ''
+      addError: payload.error
     });
   },
 
