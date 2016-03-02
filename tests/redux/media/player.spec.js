@@ -16,8 +16,7 @@ import {
   default as playerReducer
 } from '../../../src/redux/modules/media/player'
 
-import { checkActionTypes, checkIsFunction, checkCreatingAction, checkApiAction, checkCreatingActionWithMultipleParameters } from '../../../src/common/Test'
-import { createAction } from 'redux-actions'
+import { checkActionTypes, checkCreatingAction, checkCreatingActionWithMultipleParameters } from '../../../src/common/Test'
 import Immutable, { fromJS } from 'immutable'
 
 describe('(Redux Module) markers.js', function () {

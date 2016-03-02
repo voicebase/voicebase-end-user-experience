@@ -140,7 +140,7 @@ export default handleActions({
   },
 
   [COLLAPSE_MEDIA]: (state, { payload: mediaId }) => {
-    let activeMediaId = (state.activeMediaId === mediaId) ? '' : state.activeMediaId;
+    let activeMediaId = (state.get('activeMediaId') === mediaId) ? '' : state.get('activeMediaId');
     return state.set('activeMediaId', activeMediaId);
   },
 

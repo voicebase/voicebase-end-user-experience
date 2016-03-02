@@ -71,16 +71,18 @@ export default {
             metadata: fakeExample.metadata
           }
         });
-        response.data.media.forEach(mediaItem => {
-          if (mediaItem.status === 'failed' || mediaItem.status === 'finished') {
-            mediaIds.push(mediaItem.mediaId);
-            media[mediaItem.mediaId] = mediaItem;
-          }
-          else if (mediaItem.status === 'accepted' || mediaItem.status === 'running') {
-            processingIds.push(mediaItem.mediaId);
-            processingMedia[mediaItem.mediaId] = mediaItem;
-          }
-        });
+        if (response.data.media) {
+          response.data.media.forEach(mediaItem => {
+            if (mediaItem.status === 'failed' || mediaItem.status === 'finished') {
+              mediaIds.push(mediaItem.mediaId);
+              media[mediaItem.mediaId] = mediaItem;
+            }
+            else if (mediaItem.status === 'accepted' || mediaItem.status === 'running') {
+              processingIds.push(mediaItem.mediaId);
+              processingMedia[mediaItem.mediaId] = mediaItem;
+            }
+          });
+        }
         return {
           mediaIds,
           media,
@@ -113,7 +115,6 @@ export default {
         if (error.data && error.data.errors) {
           error = error.data.errors.error;
         }
-        alert(error);
         return Promise.reject({error, mediaId})
       });
   },

@@ -6,8 +6,7 @@ import {
   default as markersReducer
 } from '../../../src/redux/modules/media/markers'
 
-import { checkActionTypes, checkIsFunction, checkCreatingAction, checkApiAction, checkCreatingActionWithMultipleParameters } from '../../../src/common/Test'
-import { createAction } from 'redux-actions'
+import { checkActionTypes, checkCreatingAction, checkCreatingActionWithMultipleParameters } from '../../../src/common/Test'
 import Immutable, { fromJS } from 'immutable'
 
 describe('(Redux Module) markers.js', function () {
