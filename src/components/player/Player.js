@@ -70,7 +70,9 @@ export class Player extends React.Component {
   }
 
   onPause() {
-    this.props.actions.pause(this.props.mediaId);
+    if (this.props.playerState.loaded !== 0) {
+      this.props.actions.pause(this.props.mediaId);
+    }
   }
 
   onProgress({played, loaded}) {
@@ -255,6 +257,7 @@ export class Player extends React.Component {
     }
 
     let hasMarkers = this.props.markersState && this.props.markersState.markerIds && this.props.markersState.markerIds.length > 0;
+    let isLoaded = playerState.loaded === 0;
 
     return (
       <div className={playerClases}>
@@ -280,7 +283,11 @@ export class Player extends React.Component {
         <div className="player">
           <ButtonGroup className="player__buttons">
             <Button bsStyle="primary" onClick={this.togglePlay.bind(this)}>
-              {playerState.playing && <i className="fa fa-fw fa-pause" />}
+              {
+                playerState.playing && isLoaded &&
+                <i className="fa fa-fw fa-circle-o-notch fa-spin" />
+              }
+              {playerState.playing && !isLoaded && <i className="fa fa-fw fa-pause" />}
               {!playerState.playing && <i className="fa fa-fw fa-play" />}
             </Button>
             {
