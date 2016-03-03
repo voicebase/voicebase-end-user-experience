@@ -2,7 +2,11 @@ import { createAction } from 'redux-actions'
 import configureMockStore from 'redux-mock-store';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
+import TestUtils from 'react-addons-test-utils'
 
+/*
+* ACTIONS TESTING
+* */
 export const checkActionTypes = function (actions, actionName, actionType) {
   checkIsFunction(actions, actionName);
   checkType(actions, actionType, actionName);
@@ -86,3 +90,15 @@ export const checkAsyncAction = function (actions, actionName, actionType, param
   // call action;
   store.dispatch(actions[actionName].apply(this, params));
 };
+
+/*
+ * COMPONENTS TESTING
+ * */
+
+
+export const shallowRender = function (component) {
+  const renderer = TestUtils.createRenderer()
+  renderer.render(component);
+  return renderer.getRenderOutput();
+};
+
