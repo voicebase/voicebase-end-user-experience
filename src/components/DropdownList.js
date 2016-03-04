@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import {Dropdown, MenuItem} from 'react-bootstrap'
 
-export default class LanguageDropdown extends React.Component {
+export default class DropdownList extends React.Component {
   static propTypes = {
     onSelect: PropTypes.func.isRequired,
     items: PropTypes.object.isRequired,
@@ -19,17 +19,18 @@ export default class LanguageDropdown extends React.Component {
     return (
       <Dropdown id={this.props.dropdownKey + '-dropdown'} onSelect={this.onSelectItem.bind(this)} className="dropdown--custom-caret">
         <Dropdown.Toggle>
-          { activeItem.name }
+          { activeItem && activeItem.name }
           <i className="fa fa-caret-down"/>
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {
             Object.keys(items).map(id => {
               let item = items[id];
+              let activeId = (activeItem) ? activeItem.id : null;
               return (
                 <MenuItem key={this.props.dropdownKey + 'priority-item' + id}
                           eventKey={id}
-                          active={id === activeItem.id}
+                          active={id === activeId}
                 >
                   {item.name}
                 </MenuItem>
