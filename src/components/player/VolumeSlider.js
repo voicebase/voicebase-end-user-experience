@@ -81,11 +81,13 @@ export class VolumeSlider extends React.Component {
     document.addEventListener('mouseup', this.handleDragEnd);
   };
 
-  handleDrag = (e) => {
+  handleDrag = (nativeEvent) => {
+    nativeEvent.stopPropagation();
+    nativeEvent.preventDefault();
     let value, { onChange } = this.props; // eslint-disable-line one-var
     if (!onChange) return;
 
-    value = this.position(e);
+    value = this.position(nativeEvent);
     onChange && onChange(value);
   };
 
@@ -95,6 +97,7 @@ export class VolumeSlider extends React.Component {
   };
 
   handleNoop = (e) => {
+    e.nativeEvent.stopImmediatePropagation();
     e.stopPropagation();
     e.preventDefault();
   };
