@@ -336,7 +336,7 @@ export class Player extends React.Component {
           </div>
 
           <ButtonGroup className="player__buttons">
-            <OverlayTrigger trigger="click" placement={playerState.isFullscreen ? 'top' : 'bottom'} overlay={this.getSlider()}>
+            <OverlayTrigger trigger="click" placement={playerState.isFullscreen ? 'top' : 'bottom'} rootClose overlay={this.getSlider()}>
               <Button><i className="fa fa-fw fa-volume-up"/></Button>
             </OverlayTrigger>
             { this.props.hasDownloadButton && <Button><i className="fa fa-fw fa-cloud-download" /></Button> }
