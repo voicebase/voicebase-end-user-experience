@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { reduxForm } from 'redux-form';
 import {Input, Button, Alert} from 'react-bootstrap'
 
-class LoginForm extends React.Component {
+export class LoginForm extends React.Component {
 
   static propTypes = {
     fields: PropTypes.object.isRequired,
@@ -57,7 +57,7 @@ class LoginForm extends React.Component {
   }
 }
 
-const validateLogin = values => {
+export const validateLogin = values => {
   const errors = {};
   if (!values.username) {
     errors.username = 'Email is required';
@@ -68,10 +68,10 @@ const validateLogin = values => {
   return errors;
 };
 
-LoginForm = reduxForm({
+const LoginFormDecorate = reduxForm({
   form: 'login',
   fields: ['username', 'password'],
   validate: validateLogin
 })(LoginForm);
 
-export default LoginForm
+export default LoginFormDecorate
