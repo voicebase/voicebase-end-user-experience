@@ -17,7 +17,7 @@ export class MediaList extends React.Component {
     return (
       <div>
         {
-          mediaList.mediaIds.length > 0 &&
+          (mediaList.mediaIds.length > 0 || mediaList.processingIds.length > 0) &&
           <div className="list-group listings">
             {
               mediaList.processingIds.map(mediaId => {
