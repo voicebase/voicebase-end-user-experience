@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallowRender } from '../../src/common/Test'
 import TestUtils from 'react-addons-test-utils'
-import { fromJS } from 'immutable'
 
 import { SearchForm } from '../../src/components/SearchForm'
 import { initialState } from '../../src/redux/modules/search'
@@ -9,7 +8,7 @@ import {Row, Col, Input, Button} from 'react-bootstrap'
 import DatePicker from '../../src/components/DatePicker'
 import DropdownList from '../../src/components/DropdownList'
 
-describe('SidebarMenu component', function () {
+describe('SearchForm component', function () {
   let component;
 
   let options = {
