@@ -4,7 +4,7 @@ import TestUtils from 'react-addons-test-utils'
 
 import Predictions from '../../../src/components/player/Predictions'
 
-describe('MediaListItem component', function () {
+describe('Predictions component', function () {
   let component;
 
   let options = {
