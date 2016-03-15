@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../src/common/Test'
 import TestUtils from 'react-addons-test-utils'
 import { fromJS } from 'immutable'
 import ProcessingListItem from '../../../src/components/upload/ProcessingListItem'
