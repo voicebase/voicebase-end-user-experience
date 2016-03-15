@@ -5,7 +5,7 @@ import TestUtils from 'react-addons-test-utils'
 
 import PlayerSpeakers from '../../../src/components/player/PlayerSpeakers'
 
-describe('ProcessingListItem component', function () {
+describe('PlayerSpeakers component', function () {
   let component;
   let rootElement;
 
