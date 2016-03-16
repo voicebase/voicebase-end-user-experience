@@ -99,10 +99,41 @@ export class Transcript extends React.Component {
     return endPhraseWords;
   }
 
+  getMarkers() {
+    let markersState = this.props.markersState;
+    let markers = {};
+    if (markersState) {
+      markersState.markerIds.forEach(markerId => {
+        let marker = markersState.markers[markerId];
+        let startTime = marker.time.toFixed(2);
+        markers[startTime] = marker;
+      });
+    }
+    return markers;
+  }
+
+  isSpeaker(word) {
+    if (!word.m) {
+      return false;
+    }
+    return (word.m === 'turn');
+  }
+
+  getSpeakerColor (word) {
+    let speakerName = getClearWordFromTranscript(word.w);
+    let speaker = this.props.mediaState.speakers[speakerName];
+    return (speaker) ? speaker.color : null;
+  }
+
+  isHoverUtterance(utterance) {
+    return (this.state.hoverUtterance &&
+            utterance.id === this.state.hoverUtterance.id &&
+            utterance.segmentIndex === this.state.hoverUtterance.segmentIndex);
+  }
+
   render() {
     let mediaState = this.props.mediaState;
     let playerState = this.props.playerState;
-    let markersState = this.props.markersState;
     let transcript = mediaState.transcript;
 
     let time = playerState.duration * playerState.played;
@@ -112,15 +143,8 @@ export class Transcript extends React.Component {
     let currentWordsCounter = 0;
 
     // Prepare markers highlight
-    let markers = {};
+    let markers = this.getMarkers();
     let endPhraseWords = {};
-    if (markersState) {
-      markersState.markerIds.forEach(markerId => {
-        let marker = markersState.markers[markerId];
-        let startTime = marker.time.toFixed(2);
-        markers[startTime] = marker;
-      });
-    }
 
     return (
       <div className="listing__transcript">
@@ -154,29 +178,23 @@ export class Transcript extends React.Component {
               }
 
               // highlight speaker
-              let isSpeaker = (word.m && word.m === 'turn');
+              let isSpeaker = this.isSpeaker(word);
               if (isSpeaker) {
-                let speakerName = getClearWordFromTranscript(word.w);
-                let speaker = mediaState.speakers[speakerName];
-                let speakerColor = (speaker) ? speaker.color : null;
-                wordStyle['color'] = speakerColor;
+                wordStyle['color'] = this.getSpeakerColor(word);
               }
 
               // highlight utterances phrase
               let utterance = null;
               if (mediaState.view.activeTab === DETECTION_TAB) {
                 utterance = this.findDetectionSegment(word.s);
-                if (utterance && !isSpeaker) {
-                  if (this.state.hoverUtterance &&
-                      utterance.id === this.state.hoverUtterance.id &&
-                      utterance.segmentIndex === this.state.hoverUtterance.segmentIndex)
-                  {
-                    wordStyle['color'] = '#fff';
-                    wordStyle['backgroundColor'] = utterance.color;
-                  }
-                  else {
-                    wordStyle['color'] = utterance.color;
-                  }
+              }
+              if (utterance && !isSpeaker) {
+                if (this.isHoverUtterance(utterance)) {
+                  wordStyle['color'] = '#fff';
+                  wordStyle['backgroundColor'] = utterance.color;
+                }
+                else {
+                  wordStyle['color'] = utterance.color;
                 }
               }
 

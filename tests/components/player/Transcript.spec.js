@@ -4,6 +4,7 @@ import { shallowRender } from '../../../src/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
 import Transcript from '../../../src/components/player/Transcript'
+import { DETECTION_TAB } from '../../../src/redux/modules/media/mediaData'
 
 describe('Transcript component', function () {
   let component;
@@ -220,5 +221,82 @@ describe('Transcript component', function () {
     }, options.mediaState.transcript.words, 5);
     expect(Object.keys(res)).to.eql(['4', '5']);
   });
+
+  it('Check getMarkers with empty markersState', function() {
+    let res = component.getMarkers();
+    expect(res).to.eql({});
+  });
+
+  it('Check getMarkers with non-empty markersState', function() {
+    let markersState = {
+      markerIds: ['0', '1'],
+      markers: {
+        0: {
+          id: "0",
+          keywordName: "george washington",
+          time: 0.71
+        },
+        1: {
+          id: "1",
+          keywordName: "george washington",
+          time: 57
+        }
+      }
+    };
+
+    component = getComponent({
+      ...options,
+      markersState: markersState
+    });
+    let res = component.getMarkers();
+
+    expect(res).to.eql({
+      "0.71": markersState.markers[0],
+      "57.00": markersState.markers[1]
+    });
+  });
+
+  it('Check isSpeaker', function() {
+    assert.isFalse(component.isSpeaker({}));
+    assert.isFalse(component.isSpeaker({m: 'test'}));
+    assert.isTrue(component.isSpeaker({m: 'turn'}));
+  });
+
+  it('Check getSpeakerColor', function() {
+    let res = component.getSpeakerColor({w: 'Speaker 1:'});
+    assert.equal(res, options.mediaState.speakers['Speaker 1'].color);
+  });
+
+  it('Check isHoverUtterance if no utterance', function() {
+    let utterance = options.mediaState.utterances.items['0'];
+    let res = component.isHoverUtterance(utterance);
+    assert.isNotTrue(res);
+  });
+
+  it('Check isHoverUtterance with utterance', function() {
+    let utterance = {
+      ...options.mediaState.utterances.items['0'],
+      segmentIndex: '0'
+    };
+    component.state.hoverUtterance = utterance;
+    let res = component.isHoverUtterance(utterance);
+    assert.isTrue(res);
+  });
+
+  it('Check DETECTION_TAB', function() {
+    component = getComponent({
+      ...options,
+      mediaState: {
+        ...options.mediaState,
+        "view": {
+          "activeTab": DETECTION_TAB
+        }
+      }
+    });
+    component.findDetectionSegment = sinon.spy();
+    component.render();
+    assert.isTrue(component.findDetectionSegment.called);
+  });
+
 
 });
