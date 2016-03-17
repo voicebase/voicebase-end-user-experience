@@ -192,6 +192,32 @@ describe('Transcript component', function () {
     assert.isTrue(component.onDuration.calledOnce);
   });
 
+  it('check componentDidUpdate with justCreated markers', function() {
+    component = getComponent({
+      ...options,
+      markersState: {
+        ...options.markersState,
+        justCreated: true
+      }
+    });
+    component.seekToFirstMarker = sinon.spy();
+    component.componentDidUpdate();
+    assert.isTrue(component.seekToFirstMarker.calledOnce);
+  });
+
+  it('check componentDidUpdate with utteranceTime', function() {
+    component = getComponent({
+      ...options,
+      playerState: {
+        ...options.markersState,
+        utteranceTime: 100
+      }
+    });
+    component.seekToUtterance = sinon.spy();
+    component.componentDidUpdate();
+    assert.isTrue(component.seekToUtterance.calledOnce);
+  });
+
   it('check togglePlay if paused', function() {
     component.onPause = sinon.spy();
     component.onPlay = sinon.spy();
@@ -413,6 +439,128 @@ describe('Transcript component', function () {
     });
     component.exitFullscreen();
     assert.isTrue(setFullscreen.calledOnce);
+  });
+
+  it('check calcTimeOffset', function() {
+    let res = component.calcTimeOffset(100);
+    assert.equal(res, 0);
+  });
+
+  it('check calcTimeOffset without duration', function() {
+    component = getComponent({
+      ...options,
+      mediaState: {
+        ...options.mediaState,
+        data: {
+          metadata: {
+            duration: null
+          }
+        }
+      }
+    });
+    let res = component.calcTimeOffset(100);
+    assert.equal(res, 0);
+  });
+
+  it('check calcPosition', function() {
+    let res = component.calcPosition({
+      pageX: 1000,
+      currentTarget: {
+        clientWidth: 1000
+      }
+    });
+    assert.equal(res, 1);
+  });
+
+  it('check seekToFirstMarker', function() {
+    var clock = sinon.useFakeTimers();
+    let clearJustCreatedMarkers= sinon.spy();
+    component = getComponent({
+      ...options,
+      actions: {
+        ...options.actions,
+        clearJustCreatedMarkers
+      }
+    });
+    component.onSeekMarker = sinon.spy();
+    component.seekToFirstMarker(options.markersState);
+    clock.tick(200);
+
+    assert.equal(clearJustCreatedMarkers.calledOnce, true);
+    assert.equal(component.onSeekMarker.calledOnce, true);
+    clock.restore();
+  });
+
+  it('check seekToNextMarker from last markers', function() {
+    component = getComponent({
+      ...options,
+      playerState: {
+        ...options.playerState,
+        played: 100
+      }
+    });
+    component.seekOnPosition = sinon.spy();
+    component.onSeekMarker = sinon.spy();
+    component.seekToNextMarker();
+
+    assert.equal(component.onSeekMarker.calledOnce, true);
+    assert.equal(component.seekOnPosition.called, false);
+  });
+
+  it('check seekToNextMarker from non-last markers', function() {
+    component = getComponent({
+      ...options,
+      playerState: {
+        ...options.playerState,
+        duration: 100
+      }
+    });
+
+    component.seekOnPosition = sinon.spy();
+    component.onSeekMarker = sinon.spy();
+    component.seekToNextMarker();
+
+    assert.equal(component.onSeekMarker.called, false);
+    assert.equal(component.seekOnPosition.calledOnce, true);
+  });
+
+  it('check seekToUtterance', function() {
+    var clock = sinon.useFakeTimers();
+    let clearUtteranceTime= sinon.spy();
+    component = getComponent({
+      ...options,
+      actions: {
+        ...options.actions,
+        clearUtteranceTime
+      }
+    });
+    component.onSeekMarker = sinon.spy();
+    component.seekToUtterance(100);
+    clock.tick(100);
+
+    assert.equal(clearUtteranceTime.calledOnce, true);
+    assert.equal(component.onSeekMarker.calledOnce, true);
+    clock.restore();
+  });
+
+  it('check seekOnPosition', function() {
+    let setPosition= sinon.spy();
+    component = getComponent({
+      ...options,
+      actions: {
+        ...options.actions,
+        setPosition
+      }
+    });
+    component.seekOnPosition(100);
+
+    assert.equal(setPosition.calledOnce, true);
+  });
+
+  it('check onSeekMarker', function() {
+    component.seekOnPosition = sinon.spy();
+    component.onSeekMarker();
+    assert.equal(component.seekOnPosition.calledOnce, true);
   });
 
 
