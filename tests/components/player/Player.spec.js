@@ -5,7 +5,7 @@ import TestUtils from 'react-addons-test-utils'
 
 import Player from '../../../src/components/player/Player'
 
-describe('Transcript component', function () {
+describe('Player component', function () {
   let component;
   let rootElement;
 
