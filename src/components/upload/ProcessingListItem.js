@@ -83,7 +83,7 @@ export default class ProcessingListItem extends React.Component {
   render() {
     let mediaDataState = this.props.mediaDataState;
 
-    let fileStatus, keywordsStatus;
+    let fileStatus, keywordsStatus, predictionStatus;
     if (mediaDataState && mediaDataState.jobTasks) {
       let jobTasks = mediaDataState.jobTasks || {};
       let processingTasks = this.parseTasks(jobTasks);
@@ -95,6 +95,7 @@ export default class ProcessingListItem extends React.Component {
         isCompleted: ingestStatus.isCompleted && transcriptStatus.isCompleted
       };
       keywordsStatus = this.getProgressStatus(processingTasks.keywords);
+      predictionStatus = processingTasks.prediction;
     }
 
     let resultClasses = classnames('progress__step', {active: fileStatus && fileStatus.isCompleted && keywordsStatus && keywordsStatus.isCompleted});
@@ -111,9 +112,12 @@ export default class ProcessingListItem extends React.Component {
         {
           (mediaDataState && mediaDataState.jobTasks) &&
           <div className="progress">
-            <div className={this.getClasses(fileStatus)}>File processing</div>
+            <div className={this.getClasses(fileStatus)}>Transcript</div>
             <div className={this.getClasses(keywordsStatus)}>Analytics</div>
-            <div className="progress__step done">Prediction/detection</div>
+            {
+              predictionStatus &&
+              <div className="progress__step done">Prediction/detection</div>
+            }
             <div className={resultClasses}>Results</div>
           </div>
         }
