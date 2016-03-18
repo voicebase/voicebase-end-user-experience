@@ -90,23 +90,18 @@
 
 .sidebar .nav > li > a {
   color: #afcad9;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -ms-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  transition: all 0.3s ease;
   padding: 10px 20px;
   font-size: 14px;
   font-weight: 500;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -ms-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
 
 .sidebar .nav > li.upload-files > a {
   color: #85d04a;
+}
+
+.sidebar .nav > li.upload-files.active > a {
+  background: #6bb730;
 }
 
 .sidebar .nav > li > a:hover, .sidebar .nav > li > a:focus {

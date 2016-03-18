@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import Dropzone from 'react-dropzone'
 import NotificationSystem from 'react-notification-system'
+import { Button } from 'react-bootstrap'
 
 export default class UploadZone extends React.Component {
   static propTypes = {
@@ -60,8 +61,9 @@ export default class UploadZone extends React.Component {
           <div className="empty-overlay">
             <div className="empty-overlay__message">
               <i className="fa fa-cloud-upload" />
-              <h2>No files uploaded yet</h2>
-              <p><strong>Drag and drop</strong> audio from your computer or <strong>click</strong> to upload</p>
+              <p>Drag &amp; drop the audio file</p>
+              <div className="or-divider"><span>or</span></div>
+              <Button bsStyle="success">Click here to browse</Button>
             </div>
           </div>
         </Dropzone>
