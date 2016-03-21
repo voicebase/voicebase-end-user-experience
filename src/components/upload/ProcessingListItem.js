@@ -14,6 +14,12 @@ export default class ProcessingListItem extends React.Component {
 
   componentWillMount() {
     console.log('Upload interval');
+    this.state = {
+      jobsQueue: {
+        fileStatus: false,
+        keywordsStatus: false
+      }
+    };
     if (!this.props.mediaDataState) {
       this.processingInterval = setInterval(() => {
         this.getMediaData();
@@ -26,10 +32,20 @@ export default class ProcessingListItem extends React.Component {
     clearInterval(this.processingInterval);
   }
 
+  componentWillReceiveProps(nextProps) {
+    let mediaDataState = nextProps.mediaDataState;
+    let phasesStatus = this.getPhasesStatus(mediaDataState);
+    this.updateQueueStatus(phasesStatus.fileStatus, phasesStatus.keywordsStatus);
+  }
+
   getMediaData() {
     let mediaDataState = this.props.mediaDataState;
+    let queue = this.state.jobsQueue;
     this.props.actions.getDataForMedia(this.props.token, this.props.mediaId);
     if (mediaDataState && (mediaDataState.status === 'finished' || mediaDataState.status === 'failed') && this.processingInterval) {
+      if (mediaDataState.status === 'finished' && mediaDataState.jobTasks && (!queue.fileStatus || !queue.keywordsStatus)) {
+        return false;
+      }
       clearInterval(this.processingInterval);
       this.processingInterval = null;
       setTimeout(() => {
@@ -80,10 +96,10 @@ export default class ProcessingListItem extends React.Component {
     return classnames('progress__step', {'active': status && status.isProgress, 'done': status && status.isCompleted});
   }
 
-  render() {
-    let mediaDataState = this.props.mediaDataState;
-
-    let fileStatus, keywordsStatus, predictionStatus;
+  getPhasesStatus(mediaDataState) {
+    let fileStatus = null;
+    let keywordsStatus = null;
+    let predictionStatus = null;
     if (mediaDataState && mediaDataState.jobTasks) {
       let jobTasks = mediaDataState.jobTasks || {};
       let processingTasks = this.parseTasks(jobTasks);
@@ -97,6 +113,36 @@ export default class ProcessingListItem extends React.Component {
       keywordsStatus = this.getProgressStatus(processingTasks.keywords);
       predictionStatus = processingTasks.prediction;
     }
+    return {
+      fileStatus,
+      keywordsStatus,
+      predictionStatus
+    }
+  }
+
+  updateQueueStatus(fileStatus, keywordsStatus) {
+    let _keywordsStatus = (keywordsStatus && keywordsStatus.isCompleted && this.state.jobsQueue.fileStatus);
+    let _fileStatus = (fileStatus && fileStatus.isCompleted);
+    this.setState({
+      jobsQueue: {
+        keywordsStatus: _keywordsStatus,
+        fileStatus: _fileStatus
+      }
+    });
+  }
+
+  render() {
+    let mediaDataState = this.props.mediaDataState;
+    let jobsQueue = this.state.jobsQueue;
+
+    let phasesStatus = this.getPhasesStatus(mediaDataState);
+    let fileStatus = phasesStatus.fileStatus;
+    let keywordsStatus = phasesStatus.keywordsStatus;
+    if (!jobsQueue.keywordsStatus && keywordsStatus && keywordsStatus.isCompleted) {
+      keywordsStatus.isProgress = true;
+      keywordsStatus.isCompleted = false;
+    }
+    let predictionStatus = phasesStatus.predictionStatus || phasesStatus.detection;
 
     let resultClasses = classnames('progress__step', {active: fileStatus && fileStatus.isCompleted && keywordsStatus && keywordsStatus.isCompleted});
 
