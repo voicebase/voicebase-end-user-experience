@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import classnames from 'classnames'
 import {Col, Button, ListGroupItem, Collapse, Label} from 'react-bootstrap'
 import Spinner from '../Spinner'
 import PredictionForm from './PredictionForm'
@@ -9,20 +10,24 @@ export class SettingsListItem extends React.Component {
   static propTypes = {
     type: PropTypes.string.isRequired,
     item: PropTypes.object.isRequired,
+    isActive: PropTypes.bool.isRequired,
     onDeleteItem: PropTypes.func.isRequired,
-    onEditItem: PropTypes.func.isRequired
+    onEditItem: PropTypes.func.isRequired,
+    onSetActiveItem: PropTypes.func.isRequired,
+    onClearActiveItem: PropTypes.func.isRequired
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {};
+  toggleItem() {
+    if (this.props.isActive) {
+      this.collapseForm();
+    }
+    else {
+      this.props.onSetActiveItem(this.props.type, this.props.item.id);
+    }
   }
 
   collapseForm() {
-    this.setState({
-      open: false
-    });
+    this.props.onClearActiveItem(this.props.type);
   }
 
   deleteItem(event) {
@@ -43,12 +48,14 @@ export class SettingsListItem extends React.Component {
       ...item
     };
 
+    let listItemClasses = classnames('list-group-item__section', {'collapsed': !this.props.isActive});
+
     return (
-      <section className="list-group-item__section">
-        <ListGroupItem href="javascript:void(0)" onClick={ () => this.setState({ open: !this.state.open })}>
+      <section className={listItemClasses}>
+        <ListGroupItem href="javascript:void(0)" onClick={this.toggleItem.bind(this)}>
           <Col sm={11}>
             <h4 className="list-group-item-heading">
-              { item.displayName }
+              { item.displayName }&nbsp;
               { item.isDefault && <Label bsStyle="primary">Default</Label> }
             </h4>
           </Col>
@@ -61,7 +68,7 @@ export class SettingsListItem extends React.Component {
           }
         </ListGroupItem>
 
-        <Collapse id={type + item.id} in={this.state.open}>
+        <Collapse id={type + item.id} in={this.props.isActive}>
           <div>
             {
               type === 'predictions' &&

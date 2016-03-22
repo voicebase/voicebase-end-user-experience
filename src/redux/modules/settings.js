@@ -15,8 +15,9 @@ export const GET_ITEMS = 'GET_ITEMS';
 export const DELETE_ITEM = 'DELETE_ITEM';
 export const EDIT_ITEM = 'EDIT_ITEM';
 export const ADD_ITEM = 'ADD_ITEM';
-export const TOGGLE_LIST = 'TOGGLE_LIST';
 export const TOGGLE_CREATE_FORM = 'TOGGLE_CREATE_FORM';
+export const SET_ACTIVE_ITEM = 'SET_ACTIVE_ITEM';
+export const CLEAR_ACTIVE_ITEM = 'CLEAR_ACTIVE_ITEM';
 
 /*
  * Actions
@@ -76,16 +77,18 @@ export const addItem = createAction(ADD_ITEM, (token, type, newItem) => {
 });
 
 // view
-export const toggleList = createAction(TOGGLE_LIST, (type, value) => { return {type, value} });
 export const toggleCreateForm = createAction(TOGGLE_CREATE_FORM, (type, value) => { return {type, value} });
+export const setActiveItem = createAction(SET_ACTIVE_ITEM, (type, itemId) => { return {type, itemId} });
+export const clearActiveItem = createAction(CLEAR_ACTIVE_ITEM, (type) => type);
 
 export const actions = {
   getItems,
   deleteItem,
   editItem,
   addItem,
-  toggleList,
-  toggleCreateForm
+  toggleCreateForm,
+  setActiveItem,
+  clearActiveItem
 };
 
 /*
@@ -95,6 +98,7 @@ export const itemInitialState = {
   view: {},
   itemIds: [],
   items: {},
+  activeItem: null,
   isGetPending: false,
   isAddPending: false,
   errorMessage: ''
@@ -264,14 +268,18 @@ export const settings = handleActions({
   },
 
   // View
-  [TOGGLE_LIST]: (state, { payload: {type, value} }) => {
-    let isExpandList = (typeof value !== 'undefined') ? value : !state.getIn([type, 'view', 'isExpandList']);
-    return state.setIn([type, 'view', 'isExpandList'], isExpandList);
-  },
-
   [TOGGLE_CREATE_FORM]: (state, { payload: {type, value} }) => {
     let isExpandCreateForm = (typeof value !== 'undefined') ? value : !state.getIn([type, 'view', 'isExpandCreateForm']);
     return state.setIn([type, 'view', 'isExpandCreateForm'], isExpandCreateForm);
+  },
+
+  [SET_ACTIVE_ITEM]: (state, { payload: {type, itemId} }) => {
+    let id = (state.getIn(['type', 'activeItem']) !== itemId) ? itemId : null;
+    return state.setIn([type, 'activeItem'], id);
+  },
+
+  [CLEAR_ACTIVE_ITEM]: (state, { payload: type }) => {
+    return state.setIn([type, 'activeItem'], null);
   }
 
 }, initialState);

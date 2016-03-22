@@ -65,7 +65,7 @@ export class SettingsView extends React.Component {
             />
           </Tab>
 
-          <Tab eventKey={2} title={this.getTabTitle(state.settings.items.get('numbers'), 'itemIds')}>
+          <Tab eventKey={3} title={this.getTabTitle(state.settings.items.get('numbers'), 'itemIds')}>
             <Numbers token={this.props.state.auth.token}
                      state={state.settings.items.get('numbers').toJS()}
                      actions={this.props.actions}

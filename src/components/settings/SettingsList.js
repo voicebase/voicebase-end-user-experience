@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
-import {Panel, Collapse, ListGroup, Alert} from 'react-bootstrap'
+import { Panel, Collapse, ListGroup, Alert, Button } from 'react-bootstrap'
 import Spinner from '../Spinner'
-import SettingsListHeader from './SettingsListHeader'
 import SettingsListItem from './SettingsListItem'
 import PredictionForm from './PredictionForm'
 import DetectionForm from './DetectionForm'
@@ -17,19 +16,22 @@ export class SettingsList extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
-  toggleList() {
-    this.props.actions.toggleList(this.props.type);
-  }
-
   expandCreateForm(event) {
     event.preventDefault();
     event.stopPropagation();
     this.props.actions.toggleCreateForm(this.props.type, true);
-    this.props.actions.toggleList(this.props.type, true);
   }
 
   collapseCreateForm() {
     this.props.actions.toggleCreateForm(this.props.type, false);
+  }
+
+  expandItem(type, itemId) {
+    this.props.actions.setActiveItem(type, itemId);
+  }
+
+  collapseItem(type) {
+    this.props.actions.clearActiveItem(type);
   }
 
   addItem(values) {
@@ -37,21 +39,10 @@ export class SettingsList extends React.Component {
     this.props.onAddItem(values);
   }
 
-  getHeader() {
-    return (
-      <SettingsListHeader title={this.props.state.view.title}
-                          addButtonLabel={this.props.state.view.addButtonLabel}
-                          length={this.props.state.itemIds.length}
-                          isAddPending={this.props.state.isAddPending}
-                          handleClickHeader={this.toggleList.bind(this)}
-                          handleClickAdd={this.expandCreateForm.bind(this)}
-      />
-    )
-  }
-
   render() {
     let state = this.props.state;
     let type = this.props.type;
+    let activeItemId = state.activeItem;
 
     return (
       <div>
@@ -64,50 +55,59 @@ export class SettingsList extends React.Component {
         }
         {
           !state.isGetPending &&
-          <Panel className="panel panel-default panel-settings" header={this.getHeader()}>
-            <Collapse in={state.view.isExpandList}>
+          <div>
+            {state.isAddPending && <div className="btn-add-settings"><Spinner/></div>}
+            {
+              !state.isAddPending &&
+              <Button bsStyle="link" className="btn-add" onClick={this.expandCreateForm.bind(this)}>
+                <i className="fa fa-plus"/>&nbsp;{state.view.addButtonLabel}
+              </Button>
+            }
+            <Collapse in={state.view.isExpandCreateForm}>
+              <div>
+                {
+                  type === 'predictions' &&
+                  <PredictionForm formKey={'add-' + type}
+                                  onSubmit={this.addItem.bind(this)}
+                                  onCancel={this.collapseCreateForm.bind(this)}
+                  />
+                }
+                {
+                  type === 'detection' &&
+                  <DetectionForm formKey={'add-' + type}
+                                 onSubmit={this.addItem.bind(this)}
+                                 onCancel={this.collapseCreateForm.bind(this)}
+                  />
+                }
+                {
+                  type === 'numbers' &&
+                  <NumbersForm formKey={'add-' + type}
+                               onSubmit={this.addItem.bind(this)}
+                               onCancel={this.collapseCreateForm.bind(this)}
+                  />
+                }
+              </div>
+            </Collapse>
+            <Panel className="panel panel-default panel-settings">
               <ListGroup>
-
-                <Collapse in={state.view.isExpandCreateForm}>
-                  <div>
-                    {
-                      type === 'predictions' &&
-                      <PredictionForm formKey={'add-' + type}
-                                      onSubmit={this.addItem.bind(this)}
-                                      onCancel={this.collapseCreateForm.bind(this)}
-                      />
-                    }
-                    {
-                      type === 'detection' &&
-                      <DetectionForm formKey={'add-' + type}
-                                     onSubmit={this.addItem.bind(this)}
-                                     onCancel={this.collapseCreateForm.bind(this)}
-                      />
-                    }
-                    {
-                      type === 'numbers' &&
-                      <NumbersForm formKey={'add-' + type}
-                                   onSubmit={this.addItem.bind(this)}
-                                   onCancel={this.collapseCreateForm.bind(this)}
-                      />
-                    }
-                  </div>
-                </Collapse>
                 {
                   state.itemIds.map(id => {
                     return (
                       <SettingsListItem key={type + id}
                                         type={type}
                                         item={state.items[id]}
+                                        isActive={activeItemId === id}
                                         onDeleteItem={this.props.onDeleteItem}
                                         onEditItem={this.props.onEditItem}
+                                        onSetActiveItem={this.expandItem.bind(this)}
+                                        onClearActiveItem={this.collapseItem.bind(this)}
                       />
                     )
                   })
                 }
               </ListGroup>
-            </Collapse>
-          </Panel>
+            </Panel>
+          </div>
         }
       </div>
     )
