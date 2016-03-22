@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
-import {Panel, Collapse, ListGroup, Alert} from 'react-bootstrap'
-import SettingsListHeader from './SettingsListHeader'
+import {Panel, Collapse, ListGroup, Alert, Button} from 'react-bootstrap'
 import SpottingGroupItem from './SpottingGroupItem'
 import Spinner from '../Spinner'
 import SpottingGroupItemForm from './SpottingGroupItemForm'
@@ -16,20 +15,14 @@ export class SpottingGroups extends React.Component {
     super(props);
 
     this.state = {
-      open: false,
       openCreate: false
     };
-  }
-
-  toggleList() {
-    this.setState({ open: !this.state.open });
   }
 
   expandCreateForm(event) {
     event.preventDefault();
     event.stopPropagation();
     this.setState({
-      open: true,
       openCreate: true
     });
   }
@@ -50,19 +43,6 @@ export class SpottingGroups extends React.Component {
     this.props.actions.addGroup(this.props.token, newGroup);
   }
 
-  getHeader() {
-    let groupsState = this.props.groupsState;
-    return (
-      <SettingsListHeader title={groupsState.view.title}
-                          addButtonLabel={groupsState.view.addButtonLabel}
-                          length={groupsState.groupIds.length}
-                          isAddPending={groupsState.isAddPending}
-                          handleClickHeader={this.toggleList.bind(this)}
-                          handleClickAdd={this.expandCreateForm.bind(this)}
-      />
-    )
-  }
-
   render() {
     let groupsState = this.props.groupsState;
 
@@ -73,6 +53,7 @@ export class SpottingGroups extends React.Component {
       keywords: ''
     };
     let keywordsSelectValueForAdd = [];
+    let activeGroup = groupsState.activeGroup;
 
     return (
       <div>
@@ -85,34 +66,42 @@ export class SpottingGroups extends React.Component {
         }
         {
           !groupsState.isGetPending &&
-          <Panel className="panel panel-default panel-settings" header={this.getHeader()}>
-            <Collapse id="list-collapse-group" in={this.state.open}>
+          <div>
+            {groupsState.isAddPending && <div className="btn-add-settings"><Spinner/></div>}
+            {
+              !groupsState.isAddPending &&
+              <Button bsStyle="link" className="btn-add" onClick={this.expandCreateForm.bind(this)}>
+                <i className="fa fa-plus"/>&nbsp;{groupsState.view.addButtonLabel}
+              </Button>
+            }
+
+            <Collapse id="add-collapse-group" in={this.state.openCreate}>
+              <div>
+                <SpottingGroupItemForm formKey={'add-group'}
+                                       keywordsSelectValue={keywordsSelectValueForAdd}
+                                       initialValues={initialValueForAdd}
+                                       onSubmit={this.addGroup.bind(this)}
+                                       onCancel={this.collapseCreateForm.bind(this)}
+                />
+              </div>
+            </Collapse>
+
+            <Panel className="panel panel-default panel-settings">
               <ListGroup>
-
-                <Collapse id="add-collapse-group" in={this.state.openCreate}>
-                  <div>
-                    <SpottingGroupItemForm formKey={'add-group'}
-                                           keywordsSelectValue={keywordsSelectValueForAdd}
-                                           initialValues={initialValueForAdd}
-                                           onSubmit={this.addGroup.bind(this)}
-                                           onCancel={this.collapseCreateForm.bind(this)}
-                    />
-                  </div>
-                </Collapse>
-
                 {
                   groupsState.groupIds.map(groupId => {
                     return (
                       <SpottingGroupItem key={'group' + groupId}
                                          token={this.props.token}
                                          group={groupsState.groups[groupId]}
+                                         isActive={activeGroup === groupId}
                                          actions={this.props.actions}/>
                     )
                   })
                 }
               </ListGroup>
-            </Collapse>
-          </Panel>
+            </Panel>
+          </div>
         }
       </div>
     )

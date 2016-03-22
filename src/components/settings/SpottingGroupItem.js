@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import {Col, Button, ListGroupItem, Label, Collapse} from 'react-bootstrap'
+import classnames from 'classnames'
 import Spinner from '../Spinner'
 import SpottingGroupItemForm from './SpottingGroupItemForm'
 
@@ -7,19 +8,21 @@ export class SpottingGroupItem extends React.Component {
   static propTypes = {
     token: PropTypes.string.isRequired,
     group: PropTypes.object.isRequired,
+    isActive: PropTypes.bool.isRequired,
     actions: PropTypes.object.isRequired
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {};
+  toggleItem() {
+    if (this.props.isActive) {
+      this.collapseForm();
+    }
+    else {
+      this.props.actions.setActiveGroup(this.props.group.id);
+    }
   }
 
   collapseForm() {
-    this.setState({
-      open: false
-    });
+    this.props.actions.clearActiveGroup();
   }
 
   deleteGroup(event) {
@@ -42,6 +45,8 @@ export class SpottingGroupItem extends React.Component {
   render() {
     let group = this.props.group;
 
+    let listItemClasses = classnames('list-group-item__section', {'collapsed': !this.props.isActive});
+
     let keywords = group.keywordIds.map(id => group.keywords[id]);
     let initialValue = {
       name: group.name,
@@ -57,8 +62,8 @@ export class SpottingGroupItem extends React.Component {
     });
 
     return (
-      <section className="list-group-item__section">
-        <ListGroupItem href="javascript:void(0)" onClick={ () => this.setState({ open: !this.state.open })}>
+      <section className={listItemClasses}>
+        <ListGroupItem href="javascript:void(0)" onClick={this.toggleItem.bind(this)}>
           <Col sm={4}>
             <h4 className="list-group-item-heading">
               { group.name }
@@ -85,7 +90,7 @@ export class SpottingGroupItem extends React.Component {
           }
         </ListGroupItem>
 
-        <Collapse id={'group-form' + group.id} in={this.state.open}>
+        <Collapse id={'group-form' + group.id} in={this.props.isActive}>
           <div>
             <SpottingGroupItemForm formKey={'group' + group.id}
                                    keywordsSelectValue={keywordsSelectValue}

@@ -10,6 +10,8 @@ export const GET_GROUPS = 'GET_GROUPS';
 export const DELETE_GROUP = 'DELETE_GROUP';
 export const EDIT_GROUP = 'EDIT_GROUP';
 export const ADD_GROUP = 'ADD_GROUP';
+export const SET_ACTIVE_GROUP = 'SET_ACTIVE_GROUP';
+export const CLEAR_ACTIVE_GROUP = 'CLEAR_ACTIVE_GROUP';
 
 /*
  * Actions
@@ -49,11 +51,16 @@ export const addGroup = createAction(ADD_GROUP, (token, newGroup) => {
   }
 });
 
+export const setActiveGroup = createAction(SET_ACTIVE_GROUP, (groupId) => groupId);
+export const clearActiveGroup = createAction(CLEAR_ACTIVE_GROUP);
+
 export const actions = {
   getGroups,
   deleteGroup,
   editGroup,
-  addGroup
+  addGroup,
+  setActiveGroup,
+  clearActiveGroup
 };
 
 /*
@@ -66,6 +73,7 @@ export const initialState = fromJS({
     isExpandList: false,
     isExpandCreateForm: false
   },
+  activeGroup: null,
   groupIds: [],
   groups: {},
   isGetPending: false,
@@ -182,6 +190,15 @@ export default handleActions({
         keywordIds: result.ids,
         keywords: result.entities
       });
+  },
+
+  [SET_ACTIVE_GROUP]: (state, { payload: groupId }) => {
+    let id = (state.get('activeGroup') !== groupId) ? groupId : null;
+    return state.set('activeGroup', id);
+  },
+
+  [CLEAR_ACTIVE_GROUP]: (state) => {
+    return state.set('activeGroup', null);
   }
 
 }, initialState);

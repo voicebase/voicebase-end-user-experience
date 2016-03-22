@@ -1,118 +1,91 @@
 /* Settings */
 .content-settings {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-  height: 100%;
 }
 
 .content-settings .content__body {
-  margin: 0 -20px;
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: column;
-  flex-direction: column;
+}
+
+.content-settings .content__heading,
+.content-settings .nav-tabs {
+  background: #eaeaea;
+}
+
+.content-settings .btn-add {
+  margin-bottom: 5px;
+  margin-top: -10px;
+  color: #999;
+
+  &:hover {
+    color: #0079c0;
+  }
+}
+
+.content-settings .nav-tabs {
+  padding-left: 20px;
+  font-weight: bold;
+  border-bottom-color: #ccc;
+
+  li.active > a,
+  li.active > a:focus,
+  li.active > a:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+    border-bottom-color: transparent;
+  }
+
+  .text-muted {
+    font-weight: normal;
+    margin-left: 5px;
+  }
+
+}
+
+.content-settings .tab-content {
+  padding: 15px 20px;
 }
 
 .panel-settings {
-  border-radius: 0;
-  border-left: 0;
-  border-right: 0;
-  background: #f5f5f5;
-}
-
-.panel-settings-open {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  overflow: hidden;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-}
-
-.panel-settings .panel-heading {
-  cursor: pointer;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -ms-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-  line-height: 20px;
-  background: white;
-  padding: 0;
-}
-
-.panel-settings .panel-heading-inner {
-  display: table;
-  width: 100%;
-  padding: 10px 15px;
-  position: relative;
-}
-
-.panel-settings .panel-heading:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.panel-settings .panel-heading .panel-title {
-  font-size: 14px;
-  line-height: 20px;
-}
-
-.panel-settings .panel-heading small {
-  font-size: 12px;
-  line-height: 20px;
-  color: #777;
-  margin-left: 10px;
 }
 
 .panel-settings .panel-body {
   padding: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
   flex: 1;
 }
 
 .panel-settings .list-group {
   position: relative;
+  border-radius: 4px;
+  overflow: hidden;
   margin-bottom: 0;
+}
+
+.panel-settings .list-group-item__section {
+  background: #fff;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-left: 0;
+  border-right: 0;
+
+  &:first-child {
+    border-top: 0;
+  }
+
+  &:hover {
+    background: #f5f5f5;
+  }
+
+  &:not(.collapsed),
+  &:not(.collapsed) .list-group-item {
+    background: #fff;
+    border-bottom: 0;
+  }
 }
 
 .panel-settings .list-group-item {
   position: relative;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
-  border-radius: 0;
-  border-left: 0;
-  border-right: 0;
-  background: #f5f5f5;
 }
 
 .panel-settings .list-group-item:after {
@@ -121,14 +94,9 @@
   clear: both;
 }
 
-.panel-settings .list-group-item:first-child {
-  border-top: 0;
-}
-
 .panel-settings .list-group-item-heading {
   font-size: 15px;
   color: #0079c0 !important;
-  width: 30%;
   margin: 0 0 0 -3px; // align with form-controls
   line-height: 20px;
 }
@@ -176,10 +144,7 @@
   border-radius: 0;
   opacity: 0;
   background: #eee;
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -ms-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
+  color: #555;
   transition: all 0.3s ease;
 }
 
@@ -212,8 +177,7 @@
 }
 
 .form-settings {
-  padding: 5px 15px 15px;
-  background: #f5f5f5;
+  padding: 15px;
 
   .Select-item:first-child {
     margin-left: 12px;
@@ -224,12 +188,4 @@
   content: "";
   display: table;
   clear: both;
-}
-
-.form-settings .buttons .btn:first-child {
-  float: left;
-}
-
-.form-settings .buttons .btn:last-child {
-  float: right;
 }

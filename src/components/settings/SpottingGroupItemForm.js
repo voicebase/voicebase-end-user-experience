@@ -49,7 +49,7 @@ class SpottingGroupItemForm extends React.Component {
           <Input type="checkbox" name="isDefault" label="Default phrase group" {...isDefault} />
           <div className="buttons">
             <Button type="submit" bsStyle="success" disabled={pristine}>Save</Button>
-            <Button onClick={this.cancel.bind(this)}>Cancel</Button>
+            <Button bsStyle="link" onClick={this.cancel.bind(this)}>Cancel</Button>
           </div>
         </form>
       </div>
