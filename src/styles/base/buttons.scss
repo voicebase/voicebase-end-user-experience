@@ -1,0 +1,24 @@
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn-success {
+  background: #85d04a;
+  border-color: #85d04a;
+
+  &:hover {
+    background: #6bb730;
+    border-color: #6bb730;
+  }
+}
+
+.btn-primary {
+  background: #0079c0;
+  border-color: #0079c0;
+
+  &:hover {
+    background: #00598d;
+    border-color: #00598d;
+  }
+}
+
