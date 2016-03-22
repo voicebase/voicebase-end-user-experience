@@ -274,7 +274,7 @@ export const settings = handleActions({
   },
 
   [SET_ACTIVE_ITEM]: (state, { payload: {type, itemId} }) => {
-    let id = (state.getIn(['type', 'activeItem']) !== itemId) ? itemId : null;
+    let id = (state.getIn([type, 'activeItem']) !== itemId) ? itemId : null;
     return state.setIn([type, 'activeItem'], id);
   },
 

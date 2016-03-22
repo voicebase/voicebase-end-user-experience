@@ -3,8 +3,9 @@ import {
   DELETE_ITEM,
   EDIT_ITEM,
   ADD_ITEM,
-  TOGGLE_LIST,
   TOGGLE_CREATE_FORM,
+  SET_ACTIVE_ITEM,
+  CLEAR_ACTIVE_ITEM,
   actions,
   itemInitialState,
   initialState,
@@ -28,8 +29,9 @@ describe('(Redux Module) settings.js', function () {
       DELETE_ITEM,
       EDIT_ITEM,
       ADD_ITEM,
-      TOGGLE_LIST,
       TOGGLE_CREATE_FORM,
+      SET_ACTIVE_ITEM,
+      CLEAR_ACTIVE_ITEM
     };
     Object.keys(constants).forEach(key => {
       it(`Should export a constant ${key}`, function () {
@@ -94,16 +96,6 @@ describe('(Redux Module) settings.js', function () {
 
     });
 
-    describe('TOGGLE_LIST', () => {
-      checkActionTypes(actions, 'toggleList', TOGGLE_LIST);
-
-      it(`Should create an action to toggleList`, () => {
-        let props = ['predictions', true];
-        let expectedAction = createAction(TOGGLE_LIST, (type, value) => {return {type, value}});
-        expect(actions.toggleList.apply(this, props)).to.deep.equal(expectedAction.apply(this, props))
-      });
-    });
-
     describe('TOGGLE_CREATE_FORM', () => {
       checkActionTypes(actions, 'toggleCreateForm', TOGGLE_CREATE_FORM);
 
@@ -112,6 +104,21 @@ describe('(Redux Module) settings.js', function () {
         let expectedAction = createAction(TOGGLE_CREATE_FORM, (type, value) => {return {type, value}});
         expect(actions.toggleCreateForm.apply(this, props)).to.deep.equal(expectedAction.apply(this, props))
       });
+    });
+
+    describe('setActiveItem', () => {
+      checkActionTypes(actions, 'setActiveItem', SET_ACTIVE_ITEM);
+
+      it(`Should create an action to setActiveItem`, () => {
+        let props = ['predictions', '0'];
+        let expectedAction = createAction(TOGGLE_CREATE_FORM, (type, value) => {return {type, value}});
+        expect(actions.toggleCreateForm.apply(this, props)).to.deep.equal(expectedAction.apply(this, props))
+      });
+    });
+
+    describe('clearActiveItem', () => {
+      checkActionTypes(actions, 'clearActiveItem', CLEAR_ACTIVE_ITEM);
+      checkCreatingAction(actions, 'clearActiveItem', CLEAR_ACTIVE_ITEM, ['predictions']);
     });
 
   });
@@ -426,32 +433,6 @@ describe('(Redux Module) settings.js', function () {
       });
     });
 
-    describe(TOGGLE_LIST + ' reducer', function () {
-      types.forEach(type => {
-        it(`TOGGLE_LIST reducer for ${type} type`, function () {
-          let expectedRes = initialState.mergeIn([type, 'view'], {
-            isExpandList: false
-          });
-          let res = settings(initialState, {
-            type: 'TOGGLE_LIST',
-            payload: {type, value: false}
-          });
-          assert.isTrue(Immutable.is(expectedRes, res));
-        });
-
-        it(`TOGGLE_LIST reducer for ${type} type without value`, function () {
-          let expectedRes = initialState.mergeIn([type, 'view'], {
-            isExpandList: true
-          });
-          let res = settings(initialState, {
-            type: 'TOGGLE_LIST',
-            payload: {type}
-          });
-          assert.isTrue(Immutable.is(expectedRes, res));
-        });
-      });
-    });
-
     describe(TOGGLE_CREATE_FORM + ' reducer', function () {
       types.forEach(type => {
         it(`TOGGLE_CREATE_FORM reducer for ${type} type`, function () {
@@ -472,6 +453,49 @@ describe('(Redux Module) settings.js', function () {
           let res = settings(initialState, {
             type: 'TOGGLE_CREATE_FORM',
             payload: {type}
+          });
+          assert.isTrue(Immutable.is(expectedRes, res));
+        });
+      });
+    });
+
+    describe(SET_ACTIVE_ITEM + ' reducer', function () {
+      types.forEach(type => {
+        it(`SET_ACTIVE_ITEM reducer for ${type} type`, function () {
+          let id = '0';
+          let expectedRes = initialState.setIn([type, 'activeItem'], id);
+          let res = settings(initialState, {
+            type: 'SET_ACTIVE_ITEM',
+            payload: {type, itemId: id}
+          });
+          assert.isTrue(Immutable.is(expectedRes, res));
+        });
+
+        it(`SET_ACTIVE_ITEM reducer for ${type} type with same value`, function () {
+          let id = '0';
+          let expectedRes = initialState.setIn([type, 'activeItem'], null);
+
+          let stateWithActiveItem = settings(initialState, {
+            type: 'SET_ACTIVE_ITEM',
+            payload: {type, itemId: id}
+          });
+          let res = settings(stateWithActiveItem, {
+            type: 'SET_ACTIVE_ITEM',
+            payload: {type, itemId: id}
+          });
+          assert.isTrue(Immutable.is(expectedRes, res));
+        });
+      });
+    });
+
+    describe(CLEAR_ACTIVE_ITEM + ' reducer', function () {
+      types.forEach(type => {
+        it(`CLEAR_ACTIVE_ITEM reducer for ${type} type`, function () {
+          let expectedRes = initialState.setIn([type, 'activeItem'], null);
+
+          let res = settings(initialState, {
+            type: 'CLEAR_ACTIVE_ITEM',
+            payload: type
           });
           assert.isTrue(Immutable.is(expectedRes, res));
         });
