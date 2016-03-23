@@ -25,7 +25,7 @@ const karmaConfig = {
   reporters: ['spec'],
   browsers: ['PhantomJS'],
   webpack: {
-    devtool: 'inline-source-map',
+    devtool: (argv.watch) ? 'inline-source-map' : 'eval',
     entry:{},
     resolve: webpackConfig.resolve,
     plugins: webpackConfig.plugins
