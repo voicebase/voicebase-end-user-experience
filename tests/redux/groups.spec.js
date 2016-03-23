@@ -3,6 +3,8 @@ import {
   DELETE_GROUP,
   EDIT_GROUP,
   ADD_GROUP,
+  SET_ACTIVE_GROUP,
+  CLEAR_ACTIVE_GROUP,
   actions,
   initialState,
   default as groupsReducer
@@ -17,7 +19,9 @@ describe('(Redux Module) groups.js', function () {
       GET_GROUPS,
       DELETE_GROUP,
       EDIT_GROUP,
-      ADD_GROUP
+      ADD_GROUP,
+      SET_ACTIVE_GROUP,
+      CLEAR_ACTIVE_GROUP
     };
     Object.keys(constants).forEach(key => {
       it(`Should export a constant ${key}`, function () {
@@ -88,6 +92,17 @@ describe('(Redux Module) groups.js', function () {
       });
 
     });
+
+    describe('setActiveGroup', () => {
+      checkActionTypes(actions, 'setActiveGroup', SET_ACTIVE_GROUP);
+      checkCreatingAction(actions, 'setActiveGroup', SET_ACTIVE_GROUP, ['0']);
+    });
+
+    describe('clearActiveGroup', () => {
+      checkActionTypes(actions, 'clearActiveGroup', CLEAR_ACTIVE_GROUP);
+      checkCreatingAction(actions, 'clearActiveGroup', CLEAR_ACTIVE_GROUP, []);
+    });
+
   });
 
   describe('Reducers', () => {
@@ -349,6 +364,40 @@ describe('(Redux Module) groups.js', function () {
         }
       });
 
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it(`SET_ACTIVE_GROUP reducer`, function () {
+      let id = '0';
+      let expectedRes = initialState.set('activeGroup', id);
+      let res = groupsReducer(initialState, {
+        type: 'SET_ACTIVE_GROUP',
+        payload: id
+      });
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it(`SET_ACTIVE_GROUP reducer with same value`, function () {
+      let id = '0';
+      let expectedRes = initialState.set('activeGroup', null);
+
+      let stateWithActiveItem = groupsReducer(initialState, {
+        type: 'SET_ACTIVE_GROUP',
+        payload: id
+      });
+      let res = groupsReducer(stateWithActiveItem, {
+        type: 'SET_ACTIVE_GROUP',
+        payload: id
+      });
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it(`CLEAR_ACTIVE_GROUP reducer`, function () {
+      let expectedRes = initialState.set('activeGroup', null);
+
+      let res = groupsReducer(initialState, {
+        type: 'CLEAR_ACTIVE_GROUP'
+      });
       assert.isTrue(Immutable.is(expectedRes, res));
     });
 
