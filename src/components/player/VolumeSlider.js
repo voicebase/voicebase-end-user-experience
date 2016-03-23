@@ -7,17 +7,17 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom'
 
-function capitalize(str) {
+export function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.substr(1);
 }
 
-function maxmin(pos, min, max) {
+export function maxmin(pos, min, max) {
   if (pos < min) { return min; }
   if (pos > max) { return max; }
   return pos;
 }
 
-const constants = {
+export const constants = {
   orientation: {
     horizontal: {
       dimension: 'width',
