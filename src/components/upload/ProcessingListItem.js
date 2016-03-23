@@ -111,7 +111,7 @@ export default class ProcessingListItem extends React.Component {
         isCompleted: ingestStatus.isCompleted && transcriptStatus.isCompleted
       };
       keywordsStatus = this.getProgressStatus(processingTasks.keywords);
-      predictionStatus = processingTasks.prediction;
+      predictionStatus = processingTasks.prediction || processingTasks.detection;
     }
     return {
       fileStatus,
@@ -142,7 +142,7 @@ export default class ProcessingListItem extends React.Component {
       keywordsStatus.isProgress = true;
       keywordsStatus.isCompleted = false;
     }
-    let predictionStatus = phasesStatus.predictionStatus || phasesStatus.detection;
+    let predictionStatus = phasesStatus.predictionStatus;
 
     let resultClasses = classnames('progress__step', {active: fileStatus && fileStatus.isCompleted && keywordsStatus && keywordsStatus.isCompleted});
 

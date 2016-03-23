@@ -104,6 +104,12 @@ describe('ProcessingListItem component', function () {
       "generator": "f05f2619-67f4-48e3-9502-35a17486d584",
       "display": "Transcripts",
       "phase": "transcripts"
+    },
+    "j8": {
+      "taskId": "j8",
+      "status": "progress",
+      "display": "Prediction",
+      "phase": "prediction"
     }
   });
 
@@ -160,7 +166,7 @@ describe('ProcessingListItem component', function () {
     let progress = TestUtils.findRenderedDOMComponentWithClass(component, 'progress');
     let steps = progress.children;
     assert.equal(steps[0].className, 'progress__step active');
-    assert.equal(steps[0].textContent, 'File processing');
+    assert.equal(steps[0].textContent, 'Transcript');
     assert.equal(steps[1].className, 'progress__step active');
     assert.equal(steps[1].textContent, 'Analytics');
     assert.equal(steps[2].className, 'progress__step done');
@@ -211,7 +217,7 @@ describe('ProcessingListItem component', function () {
     assert.equal(steps[3].className, 'progress__step');
   });
 
-  it('Check process bar if Keywords tasks are completed', function() {
+  it('Check process bar if Keywords tasks are completed, but Ingest and Transcript tasks are not completed', function() {
     component = getComponent({
       ...options,
       mediaDataState: {
@@ -226,7 +232,7 @@ describe('ProcessingListItem component', function () {
     let progress = TestUtils.findRenderedDOMComponentWithClass(component, 'progress');
     let steps = progress.children;
     assert.equal(steps[0].className, 'progress__step active');
-    assert.equal(steps[1].className, 'progress__step done');
+    assert.equal(steps[1].className, 'progress__step active');
     assert.equal(steps[2].className, 'progress__step done');
     assert.equal(steps[3].className, 'progress__step');
   });
@@ -244,7 +250,14 @@ describe('ProcessingListItem component', function () {
           .setIn(['j5', 'status'], 'completed')
           .setIn(['j6', 'status'], 'completed')
           .setIn(['j7', 'status'], 'completed')
+          .setIn(['j8', 'status'], 'completed')
           .toJS()
+      }
+    });
+    component.setState({
+      jobsQueue: {
+        keywordsStatus: true,
+        fileStatus: true
       }
     });
     rootElement = ReactDom.findDOMNode(component);
@@ -301,6 +314,24 @@ describe('ProcessingListItem component', function () {
     clock.restore();
   });
 
+  it('Check getMediaData() with jobTasks and status == finished', function() {
+    component = getComponent({
+      ...options,
+      mediaDataState: {
+        mediaId: "mediaId",
+        status: "finished",
+        jobTasks: tasks.toJS(),
+        data: {
+          status: "finished",
+          metadata: {}
+        }
+      }
+    });
+    component.processingInterval = 1;
+    let res = component.getMediaData();
+    assert.isFalse(res);
+  });
+
   it('Check getMediaData() with status == failed', function() {
     var clock = sinon.useFakeTimers();
     let getDataForMedia = sinon.spy();
@@ -348,6 +379,37 @@ describe('ProcessingListItem component', function () {
     clock.tick(6000);
     assert.isTrue(component.getMediaData.called);
     clock.restore();
+  });
+
+  it('Check componentWillReceiveProps()', function() {
+    component.updateQueueStatus = sinon.spy();
+    component.componentWillReceiveProps(options);
+    assert.isTrue(component.updateQueueStatus.called);
+  });
+
+  it('Check updateQueueStatus() with null', function() {
+    component.updateQueueStatus(null, null);
+    assert.isNotTrue(component.state.jobsQueue.keywordsStatus);
+    assert.isNotTrue(component.state.jobsQueue.fileStatus);
+  });
+
+  it('Check updateQueueStatus() with fileStatus', function() {
+    component.updateQueueStatus({isCompleted: true}, null);
+    assert.isNotTrue(component.state.jobsQueue.keywordsStatus);
+    assert.isTrue(component.state.jobsQueue.fileStatus);
+  });
+
+  it('Check updateQueueStatus() with keywordsStatus but without fileStatus', function() {
+    component.updateQueueStatus(null, {isCompleted: true});
+    assert.isNotTrue(component.state.jobsQueue.keywordsStatus);
+    assert.isNotTrue(component.state.jobsQueue.fileStatus);
+  });
+
+  it('Check updateQueueStatus() with keywordsStatus if state fileStatus=true', function() {
+    component.updateQueueStatus({isCompleted: true}, null);
+    component.updateQueueStatus({isCompleted: true}, {isCompleted: true});
+    assert.isTrue(component.state.jobsQueue.keywordsStatus);
+    assert.isTrue(component.state.jobsQueue.fileStatus);
   });
 
 });
