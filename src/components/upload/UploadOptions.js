@@ -24,13 +24,13 @@ export default class UploadPreview extends React.Component {
     if (groups.groupIds.length === 0) {
       this.props.actions.getGroups(this.props.token);
     }
-    if (items.predictions.itemIds.length === 0) {
+    if (items.predictions.itemIds.length === 0 && items.predictions.view.enabled) {
       this.props.actions.getItems(this.props.token, 'predictions');
     }
-    if (items.detection.itemIds.length === 0) {
+    if (items.detection.itemIds.length === 0 && items.detection.view.enabled) {
       this.props.actions.getItems(this.props.token, 'detection');
     }
-    if (items.numbers.itemIds.length === 0) {
+    if (items.numbers.itemIds.length === 0 && items.numbers.view.enabled) {
       this.props.actions.getItems(this.props.token, 'numbers');
     }
   }
@@ -172,57 +172,66 @@ export default class UploadPreview extends React.Component {
               }
             </Col>
           </Row>
-          <Row>
-            <Col sm={12}>
-              {
-                !predictions.isGetPending && !predictions.errorMessage &&
-                <div className="form-group">
-                  <label className="control-label">Enable 1 or more prediction models (Optional)</label>
-                  <Select placeholder="Pick a prediction model"
-                          multi
-                          value={predictionsValue.defaultValue.join(',')}
-                          options={predictionsValue.selectValue}
-                          onChange={this.onChangePrediction.bind(this)}
-                          onBlur={() => {}}
-                  />
-                </div>
-              }
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={12}>
-              {
-                !detection.isGetPending && !detection.errorMessage &&
-                <div className="form-group">
-                  <label className="control-label">Enable 1 or more detection models (Optional)</label>
-                  <Select placeholder="Pick a detection model"
-                          multi
-                          value={detectionValue.defaultValue.join(',')}
-                          options={detectionValue.selectValue}
-                          onChange={this.onChangeDetection.bind(this)}
-                          onBlur={() => {}}
-                  />
-                </div>
-              }
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={12}>
-              {
-                !numbers.isGetPending && !numbers.errorMessage &&
-                <div className="form-group">
-                  <label className="control-label">Enable 1 or more number formats (Optional)</label>
-                  <Select placeholder="Pick a number format"
-                          multi
-                          value={numbersValue.defaultValue.join(',')}
-                          options={numbersValue.selectValue}
-                          onChange={this.onChangeNumbers.bind(this)}
-                          onBlur={() => {}}
-                  />
-                </div>
-              }
-            </Col>
-          </Row>
+          {
+            predictions.view.enabled &&
+            <Row>
+              <Col sm={12}>
+                {
+                  !predictions.isGetPending && !predictions.errorMessage &&
+                  <div className="form-group">
+                    <label className="control-label">Enable 1 or more prediction models (Optional)</label>
+                    <Select placeholder="Pick a prediction model"
+                            multi
+                            value={predictionsValue.defaultValue.join(',')}
+                            options={predictionsValue.selectValue}
+                            onChange={this.onChangePrediction.bind(this)}
+                            onBlur={() => {}}
+                    />
+                  </div>
+                }
+              </Col>
+            </Row>
+          }
+          {
+            detection.view.enabled &&
+            <Row>
+              <Col sm={12}>
+                {
+                  !detection.isGetPending && !detection.errorMessage &&
+                  <div className="form-group">
+                    <label className="control-label">Enable 1 or more detection models (Optional)</label>
+                    <Select placeholder="Pick a detection model"
+                            multi
+                            value={detectionValue.defaultValue.join(',')}
+                            options={detectionValue.selectValue}
+                            onChange={this.onChangeDetection.bind(this)}
+                            onBlur={() => {}}
+                    />
+                  </div>
+                }
+              </Col>
+            </Row>
+          }
+          {
+            numbers.view.enabled &&
+            <Row>
+              <Col sm={12}>
+                {
+                  !numbers.isGetPending && !numbers.errorMessage &&
+                  <div className="form-group">
+                    <label className="control-label">Enable 1 or more number formats (Optional)</label>
+                    <Select placeholder="Pick a number format"
+                            multi
+                            value={numbersValue.defaultValue.join(',')}
+                            options={numbersValue.selectValue}
+                            onChange={this.onChangeNumbers.bind(this)}
+                            onBlur={() => {}}
+                    />
+                  </div>
+                }
+              </Col>
+            </Row>
+          }
           <Row>
             <Col sm={12}>
               {

@@ -15,10 +15,17 @@ export class SettingsView extends React.Component {
   };
 
   componentWillMount() {
+    let state = this.props.state;
     this.props.actions.getGroups(this.props.state.auth.token);
-    this.props.actions.getItems(this.props.state.auth.token, 'predictions');
-    this.props.actions.getItems(this.props.state.auth.token, 'detection');
-    this.props.actions.getItems(this.props.state.auth.token, 'numbers');
+    if (state.settings.items.getIn(['predictions', 'view', 'enabled'])) {
+      this.props.actions.getItems(this.props.state.auth.token, 'predictions');
+    }
+    if (state.settings.items.getIn(['detection', 'view', 'enabled'])) {
+      this.props.actions.getItems(this.props.state.auth.token, 'detection');
+    }
+    if (state.settings.items.getIn(['numbers', 'view', 'enabled'])) {
+      this.props.actions.getItems(this.props.state.auth.token, 'numbers');
+    }
   }
 
   getTabTitle(state, idsField) {
@@ -51,26 +58,36 @@ export class SettingsView extends React.Component {
             />
           </Tab>
 
-          <Tab eventKey={1} title={this.getTabTitle(state.settings.items.get('predictions'), 'itemIds')}>
-            <Predictions token={this.props.state.auth.token}
-                         state={state.settings.items.get('predictions').toJS()}
-                         actions={this.props.actions}
-            />
-          </Tab>
+          {
+            state.settings.items.getIn(['predictions', 'view', 'enabled']) &&
+            <Tab eventKey={1} title={this.getTabTitle(state.settings.items.get('predictions'), 'itemIds')}>
+              <Predictions token={this.props.state.auth.token}
+                           state={state.settings.items.get('predictions').toJS()}
+                           actions={this.props.actions}
+              />
+            </Tab>
+          }
 
-          <Tab eventKey={2} title={this.getTabTitle(state.settings.items.get('detection'), 'itemIds')}>
-            <Detections token={this.props.state.auth.token}
-                        state={state.settings.items.get('detection').toJS()}
-                        actions={this.props.actions}
-            />
-          </Tab>
+          {
+            state.settings.items.getIn(['detection', 'view', 'enabled']) &&
+            <Tab eventKey={2} title={this.getTabTitle(state.settings.items.get('detection'), 'itemIds')}>
+              <Detections token={this.props.state.auth.token}
+                          state={state.settings.items.get('detection').toJS()}
+                          actions={this.props.actions}
+              />
+            </Tab>
+          }
 
-          <Tab eventKey={3} title={this.getTabTitle(state.settings.items.get('numbers'), 'itemIds')}>
-            <Numbers token={this.props.state.auth.token}
-                     state={state.settings.items.get('numbers').toJS()}
-                     actions={this.props.actions}
-            />
-          </Tab>
+          {
+            state.settings.items.getIn(['numbers', 'view', 'enabled']) &&
+            <Tab eventKey={3} title={this.getTabTitle(state.settings.items.get('numbers'), 'itemIds')}>
+              <Numbers token={this.props.state.auth.token}
+                       state={state.settings.items.get('numbers').toJS()}
+                       actions={this.props.actions}
+              />
+            </Tab>
+          }
+
         </Tabs>
       </div>
     )

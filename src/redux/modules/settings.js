@@ -108,6 +108,7 @@ export const initialState = fromJS({
   predictions: {
     ...itemInitialState,
     view: {
+      enabled: false,
       title: 'Prediction Models',
       addButtonLabel: 'Add prediction model',
       isExpandList: false,
@@ -117,6 +118,7 @@ export const initialState = fromJS({
   detection: {
     ...itemInitialState,
     view: {
+      enabled: false,
       title: 'Detection Models',
       addButtonLabel: 'Add detection model',
       isExpandList: false,
@@ -126,6 +128,7 @@ export const initialState = fromJS({
   numbers: {
     ...itemInitialState,
     view: {
+      enabled: false,
       title: 'Number Formats',
       addButtonLabel: 'Add number format',
       isExpandList: false,
