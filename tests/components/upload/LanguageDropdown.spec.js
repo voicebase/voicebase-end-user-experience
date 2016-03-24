@@ -7,7 +7,7 @@ import LanguageDropdown from '../../../src/components/upload/LanguageDropdown'
 import UsFlag from '../../../src/images/us.png'
 import UkFlag from '../../../src/images/uk.png'
 
-describe('VolumeSlider component', function () {
+describe('LanguageDropdown component', function () {
   let component;
   let rootElement;
 
