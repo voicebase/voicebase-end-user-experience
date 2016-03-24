@@ -234,6 +234,18 @@ describe('SidebarMenu component', function () {
       return component.props.children[2];
     };
 
+    //const getAccountItem = function () {
+    //    return nav.props.children[0];
+    //};
+
+    const getSettingsItem = function () {
+        return nav.props.children[0];
+    };
+
+    const getLogoutItem = function () {
+        return nav.props.children[1];
+    };
+
     beforeEach(function () {
       nav = getNav();
     });
@@ -244,6 +256,7 @@ describe('SidebarMenu component', function () {
       assert.equal(nav.props.className, 'bottom');
     });
 
+/*
     it('Check My Account item', function() {
       let item = nav.props.children[0];
       assert.equal(item.type, NavItem);
@@ -279,9 +292,10 @@ describe('SidebarMenu component', function () {
       item.props.onClick('/account');
       assert.isTrue(redirect.calledOnce);
     });
+*/
 
     it('Check Settings item', function() {
-      let item = nav.props.children[1];
+      let item = getSettingsItem();
       assert.equal(item.type, NavItem);
       assert.equal(item.props.children, 'Settings');
       assert.equal(item.props.active, false);
@@ -298,7 +312,7 @@ describe('SidebarMenu component', function () {
         }
       });
       nav = getNav();
-      let item = nav.props.children[1];
+      let item = getSettingsItem();
       assert.equal(item.props.active, true);
     });
 
@@ -311,13 +325,13 @@ describe('SidebarMenu component', function () {
         }
       });
       nav = getNav();
-      let item = nav.props.children[0];
+      let item = getSettingsItem();
       item.props.onClick('/settings');
       assert.isTrue(redirect.calledOnce);
     });
 
     it('Check Logout item', function() {
-      let item = nav.props.children[2];
+      let item = getLogoutItem();
       assert.equal(item.type, NavItem);
     });
 
@@ -330,7 +344,7 @@ describe('SidebarMenu component', function () {
         }
       });
       nav = getNav();
-      let item = nav.props.children[2];
+      let item = getLogoutItem();
       item.props.onClick();
       assert.isTrue(redirect.calledOnce);
     });
