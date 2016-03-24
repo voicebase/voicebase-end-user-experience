@@ -37,6 +37,7 @@ export class SearchForm extends React.Component {
 
   handleEnterKey(event) {
     if (event.key === 'Enter') {
+      event.preventDefault();
       this.startSearch();
     }
   }
@@ -47,10 +48,22 @@ export class SearchForm extends React.Component {
 
   render() {
     let state = this.props.state.toJS();
+
+    let searchWidth = 12;
+    let datePickerWidth = 4;
+    let orderWidth = 3;
+
+    if (state.view.datePickerEnabled) {
+      searchWidth = searchWidth - datePickerWidth;
+    }
+    if (state.view.orderEnabled) {
+      searchWidth = searchWidth - orderWidth;
+    }
+
     return (
       <form className="form--filters">
         <Row>
-          <Col sm={5}>
+          <Col sm={searchWidth}>
             <div className="form-group form-group--search">
               <i className="fa fa-search"/>
               <Input type="text"
@@ -63,22 +76,28 @@ export class SearchForm extends React.Component {
             </div>
           </Col>
 
-          <Col sm={4}>
-            <DatePicker dateFrom={state.dateFrom}
-                        dateTo={state.dateTo}
-                        applyDate={this.applyDate.bind(this)}
-                        clearDate={this.clearDate.bind(this)}/>
-          </Col>
+          {
+            state.view.datePickerEnabled &&
+            <Col sm={datePickerWidth}>
+              <DatePicker dateFrom={state.dateFrom}
+                          dateTo={state.dateTo}
+                          applyDate={this.applyDate.bind(this)}
+                          clearDate={this.clearDate.bind(this)}/>
+            </Col>
+          }
 
-          <Col sm={3}>
-            <div className="pull-right">
-              <DropdownList onSelect={this.onSelectOrder.bind(this)}
-                            dropdownKey="sort-list-dropdown"
-                            items={state.order}
-                            activeItemId={state.selectedOrderId}
-              />
-            </div>
-          </Col>
+          {
+            state.view.orderEnabled &&
+            <Col sm={orderWidth}>
+              <div className="pull-right">
+                <DropdownList onSelect={this.onSelectOrder.bind(this)}
+                              dropdownKey="sort-list-dropdown"
+                              items={state.order}
+                              activeItemId={state.selectedOrderId}
+                />
+              </div>
+            </Col>
+          }
 
         </Row>
       </form>

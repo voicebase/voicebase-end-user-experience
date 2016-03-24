@@ -34,6 +34,10 @@ export const actions = {
  * State
  * */
 export const initialState = fromJS({
+  view: {
+    datePickerEnabled: false,
+    orderEnabled: false
+  },
   dateFrom: '',
   dateTo: '',
   searchString: '',

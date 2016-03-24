@@ -113,7 +113,10 @@ describe('SearchForm component', function () {
         onSearch: search
       });
       input = getInput();
-      input.props.onKeyPress({key: 'Enter'});
+      input.props.onKeyPress({
+        key: 'Enter',
+        preventDefault: function(){}
+      });
       assert.isTrue(search.calledOnce);
     });
 
@@ -133,112 +136,116 @@ describe('SearchForm component', function () {
 
   });
 
-  describe('Check DatePicker', function() {
-    let datePicker;
+  if (initialState.getIn(['view', 'datePickerEnabled'])) {
+    describe('Check DatePicker', function() {
+      let datePicker;
 
-    const getDatePicker = function () {
-      return component
-        .props.children
-        .props.children[1]
-        .props.children
-    };
+      const getDatePicker = function () {
+        return component
+          .props.children
+          .props.children[1]
+          .props.children
+      };
 
-    beforeEach(function () {
-      datePicker = getDatePicker();
-    });
-
-    it('Check root element', function() {
-      assert.equal(datePicker.type, DatePicker);
-    });
-
-    it('Check default dateFrom and dateTo', function() {
-      assert.equal(datePicker.props.dateFrom, '');
-      assert.equal(datePicker.props.dateTo, '');
-    });
-
-    it('Check custom dateFrom and dateTo', function() {
-      component = getComponent({
-        ...options,
-        state: initialState
-          .set('dateFrom', '03/16/2016 0:00')
-          .set('dateTo', '03/25/2016 0:00')
+      beforeEach(function () {
+        datePicker = getDatePicker();
       });
-      datePicker = getDatePicker();
-      assert.equal(datePicker.props.dateFrom, '03/16/2016 0:00');
-      assert.equal(datePicker.props.dateTo, '03/25/2016 0:00');
-    });
 
-    it('Check applyDate for DatePicker', function() {
-      const applyDate = sinon.spy();
-      component = getComponent({
-        ...options,
-        actions: {
-          ...options.actions,
-          applyDate: applyDate
-        }
+      it('Check root element', function() {
+        assert.equal(datePicker.type, DatePicker);
       });
-      datePicker = getDatePicker();
-      datePicker.props.applyDate();
-      assert.isTrue(applyDate.calledOnce);
-    });
 
-    it('Check clearDate for DatePicker', function() {
-      const clearDate = sinon.spy();
-      component = getComponent({
-        ...options,
-        actions: {
-          ...options.actions,
-          clearDate: clearDate
-        }
+      it('Check default dateFrom and dateTo', function() {
+        assert.equal(datePicker.props.dateFrom, '');
+        assert.equal(datePicker.props.dateTo, '');
       });
-      datePicker = getDatePicker();
-      datePicker.props.clearDate();
-      assert.isTrue(clearDate.calledOnce);
-    });
 
-  });
-
-  describe('Check DropdownList', function() {
-    let dropdown;
-
-    const getDropdownList = function () {
-      return component
-        .props.children
-        .props.children[2]
-        .props.children
-        .props.children
-    };
-
-    beforeEach(function () {
-      dropdown = getDropdownList();
-    });
-
-    it('Check root element', function() {
-      assert.equal(dropdown.type, DropdownList);
-      assert.equal(dropdown.props.dropdownKey, 'sort-list-dropdown');
-    });
-
-    it('Check order items', function() {
-      expect(dropdown.props.items).to.eql(initialState.get('order').toJS());
-    });
-
-    it('Check active order', function() {
-      expect(dropdown.props.activeItemId).to.eql(initialState.get('selectedOrderId'));
-    });
-
-    it('Check onSelect for order dropdown', function() {
-      const onSelect = sinon.spy();
-      component = getComponent({
-        ...options,
-        actions: {
-          ...options.actions,
-          selectOrder: onSelect
-        }
+      it('Check custom dateFrom and dateTo', function() {
+        component = getComponent({
+          ...options,
+          state: initialState
+            .set('dateFrom', '03/16/2016 0:00')
+            .set('dateTo', '03/25/2016 0:00')
+        });
+        datePicker = getDatePicker();
+        assert.equal(datePicker.props.dateFrom, '03/16/2016 0:00');
+        assert.equal(datePicker.props.dateTo, '03/25/2016 0:00');
       });
-      dropdown = getDropdownList();
-      dropdown.props.onSelect('2');
-      assert.isTrue(onSelect.calledOnce);
-    });
 
-  });
+      it('Check applyDate for DatePicker', function() {
+        const applyDate = sinon.spy();
+        component = getComponent({
+          ...options,
+          actions: {
+            ...options.actions,
+            applyDate: applyDate
+          }
+        });
+        datePicker = getDatePicker();
+        datePicker.props.applyDate();
+        assert.isTrue(applyDate.calledOnce);
+      });
+
+      it('Check clearDate for DatePicker', function() {
+        const clearDate = sinon.spy();
+        component = getComponent({
+          ...options,
+          actions: {
+            ...options.actions,
+            clearDate: clearDate
+          }
+        });
+        datePicker = getDatePicker();
+        datePicker.props.clearDate();
+        assert.isTrue(clearDate.calledOnce);
+      });
+
+    });
+  }
+
+  if (initialState.getIn(['view', 'orderEnabled'])) {
+    describe('Check DropdownList', function() {
+      let dropdown;
+
+      const getDropdownList = function () {
+        return component
+          .props.children
+          .props.children[2]
+          .props.children
+          .props.children
+      };
+
+      beforeEach(function () {
+        dropdown = getDropdownList();
+      });
+
+      it('Check root element', function() {
+        assert.equal(dropdown.type, DropdownList);
+        assert.equal(dropdown.props.dropdownKey, 'sort-list-dropdown');
+      });
+
+      it('Check order items', function() {
+        expect(dropdown.props.items).to.eql(initialState.get('order').toJS());
+      });
+
+      it('Check active order', function() {
+        expect(dropdown.props.activeItemId).to.eql(initialState.get('selectedOrderId'));
+      });
+
+      it('Check onSelect for order dropdown', function() {
+        const onSelect = sinon.spy();
+        component = getComponent({
+          ...options,
+          actions: {
+            ...options.actions,
+            selectOrder: onSelect
+          }
+        });
+        dropdown = getDropdownList();
+        dropdown.props.onSelect('2');
+        assert.isTrue(onSelect.calledOnce);
+      });
+
+    });
+  }
 });
