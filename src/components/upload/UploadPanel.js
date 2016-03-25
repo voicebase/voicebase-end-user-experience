@@ -11,15 +11,6 @@ export default class UploadPanel extends React.Component {
     onSelectTab: PropTypes.func.isRequired
   };
 
-  getFooter() {
-    return (
-      <div>
-        <Button onClick={this.props.nextTab} bsStyle="success" className="pull-left">Next</Button>
-        <Button onClick={this.props.onClose} className="pull-right">Cancel</Button>
-      </div>
-    )
-  }
-
   render () {
     return (
       <div>
