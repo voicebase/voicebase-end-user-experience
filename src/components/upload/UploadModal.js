@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import {Modal, ModalBody, ModalFooter, Button} from 'react-bootstrap'
 
-export default class UploadZone extends React.Component {
+export default class UploadModal extends React.Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
     showForm: PropTypes.bool.isRequired,
