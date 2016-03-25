@@ -378,15 +378,18 @@ describe('VbsPlayerApp component', function () {
 
   it('Check componentWillUnmount', function () {
     let destroyPlayer = sinon.spy();
+    let removeDataForMedia = sinon.spy();
     component = getComponent({
       ...options,
       actions: {
         ...options.actions,
-        destroyPlayer
+        destroyPlayer,
+        removeDataForMedia
       }
     });
     component.componentWillUnmount();
     assert.equal(destroyPlayer.called, true);
+    assert.equal(removeDataForMedia.called, true);
   });
 
   it('Check selectTab', function () {

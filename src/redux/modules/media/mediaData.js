@@ -9,6 +9,7 @@ import MediaApi from '../../../api/mediaApi'
  * Constants
  * */
 export const GET_DATA_FOR_MEDIA = 'GET_DATA_FOR_MEDIA';
+export const REMOVE_DATA_FOR_MEDIA = 'REMOVE_DATA_FOR_MEDIA';
 export const GET_MEDIA_URL = 'GET_MEDIA_URL';
 export const SET_ACTIVE_TOPIC = 'SET_ACTIVE_TOPIC';
 export const SET_ACTIVE_GROUP = 'SET_ACTIVE_GROUP';
@@ -32,6 +33,7 @@ export const getDataForMedia = createAction(GET_DATA_FOR_MEDIA, (token, mediaId)
     promise: MediaApi.getDataForMedia(token, mediaId)
   }
 });
+export const removeDataForMedia = createAction(REMOVE_DATA_FOR_MEDIA, (mediaId) => mediaId);
 export const getMediaUrl = createAction(GET_MEDIA_URL, (token, mediaId) => {
   return {
     data: {
@@ -52,6 +54,7 @@ export const choosePlayerAppTab = createAction(CHOOSE_PLAYER_APP_TAB, (mediaId, 
 
 export const actions = {
   getDataForMedia,
+  removeDataForMedia,
   getMediaUrl,
   setActiveTopic,
   setActiveGroup,
@@ -107,6 +110,10 @@ export default handleActions({
       getError: '',
       view: initialViewState
     });
+  },
+
+  [REMOVE_DATA_FOR_MEDIA]: (state, { payload: mediaId }) => {
+    return state.delete(mediaId);
   },
 
   [GET_MEDIA_URL + '_PENDING']: (state, { payload }) => {

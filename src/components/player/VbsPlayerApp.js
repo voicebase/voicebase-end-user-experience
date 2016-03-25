@@ -24,6 +24,7 @@ export class VbsPlayerApp extends React.Component {
 
   componentWillUnmount() {
     this.props.actions.destroyPlayer(this.props.mediaId);
+    this.props.actions.removeDataForMedia(this.props.mediaId);
   }
 
   selectTab(key) {

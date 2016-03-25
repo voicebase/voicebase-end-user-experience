@@ -1,5 +1,6 @@
 import {
   GET_DATA_FOR_MEDIA,
+  REMOVE_DATA_FOR_MEDIA,
   GET_MEDIA_URL,
   SET_ACTIVE_TOPIC,
   SET_ACTIVE_GROUP,
@@ -19,6 +20,7 @@ describe('(Redux Module) mediaData.js', function () {
   describe('Constants', () => {
     const constants = {
       GET_DATA_FOR_MEDIA,
+      REMOVE_DATA_FOR_MEDIA,
       GET_MEDIA_URL,
       SET_ACTIVE_TOPIC,
       SET_ACTIVE_GROUP,
@@ -42,6 +44,11 @@ describe('(Redux Module) mediaData.js', function () {
       it('check GET_DATA_FOR_MEDIA_REJECTED', (done) => {
         checkApiAction(actions, 'getDataForMedia', GET_DATA_FOR_MEDIA, ['token', 'mediaId'], true, done);
       });
+    });
+
+    describe('REMOVE_DATA_FOR_MEDIA', () => {
+      checkActionTypes(actions, 'removeDataForMedia', REMOVE_DATA_FOR_MEDIA);
+      checkCreatingAction(actions, 'removeDataForMedia', REMOVE_DATA_FOR_MEDIA, ['mediaId']);
     });
 
     describe('GET_MEDIA_URL', () => {
@@ -149,6 +156,23 @@ describe('(Redux Module) mediaData.js', function () {
         .setIn([mediaId, 'speakers', 'Speaker 2', 'color'], speaker2Color)
         .setIn([mediaId, 'utterances', 'items', '0', 'color'], utter1Color)
         .setIn([mediaId, 'utterances', 'items', '1', 'color'], utter2Color)
+
+      assert.isTrue(Immutable.is(expectedRes, res));
+    });
+
+    it(`${REMOVE_DATA_FOR_MEDIA} reducer `, function () {
+      let state = initialState
+        .merge({
+          'mediaId': {},
+          'mediaId2': {}
+        });
+
+      let expectedRes = initialState.merge({'mediaId': {}});
+
+      let res = mediaDataReducer(state, {
+        type: REMOVE_DATA_FOR_MEDIA,
+        payload: 'mediaId2'
+      });
 
       assert.isTrue(Immutable.is(expectedRes, res));
     });
