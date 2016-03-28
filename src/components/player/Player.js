@@ -33,7 +33,7 @@ export class Player extends React.Component {
     if (!this.props.mediaState) {
       return false;
     }
-    let duration = this.props.mediaState.data.metadata.duration;
+    let duration = this.props.mediaState.metadata.duration;
     if (duration) {
       this.onDuration(duration);
     }

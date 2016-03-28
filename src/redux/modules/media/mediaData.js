@@ -91,8 +91,8 @@ export default handleActions({
   [GET_DATA_FOR_MEDIA + '_FULFILLED']: (state, { payload: response }) => {
     let parsedResult = parseMediaData(response);
     return state.mergeIn([response.mediaId], {
-      data: response,
       status: parsedResult.status,
+      metadata: parsedResult.metadata,
       topicsIds: parsedResult.topicsIds,
       topics: parsedResult.topics,
       activeTopic: parsedResult.activeTopic,
@@ -236,9 +236,17 @@ export const parseMediaData = function (data) {
     }
   }
 
+  let metadata = null;
+  if (data.metadata) {
+    metadata = {
+      ...data.metadata
+    }
+  }
+
   let activeSpeakerId = (transcriptSpeakers.length > 0) ? transcriptSpeakers[0].name : Object.keys(speakers)[0];
 
   return {
+    metadata,
     status: data.status,
     activeTopic,
     activeSpeaker: activeSpeakerId,
@@ -345,6 +353,6 @@ const parsePredictions = function (predictions) {
   return res;
 };
 
-let parseScore = function (score) {
+const parseScore = function (score) {
   return parseFloat(score.toFixed(1));
 };

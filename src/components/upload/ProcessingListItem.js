@@ -54,8 +54,8 @@ export default class ProcessingListItem extends React.Component {
           this.props.actions.getMediaUrl(this.props.token, this.props.mediaId);
           this.props.actions.addMedia({
             mediaId: this.props.mediaId,
-            status: mediaDataState.data.status,
-            metadata: mediaDataState.data.metadata
+            status: mediaDataState.status,
+            metadata: mediaDataState.metadata
           });
         }
         else {

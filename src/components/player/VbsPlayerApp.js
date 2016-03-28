@@ -19,7 +19,7 @@ export class VbsPlayerApp extends React.Component {
 
   componentWillMount() {
     let mediaData = this.props.mediaDataState;
-    this.props.actions.createPlayer(this.props.mediaId, mediaData.mediaUrl, mediaData.data.metadata.type || 'audio');
+    this.props.actions.createPlayer(this.props.mediaId, mediaData.mediaUrl, mediaData.metadata.type || 'audio');
   }
 
   componentWillUnmount() {

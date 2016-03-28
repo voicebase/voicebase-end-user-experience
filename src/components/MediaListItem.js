@@ -117,7 +117,7 @@ export class MediaListItem extends React.Component {
               </Row>
             }
             {
-              !this.isGettingMediaData(mediaData) && mediaData && mediaData.data && mediaData.status === 'finished' &&
+              !this.isGettingMediaData(mediaData) && mediaData && mediaData.status === 'finished' &&
               this.getPlayerApp()
             }
           </div>
