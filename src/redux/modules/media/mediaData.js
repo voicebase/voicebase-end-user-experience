@@ -36,12 +36,11 @@ export const getDataForMedia = (token, mediaId, searchString) => {
       },
       promise: MediaApi.getDataForMedia(token, mediaId)
         .then(response => {
-          let parsedResult = parseMediaData(response);
           if (searchString) {
             let searchResult = localSearch(response.transcripts.latest.words, searchString);
             dispatch(setMarkers(mediaId, searchResult));
           }
-          return parsedResult;
+          return response;
         })
     }
   });
@@ -103,6 +102,7 @@ export default handleActions({
   },
 
   [GET_DATA_FOR_MEDIA + '_FULFILLED']: (state, { payload: response }) => {
+    response = parseMediaData(response);
     return state.mergeIn([response.mediaId], {
       status: response.status,
       metadata: response.metadata,

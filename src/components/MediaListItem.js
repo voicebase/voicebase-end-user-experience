@@ -29,6 +29,8 @@ export class MediaListItem extends React.Component {
     }
     else {
       this.props.actions.collapseMedia(this.props.mediaId);
+      this.props.actions.removeDataForMedia(this.props.mediaId);
+      this.props.actions.destroyPlayer(this.props.mediaId);
     }
   }
 

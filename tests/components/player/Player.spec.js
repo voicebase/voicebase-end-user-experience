@@ -25,10 +25,8 @@ describe('Player component', function () {
       utteranceTime: null
     },
     mediaState: {
-      data: {
-        metadata: {
-          duration: 1000
-        }
+      metadata: {
+        duration: 1000
       },
       "transcriptSpeakers": [
         {
@@ -174,10 +172,8 @@ describe('Player component', function () {
       ...options,
       mediaState: {
         ...options.mediaState,
-        data: {
-          metadata: {
-            duration: null
-          }
+        metadata: {
+          duration: null
         }
       }
     });
@@ -451,10 +447,8 @@ describe('Player component', function () {
       ...options,
       mediaState: {
         ...options.mediaState,
-        data: {
-          metadata: {
-            duration: null
-          }
+        metadata: {
+          duration: null
         }
       }
     });

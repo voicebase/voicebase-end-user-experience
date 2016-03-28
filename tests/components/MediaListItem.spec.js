@@ -45,7 +45,9 @@ describe('MediaListItem component', function () {
       expandMedia: function(mediaId){},
       selectMedia: function(mediaId){},
       unselectMedia: function(mediaId){},
-      deleteMedia: function(token, mediaId){}
+      deleteMedia: function(token, mediaId){},
+      removeDataForMedia: function(token, mediaId){},
+      destroyPlayer: function(token, mediaId){}
     }
   };
 
@@ -477,7 +479,7 @@ describe('MediaListItem component', function () {
           }
         });
         let playerApp = getPlayer();
-        assert.isUndefined(playerApp);
+        assert.isFalse(playerApp);
       });
 
       it('Check player block without status === "finished"', function() {

@@ -133,8 +133,8 @@ describe('(Redux Module) mediaData.js', function () {
       let parsedResult = parseMediaData(response);
       let expectedRes = initialState
         .mergeIn([mediaId], {
-          data: response,
           status: parsedResult.status,
+          metadata: parsedResult.metadata,
           topicsIds: parsedResult.topicsIds,
           topics: parsedResult.topics,
           activeTopic: parsedResult.activeTopic,

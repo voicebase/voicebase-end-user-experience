@@ -43,11 +43,9 @@ describe('VbsPlayerApp component', function () {
       utteranceTime: null
     },
     mediaDataState: {
-      data: {
-        metadata: {
-          duration: 1000,
-          type: 'audio'
-        }
+      metadata: {
+        duration: 1000,
+        type: 'audio'
       },
       "view": {
         "activeTab": 1
