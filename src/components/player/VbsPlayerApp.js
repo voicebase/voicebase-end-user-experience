@@ -94,10 +94,10 @@ export class VbsPlayerApp extends React.Component {
         {
           (activeTab === KEYWORDS_TAB || activeTab === DETECTION_TAB || activeTab === GROUPS_TAB) &&
           <Transcript mediaId={this.props.mediaId}
-                      playerState={playerState}
+                      duration={playerState.duration}
+                      played={playerState.played}
                       mediaState={mediaData}
                       markersState={markersState}
-                      actions={this.props.actions}
           />
         }
       </div>

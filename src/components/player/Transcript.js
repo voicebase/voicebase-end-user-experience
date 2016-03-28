@@ -9,10 +9,10 @@ import {getClearWordFromTranscript} from '../../common/Common';
 export class Transcript extends React.Component {
   static propTypes = {
     mediaId: PropTypes.string.isRequired,
-    playerState: PropTypes.object.isRequired,
+    duration: PropTypes.number,
+    played: PropTypes.number,
     mediaState: PropTypes.object.isRequired,
-    markersState: PropTypes.object,
-    actions: PropTypes.object.isRequired
+    markersState: PropTypes.object
   };
 
   transcriptHighlight = 10;
@@ -133,10 +133,9 @@ export class Transcript extends React.Component {
 
   render() {
     let mediaState = this.props.mediaState;
-    let playerState = this.props.playerState;
     let transcript = mediaState.transcript;
 
-    let time = playerState.duration * playerState.played;
+    let time = this.props.duration * this.props.played;
     // Calculate current bounds
     let bottomHighlightBound = parseInt(time / this.transcriptHighlight, 10) * this.transcriptHighlight;
     let topHighlightBound = bottomHighlightBound + this.transcriptHighlight;
