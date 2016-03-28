@@ -4,6 +4,8 @@ import { normalize } from '../../../common/Normalize'
 import { fromJS } from 'immutable';
 
 import MediaApi from '../../../api/mediaApi'
+import { setMarkers } from './markers'
+import { localSearch } from '../../../common/Search'
 
 /*
  * Constants
@@ -24,15 +26,27 @@ export const GROUPS_TAB = 4;
 /*
  * Actions
  * */
-export const getDataForMedia = createAction(GET_DATA_FOR_MEDIA, (token, mediaId) => {
-  return {
-    data: {
-      token,
-      mediaId
-    },
-    promise: MediaApi.getDataForMedia(token, mediaId)
-  }
-});
+export const getDataForMedia = (token, mediaId, searchString) => {
+  return (dispatch) => dispatch({
+    type: GET_DATA_FOR_MEDIA,
+    payload: {
+      data: {
+        token,
+        mediaId
+      },
+      promise: MediaApi.getDataForMedia(token, mediaId)
+        .then(response => {
+          let parsedResult = parseMediaData(response);
+          if (searchString) {
+            let searchResult = localSearch(response.transcripts.latest.words, searchString);
+            dispatch(setMarkers(mediaId, searchResult));
+          }
+          return parsedResult;
+        })
+    }
+  });
+};
+
 export const removeDataForMedia = createAction(REMOVE_DATA_FOR_MEDIA, (mediaId) => mediaId);
 export const getMediaUrl = createAction(GET_MEDIA_URL, (token, mediaId) => {
   return {
@@ -89,23 +103,22 @@ export default handleActions({
   },
 
   [GET_DATA_FOR_MEDIA + '_FULFILLED']: (state, { payload: response }) => {
-    let parsedResult = parseMediaData(response);
     return state.mergeIn([response.mediaId], {
-      status: parsedResult.status,
-      metadata: parsedResult.metadata,
-      topicsIds: parsedResult.topicsIds,
-      topics: parsedResult.topics,
-      activeTopic: parsedResult.activeTopic,
-      groupsIds: parsedResult.groupsIds,
-      groups: parsedResult.groups,
-      activeGroup: parsedResult.activeGroup,
-      speakers: parsedResult.speakers,
-      transcriptSpeakers: parsedResult.transcriptSpeakers,
-      activeSpeaker: parsedResult.activeSpeaker,
-      transcript: parsedResult.transcript,
-      predictions: parsedResult.predictions,
-      utterances: parsedResult.utterances,
-      jobTasks: parsedResult.jobTasks,
+      status: response.status,
+      metadata: response.metadata,
+      topicsIds: response.topicsIds,
+      topics: response.topics,
+      activeTopic: response.activeTopic,
+      groupsIds: response.groupsIds,
+      groups: response.groups,
+      activeGroup: response.activeGroup,
+      speakers: response.speakers,
+      transcriptSpeakers: response.transcriptSpeakers,
+      activeSpeaker: response.activeSpeaker,
+      transcript: response.transcript,
+      predictions: response.predictions,
+      utterances: response.utterances,
+      jobTasks: response.jobTasks,
       getPending: false,
       getError: '',
       view: initialViewState
@@ -246,6 +259,7 @@ export const parseMediaData = function (data) {
   let activeSpeakerId = (transcriptSpeakers.length > 0) ? transcriptSpeakers[0].name : Object.keys(speakers)[0];
 
   return {
+    mediaId: data.mediaId,
     metadata,
     status: data.status,
     activeTopic,

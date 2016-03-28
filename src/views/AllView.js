@@ -76,7 +76,11 @@ export class AllView extends React.Component {
                                 actions={this.props.actions}
             />
 
-            <MediaList token={state.auth.token} state={state.media} actions={this.props.actions}/>
+            <MediaList token={state.auth.token}
+                       state={state.media}
+                       searchString={state.search.get('searchString')}
+                       actions={this.props.actions}
+            />
           </div>
         }
         <NotificationSystem ref="notificationSystem" />

@@ -7,6 +7,7 @@ export class MediaList extends React.Component {
   static propTypes = {
     token: PropTypes.string.isRequired,
     state: PropTypes.object.isRequired,
+    searchString: PropTypes.string.isRequired,
     actions: PropTypes.object.isRequired
   };
 
@@ -44,6 +45,7 @@ export class MediaList extends React.Component {
                                       token={this.props.token}
                                       mediaState={state}
                                       listItemState={mediaList.media[mediaId]}
+                                      searchString={this.props.searchString}
                                       actions={this.props.actions} />
               })
             }

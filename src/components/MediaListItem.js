@@ -13,6 +13,7 @@ export class MediaListItem extends React.Component {
     isExpanded: PropTypes.bool.isRequired,
     listItemState: PropTypes.object.isRequired,
     mediaState: PropTypes.object.isRequired,
+    searchString: PropTypes.string.isRequired,
     actions: PropTypes.object.isRequired
   };
 
@@ -22,7 +23,7 @@ export class MediaListItem extends React.Component {
     if (!this.props.isExpanded) {
       if (!this.props.mediaState.mediaData.has(this.props.mediaId)) {
         this.props.actions.getMediaUrl(this.props.token, this.props.mediaId);
-        this.props.actions.getDataForMedia(this.props.token, this.props.mediaId);
+        this.props.actions.getDataForMedia(this.props.token, this.props.mediaId, this.props.searchString);
       }
       this.props.actions.expandMedia(this.props.mediaId);
     }

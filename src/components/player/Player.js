@@ -124,7 +124,9 @@ export class Player extends React.Component {
   }
 
   onSeekMarker(markerTime) {
-    this.seekOnPosition(markerTime / this.props.playerState.duration);
+    let duration = this.props.playerState.duration;
+    let position = (duration) ? markerTime / duration : 0;
+    this.seekOnPosition(position);
   }
 
   seekToFirstMarker(markersState) {
