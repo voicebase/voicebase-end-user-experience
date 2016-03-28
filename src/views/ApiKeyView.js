@@ -14,7 +14,9 @@ export class ApiKeyView extends React.Component {
   }
 
   componentDidMount(nextProps) {
-    this.props.actions.createKey(this.props.state.auth.token);
+    if (this.props.state.auth.emailVerified) {
+      this.props.actions.createKey(this.props.state.auth.token);
+    }
   }
 
   render () {
@@ -36,6 +38,14 @@ export class ApiKeyView extends React.Component {
           </td>
           <td>
             {this.props.state.auth.email}
+          </td>
+        </tr>
+         <tr>
+          <td>
+            Email verified:
+          </td>
+          <td>
+            {this.props.state.auth.emailVerified?'true':'false'}
           </td>
         </tr>
         <tr>
@@ -67,7 +77,7 @@ export class ApiKeyView extends React.Component {
             API key:
           </td>
           <td>
-            <textarea rows='4' cols='100' readOnly='true' value={this.props.state.apiKeys.apiKey}/>
+            <textarea rows='4' cols='100' readOnly='true' value={this.props.state.auth.emailVerified?this.props.state.apiKeys.apiKey:'Accept email to view api key'}/>
           </td>
         </tr>
         </tbody>

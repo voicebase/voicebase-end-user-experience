@@ -37,7 +37,8 @@ export const actions = {
  * */
 export const initialState = {
   isRemember: false,
-  isPending: false
+  isPending: false,
+  emailVerified: false
 };
 
 /*
@@ -54,7 +55,8 @@ export default handleActions({
       email: response.profile.email,
       name: response.profile.nickname,
       userId: response.profile.user_id,
-      picture: response.profile.picture
+      picture: response.profile.picture,
+      emailVerified: response.profile.email_verified
     };
   },
   [`${SIGN_OUT}_PENDING`]: (state, { payload: response }) => {

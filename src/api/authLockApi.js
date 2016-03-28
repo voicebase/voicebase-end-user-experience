@@ -7,7 +7,7 @@ export default {
   signIn: function (Auth0Lock, domain, api) {
     return new Promise(function(resolve, reject) {
       const lock = new Auth0Lock(api, domain);
-      lock.show(function (err, profile, token) {
+      lock.show({icon:'https://s3.amazonaws.com/www-tropo-com/wp-content/uploads/2015/06/voicebase-logo.png'}, function (err, profile, token) {
         if (err) {
           reject(err);
         } else {
