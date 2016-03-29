@@ -24,7 +24,7 @@ export const getClearWordFromTranscript = function (word) {
 };
 
 export const COLORS = [
-  '#78c361',
+  '#55a01a',
   '#9932cc',
   '#ff69b4',
   '#6495ed',
