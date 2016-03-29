@@ -198,12 +198,15 @@ export class Player extends React.Component {
     return markersState.markerIds.map(markerId => {
       let marker = markersState.markers[markerId];
       let position = this.calcTimeOffset(marker.time);
-      let offsetStyle = {left: position + 'px'};
+      let style = {
+        left: position + 'px',
+        borderBottomColor: marker.color
+      };
       return (
         <a href="#"
            key={'marker-' + markerId}
            className="player__keywords__marker"
-           style={offsetStyle}
+           style={style}
            onClick={this.onSeekMarker.bind(this, marker.time)} />
       )
     })

@@ -73,10 +73,12 @@ export class Transcript extends React.Component {
   }
 
   checkPhrase (findingKeyword, words, index) {
+    let wordObj = {
+      keywordId: findingKeyword.id,
+      color: findingKeyword.color
+    };
     let endPhraseWords = {
-      [words[index].p]: {
-        keywordId: findingKeyword.id
-      }
+      [words[index].p]: {...wordObj}
     };
     let splitMarker = findingKeyword.keywordName.split(' ');
     if (splitMarker.length > 0) {
@@ -90,9 +92,7 @@ export class Transcript extends React.Component {
       if (fuseResult.length >= splitMarker.length) {
         for (let j = 1; j < splitMarker.length; j++) {
           let nextWord = words[index + j];
-          endPhraseWords[nextWord.p] = {
-            keywordId: findingKeyword.id
-          };
+          endPhraseWords[nextWord.p] = {...wordObj};
         }
       }
     }
@@ -167,12 +167,13 @@ export class Transcript extends React.Component {
               }
               if (endPhraseWords[word.p]) {
                 isFindingKeyword = true;
+                const color = endPhraseWords[word.p].color;
                 if (this.state.hoverKeyword !== null && endPhraseWords[word.p].keywordId === this.state.hoverKeyword) {
                   wordStyle['color'] = '#fff';
-                  wordStyle['backgroundColor'] = '#55a01a';
+                  wordStyle['backgroundColor'] = color;
                 }
                 else {
-                  wordStyle['color'] = '#55a01a';
+                  wordStyle['color'] = color;
                 }
               }
 

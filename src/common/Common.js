@@ -23,6 +23,17 @@ export const getClearWordFromTranscript = function (word) {
   return replaceAndTrim(word).replace(/:$/, '');
 };
 
+export const COLORS = [
+  '#78c361',
+  '#9932cc',
+  '#ff69b4',
+  '#6495ed',
+  '#ffd700',
+  '#f6a7a1',
+  '#7fb397',
+  '#009999'
+];
+
 export const getRandomColor = function () {
   let letters = '012345'.split('');
   let color = '#';
@@ -46,4 +57,16 @@ export const getFileType = function (file) {
 
 export const dateToIso = function (date) {
   return new Date(date).toISOString();
+};
+
+export const sortByField = function (field) {
+  var sortOrder = 1;
+  if (field[0] === '-') {
+    sortOrder = -1;
+    field = field.substr(1);
+  }
+  return function (a, b) {
+    var result = (a[field] < b[field]) ? -1 : (a[field] > b[field]) ? 1 : 0;
+    return result * sortOrder;
+  };
 };

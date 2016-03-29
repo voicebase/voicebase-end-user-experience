@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import classnames from 'classnames';
+import { COLORS } from '../../common/Common'
 
 export class Keywords extends React.Component {
   static propTypes = {
@@ -23,12 +24,14 @@ export class Keywords extends React.Component {
   }
 
   setMarkers(keyword, activeSpeakerId) {
+    let color = COLORS[0];
     let times = keyword.t[activeSpeakerId];
     let markers = times.map(_time => {
       let time = parseFloat(_time);
       return {
         time,
-        keywordName: keyword.name
+        keywordName: keyword.name,
+        color
       }
     });
     this.props.actions.setMarkers(this.props.mediaId, markers);

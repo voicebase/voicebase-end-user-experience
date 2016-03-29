@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions'
 import { normalize } from '../../../common/Normalize'
+import { sortByField } from '../../../common/Common'
 import { fromJS } from 'immutable';
 
 /*
@@ -31,11 +32,13 @@ export const initialState = fromJS({});
  * */
 export default handleActions({
   [SET_MARKERS]: (state, {payload}) => {
-    let result = normalize(payload.markers, (marker, i) => {
+    let markers = payload.markers.sort(sortByField('time'));
+    let result = normalize(markers, (marker, i) => {
       return {
         id: i.toString(),
         time: marker.time,
-        keywordName: marker.keywordName
+        keywordName: marker.keywordName,
+        color: marker.color
       }
     });
 

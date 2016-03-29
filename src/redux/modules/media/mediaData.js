@@ -5,7 +5,7 @@ import { fromJS } from 'immutable';
 
 import MediaApi from '../../../api/mediaApi'
 import { setMarkers } from './markers'
-import { localSearch } from '../../../common/Search'
+import { localSearch, searchResultsToMarkers } from '../../../common/Search'
 
 /*
  * Constants
@@ -38,7 +38,8 @@ export const getDataForMedia = (token, mediaId, searchString) => {
         .then(response => {
           if (searchString) {
             let searchResult = localSearch(response.transcripts.latest.words, searchString);
-            dispatch(setMarkers(mediaId, searchResult));
+            let markers = searchResultsToMarkers(searchResult);
+            dispatch(setMarkers(mediaId, markers));
           }
           return response;
         })
