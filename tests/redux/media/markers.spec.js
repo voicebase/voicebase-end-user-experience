@@ -36,13 +36,13 @@ describe('(Redux Module) markers.js', function () {
 
   describe('Reducers', () => {
     let markersData = [
-      {"time": 123.55, "keywordName": "premium package"},
-      {"time": 193.67, "keywordName": "premium package"}
+      {"time": 123.55, "keywordName": "premium package", color: '#fff'},
+      {"time": 193.67, "keywordName": "premium package", color: '#ddd'}
     ];
 
     let normalizeMarkers = {
-      "0": {"id": "0", "time": 123.55, "keywordName": "premium package"},
-      "1": {"id": "1", "time": 193.67, "keywordName": "premium package"}
+      "0": {"id": "0", "time": 123.55, "keywordName": "premium package", color: '#fff'},
+      "1": {"id": "1", "time": 193.67, "keywordName": "premium package", color: '#ddd'}
     };
 
     it(`${SET_MARKERS} reducer `, function () {
