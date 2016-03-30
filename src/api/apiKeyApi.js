@@ -1,18 +1,20 @@
 import axios from 'axios'
 
+// Auth0 prototype
 // const baseUrl = 'https://apis.voicebase.com/v2-beta';
-const baseUrl = 'http://localhost:8080/auth0demo/api/token';
+const baseUrl = 'https://apis.dev.voicebase.com/v2-beta/profile/keys';
+// const baseUrl = 'http://localhost:10080/v2-beta/profile/keys';
 
 export default {
   createKey(token) {
     let url = `${baseUrl}`;
-    return axios.get(url, {
+    return axios.post(url, null, {
       headers: {
         Authorization: 'Bearer ' + token
       }
     })
     .then(response => {
-      const apiKey = response.data.apiToken;
+      const apiKey = response.data.key.bearerToken;
       const returnedObject = { apiKey };
       return returnedObject;
     })
