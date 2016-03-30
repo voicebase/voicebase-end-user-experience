@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Row, Col } from 'react-bootstrap'
-import classnames from 'classnames';
 import { COLORS } from '../../common/Common'
+import KeywordTopic from './KeywordTopic'
 
 export class Keywords extends React.Component {
   static propTypes = {
@@ -15,12 +15,7 @@ export class Keywords extends React.Component {
   };
 
   setActiveTopic(topicId) {
-    if (this.props.type === 'keywords') {
-      this.props.actions.setActiveTopic(this.props.mediaId, topicId);
-    }
-    else if (this.props.type === 'groups') {
-      this.props.actions.setActiveGroup(this.props.mediaId, topicId);
-    }
+    this.props.actions.setActiveTopic(this.props.mediaId, topicId, this.props.type);
   }
 
   setMarkers(keyword, activeSpeakerId) {
@@ -50,13 +45,12 @@ export class Keywords extends React.Component {
             <ul className="listing__keywords__topics">
               {
                 this.props.topicsIds.map(topicId => {
-                  let topic = topics[topicId];
-                  let activeClass = classnames({active: (activeTopicId === topicId)});
-
                   return (
-                    <li key={'topic-' + topicId} className={activeClass} onClick={this.setActiveTopic.bind(this, topicId)}>
-                      <a href="javascript:void(0)">{topic.name}</a>
-                    </li>
+                    <KeywordTopic key={'topic-' + topicId}
+                                  topicName={topics[topicId].name}
+                                  isActive={activeTopicId === topicId}
+                                  onClickTopic={this.setActiveTopic.bind(this, topicId)}
+                    />
                   )
                 })
               }

@@ -14,7 +14,6 @@ export const GET_DATA_FOR_MEDIA = 'GET_DATA_FOR_MEDIA';
 export const REMOVE_DATA_FOR_MEDIA = 'REMOVE_DATA_FOR_MEDIA';
 export const GET_MEDIA_URL = 'GET_MEDIA_URL';
 export const SET_ACTIVE_TOPIC = 'SET_ACTIVE_TOPIC';
-export const SET_ACTIVE_GROUP = 'SET_ACTIVE_GROUP';
 export const CHOOSE_PLAYER_APP_TAB = 'CHOOSE_PLAYER_APP_TAB';
 
 //view
@@ -56,11 +55,8 @@ export const getMediaUrl = createAction(GET_MEDIA_URL, (token, mediaId) => {
     promise: MediaApi.getMediaUrl(token, mediaId)
   }
 });
-export const setActiveTopic = createAction(SET_ACTIVE_TOPIC, (mediaId, topicId) => {
-  return {mediaId, topicId};
-});
-export const setActiveGroup = createAction(SET_ACTIVE_GROUP, (mediaId, topicId) => {
-  return {mediaId, topicId};
+export const setActiveTopic = createAction(SET_ACTIVE_TOPIC, (mediaId, topicId, type) => {
+  return {mediaId, topicId, type};
 });
 export const choosePlayerAppTab = createAction(CHOOSE_PLAYER_APP_TAB, (mediaId, tabId) => {
   return {mediaId, tabId};
@@ -71,7 +67,6 @@ export const actions = {
   removeDataForMedia,
   getMediaUrl,
   setActiveTopic,
-  setActiveGroup,
   choosePlayerAppTab
 };
 
@@ -152,11 +147,8 @@ export default handleActions({
   },
 
   [SET_ACTIVE_TOPIC]: (state, { payload }) => {
-    return state.setIn([payload.mediaId, 'activeTopic'], payload.topicId);
-  },
-
-  [SET_ACTIVE_GROUP]: (state, { payload }) => {
-    return state.setIn([payload.mediaId, 'activeGroup'], payload.topicId);
+    let field = payload.type === 'keywords' ? 'activeTopic' : 'activeGroup';
+    return state.setIn([payload.mediaId, field], payload.topicId);
   },
 
   [CHOOSE_PLAYER_APP_TAB]: (state, { payload: {tabId, mediaId} }) => {
