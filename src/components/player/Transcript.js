@@ -3,6 +3,7 @@ import $ from 'jquery'
 import _ from 'lodash';
 import Fuse from 'fuse.js';
 import classnames from 'classnames';
+import equal from 'deep-equal'
 import { DETECTION_TAB } from '../../redux/modules/media/mediaData'
 import {getClearWordFromTranscript} from '../../common/Common';
 
@@ -18,6 +19,7 @@ export class Transcript extends React.Component {
     markersState: PropTypes.object
   };
 
+  lastTime = null;
   transcriptHighlight = 10;
   isHoverTranscript = false;
 
@@ -27,6 +29,20 @@ export class Transcript extends React.Component {
       hoverUtterance: null,
       hoverKeyword: null
     };
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    let time = this.lastTime;
+    let nextTime = nextProps.duration * nextProps.played;
+    let isTimeChanged = (time === null) ? true : Math.abs(time - nextTime) >= this.transcriptHighlight;
+    if (isTimeChanged) {
+      this.lastTime = nextTime;
+    }
+
+    const isChangedState = !equal(this.state, nextState);
+    const isChangedMarkers = !equal(this.props.markersState, nextProps.markersState);
+
+    return isTimeChanged || isChangedState || isChangedMarkers;
   }
 
   componentDidUpdate() {
