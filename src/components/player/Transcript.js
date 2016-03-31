@@ -34,7 +34,7 @@ export class Transcript extends React.Component {
   shouldComponentUpdate (nextProps, nextState) {
     let time = this.lastTime;
     let nextTime = nextProps.duration * nextProps.played;
-    let isTimeChanged = (time === null) ? true : Math.abs(time - nextTime) >= this.transcriptHighlight;
+    let isTimeChanged = (time === null) ? true : this.calcTimeBound(time) !== this.calcTimeBound(nextTime);
     if (isTimeChanged) {
       this.lastTime = nextTime;
     }
@@ -62,6 +62,10 @@ export class Transcript extends React.Component {
 
   onBlurTranscript() {
     this.isHoverTranscript = false;
+  }
+
+  calcTimeBound(time) {
+    return parseInt(time / this.transcriptHighlight, 10) * this.transcriptHighlight;
   }
 
   findDetectionSegment(start) {
@@ -156,7 +160,7 @@ export class Transcript extends React.Component {
 
     let time = this.props.duration * this.props.played;
     // Calculate current bounds
-    let bottomHighlightBound = parseInt(time / this.transcriptHighlight, 10) * this.transcriptHighlight;
+    let bottomHighlightBound = this.calcTimeBound(time);
     let topHighlightBound = bottomHighlightBound + this.transcriptHighlight;
     let currentWordsCounter = 0;
 
@@ -179,7 +183,7 @@ export class Transcript extends React.Component {
               let wordStyle = {};
 
               // highlight for current position of playing
-              let isCurrent = (wordTimeInSec > bottomHighlightBound && wordTimeInSec < topHighlightBound);
+              let isCurrent = (wordTimeInSec >= bottomHighlightBound && wordTimeInSec <= topHighlightBound);
               currentWordsCounter = (isCurrent) ? currentWordsCounter + 1 : currentWordsCounter;
 
               // hightlight for keywords
