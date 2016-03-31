@@ -11,7 +11,10 @@ export class Transcript extends React.Component {
     mediaId: PropTypes.string.isRequired,
     duration: PropTypes.number,
     played: PropTypes.number,
-    mediaState: PropTypes.object.isRequired,
+    transcript: PropTypes.object.isRequired,
+    utterances: PropTypes.object,
+    speakers: PropTypes.object.isRequired,
+    activeTab: PropTypes.number.isRequired,
     markersState: PropTypes.object
   };
 
@@ -46,7 +49,7 @@ export class Transcript extends React.Component {
   }
 
   findDetectionSegment(start) {
-    let utterances = this.props.mediaState.utterances;
+    let utterances = this.props.utterances;
     let findUtterance = null;
     for (let id of utterances.itemIds) {
       let utterance = utterances.items[id];
@@ -112,16 +115,16 @@ export class Transcript extends React.Component {
     return markers;
   }
 
-  isSpeaker(word) {
-    if (!word.m) {
+  isSpeaker(wordTurn) {
+    if (!wordTurn) {
       return false;
     }
-    return (word.m === 'turn');
+    return (wordTurn === 'turn');
   }
 
-  getSpeakerColor (word) {
-    let speakerName = getClearWordFromTranscript(word.w);
-    let speaker = this.props.mediaState.speakers[speakerName];
+  getSpeakerColor (wordVal) {
+    let speakerName = getClearWordFromTranscript(wordVal);
+    let speaker = this.props.speakers[speakerName];
     return (speaker) ? speaker.color : null;
   }
 
@@ -132,8 +135,8 @@ export class Transcript extends React.Component {
   }
 
   render() {
-    let mediaState = this.props.mediaState;
-    let transcript = mediaState.transcript;
+    let transcript = this.props.transcript;
+    let activeTab = this.props.activeTab;
 
     let time = this.props.duration * this.props.played;
     // Calculate current bounds
@@ -151,7 +154,12 @@ export class Transcript extends React.Component {
           {
             transcript.wordIds.map((wordId, i) => {
               let word = transcript.words[wordId];
-              let wordTimeInSec = word.s / 1000;
+              let startTime = word.s;
+              let wordPos = word.p;
+              let wordTurn = word.m;
+              let wordVal = word.w;
+
+              let wordTimeInSec = startTime / 1000;
               let wordStyle = {};
 
               // highlight for current position of playing
@@ -159,16 +167,17 @@ export class Transcript extends React.Component {
               currentWordsCounter = (isCurrent) ? currentWordsCounter + 1 : currentWordsCounter;
 
               // hightlight for keywords
-              let findingKeyword = markers[(word.s / 1000).toFixed(2)];
+              let findingKeyword = markers[wordTimeInSec.toFixed(2)];
               let isFindingKeyword = false;
               if (findingKeyword) {
                 let phraseWords = this.checkPhrase(findingKeyword, transcript.words, i);
                 endPhraseWords = Object.assign({}, endPhraseWords, phraseWords);
               }
-              if (endPhraseWords[word.p]) {
+
+              if (endPhraseWords[wordPos]) {
                 isFindingKeyword = true;
-                const color = endPhraseWords[word.p].color;
-                if (this.state.hoverKeyword !== null && endPhraseWords[word.p].keywordId === this.state.hoverKeyword) {
+                const color = endPhraseWords[wordPos].color;
+                if (this.state.hoverKeyword !== null && endPhraseWords[wordPos].keywordId === this.state.hoverKeyword) {
                   wordStyle['color'] = '#fff';
                   wordStyle['backgroundColor'] = color;
                 }
@@ -178,15 +187,15 @@ export class Transcript extends React.Component {
               }
 
               // highlight speaker
-              let isSpeaker = this.isSpeaker(word);
+              let isSpeaker = this.isSpeaker(wordTurn);
               if (isSpeaker) {
-                wordStyle['color'] = this.getSpeakerColor(word);
+                wordStyle['color'] = this.getSpeakerColor(wordVal);
               }
 
               // highlight utterances phrase
               let utterance = null;
-              if (mediaState.view.activeTab === DETECTION_TAB) {
-                utterance = this.findDetectionSegment(word.s);
+              if (activeTab === DETECTION_TAB) {
+                utterance = this.findDetectionSegment(startTime);
               }
               if (utterance && !isSpeaker) {
                 if (this.isHoverUtterance(utterance)) {

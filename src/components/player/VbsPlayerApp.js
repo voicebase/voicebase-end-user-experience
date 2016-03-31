@@ -96,7 +96,10 @@ export class VbsPlayerApp extends React.Component {
           <Transcript mediaId={this.props.mediaId}
                       duration={playerState.duration}
                       played={playerState.played}
-                      mediaState={mediaData}
+                      transcript={mediaData.transcript}
+                      utterances={mediaData.utterances}
+                      speakers={mediaData.speakers}
+                      activeTab={mediaData.view.activeTab}
                       markersState={markersState}
           />
         }
