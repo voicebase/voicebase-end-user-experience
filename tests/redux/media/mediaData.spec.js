@@ -3,7 +3,6 @@ import {
   REMOVE_DATA_FOR_MEDIA,
   GET_MEDIA_URL,
   SET_ACTIVE_TOPIC,
-  SET_ACTIVE_GROUP,
   CHOOSE_PLAYER_APP_TAB,
   actions,
   initialState,
@@ -23,7 +22,6 @@ describe('(Redux Module) mediaData.js', function () {
       REMOVE_DATA_FOR_MEDIA,
       GET_MEDIA_URL,
       SET_ACTIVE_TOPIC,
-      SET_ACTIVE_GROUP,
       CHOOSE_PLAYER_APP_TAB
     };
     Object.keys(constants).forEach(key => {
@@ -65,12 +63,7 @@ describe('(Redux Module) mediaData.js', function () {
 
     describe('SET_ACTIVE_TOPIC', () => {
       checkActionTypes(actions, 'setActiveTopic', SET_ACTIVE_TOPIC);
-      checkCreatingActionWithMultipleParameters(actions, 'setActiveTopic', SET_ACTIVE_TOPIC, ['mediaId', 0], ['mediaId', 'topicId']);
-    });
-
-    describe('SET_ACTIVE_GROUP', () => {
-      checkActionTypes(actions, 'setActiveGroup', SET_ACTIVE_GROUP);
-      checkCreatingActionWithMultipleParameters(actions, 'setActiveGroup', SET_ACTIVE_GROUP, ['mediaId', 0], ['mediaId', 'topicId']);
+      checkCreatingActionWithMultipleParameters(actions, 'setActiveTopic', SET_ACTIVE_TOPIC, ['mediaId', 0, 'keywords'], ['mediaId', 'topicId', 'type']);
     });
 
     describe('CHOOSE_PLAYER_APP_TAB', () => {
@@ -122,15 +115,15 @@ describe('(Redux Module) mediaData.js', function () {
 
       let res = mediaDataReducer(initialState, {
         type: GET_DATA_FOR_MEDIA + '_FULFILLED',
-        payload: response
+        payload: JSON.parse(JSON.stringify(response))
       });
 
-      let speaker1Color = res.getIn([mediaId, 'speakers', 'Speaker 1', 'color']);
-      let speaker2Color = res.getIn([mediaId, 'speakers', 'Speaker 2', 'color']);
+      let speaker1Color = res.getIn([mediaId, 'speakers', 'speaker 1', 'color']);
+      let speaker2Color = res.getIn([mediaId, 'speakers', 'speaker 2', 'color']);
       let utter1Color = res.getIn([mediaId, 'utterances', 'items', '0', 'color']);
       let utter2Color = res.getIn([mediaId, 'utterances', 'items', '1', 'color']);
 
-      let parsedResult = parseMediaData(response);
+      let parsedResult = parseMediaData(JSON.parse(JSON.stringify(response)));
       let expectedRes = initialState
         .mergeIn([mediaId], {
           status: parsedResult.status,
@@ -152,8 +145,8 @@ describe('(Redux Module) mediaData.js', function () {
           getError: '',
           view: initialViewState
         })
-        .setIn([mediaId, 'speakers', 'Speaker 1', 'color'], speaker1Color)
-        .setIn([mediaId, 'speakers', 'Speaker 2', 'color'], speaker2Color)
+        .setIn([mediaId, 'speakers', 'speaker 1', 'color'], speaker1Color)
+        .setIn([mediaId, 'speakers', 'speaker 2', 'color'], speaker2Color)
         .setIn([mediaId, 'utterances', 'items', '0', 'color'], utter1Color)
         .setIn([mediaId, 'utterances', 'items', '1', 'color'], utter2Color)
 
@@ -228,19 +221,19 @@ describe('(Redux Module) mediaData.js', function () {
 
       let res = mediaDataReducer(initialState, {
         type: SET_ACTIVE_TOPIC,
-        payload: {mediaId: 'mediaId', topicId: 0}
+        payload: {mediaId: 'mediaId', topicId: 0, type: 'keywords'}
       });
 
       assert.isTrue(Immutable.is(expectedRes, res));
     });
 
-    it(`${SET_ACTIVE_GROUP} reducer `, function () {
+    it(`${SET_ACTIVE_TOPIC} reducer for group`, function () {
       let expectedRes = initialState
         .setIn(['mediaId', 'activeGroup'], 0);
 
       let res = mediaDataReducer(initialState, {
-        type: SET_ACTIVE_GROUP,
-        payload: {mediaId: 'mediaId', topicId: 0}
+        type: SET_ACTIVE_TOPIC,
+        payload: {mediaId: 'mediaId', topicId: 0, type: 'group'}
       });
 
       assert.isTrue(Immutable.is(expectedRes, res));

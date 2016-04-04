@@ -47,7 +47,7 @@ export class KeywordWord extends React.Component {
   render() {
     let keyword = this.props.keyword;
     let times = this.getKeywordTimes(keyword);
-    if (!times) { // no times - no keyword.
+    if (!times || (times && times.length === 0)) { // no times - no keyword.
       return null;
     }
 
