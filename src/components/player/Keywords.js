@@ -7,7 +7,7 @@ export class Keywords extends React.Component {
   static propTypes = {
     mediaId: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    activeSpeaker: PropTypes.string.isRequired,
+    activeSpeaker: PropTypes.string,
     activeTopic: PropTypes.string.isRequired,
     topicsIds: PropTypes.array.isRequired,
     topics: PropTypes.object.isRequired,
@@ -20,7 +20,7 @@ export class Keywords extends React.Component {
 
   setMarkers(keyword, activeSpeakerId) {
     let color = COLORS[0];
-    let times = keyword.t[activeSpeakerId];
+    let times = (activeSpeakerId) ? keyword.t[activeSpeakerId] : this.getAllKeywordTimes(keyword);
     let markers = times.map(_time => {
       let time = parseFloat(_time);
       return {
@@ -30,6 +30,14 @@ export class Keywords extends React.Component {
       }
     });
     this.props.actions.setMarkers(this.props.mediaId, markers);
+  }
+
+  getAllKeywordTimes(keyword) {
+    let times = [];
+    Object.keys(keyword.t).forEach(speakerName => {
+      times = times.concat(keyword.t[speakerName]);
+    });
+    return times;
   }
 
   render () {
@@ -61,7 +69,7 @@ export class Keywords extends React.Component {
               {
                 activeTopic.keywordsIds.map(keywordId => {
                   let keyword = activeTopic.keywords[keywordId];
-                  let times = keyword.t[activeSpeakerId];
+                  let times = (activeSpeakerId) ? keyword.t[activeSpeakerId] : this.getAllKeywordTimes(keyword);
                   if (!times) { // no times - no keyword.
                     return null;
                   }

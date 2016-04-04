@@ -205,7 +205,7 @@ export const parseMediaData = function (data) {
   if (data.transcripts && data.transcripts.latest && data.transcripts.latest.words) {
     let result = normalize(data.transcripts.latest.words, word => {
       if (word.m && word.m === 'turn') {
-        let clearSpeakerName = getClearWordFromTranscript(word.w);
+        let clearSpeakerName = getClearWordFromTranscript(word.w).toLowerCase();
         speakers = addSpeaker(speakers, [clearSpeakerName]);
         transcriptSpeakers.push({start: word.s, name: clearSpeakerName});
       }
@@ -249,14 +249,12 @@ export const parseMediaData = function (data) {
     }
   }
 
-  let activeSpeakerId = (transcriptSpeakers.length > 0) ? transcriptSpeakers[0].name : Object.keys(speakers)[0];
-
   return {
     mediaId: data.mediaId,
     metadata,
     status: data.status,
     activeTopic,
-    activeSpeaker: activeSpeakerId,
+    activeSpeaker: null,
     speakers,
     transcriptSpeakers,
     groupsIds,
@@ -275,6 +273,11 @@ const parseKeywords = function (keywordsArr) {
   let speakers = {};
   let result = normalize(keywordsArr, keyword => {
     speakers = addSpeaker(speakers, Object.keys(keyword.t));
+    let times = {};
+    Object.keys(keyword.t).forEach(speakerName => {
+      times[speakerName.toLowerCase()] = keyword.t[speakerName];
+    });
+    keyword.t = times;
     return keyword;
   });
   let keywordsIds = result.ids;
@@ -307,9 +310,11 @@ const parseTopics = function (topicsArr) {
 
 const addSpeaker = function (speakersObject, newSpeakersNames) {
   newSpeakersNames.forEach(speakerName => {
-    if (!speakersObject[speakerName]) {
-      speakersObject[speakerName] = {
-        name: speakerName,
+    const key = speakerName.toLowerCase();
+    if (!speakersObject[key]) {
+      speakersObject[key] = {
+        name: key,
+        originalName: speakerName,
         color: getRandomColor()
       }
     }

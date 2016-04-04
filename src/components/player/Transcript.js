@@ -143,7 +143,7 @@ export class Transcript extends React.Component {
   }
 
   getSpeakerColor (wordVal) {
-    let speakerName = getClearWordFromTranscript(wordVal);
+    let speakerName = getClearWordFromTranscript(wordVal).toLowerCase();
     let speaker = this.props.speakers[speakerName];
     return (speaker) ? speaker.color : null;
   }
