@@ -99,7 +99,7 @@ export class MediaListItem extends React.Component {
                               metadata={media.metadata}
           />
           <p className="list-group-item-text">
-            Uploaded Jan 5, 2010
+            &nbsp;
             { duration && <span> | Length {parsedDuration}</span> }
           </p>
           <input type="checkbox" className="listing__checkbox" checked={checked} onChange={this.selectMedia.bind(this)} />
