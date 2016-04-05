@@ -1,6 +1,6 @@
 import axios from 'axios'
+import { baseUrl } from './baseUrl'
 
-const baseUrl = 'https://apis.voicebase.com/v2-beta';
 const TYPE = 'predictions';
 
 export default {

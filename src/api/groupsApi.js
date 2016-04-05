@@ -1,6 +1,5 @@
 import axios from 'axios'
-
-const baseUrl = 'https://apis.voicebase.com/v2-beta';
+import { baseUrl } from './baseUrl'
 
 export default {
   getGroups(token) {

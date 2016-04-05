@@ -1,12 +1,11 @@
 import axios from 'axios'
 import $ from 'jquery'
 import { dateToIso } from '../common/Common'
+import { baseUrl } from './baseUrl'
 import fakeJson from './../fakeData/fakeData'
 import fakeDataVideoJson from './../fakeData/fakeDataVideo'
 import cablehotleadJson from './../fakeData/cablehotlead'
 import CallCenter1Json from './../fakeData/CallCenter1'
-
-const baseUrl = 'https://apis.voicebase.com/v2-beta';
 
 const fakeExamples = {
   'fake_cablehotlead': {
