@@ -61,16 +61,19 @@ export default {
       .then(response => {
         let processingIds = [];
         let processingMedia = {};
-        let mediaIds = [].concat(Object.keys(fakeExamples));
+        let mediaIds = [];
         let media = {};
-        Object.keys(fakeExamples).forEach(id => {
-          let fakeExample = fakeExamples[id];
-          media[id] = {
-            mediaId: id,
-            status: 'finished',
-            metadata: fakeExample.metadata
-          }
-        });
+        if (__DEBUG__) {
+          mediaIds = [].concat(Object.keys(fakeExamples));
+          Object.keys(fakeExamples).forEach(id => {
+            let fakeExample = fakeExamples[id];
+            media[id] = {
+              mediaId: id,
+              status: 'finished',
+              metadata: fakeExample.metadata
+            }
+          });
+        }
         if (response.data.media) {
           response.data.media.forEach(mediaItem => {
             if (mediaItem.status === 'failed' || mediaItem.status === 'finished') {
