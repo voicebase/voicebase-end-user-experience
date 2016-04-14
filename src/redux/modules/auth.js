@@ -1,10 +1,12 @@
 import { createAction, handleActions } from 'redux-actions'
+
 import authLockApi from '../../api/authLockApi'
 
 /*
  * Constants
  * */
 export const SIGN_IN = 'SIGN_IN';
+export const SET_REMEMBER = 'SET_REMEMBER';
 export const SIGN_OUT = 'SIGN_OUT';
 export const DOMAIN = 'voicebase.auth0.com';
 export const API = '1eQFoL41viLp5qK90AMme5tc5TjEpUeE';
@@ -19,17 +21,14 @@ export const signIn = createAction(SIGN_IN, Auth0Lock => {
   }
 });
 
-//export const signOut = createAction(SIGN_OUT);
+export const setRemember = createAction(SET_REMEMBER, (isRemember) => isRemember);
 
-export const signOut = createAction(SIGN_OUT, Auth0Lock => {
-  return {
-    promise: authLockApi.signOut(DOMAIN, RETURN_TO)
-  }
-});
+export const signOut = createAction(SIGN_OUT, {});
 
 export const actions = {
+  signIn,
   signOut,
-  signIn
+  setRemember
 };
 
 /*
@@ -38,13 +37,33 @@ export const actions = {
 export const initialState = {
   isRemember: false,
   isPending: false,
+  token: '',
+  errorMessage: '',
   emailVerified: false
 };
 
 /*
  * Reducers
- **/
+ * */
 export default handleActions({
+  [`${SIGN_IN}_PENDING`]: (state, { payload }) => {
+    return {
+      ...state,
+      isPending: true,
+      errorMessage: '',
+      token: ''
+    };
+  },
+
+  [`${SIGN_IN}_REJECTED`]: (state, { payload: error }) => {
+    return {
+      ...state,
+      isPending: false,
+      errorMessage: error,
+      token: ''
+    };
+  },
+
   [`${SIGN_IN}_FULFILLED`]: (state, { payload: response }) => {
     return {
       ...state,
@@ -59,32 +78,18 @@ export default handleActions({
       emailVerified: response.profile.email_verified
     };
   },
-  [`${SIGN_OUT}_PENDING`]: (state, { payload: response }) => {
+
+  [SET_REMEMBER]: (state, { payload: isRemember }) => {
     return {
       ...state,
-      isPending: true,
-      isRemember: false,
-      errorMessage: '',
-      token: '',
-      email: '',
-      name: '',
-      userId: '',
-      picture: ''
+      isRemember: isRemember
     };
   },
-  [`${SIGN_OUT}_FULFILLED`]: (state, { payload: response }) => {
+
+  [SIGN_OUT]: (state) => {
     return {
-      ...state,
-      isPending: false,
-      isRemember: false
-    };
-  },
-  [`${SIGN_OUT}_REJECTED`]: (state, { payload: response }) => {
-    return {
-      ...state,
-      isPending: false,
-      isRemember: false,
-      errorMessage: response.error
+      ...initialState,
+      isRemember: state.isRemember
     };
   }
 }, initialState);

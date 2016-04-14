@@ -47,7 +47,7 @@ export class LoginForm extends React.Component {
           {password.touched && password.error && <div className="login-field-error">{password.error}</div>}
 
           <Input type="checkbox" label="Remember me" checked={this.props.isRemember} onChange={this.onChangeRemember.bind(this)}/>
-
+          <hr/>
           <Button type="submit" bsStyle="primary" className="pull-left" disabled={this.props.isPending} onClick={handleSubmit}>
             {this.props.isPending ? 'Signing In...' : 'Sign In'}
           </Button>
