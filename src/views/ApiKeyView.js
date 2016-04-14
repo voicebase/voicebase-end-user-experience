@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
+import {actions as authActions} from '../redux/modules/auth'
 import connectWrapper from '../redux/utils/connect'
-import {actions as apiKeyActions} from '../redux/modules/apiKeys'
 
 export class ApiKeyView extends React.Component {
   static propTypes = {
@@ -8,16 +8,6 @@ export class ApiKeyView extends React.Component {
     state: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
-
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount(nextProps) {
-    if (this.props.state.auth.emailVerified) {
-      this.props.actions.createKey(this.props.state.auth.token);
-    }
-  }
 
   render () {
     return (
@@ -29,7 +19,7 @@ export class ApiKeyView extends React.Component {
             Image:
           </td>
           <td>
-            <img src={this.props.state.auth.picture} />
+            <img src={this.props.state.auth.profile.picture} />
           </td>
         </tr>
         <tr>
@@ -37,7 +27,7 @@ export class ApiKeyView extends React.Component {
             Email:
           </td>
           <td>
-            {this.props.state.auth.email}
+            {this.props.state.auth.profile.email}
           </td>
         </tr>
          <tr>
@@ -45,7 +35,7 @@ export class ApiKeyView extends React.Component {
             Email verified:
           </td>
           <td>
-            {this.props.state.auth.emailVerified ? 'true' : 'false'}
+            {this.props.state.auth.profile.email_verified ? 'true' : 'false'}
           </td>
         </tr>
         <tr>
@@ -53,7 +43,7 @@ export class ApiKeyView extends React.Component {
             Name:
           </td>
           <td>
-            {this.props.state.auth.name}
+            {this.props.state.auth.profile.name}
           </td>
         </tr>
         <tr>
@@ -61,7 +51,7 @@ export class ApiKeyView extends React.Component {
             User id:
           </td>
           <td>
-            {this.props.state.auth.userId}
+            {this.props.state.auth.profile.userId}
           </td>
         </tr>
         <tr>
@@ -69,7 +59,7 @@ export class ApiKeyView extends React.Component {
             User key:
           </td>
           <td>
-            <textarea rows='4' cols='100' readOnly='true' value={this.props.state.auth.token}/>
+            <textarea rows='4' cols='100' readOnly='true' value={this.props.state.auth.auth0Token}/>
           </td>
         </tr>
         <tr>
@@ -77,7 +67,7 @@ export class ApiKeyView extends React.Component {
             API key:
           </td>
           <td>
-            <textarea rows='4' cols='100' readOnly='true' value={this.props.state.auth.emailVerified ? this.props.state.apiKeys.apiKey : 'Accept email to view api key'}/>
+            <textarea rows='4' cols='100' readOnly='true' value={this.props.state.auth.token}/>
           </td>
         </tr>
         </tbody>
@@ -87,4 +77,4 @@ export class ApiKeyView extends React.Component {
   }
 }
 
-export default connectWrapper(apiKeyActions, ApiKeyView)
+export default connectWrapper(authActions, ApiKeyView)
