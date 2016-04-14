@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import {actions as authActions} from '../redux/modules/auth'
 import connectWrapper from '../redux/utils/connect'
-import {Panel} from 'react-bootstrap'
+import { Panel, Button } from 'react-bootstrap'
 import Logo from '../images/voicebase-logo-2.png'
 
 export class LoginView extends React.Component {
@@ -16,22 +16,30 @@ export class LoginView extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (nextProps.state.auth.token) {
+    let nextAuth = nextProps.state.auth;
+    if (nextAuth.token) {
       this.props.history.pushState(null, '/');
+    }
+    if (nextAuth.auth0Token && !nextAuth.profile.email_verified) {
+      this.props.history.pushState(null, '/confirm');
     }
   }
 
   signIn() {
-    this.props.actions.signIn(window.Auth0Lock);
+    this.props.actions.signIn();
   }
 
   render() {
+    const auth = this.props.state.auth;
+
     return (
       <div className="login-overlay">
         <div className="login-content">
           <img src={Logo} className="img-responsive"/>
           <Panel>
-            <a onClick={this.signIn.bind(this)} className="btn btn-primary btn-lg btn-login btn-block">Sign In</a>
+            <Button bsStyle="primary" bsSize="large" block onClick={this.signIn.bind(this)}>
+              {(auth.isPending || auth.tokenPending) ? 'Signing In...' : 'Sign In'}
+            </Button>
           </Panel>
         </div>
       </div>

@@ -29,7 +29,7 @@ export class ApiKeyView extends React.Component {
             Image:
           </td>
           <td>
-            <img src={this.props.state.auth.picture}></img>
+            <img src={this.props.state.auth.picture} />
           </td>
         </tr>
         <tr>
@@ -45,7 +45,7 @@ export class ApiKeyView extends React.Component {
             Email verified:
           </td>
           <td>
-            {this.props.state.auth.emailVerified?'true':'false'}
+            {this.props.state.auth.emailVerified ? 'true' : 'false'}
           </td>
         </tr>
         <tr>
@@ -77,7 +77,7 @@ export class ApiKeyView extends React.Component {
             API key:
           </td>
           <td>
-            <textarea rows='4' cols='100' readOnly='true' value={this.props.state.auth.emailVerified?this.props.state.apiKeys.apiKey:'Accept email to view api key'}/>
+            <textarea rows='4' cols='100' readOnly='true' value={this.props.state.auth.emailVerified ? this.props.state.apiKeys.apiKey : 'Accept email to view api key'}/>
           </td>
         </tr>
         </tbody>

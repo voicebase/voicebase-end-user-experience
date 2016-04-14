@@ -8,16 +8,29 @@ import authLockApi from '../../api/authLockApi'
 export const SIGN_IN = 'SIGN_IN';
 export const SET_REMEMBER = 'SET_REMEMBER';
 export const SIGN_OUT = 'SIGN_OUT';
-export const DOMAIN = 'voicebase.auth0.com';
-export const API = '1eQFoL41viLp5qK90AMme5tc5TjEpUeE';
-export const RETURN_TO = '1eQFoL41viLp5qK90AMme5tc5TjEpUeE';
+export const CREATE_TOKEN = 'CREATE_TOKEN';
 
 /*
  * Actions
  * */
-export const signIn = createAction(SIGN_IN, Auth0Lock => {
+export const signIn = () => {
+  return (dispatch) => dispatch({
+    type: SIGN_IN,
+    payload: {
+      promise: authLockApi.signIn()
+        .then(response => {
+          if (response.profile.email_verified) {
+            dispatch(createToken(response.token));
+          }
+          return response;
+        })
+    }
+  })
+};
+
+export const createToken = createAction(CREATE_TOKEN, (auth0Token) => {
   return {
-    promise: authLockApi.signIn(Auth0Lock, DOMAIN, API)
+    promise: authLockApi.createToken(auth0Token)
   }
 });
 
@@ -28,7 +41,8 @@ export const signOut = createAction(SIGN_OUT, {});
 export const actions = {
   signIn,
   signOut,
-  setRemember
+  setRemember,
+  createToken
 };
 
 /*
@@ -37,20 +51,23 @@ export const actions = {
 export const initialState = {
   isRemember: false,
   isPending: false,
-  token: '',
+  tokenPending: false,
   errorMessage: '',
-  emailVerified: false
+  auth0Token: '',
+  token: '',
+  profile: {}
 };
 
 /*
  * Reducers
  * */
 export default handleActions({
-  [`${SIGN_IN}_PENDING`]: (state, { payload }) => {
+  [`${SIGN_IN}_PENDING`]: (state) => {
     return {
       ...state,
       isPending: true,
       errorMessage: '',
+      auth0Token: '',
       token: ''
     };
   },
@@ -60,6 +77,7 @@ export default handleActions({
       ...state,
       isPending: false,
       errorMessage: error,
+      auth0Token: '',
       token: ''
     };
   },
@@ -70,12 +88,34 @@ export default handleActions({
       isPending: false,
       isRemember: true,
       errorMessage: '',
-      token: response.token,
-      email: response.profile.email,
-      name: response.profile.nickname,
-      userId: response.profile.user_id,
-      picture: response.profile.picture,
-      emailVerified: response.profile.email_verified
+      auth0Token: response.token,
+      token: '',
+      profile: response.profile
+    };
+  },
+
+  [`${CREATE_TOKEN}_PENDING`]: (state) => {
+    return {
+      ...state,
+      tokenPending: true,
+      token: ''
+    };
+  },
+
+  [`${CREATE_TOKEN}_REJECTED`]: (state, { payload: error }) => {
+    return {
+      ...state,
+      tokenPending: false,
+      errorMessage: error,
+      token: ''
+    };
+  },
+
+  [`${CREATE_TOKEN}_FULFILLED`]: (state, { payload: response }) => {
+    return {
+      ...state,
+      tokenPending: false,
+      token: response.token
     };
   },
 
