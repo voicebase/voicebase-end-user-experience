@@ -4,6 +4,7 @@ import { Route, IndexRoute, Redirect } from 'react-router'
 import CoreLayout from '../views/CoreLayout'
 import AppLayout from '../views/AppLayout'
 import LoginView from '../views/LoginView'
+import ConfirmView from '../views/ConfirmView'
 import ApiKeyView from '../views/ApiKeyView'
 import AllView from '../views/AllView'
 import UploadView from '../views/UploadView'
@@ -33,6 +34,7 @@ export default function (store, history) {
       </Route>
 
       <Route path='/login' component={LoginView} />
+      <Route path='/confirm' component={ConfirmView} />
       <Route path='/404' component={NotFoundView} />
       <Redirect from='*' to='/404' />
     </Route>
