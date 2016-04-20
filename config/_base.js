@@ -38,6 +38,7 @@ const config = {
     colors : true
   },
   compiler_vendor : [
+    'axios',
     'history',
     'react',
     'react-dom',
@@ -48,7 +49,17 @@ const config = {
     'redux-simple-router',
     'classnames',
     'redux-promise-middleware',
-    'redux-thunk'
+    'redux-thunk',
+    'redux-form',
+    'redux-localstorage',
+    'react-bootstrap',
+    'react-bootstrap-daterangepicker',
+    'react-dropzone',
+    'react-notification-system',
+    'react-select',
+    'immutable',
+    'jquery',
+    'fuse.js'
   ],
 
   // ----------------------------------
