@@ -17,7 +17,9 @@ const webpackConfig = {
     root: paths.base(config.dir_client),
     extensions: ['', '.js']
   },
-  module: {}
+  module: {
+    noParse: /node_modules\/jquery\/dist\/jquery.js/
+  }
 }
 // ------------------------------------
 // Entry Points
@@ -153,8 +155,7 @@ webpackConfig.module.loaders.push({
   exclude: /src/,
   loaders: [
     'style',
-    'css?sourceMap',
-    'postcss'
+    'css'
   ]
 })
 
@@ -180,11 +181,11 @@ webpackConfig.postcss = [
 // File loaders
 /* eslint-disable */
 webpackConfig.module.loaders.push(
-  { test: /\.woff(\?.*)?$/,  loader: 'url?prefix=fonts/&name=[path][name].[ext]&mimetype=application/font-woff' },
-  { test: /\.woff2(\?.*)?$/, loader: 'url?prefix=fonts/&name=[path][name].[ext]&mimetype=application/font-woff2' },
-  { test: /\.ttf(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&mimetype=application/octet-stream' },
+  { test: /\.woff(\?.*)?$/,  loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
+  { test: /\.woff2(\?.*)?$/, loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
+  { test: /\.ttf(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
   { test: /\.eot(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
-  { test: /\.svg(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&mimetype=image/svg+xml' },
+  { test: /\.svg(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
   { test: /\.(png|jpg)$/,    loader: 'url' }
 )
 /* eslint-enable */
