@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import $ from 'jquery'
-import _ from 'lodash';
 import Fuse from 'fuse.js';
 import classnames from 'classnames';
 import equal from 'deep-equal'
@@ -41,8 +40,9 @@ export class Transcript extends React.Component {
 
     const isChangedState = !equal(this.state, nextState);
     const isChangedMarkers = !equal(this.props.markersState, nextProps.markersState);
+    const isChangedTab = !equal(this.props.activeTab, nextProps.activeTab);
 
-    return isTimeChanged || isChangedState || isChangedMarkers;
+    return isTimeChanged || isChangedState || isChangedMarkers || isChangedTab;
   }
 
   componentDidUpdate() {
@@ -73,7 +73,14 @@ export class Transcript extends React.Component {
     let findUtterance = null;
     for (let id of utterances.itemIds) {
       let utterance = utterances.items[id];
-      let res = _.findIndex(utterance.segments, segment => start > segment.s && start < segment.e)
+      let res = -1;
+      for (let i = 0; i < utterance.segments.length; i++) {
+        let segment = utterance.segments[i];
+        if (start > segment.s && start < segment.e) {
+          res = i;
+          break;
+        }
+      }
       if (res > -1) {
         findUtterance = {...utterance, segmentIndex: res};
         break;
