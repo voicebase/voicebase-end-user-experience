@@ -4,7 +4,8 @@ import Spinner from '../Spinner'
 
 export class ApiKeysList extends React.Component {
   static propTypes = {
-    authState: PropTypes.object.isRequired
+    authState: PropTypes.object.isRequired,
+    onGenerateApiKey: PropTypes.func.isRequired
   };
 
   getTooltip() {
@@ -27,7 +28,7 @@ export class ApiKeysList extends React.Component {
           <Panel className="auth0-key-manager">
             <div className="generate-container">
               <h4>Generate an API Key</h4>
-              <Button bsStyle="success" className="generate-button">Go</Button>
+              <Button bsStyle="success" className="generate-button" onClick={this.props.onGenerateApiKey}>Go</Button>
             </div>
 
             <h4>Active API Keys</h4>

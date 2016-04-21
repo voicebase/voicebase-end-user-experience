@@ -110,8 +110,7 @@ export default handleActions({
   [`${CREATE_TOKEN}_PENDING`]: (state) => {
     return {
       ...state,
-      tokenPending: true,
-      token: ''
+      tokenPending: true
     };
   },
 
@@ -119,8 +118,7 @@ export default handleActions({
     return {
       ...state,
       tokenPending: false,
-      errorMessage: error,
-      token: ''
+      errorMessage: error
     };
   },
 

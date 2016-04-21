@@ -14,6 +14,10 @@ export class ApiKeyView extends React.Component {
     this.props.actions.getApiKeys(this.props.state.auth.auth0Token);
   }
 
+  onGenerateApiKey() {
+    this.props.history.pushState(null, '/generate-api-key');
+  }
+
   render () {
     return (
      <div>
@@ -23,7 +27,9 @@ export class ApiKeyView extends React.Component {
          </h3>
        </div>
 
-       <ApiKeysList authState={this.props.state.auth} />
+       <ApiKeysList authState={this.props.state.auth}
+                    onGenerateApiKey={this.onGenerateApiKey.bind(this)}
+       />
      </div>
     )
   }
