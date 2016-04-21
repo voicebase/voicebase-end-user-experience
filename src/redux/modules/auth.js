@@ -9,6 +9,7 @@ export const SIGN_IN = 'SIGN_IN';
 export const SET_REMEMBER = 'SET_REMEMBER';
 export const SIGN_OUT = 'SIGN_OUT';
 export const CREATE_TOKEN = 'CREATE_TOKEN';
+export const GET_API_KEYS = 'GET_API_KEYS';
 
 /*
  * Actions
@@ -34,6 +35,12 @@ export const createToken = createAction(CREATE_TOKEN, (auth0Token) => {
   }
 });
 
+export const getApiKeys = createAction(GET_API_KEYS, (auth0Token) => {
+  return {
+    promise: authLockApi.getApiKeys(auth0Token)
+  }
+});
+
 export const setRemember = createAction(SET_REMEMBER, (isRemember) => isRemember);
 
 export const signOut = createAction(SIGN_OUT, {});
@@ -42,7 +49,8 @@ export const actions = {
   signIn,
   signOut,
   setRemember,
-  createToken
+  createToken,
+  getApiKeys
 };
 
 /*
@@ -55,7 +63,12 @@ export const initialState = {
   errorMessage: '',
   auth0Token: '',
   token: '',
-  profile: {}
+  profile: {},
+  keys: {
+    isPending: false,
+    errorMessage: '',
+    keys: []
+  }
 };
 
 /*
@@ -116,6 +129,40 @@ export default handleActions({
       ...state,
       tokenPending: false,
       token: response.token
+    };
+  },
+
+  [`${GET_API_KEYS}_PENDING`]: (state) => {
+    return {
+      ...state,
+      keys: {
+        ...state.keys,
+        isPending: true,
+        errorMessage: ''
+      }
+    };
+  },
+
+  [`${GET_API_KEYS}_REJECTED`]: (state, { payload: error }) => {
+    return {
+      ...state,
+      keys: {
+        ...state.keys,
+        isPending: false,
+        errorMessage: error
+      }
+    };
+  },
+
+  [`${GET_API_KEYS}_FULFILLED`]: (state, { payload: response }) => {
+    return {
+      ...state,
+      keys: {
+        ...state.keys,
+        isPending: false,
+        errorMessage: '',
+        keys: response.keys
+      }
     };
   },
 

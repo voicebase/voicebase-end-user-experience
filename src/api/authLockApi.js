@@ -41,5 +41,24 @@ export default {
       }
       return Promise.reject(error);
     });
+  },
+
+  getApiKeys(auth0Token) {
+    let url = `${baseUrl}/profile/keys`;
+    return axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${auth0Token}`
+      }
+    })
+    .then(response => {
+      const keys = response.data.keys;
+      return { keys };
+    })
+    .catch(error => {
+      if (error.data && error.data.errors) {
+        error = error.data.error;
+      }
+      return Promise.reject(error);
+    });
   }
 }

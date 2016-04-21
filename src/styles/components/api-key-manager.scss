@@ -7,3 +7,22 @@
     margin-right: 5px;
   }
 }
+
+.generate-container {
+  display: flex;
+}
+
+.generate-button {
+  margin-left: 5px;
+}
+
+.keys-list-container {
+  max-height: 300px;
+  overflow: auto;
+}
+
+.tooltip-icon {
+  cursor: pointer;
+  margin-left: 5px;
+}
+

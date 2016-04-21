@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import {actions as authActions} from '../redux/modules/auth'
 import connectWrapper from '../redux/utils/connect'
-import ApiKeyManager from '../components/ApiKeyManager'
+import ApiKeysList from '../components/apiKeys/ApiKeysList'
 
 export class ApiKeyView extends React.Component {
   static propTypes = {
@@ -9,6 +9,10 @@ export class ApiKeyView extends React.Component {
     state: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
+
+  componentWillMount() {
+    this.props.actions.getApiKeys(this.props.state.auth.auth0Token);
+  }
 
   render () {
     return (
@@ -19,7 +23,7 @@ export class ApiKeyView extends React.Component {
          </h3>
        </div>
 
-       <ApiKeyManager authState={this.props.state.auth} />
+       <ApiKeysList authState={this.props.state.auth} />
      </div>
     )
   }
