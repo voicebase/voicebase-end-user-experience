@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Panel, Button, Table, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { months } from '../../common/months'
 import Spinner from '../Spinner'
 
 export class ApiKeysList extends React.Component {
@@ -49,10 +50,19 @@ export class ApiKeysList extends React.Component {
                 <tbody>
                 {
                   keys.map((key, i) => {
+                    let dateLabel = '-';
+                    if (key.issued) {
+                      const dateObj = new Date(key.issued);
+                      const day = dateObj.getDate();
+                      const month = months[dateObj.getMonth() + 1].short;
+                      const year = dateObj.getFullYear();
+                      dateLabel = `${month} ${day}, ${year}`;
+                    }
+
                     return (
                       <tr key={'active-key' + i}>
                         <td>
-                          Jan 11, 2016
+                          {dateLabel}
                         </td>
                         <td>
                           ...{key.lastSix}
