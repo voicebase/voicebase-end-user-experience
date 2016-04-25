@@ -167,6 +167,7 @@ describe('UploadOptions component', function () {
       uploadState: {
         ...options.uploadState,
         options: {
+          ...options.uploadState.options,
           language: 'uk',
           priority: 'high'
         }
@@ -319,6 +320,7 @@ describe('UploadOptions component', function () {
       uploadState: {
         ...options.uploadState,
         options: {
+          ...options.uploadState.options,
           groups: ['0']
         }
       }

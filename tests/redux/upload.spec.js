@@ -128,7 +128,8 @@ describe('(Redux Module) upload.js', function () {
       ...initialJsState,
       view: {
         showForm: true,
-        activeTab: FILES_PREVIEW_TAB
+        activeTab: FILES_PREVIEW_TAB,
+        isStereoFile: false
       },
       fileIds: ['0', '1'],
       files: {
