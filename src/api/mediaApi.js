@@ -204,7 +204,23 @@ export default {
         };
       }
 
-      let sumConf = Object.assign({}, jobConf, groupsConf, predictionsConf);
+      let speakersConf = {};
+      if (options.speakers) {
+        speakersConf = {
+          ingest: {
+            channels: {
+              left: {
+                speaker: options.speakers.left
+              },
+              right: {
+                speaker: options.speakers.right
+              }
+            }
+          }
+        };
+      }
+
+      let sumConf = Object.assign({}, jobConf, groupsConf, predictionsConf, speakersConf);
 
       let conf = {
         configuration: sumConf

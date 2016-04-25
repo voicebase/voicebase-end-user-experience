@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import {Row, Col} from 'react-bootstrap'
+import { Row, Col, ButtonGroup, Button, Fade } from 'react-bootstrap'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 
@@ -99,6 +99,23 @@ export default class UploadPreview extends React.Component {
     this.props.actions.setGroups(value);
   }
 
+  onChangeStereo(isStereo) {
+    this.props.actions.setIsStereo(isStereo);
+  }
+
+  onChangeLeftSpeaker(event) {
+    this.onChangeSpeakerName(event, 'left');
+  }
+
+  onChangeRightSpeaker(event) {
+    this.onChangeSpeakerName(event, 'right');
+  }
+
+  onChangeSpeakerName(event, type) {
+    const speakerName = event.target.value;
+    this.props.actions.setSpeaker(type, speakerName);
+  }
+
   parseSelectValue(value) {
     return (value) ? value.split(',') : [];
   }
@@ -141,6 +158,9 @@ export default class UploadPreview extends React.Component {
     let groups = settingsState.groups.toJS();
     let groupsValue = this.getSelectValue('groups', groups.groups);
 
+    const isStereo = uploadState.view.isStereoFile;
+    const speakers = uploadState.options.speakers;
+
     return (
       <div>
         <form className="upload-options">
@@ -170,6 +190,41 @@ export default class UploadPreview extends React.Component {
                   />
                 </div>
               }
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <div className="form-group">
+                <label className="control-label">Are the files in stereo?</label>
+                <ButtonGroup>
+                  <Button active={isStereo} onClick={this.onChangeStereo.bind(this, true)}>Yes</Button>
+                  <Button active={!isStereo} onClick={this.onChangeStereo.bind(this, false)}>No</Button>
+                </ButtonGroup>
+              </div>
+            </Col>
+            <Col md={6}>
+              <Fade in={isStereo}>
+                <Row>
+                  <Col md={6}>
+                    <div className="form-group">
+                      <label className="control-label">Speaker 1</label>
+                      <input type="text" className="form-control" placeholder="Name of Speaker 1"
+                             value={speakers.left}
+                             onChange={this.onChangeLeftSpeaker.bind(this)}
+                      />
+                    </div>
+                  </Col>
+                  <Col md={6}>
+                    <div className="form-group">
+                      <label className="control-label">Speaker 2</label>
+                      <input type="text" className="form-control" placeholder="Name of Speaker 2"
+                             value={speakers.right}
+                             onChange={this.onChangeRightSpeaker.bind(this)}
+                      />
+                    </div>
+                  </Col>
+                </Row>
+              </Fade>
             </Col>
           </Row>
           {

@@ -16,6 +16,8 @@ export const SET_PREDICTION = 'SET_PREDICTION';
 export const SET_DETECTION = 'SET_DETECTION';
 export const SET_NUMBERS = 'SET_NUMBERS';
 export const SET_GROUPS = 'SET_GROUPS';
+export const SET_IS_STEREO = 'SET_IS_STEREO';
+export const SET_SPEAKER = 'SET_SPEAKER';
 export const CANCEL_UPLOAD = 'CANCEL_UPLOAD';
 export const CHOOSE_TAB = 'CHOOSE_TAB';
 export const FILES_PREVIEW_TAB = 1;
@@ -38,6 +40,10 @@ export const setPrediction = createAction(SET_PREDICTION, (predictionIds) => pre
 export const setDetection = createAction(SET_DETECTION, (detectionIds) => detectionIds);
 export const setNumbers = createAction(SET_NUMBERS, (numberIds) => numberIds);
 export const setGroups = createAction(SET_GROUPS, (groupIds) => groupIds);
+export const setIsStereo = createAction(SET_IS_STEREO, (isStereo) => isStereo);
+export const setSpeaker = createAction(SET_SPEAKER, (speakerType, speakerName) => {
+  return {speakerType, speakerName};
+});
 
 // view
 export const cancelUpload = createAction(CANCEL_UPLOAD);
@@ -53,6 +59,8 @@ export const actions = {
   setDetection,
   setNumbers,
   setGroups,
+  setIsStereo,
+  setSpeaker,
   cancelUpload,
   chooseTab
 };
@@ -63,11 +71,17 @@ export const actions = {
 export const initialState = fromJS({
   view: {
     showForm: false,
-    activeTab: FILES_PREVIEW_TAB
+    activeTab: FILES_PREVIEW_TAB,
+    isStereoFile: false
   },
   fileIds: [],
   files: {},
-  options: {}
+  options: {
+    speakers: {
+      left: 'Speaker 1',
+      right: 'Speaker 2'
+    }
+  }
 });
 
 /*
@@ -123,16 +137,8 @@ export default handleActions({
     });
   },
 
-  [CANCEL_UPLOAD]: (state) => {
-    return state.merge({
-      fileIds: [],
-      files: {},
-      view: {
-        showForm: false,
-        activeTab: FILES_PREVIEW_TAB
-      },
-      options: {}
-    });
+  [CANCEL_UPLOAD]: () => {
+    return initialState;
   },
 
   [CHOOSE_TAB]: (state, { payload: tabId }) => {
@@ -161,5 +167,13 @@ export default handleActions({
 
   [SET_GROUPS]: (state, { payload: groupIds }) => {
     return state.setIn(['options', 'groups'], groupIds);
+  },
+
+  [SET_IS_STEREO]: (state, { payload: isStereo }) => {
+    return state.setIn(['view', 'isStereoFile'], isStereo);
+  },
+
+  [SET_SPEAKER]: (state, { payload }) => {
+    return state.setIn(['options', 'speakers', payload.speakerType], payload.speakerName);
   }
 }, initialState);

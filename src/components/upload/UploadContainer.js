@@ -33,9 +33,10 @@ export default class UploadContainer extends React.Component {
       let settings = this.props.state.settings;
       let groups = options.groups && options.groups.map(groupId => settings.groups.getIn(['groups', groupId, 'name']));
       let predictions = options.predictions && options.predictions.map(id => settings.items.getIn(['predictions', 'items', id, 'modelId']));
+      let speakers = (uploadState.view.isStereoFile) ? options.speakers : null;
       uploadState.fileIds.forEach(fileId => {
         let file = uploadState.files[fileId].file;
-        this.props.actions.postFile(this.props.state.auth.token, fileId, file, {groups, predictions});
+        this.props.actions.postFile(this.props.state.auth.token, fileId, file, {groups, predictions, speakers});
       });
       this.props.onFinish();
     }
