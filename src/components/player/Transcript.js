@@ -4,7 +4,7 @@ import Fuse from 'fuse.js';
 import classnames from 'classnames';
 import equal from 'deep-equal'
 import { DETECTION_TAB } from '../../redux/modules/media/mediaData'
-import {getClearWordFromTranscript} from '../../common/Common';
+import TranscriptSpeakerWord from './TranscriptSpeakerWord'
 
 export class Transcript extends React.Component {
   static propTypes = {
@@ -149,10 +149,10 @@ export class Transcript extends React.Component {
     return (wordTurn === 'turn');
   }
 
-  getSpeakerColor (wordVal) {
-    let speakerName = getClearWordFromTranscript(wordVal).toLowerCase();
-    let speaker = this.props.speakers[speakerName];
-    return (speaker) ? speaker.color : null;
+  getSpeakersCount() {
+    let speakers = Object.keys(this.props.speakers);
+    speakers = speakers.filter(speaker => speaker !== 'unknown');
+    return speakers.length;
   }
 
   isHoverUtterance(utterance) {
@@ -175,9 +175,14 @@ export class Transcript extends React.Component {
     let markers = this.getMarkers();
     let endPhraseWords = {};
 
+    const speakersCount = this.getSpeakersCount();
+    let contentClasses = classnames('listing__transcript__content', {
+      'listing__transcript__content--with-speakers': speakersCount > 0
+    });
+
     return (
       <div className="listing__transcript">
-        <div className="listing__transcript__content" ref="transcript" onMouseEnter={this.onHoverTranscript.bind(this)} onMouseLeave={this.onBlurTranscript.bind(this)}>
+        <div className={contentClasses} ref="transcript" onMouseEnter={this.onHoverTranscript.bind(this)} onMouseLeave={this.onBlurTranscript.bind(this)}>
           {
             transcript.wordIds.map((wordId, i) => {
               let word = transcript.words[wordId];
@@ -215,9 +220,6 @@ export class Transcript extends React.Component {
 
               // highlight speaker
               let isSpeaker = this.isSpeaker(wordTurn);
-              if (isSpeaker) {
-                wordStyle['color'] = this.getSpeakerColor(wordVal);
-              }
 
               // highlight utterances phrase
               let utterance = null;
@@ -236,20 +238,32 @@ export class Transcript extends React.Component {
 
               let highlightClass = classnames({
                 current: isCurrent,
-                'highlighted': isFindingKeyword || isSpeaker || utterance
+                'highlighted': isFindingKeyword || utterance
               });
 
-              return (
-                <span key={'word-' + i}
-                      className={highlightClass}
-                      style={wordStyle}
-                      ref={currentWordsCounter === 1 ? 'current' : null}
-                      onMouseEnter={this.onHoverDetectionSegment.bind(this, utterance, endPhraseWords[word.p])}
-                      onMouseLeave={this.onBlurDetectionSegment.bind(this)}
-                >
-                  {(word.m === 'punc') ? word.w : ' ' + word.w}
-                </span>
-              )
+              if (isSpeaker) {
+                return (
+                  <TranscriptSpeakerWord
+                    key={'word-' + i}
+                    isFirst={i > 0}
+                    word={word}
+                    speakers={this.props.speakers}
+                  />
+                )
+              }
+              else {
+                return (
+                  <span key={'word-' + i}
+                        className={highlightClass}
+                        style={wordStyle}
+                        ref={currentWordsCounter === 1 ? 'current' : null}
+                        onMouseEnter={this.onHoverDetectionSegment.bind(this, utterance, endPhraseWords[word.p])}
+                        onMouseLeave={this.onBlurDetectionSegment.bind(this)}
+                  >
+                    {(word.m === 'punc') ? wordVal : ' ' + wordVal}
+                  </span>
+                )
+              }
             })
           }
         </div>
