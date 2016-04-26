@@ -112,14 +112,14 @@ export class Transcript extends React.Component {
     };
     let splitMarker = findingKeyword.keywordName.split(' ');
     if (splitMarker.length > 0) {
-      let fuseModel = new Fuse(splitMarker, {threshold: 0.2});
+      let fuseModel = new Fuse([findingKeyword.keywordName], {threshold: 0.2});
       let phrase = '';
       for (let j = 0; j < splitMarker.length; j++) {
         let nextWord = words[index + j];
         phrase += nextWord.w + ' ';
       }
       let fuseResult = fuseModel.search(phrase);
-      if (fuseResult.length >= splitMarker.length) {
+      if (fuseResult.length > 0) {
         for (let j = 1; j < splitMarker.length; j++) {
           let nextWord = words[index + j];
           endPhraseWords[nextWord.p] = {...wordObj};

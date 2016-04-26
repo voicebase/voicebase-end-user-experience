@@ -246,10 +246,10 @@ describe('Transcript component', function () {
     assert.isTrue(component.isSpeaker('turn'));
   });
 
-  it('Check getSpeakerColor', function() {
-    let res = component.getSpeakerColor('Speaker 1:');
-    assert.equal(res, options.speakers['speaker 1'].color);
-  });
+  // it('Check getSpeakerColor', function() {
+  //   let res = component.getSpeakerColor('Speaker 1:');
+  //   assert.equal(res, options.speakers['speaker 1'].color);
+  // });
 
   it('Check isHoverUtterance if no utterance', function() {
     let utterance = options.utterances.items['0'];
