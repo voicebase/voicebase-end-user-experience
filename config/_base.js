@@ -27,7 +27,7 @@ const config = {
   // ----------------------------------
   compiler_css_modules     : false,
   compiler_enable_hmr      : false,
-  compiler_devtool         : 'cheap-module-eval-source-map',
+  compiler_devtool         : 'source-map',
   compiler_hash_type       : 'hash',
   compiler_fail_on_warning : false,
   compiler_quiet           : false,
