@@ -30,9 +30,22 @@
   margin-left: -90px;
   display: block;
   float: left;
-  white-space: nowrap;
+  //white-space: nowrap; // speaker in one line
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+@media only screen and (min-width : 992px) {
+  $transcript-left: 150px;
+
+  .listing__transcript__content--with-speakers {
+    padding-left: $transcript-left;
+  }
+
+  .listing__transcript__speaker {
+    width: $transcript-left - 15px;
+    margin-left: -1 * ($transcript-left - 10px);
+  }
 }
 
 .listing__transcript .current {
