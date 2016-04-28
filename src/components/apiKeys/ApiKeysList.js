@@ -1,12 +1,11 @@
 import React, { PropTypes } from 'react'
-import { Panel, Button, Table, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Panel, Table, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { months } from '../../common/months'
 import Spinner from '../Spinner'
 
 export class ApiKeysList extends React.Component {
   static propTypes = {
-    authState: PropTypes.object.isRequired,
-    onGenerateApiKey: PropTypes.func.isRequired
+    authState: PropTypes.object.isRequired
   };
 
   getTooltip() {
@@ -26,25 +25,17 @@ export class ApiKeysList extends React.Component {
         {auth.keys.isPending && <Spinner />}
         {
           !auth.keys.isPending &&
-          <Panel className="auth0-key-manager">
-            <div className="generate-container">
-              <h4>Generate an API Key</h4>
-              <Button bsStyle="success" className="generate-button" onClick={this.props.onGenerateApiKey}>Go</Button>
-            </div>
-
-            <h4>Active API Keys</h4>
-
-            <div className="keys-list-container">
-              <Table>
+          <Panel className="keys-list-container">
+            <Table className="keys-list">
                 <thead>
                 <tr>
-                  <th>Date Generated</th>
                   <th>
-                    <span>Key Reference</span>
+                    <span>KEY REFERENCE</span>
                     <OverlayTrigger placement="right" overlay={this.getTooltip()}>
                       <i className="fa fa-question-circle tooltip-icon"/>
                     </OverlayTrigger>
                   </th>
+                  <th>DATE CREATED</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -62,10 +53,10 @@ export class ApiKeysList extends React.Component {
                     return (
                       <tr key={'active-key' + i}>
                         <td>
-                          {dateLabel}
+                          <code>...{key.lastSix}</code>
                         </td>
                         <td>
-                          ...{key.lastSix}
+                          {dateLabel}
                         </td>
                       </tr>
                     )
@@ -73,7 +64,6 @@ export class ApiKeysList extends React.Component {
                 }
                 </tbody>
               </Table>
-            </div>
           </Panel>
         }
       </div>

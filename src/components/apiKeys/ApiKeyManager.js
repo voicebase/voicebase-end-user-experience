@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { Panel, Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import ClipboardButton from 'react-clipboard.js'
 import Spinner from '../Spinner'
 import { saveAs } from 'filesaverjs'
@@ -33,9 +33,14 @@ export class ApiKeyManager extends React.Component {
         {auth.tokenPending && <Spinner />}
         {
           !auth.tokenPending &&
-          <Panel className="auth0-key-manager">
+          <div className="auth0-key-manager">
             <form>
-              <h4>API Key</h4>
+              <div className="form-group">
+                <ClipboardButton className="btn btn-success copy-button" data-clipboard-text={auth.token} onSuccess={this.onCopySuccess.bind(this)}>
+                  {this.state.isCopied ? 'Copied!' : 'Copy to clipboard'}
+                </ClipboardButton>
+                <Button bsStyle="success" onClick={this.downloadKey.bind(this)}>Download</Button>
+              </div>
 
               <div className="form-group">
                 <textarea className="form-control" rows="4" readOnly value={auth.token} />
@@ -47,12 +52,8 @@ export class ApiKeyManager extends React.Component {
                 <strong>Warning!</strong> This key is only is only displayed this one time. It will not be displayed again once you navigate away from this page
               </div>
 
-              <ClipboardButton className="btn btn-success copy-button" data-clipboard-text={auth.token} onSuccess={this.onCopySuccess.bind(this)}>
-                {this.state.isCopied ? 'Copied!' : 'Copy to clipboard'}
-              </ClipboardButton>
-              <Button bsStyle="success" onClick={this.downloadKey.bind(this)}>Download</Button>
             </form>
-          </Panel>
+          </div>
         }
       </div>
     )
