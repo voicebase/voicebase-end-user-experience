@@ -245,7 +245,7 @@ export class Transcript extends React.Component {
                 return (
                   <TranscriptSpeakerWord
                     key={'word-' + i}
-                    isFirst={i > 0}
+                    isFirst={i === 0}
                     word={word}
                     speakers={this.props.speakers}
                   />

@@ -1,5 +1,5 @@
-import React, {PropTypes} from 'react'
-import {getClearWordFromTranscript} from '../../common/Common';
+import React, { PropTypes } from 'react'
+import { getClearWordFromTranscript, parseTime } from '../../common/Common';
 
 export class TranscriptSpeakerWord extends React.Component {
   static propTypes = {
@@ -20,15 +20,21 @@ export class TranscriptSpeakerWord extends React.Component {
     let wordStyle = {
       color: this.getSpeakerColor(word.w)
     };
+    let parsedTime = parseTime(word.s / 1000);
 
     return (
       <div className="listing__transcript__speaker-wrapper">
-        {isFirst && <br/>}
-        <span className="listing__transcript__speaker highlighted"
-              style={wordStyle}
-        >
-          {word.w}
-        </span>
+        {!isFirst && <br/>}
+        <div className="listing__transcript__speaker">
+          <div className="highlighted"
+                style={wordStyle}
+          >
+            {word.w}
+          </div>
+          <div className="listing__transcript__speaker-time">
+            {parsedTime}
+          </div>
+        </div>
       </div>
     )
   }
