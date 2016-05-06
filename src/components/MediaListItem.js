@@ -89,7 +89,10 @@ export class MediaListItem extends React.Component {
 
     let checked = media.checked;
 
-    let duration = media.metadata.duration;
+    let duration = 0;
+    if (media.metadata && media.metadata.length && media.metadata.length.milliseconds) {
+      duration = media.metadata.length.milliseconds / 1000;
+    }
     let parsedDuration = parseTime(duration);
 
     return (

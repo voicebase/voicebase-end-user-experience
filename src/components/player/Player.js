@@ -30,10 +30,14 @@ export class Player extends React.Component {
   }
 
   componentWillMount() {
-    if (!this.props.mediaState) {
+    const media = this.props.mediaState;
+    if (!media) {
       return false;
     }
-    let duration = this.props.mediaState.metadata.duration;
+    let duration = 0;
+    if (media.metadata && media.metadata.length && media.metadata.length.milliseconds) {
+      duration = media.metadata.length.milliseconds / 1000;
+    }
     if (duration) {
       this.onDuration(duration);
     }
