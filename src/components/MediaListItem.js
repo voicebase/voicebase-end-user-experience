@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import MediaListItemTitle from './MediaListItemTitle';
 import Spinner from './Spinner';
 import VbsPlayerApp from './player/VbsPlayerApp';
-import { parseTime } from '../common/Common';
+import { parseTime, getDateLabel } from '../common/Common';
 
 export class MediaListItem extends React.Component {
   static propTypes = {
@@ -89,11 +89,14 @@ export class MediaListItem extends React.Component {
 
     let checked = media.checked;
 
-    let duration = 0;
+    let duration = null;
     if (media.metadata && media.metadata.length && media.metadata.length.milliseconds) {
       duration = media.metadata.length.milliseconds / 1000;
     }
     let parsedDuration = parseTime(duration);
+
+    const dateCreated = media.dateCreated;
+    let dateLabel = (dateCreated) ? getDateLabel(dateCreated) : null;
 
     return (
       <div>
@@ -102,8 +105,9 @@ export class MediaListItem extends React.Component {
                               metadata={media.metadata}
           />
           <p className="list-group-item-text">
+            { dateLabel && <span>Uploaded {dateLabel} |</span> }
             &nbsp;
-            { duration && <span> | Length {parsedDuration}</span> }
+            { duration && <span>Length {parsedDuration}</span> }
           </p>
           <input type="checkbox" className="listing__checkbox" checked={checked} onChange={this.selectMedia.bind(this)} />
           {media.deletePending && <Spinner isMediumItem/>}

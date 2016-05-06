@@ -1,3 +1,5 @@
+import { months } from '../common/months'
+
 export const parseTime = function (seconds) {
   let hours = `${Math.floor(seconds / 3600)}`;
   let minutes = `${Math.floor(seconds % 3600 / 60)}`;
@@ -57,6 +59,14 @@ export const getFileType = function (file) {
 
 export const dateToIso = function (date) {
   return new Date(date).toISOString();
+};
+
+export const getDateLabel = function (date) {
+  const dateObj = new Date(date);
+  const day = dateObj.getDate();
+  const month = months[dateObj.getMonth() + 1].short;
+  const year = dateObj.getFullYear();
+  return `${month} ${day}, ${year}`;
 };
 
 export const sortByField = function (field) {
