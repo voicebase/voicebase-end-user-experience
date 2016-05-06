@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../src/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
 import Player from '../../../src/components/player/Player'
@@ -26,7 +25,10 @@ describe('Player component', function () {
     },
     mediaState: {
       metadata: {
-        duration: 1000
+        length: {
+          milliseconds: 1000000,
+          descriptive: '1000 sec'
+        }
       },
       "transcriptSpeakers": [
         {
@@ -172,9 +174,7 @@ describe('Player component', function () {
       ...options,
       mediaState: {
         ...options.mediaState,
-        metadata: {
-          duration: null
-        }
+        metadata: {}
       }
     });
     component.onDuration = sinon.spy();
@@ -247,13 +247,17 @@ describe('Player component', function () {
       }
     });
     component.onDuration(900);
-    assert.isTrue(setDuration.calledOnce);
+    assert.isTrue(setDuration.called);
   });
 
   it('check onDuration with negative argument', function() {
     let setDuration = sinon.spy();
     component = getComponent({
       ...options,
+      mediaState: {
+        ...options.mediaState,
+        metadata: {}
+      },
       actions: {
         ...options.actions,
         setDuration
@@ -447,9 +451,7 @@ describe('Player component', function () {
       ...options,
       mediaState: {
         ...options.mediaState,
-        metadata: {
-          duration: null
-        }
+        metadata: {}
       }
     });
     let res = component.calcTimeOffset(100);

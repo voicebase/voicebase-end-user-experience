@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallowRender } from '../../src/common/Test'
-import TestUtils from 'react-addons-test-utils'
 
 import { MediaListItem } from '../../src/components/MediaListItem'
 import { MediaListItemTitle } from '../../src/components/MediaListItemTitle'
@@ -26,8 +25,12 @@ describe('MediaListItem component', function () {
     isExpanded: false,
     listItemState: {
       mediaId: "mediaId",
+      dateCreated: 'Fri May 06 2016 13:04:05',
       metadata: {
-        duration: 288,
+        length: {
+          milliseconds: 288000,
+          descriptive: '288 sec'
+        },
         title: "* Cable Sales Call",
         type: "audio"
       },
@@ -185,17 +188,16 @@ describe('MediaListItem component', function () {
       let label = itemRow.props.children[1];
       assert.equal(label.type, 'p');
       assert.equal(label.props.className, 'list-group-item-text');
-      //assert.equal(label.props.children[0], 'Uploaded Jan 5, 2010');
-      assert.equal(label.props.children[1].type, 'span');
-
+      assert.equal(label.props.children[0].props.children.join(''), 'Uploaded May 6, 2016 |');
+      assert.equal(label.props.children[2].type, 'span');
     });
 
     it('Check item label duration', function() {
       let label = itemRow.props.children[1];
-      let duration = parseTime(options.listItemState.metadata.duration);
-      assert.equal(label.props.children[1].type, 'span');
-      assert.equal(label.props.children[1].props.children[0], ' | Length ');
-      assert.equal(label.props.children[1].props.children[1],  `${duration}`);
+      let duration = parseTime(options.listItemState.metadata.length.milliseconds / 1000);
+      assert.equal(label.props.children[2].type, 'span');
+      assert.equal(label.props.children[2].props.children[0], 'Length ');
+      assert.equal(label.props.children[2].props.children[1],  `${duration}`);
     });
 
     it('Check item label if no duration in metadata', function() {
@@ -211,7 +213,7 @@ describe('MediaListItem component', function () {
       });
       itemRow = getItemRow();
       let label = itemRow.props.children[1];
-      assert.isUndefined(label.props.children[1]);
+      assert.isNull(label.props.children[2]);
     });
 
     it('Check unchecked checkbox', function() {
