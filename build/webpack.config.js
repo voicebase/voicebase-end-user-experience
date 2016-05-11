@@ -47,8 +47,6 @@ webpackConfig.output = {
 // ------------------------------------
 webpackConfig.plugins = [
   new webpack.DefinePlugin(config.globals),
-  new webpack.optimize.OccurrenceOrderPlugin(),
-  new webpack.optimize.DedupePlugin(),
   new HtmlWebpackPlugin({
     template: paths.client('index.html'),
     hash: false,
@@ -71,6 +69,8 @@ if (config.compiler_enable_hmr) {
 if (config.env === 'production') {
   debug('Apply UglifyJS plugin.')
   webpackConfig.plugins.push(
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         unused: true,
