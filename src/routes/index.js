@@ -5,8 +5,6 @@ import CoreLayout from '../views/CoreLayout'
 import AppLayout from '../views/AppLayout'
 import LoginView from '../views/LoginView'
 import ConfirmView from '../views/ConfirmView'
-import ApiKeyView from '../views/ApiKeyView'
-import NewApiKeyView from '../views/NewApiKeyView'
 import AllView from '../views/AllView'
 import UploadView from '../views/UploadView'
 import SettingsView from '../views/SettingsView'
@@ -31,8 +29,6 @@ export default function (store, history) {
         <Route path='/all' component={AllView} />
         <Route path='/upload' component={UploadView} />
         <Route path='/settings' component={SettingsView} />
-        <Route path='/apikeys' component={ApiKeyView} />
-        <Route path='/generate-api-key' component={NewApiKeyView} />
       </Route>
 
       <Route path='/login' component={LoginView} />
