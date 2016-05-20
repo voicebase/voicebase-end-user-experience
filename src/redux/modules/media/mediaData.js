@@ -180,12 +180,11 @@ export const parseMediaData = function (data) {
       };
       activeTopic = 'ALL_TOPICS';
     }
-    if (data.keywords.latest.groups && Array.isArray(data.keywords.latest.groups)) {
-      let parseGroupsResult = parseTopics(data.keywords.latest.groups);
-      groupsIds = parseGroupsResult.topicsIds;
-      groups = parseGroupsResult.topics;
-      activeGroup = parseGroupsResult.activeTopic;
-      speakers = Object.assign({}, speakers, parseGroupsResult.speakers);
+    if (data.keywords.latest.groups) {
+      let parseGroupsResult = parseGroups(data.keywords.latest.groups);
+      groupsIds = parseGroupsResult.groupIds;
+      groups = parseGroupsResult.groups;
+      activeGroup = parseGroupsResult.activeGroup;
     }
   }
 
@@ -306,6 +305,45 @@ const parseTopics = function (topicsArr) {
   let topics = result.entities;
 
   return {topicsIds, topics, activeTopic, speakers}
+};
+
+const parseGroups = function (groupsData) {
+  let activeGroup = null;
+  let groupIds = [];
+  let groups = {};
+
+  Object.keys(groupsData).forEach((groupName, i) => {
+    let id = i.toString();
+    let group = groupsData[groupName];
+    if (i === 0) {
+      activeGroup = id;
+    }
+
+    let keywords = {};
+    let keywordsIds = Object.keys(group).map((keywordName, j) => {
+      let keywordId = j.toString();
+      let keyword = group[keywordName];
+      let times = keyword.map(keywordItem => keywordItem.s);
+
+      keywords[keywordId] = {
+        name: keywordName,
+        t: {
+          'unknown': times
+        }
+      };
+      return keywordId;
+    });
+
+    groupIds.push(id);
+    groups[id] = {
+      key: id,
+      name: groupName,
+      keywordsIds,
+      keywords
+    }
+  });
+
+  return {groupIds, groups, activeGroup}
 };
 
 const addSpeaker = function (speakersObject, newSpeakersNames) {
