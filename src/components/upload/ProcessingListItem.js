@@ -72,7 +72,7 @@ export default class ProcessingListItem extends React.Component {
     let processingTasks = {};
     Object.keys(jobTasks).forEach(taskId => {
       let task = jobTasks[taskId];
-      let status = (task.status === 'completed') ? 'completed' : 'progress';
+      let status = (task.status === 'finished') ? 'completed' : 'progress';
       if (!processingTasks[task.phase]) {
         processingTasks[task.phase] = {
           completed: [],
