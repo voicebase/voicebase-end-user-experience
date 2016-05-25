@@ -220,7 +220,18 @@ export default {
         };
       }
 
-      let sumConf = Object.assign({}, jobConf, groupsConf, predictionsConf, speakersConf);
+      let tarnscriptConf = {};
+      if (options.vocabularies && options.vocabularies.length > 0) {
+        tarnscriptConf = {
+          transcripts: {
+            vocabularies: [{
+              terms: options.vocabularies
+            }]
+          }
+        };
+      }
+
+      let sumConf = Object.assign({}, jobConf, groupsConf, predictionsConf, speakersConf, tarnscriptConf);
 
       let conf = {
         configuration: sumConf

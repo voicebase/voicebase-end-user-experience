@@ -16,6 +16,7 @@ export const SET_PREDICTION = 'SET_PREDICTION';
 export const SET_DETECTION = 'SET_DETECTION';
 export const SET_NUMBERS = 'SET_NUMBERS';
 export const SET_GROUPS = 'SET_GROUPS';
+export const SET_VOCABULARY = 'SET_VOCABULARY';
 export const SET_IS_STEREO = 'SET_IS_STEREO';
 export const SET_SPEAKER = 'SET_SPEAKER';
 export const CANCEL_UPLOAD = 'CANCEL_UPLOAD';
@@ -40,6 +41,7 @@ export const setPrediction = createAction(SET_PREDICTION, (predictionIds) => pre
 export const setDetection = createAction(SET_DETECTION, (detectionIds) => detectionIds);
 export const setNumbers = createAction(SET_NUMBERS, (numberIds) => numberIds);
 export const setGroups = createAction(SET_GROUPS, (groupIds) => groupIds);
+export const setVocabulary = createAction(SET_VOCABULARY, (vocabulary) => vocabulary);
 export const setIsStereo = createAction(SET_IS_STEREO, (isStereo) => isStereo);
 export const setSpeaker = createAction(SET_SPEAKER, (speakerType, speakerName) => {
   return {speakerType, speakerName};
@@ -59,6 +61,7 @@ export const actions = {
   setDetection,
   setNumbers,
   setGroups,
+  setVocabulary,
   setIsStereo,
   setSpeaker,
   cancelUpload,
@@ -72,7 +75,8 @@ export const initialState = fromJS({
   view: {
     showForm: false,
     activeTab: FILES_PREVIEW_TAB,
-    isStereoFile: false
+    isStereoFile: false,
+    showVocabularies: true
   },
   fileIds: [],
   files: {},
@@ -80,7 +84,8 @@ export const initialState = fromJS({
     speakers: {
       left: 'Speaker 1',
       right: 'Speaker 2'
-    }
+    },
+    vocabularies: []
   }
 });
 
@@ -167,6 +172,10 @@ export default handleActions({
 
   [SET_GROUPS]: (state, { payload: groupIds }) => {
     return state.setIn(['options', 'groups'], groupIds);
+  },
+
+  [SET_VOCABULARY]: (state, { payload: vocabulary }) => {
+    return state.setIn(['options', 'vocabularies'], vocabulary);
   },
 
   [SET_IS_STEREO]: (state, { payload: isStereo }) => {

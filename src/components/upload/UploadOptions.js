@@ -99,6 +99,11 @@ export default class UploadPreview extends React.Component {
     this.props.actions.setGroups(value);
   }
 
+  onChangeVocabulary(newValue) {
+    let value = this.parseSelectValue(newValue);
+    this.props.actions.setVocabulary(value);
+  }
+
   onChangeStereo(isStereo) {
     this.props.actions.setIsStereo(isStereo);
   }
@@ -126,11 +131,11 @@ export default class UploadPreview extends React.Component {
     let selectValue = [];
     if (uploadState.options[key]) {
       defaultValue = uploadState.options[key];
-      selectValue = Object.keys(items).map(id => {
+      selectValue = Object.keys(items).map((id, i) => {
         let item = items[id];
         return {
-          value: item.id,
-          label: item.displayName || item.name
+          value: item.id || i,
+          label: item.displayName || item.name || item
         }
       });
     }
@@ -160,6 +165,9 @@ export default class UploadPreview extends React.Component {
 
     const isStereo = uploadState.view.isStereoFile;
     const speakers = uploadState.options.speakers;
+
+    const vocabularies = uploadState.options.vocabularies;
+    let vocabularyValue = this.getSelectValue('vocabularies', vocabularies);
 
     return (
       <div>
@@ -298,6 +306,24 @@ export default class UploadPreview extends React.Component {
                           value={groupsValue.defaultValue.join(',')}
                           options={groupsValue.selectValue}
                           onChange={this.onChangeGroups.bind(this)}
+                          onBlur={() => {}}
+                  />
+                </div>
+              }
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={12}>
+              {
+                uploadState.view.showVocabularies &&
+                <div className="form-group">
+                  <label className="control-label">Add 1 or more custom terms separated by a semicolon (Optional)</label>
+                  <Select placeholder="Pick 1 or more custom terms"
+                          multi
+                          allowCreate
+                          value={vocabularyValue.defaultValue.join(',')}
+                          options={vocabularyValue.selectValue}
+                          onChange={this.onChangeVocabulary.bind(this)}
                           onBlur={() => {}}
                   />
                 </div>
