@@ -317,7 +317,7 @@ export default class UploadPreview extends React.Component {
               {
                 uploadState.view.showVocabularies &&
                 <div className="form-group">
-                  <label className="control-label">Add 1 or more custom terms separated by a semicolon (Optional)</label>
+                  <label className="control-label">Add 1 or more custom terms (Optional)</label>
                   <Select placeholder="Pick 1 or more custom terms"
                           multi
                           allowCreate
