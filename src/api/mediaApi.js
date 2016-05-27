@@ -220,18 +220,21 @@ export default {
         };
       }
 
-      let tarnscriptConf = {};
+      let transcriptConf = {
+        transcripts: {
+          formatNumbers: true
+        }
+      };
       if (options.vocabularies && options.vocabularies.length > 0) {
-        tarnscriptConf = {
-          transcripts: {
-            vocabularies: [{
-              terms: options.vocabularies
-            }]
-          }
+        transcriptConf.transcripts = {
+          ...transcriptConf.transcripts,
+          vocabularies: [{
+            terms: options.vocabularies
+          }]
         };
       }
 
-      let sumConf = Object.assign({}, jobConf, groupsConf, predictionsConf, speakersConf, tarnscriptConf);
+      let sumConf = Object.assign({}, jobConf, groupsConf, predictionsConf, speakersConf, transcriptConf);
 
       let conf = {
         configuration: sumConf
