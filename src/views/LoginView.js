@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import {actions as authActions} from '../redux/modules/auth'
 import connectWrapper from '../redux/utils/connect'
-import { Panel, Button } from 'react-bootstrap'
 import Logo from '../images/voicebase-logo-2.png'
+import Spinner from '../components/Spinner'
 
 export class LoginView extends React.Component {
   static propTypes = {
@@ -13,6 +13,10 @@ export class LoginView extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  componentWillMount () {
+    this.props.actions.signIn();
   }
 
   componentWillUpdate(nextProps) {
@@ -36,11 +40,10 @@ export class LoginView extends React.Component {
       <div className="login-overlay">
         <div className="login-content">
           <img src={Logo} className="img-responsive"/>
-          <Panel>
-            <Button bsStyle="primary" bsSize="large" block onClick={this.signIn.bind(this)}>
-              {(auth.isPending || auth.tokenPending) ? 'Signing In...' : 'Sign In'}
-            </Button>
-          </Panel>
+          {
+            (auth.isPending || auth.tokenPending) &&
+            <Spinner />
+          }
         </div>
       </div>
     )

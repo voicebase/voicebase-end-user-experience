@@ -15,7 +15,7 @@
   left: 0;
   right: 0;
   top: 50%;
-  margin-top: -240px;
+  transform: translate(0, -50%);
 }
 
 .login-overlay .login-content img {
@@ -60,5 +60,17 @@
 
   h3 {
     margin-top: 25px;
+  }
+}
+
+.login-content .spinner {
+  margin: 0 auto;
+
+  .rect1,
+  .rect2,
+  .rect3,
+  .rect4,
+  .rect5 {
+    background-color: #fff;
   }
 }
