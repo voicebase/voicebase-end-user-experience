@@ -46,65 +46,61 @@ export class SettingsList extends React.Component {
 
     return (
       <div>
-        { state.isGetPending && <Spinner /> }
-        {
-          state.errorMessage &&
+        {state.isGetPending && <Spinner />}
+        {state.errorMessage &&
           <Alert bsStyle="warning">
             {state.errorMessage}
           </Alert>
         }
-        {
-          !state.isGetPending &&
+        {!state.isGetPending &&
           <div>
-            {state.isAddPending && <div className="btn-add-settings"><Spinner/></div>}
-            {
-              !state.isAddPending &&
+            {state.isAddPending && <div className="btn-add-settings"><Spinner /></div>}
+            {!state.isAddPending &&
               <Button bsStyle="link" className="btn-add" onClick={this.expandCreateForm.bind(this)}>
-                <i className="fa fa-plus"/>&nbsp;{state.view.addButtonLabel}
+                <i className="fa fa-plus" />&nbsp;{state.view.addButtonLabel}
               </Button>
             }
             <Collapse in={state.view.isExpandCreateForm}>
               <div>
-                {
-                  type === 'predictions' &&
-                  <PredictionForm formKey={'add-' + type}
-                                  onSubmit={this.addItem.bind(this)}
-                                  onCancel={this.collapseCreateForm.bind(this)}
+                {type === 'predictions' &&
+                  <PredictionForm
+                    formKey={'add-' + type}
+                    onSubmit={this.addItem.bind(this)}
+                    onCancel={this.collapseCreateForm.bind(this)}
                   />
                 }
-                {
-                  type === 'detection' &&
-                  <DetectionForm formKey={'add-' + type}
-                                 onSubmit={this.addItem.bind(this)}
-                                 onCancel={this.collapseCreateForm.bind(this)}
+                {type === 'detection' &&
+                  <DetectionForm
+                    formKey={'add-' + type}
+                    onSubmit={this.addItem.bind(this)}
+                    onCancel={this.collapseCreateForm.bind(this)}
                   />
                 }
-                {
-                  type === 'numbers' &&
-                  <NumbersForm formKey={'add-' + type}
-                               onSubmit={this.addItem.bind(this)}
-                               onCancel={this.collapseCreateForm.bind(this)}
+                {type === 'numbers' &&
+                  <NumbersForm
+                    formKey={'add-' + type}
+                    onSubmit={this.addItem.bind(this)}
+                    onCancel={this.collapseCreateForm.bind(this)}
                   />
                 }
               </div>
             </Collapse>
             <Panel className="panel panel-default panel-settings">
               <ListGroup>
-                {
-                  state.itemIds.map(id => {
-                    return (
-                      <SettingsListItem key={type + id}
-                                        type={type}
-                                        item={state.items[id]}
-                                        isActive={activeItemId === id}
-                                        onDeleteItem={this.props.onDeleteItem}
-                                        onEditItem={this.props.onEditItem}
-                                        onSetActiveItem={this.expandItem.bind(this)}
-                                        onClearActiveItem={this.collapseItem.bind(this)}
-                      />
-                    )
-                  })
-                }
+                {state.itemIds.map(id => {
+                  return (
+                    <SettingsListItem
+                      key={type + id}
+                      type={type}
+                      item={state.items[id]}
+                      isActive={activeItemId === id}
+                      onDeleteItem={this.props.onDeleteItem}
+                      onEditItem={this.props.onEditItem}
+                      onSetActiveItem={this.expandItem.bind(this)}
+                      onClearActiveItem={this.collapseItem.bind(this)}
+                    />
+                  )
+                })}
               </ListGroup>
             </Panel>
           </div>

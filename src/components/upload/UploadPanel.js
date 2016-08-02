@@ -14,9 +14,10 @@ export default class UploadPanel extends React.Component {
   render () {
     return (
       <div>
-        <Panel className="upload-panel"
-               collapsible
-               expanded={this.props.showForm}
+        <Panel
+          className="upload-panel"
+          collapsible
+          expanded={this.props.showForm}
         >
           {this.props.children}
           <div className="upload-panel__footer">

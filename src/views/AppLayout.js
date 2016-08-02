@@ -5,8 +5,11 @@ import {Grid, Row, Col} from 'react-bootstrap'
 import SidebarMenu from '../components/SidebarMenu'
 
 export class AppLayout extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
   static propTypes = {
-    history: PropTypes.object.isRequired,
     children: PropTypes.element,
     state: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
@@ -26,7 +29,7 @@ export class AppLayout extends React.Component {
 
   redirectIfNotLoggedIn() {
     if (!this.props.state.auth.token) {
-      this.props.history.pushState(null, '/login');
+      this.context.router.push('/login');
     }
   }
 
@@ -36,7 +39,7 @@ export class AppLayout extends React.Component {
       <Grid fluid>
         <Row>
           <Col xs={2} className="sidebar">
-            <SidebarMenu state={state} history={this.props.history} actions={this.props.actions}/>
+            <SidebarMenu state={state} actions={this.props.actions} />
           </Col>
           <Col xs={10} className="content">
             {this.props.children}

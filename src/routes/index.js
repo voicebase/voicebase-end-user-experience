@@ -9,14 +9,14 @@ import UploadView from '../views/UploadView'
 import SettingsView from '../views/SettingsView'
 import NotFoundView from '../views/NotFoundView'
 
-export default function (store, history) {
-  const redirectIfLoggedIn = (nextState, replaceState) => {
+export default function (store) {
+  const redirectIfLoggedIn = (nextState, replace) => {
     const { auth } = store.getState();
     if (!auth.token) {
-      replaceState(null, '/login');
+      replace('/login');
     }
     else {
-      replaceState(null, '/all');
+      replace('/all');
     }
   };
 

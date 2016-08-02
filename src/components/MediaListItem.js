@@ -69,12 +69,13 @@ export class MediaListItem extends React.Component {
       : null;
 
     return (
-      <VbsPlayerApp token={this.props.token}
-                    mediaId={this.props.mediaId}
-                    playerState={playerState}
-                    mediaDataState={mediaDataState}
-                    markersState={markersState}
-                    actions={this.props.actions}
+      <VbsPlayerApp
+        token={this.props.token}
+        mediaId={this.props.mediaId}
+        playerState={playerState}
+        mediaDataState={mediaDataState}
+        markersState={markersState}
+        actions={this.props.actions}
       />
     );
   }
@@ -101,23 +102,23 @@ export class MediaListItem extends React.Component {
     return (
       <div>
         <div className={itemClasses} onClick={this.toggle.bind(this)}>
-          <MediaListItemTitle mediaId={this.props.mediaId}
-                              metadata={media.metadata}
+          <MediaListItemTitle
+            mediaId={this.props.mediaId}
+            metadata={media.metadata}
           />
           <p className="list-group-item-text">
-            { dateLabel && <span>Uploaded {dateLabel} |</span> }
+            {dateLabel && <span>Uploaded {dateLabel} |</span>}
             &nbsp;
-            { duration && <span>Length {parsedDuration}</span> }
+            {duration && <span>Length {parsedDuration}</span>}
           </p>
           <input type="checkbox" className="listing__checkbox" checked={checked} onChange={this.selectMedia.bind(this)} />
-          {media.deletePending && <Spinner isMediumItem/>}
-          {!media.deletePending && <a href="#" className="listing__delete" onClick={this.deleteMedia.bind(this)}><i className="fa fa-trash"/></a>}
+          {media.deletePending && <Spinner isMediumItem />}
+          {!media.deletePending && <a href="#" className="listing__delete" onClick={this.deleteMedia.bind(this)}><i className="fa fa-trash" /></a>}
         </div>
         <Collapse in={this.props.isExpanded}>
           <div className="listing__body">
-            {this.isGettingMediaData(mediaData) && <div className="spinner-media_item"><Spinner/></div>}
-            {
-              mediaData && mediaData.status === 'failed' &&
+            {this.isGettingMediaData(mediaData) && <div className="spinner-media_item"><Spinner /></div>}
+            {mediaData && mediaData.status === 'failed' &&
               <Row className="row-without-margin">
                 <Col sm={12}>
                   <Alert bsStyle="danger">
@@ -126,8 +127,7 @@ export class MediaListItem extends React.Component {
                 </Col>
               </Row>
             }
-            {
-              !this.isGettingMediaData(mediaData) && mediaData && mediaData.status === 'finished' &&
+            {!this.isGettingMediaData(mediaData) && mediaData && mediaData.status === 'finished' &&
               this.getPlayerApp()
             }
           </div>

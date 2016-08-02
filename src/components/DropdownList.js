@@ -19,24 +19,23 @@ export default class DropdownList extends React.Component {
     return (
       <Dropdown id={this.props.dropdownKey + '-dropdown'} onSelect={this.onSelectItem.bind(this)} className="dropdown--custom-caret">
         <Dropdown.Toggle>
-          { activeItem && activeItem.name }
-          <i className="fa fa-caret-down"/>
+          {activeItem && activeItem.name}
+          <i className="fa fa-caret-down" />
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          {
-            Object.keys(items).map(id => {
-              let item = items[id];
-              let activeId = (activeItem) ? activeItem.id : null;
-              return (
-                <MenuItem key={this.props.dropdownKey + 'priority-item' + id}
-                          eventKey={id}
-                          active={id === activeId}
-                >
-                  {item.name}
-                </MenuItem>
-              )
-            })
-          }
+          {Object.keys(items).map(id => {
+            let item = items[id];
+            let activeId = (activeItem) ? activeItem.id : null;
+            return (
+              <MenuItem
+                key={this.props.dropdownKey + 'priority-item' + id}
+                eventKey={id}
+                active={id === activeId}
+              >
+                {item.name}
+              </MenuItem>
+            )
+          })}
         </Dropdown.Menu>
       </Dropdown>
     )

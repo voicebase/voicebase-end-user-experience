@@ -34,8 +34,7 @@ export class SettingsView extends React.Component {
     return (
       <div>
         {state.getIn(['view', 'title'])}&nbsp;
-        {
-          !isGetPending &&
+        {!isGetPending &&
           <span className="text-muted">{ids.size}</span>
         }
       </div>
@@ -50,40 +49,41 @@ export class SettingsView extends React.Component {
         <div className="content__heading">
           <h3>Settings</h3>
         </div>
-        <Tabs>
+        <Tabs id='content-settings-tabs'>
           <Tab eventKey={0} title={this.getTabTitle(state.settings.groups, 'groupIds')}>
-            <SpottingGroups token={this.props.state.auth.token}
-                            groupsState={state.settings.groups.toJS()}
-                            actions={this.props.actions}
+            <SpottingGroups
+              token={this.props.state.auth.token}
+              groupsState={state.settings.groups.toJS()}
+              actions={this.props.actions}
             />
           </Tab>
 
-          {
-            state.settings.items.getIn(['predictions', 'view', 'enabled']) &&
+          {state.settings.items.getIn(['predictions', 'view', 'enabled']) &&
             <Tab eventKey={1} title={this.getTabTitle(state.settings.items.get('predictions'), 'itemIds')}>
-              <Predictions token={this.props.state.auth.token}
-                           state={state.settings.items.get('predictions').toJS()}
-                           actions={this.props.actions}
+              <Predictions
+                token={this.props.state.auth.token}
+                state={state.settings.items.get('predictions').toJS()}
+                actions={this.props.actions}
               />
             </Tab>
           }
 
-          {
-            state.settings.items.getIn(['detection', 'view', 'enabled']) &&
+          {state.settings.items.getIn(['detection', 'view', 'enabled']) &&
             <Tab eventKey={2} title={this.getTabTitle(state.settings.items.get('detection'), 'itemIds')}>
-              <Detections token={this.props.state.auth.token}
-                          state={state.settings.items.get('detection').toJS()}
-                          actions={this.props.actions}
+              <Detections
+                token={this.props.state.auth.token}
+                state={state.settings.items.get('detection').toJS()}
+                actions={this.props.actions}
               />
             </Tab>
           }
 
-          {
-            state.settings.items.getIn(['numbers', 'view', 'enabled']) &&
+          {state.settings.items.getIn(['numbers', 'view', 'enabled']) &&
             <Tab eventKey={3} title={this.getTabTitle(state.settings.items.get('numbers'), 'itemIds')}>
-              <Numbers token={this.props.state.auth.token}
-                       state={state.settings.items.get('numbers').toJS()}
-                       actions={this.props.actions}
+              <Numbers
+                token={this.props.state.auth.token}
+                state={state.settings.items.get('numbers').toJS()}
+                actions={this.props.actions}
               />
             </Tab>
           }

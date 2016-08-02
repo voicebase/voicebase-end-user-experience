@@ -10,9 +10,9 @@ export default class LanguageDropdown extends React.Component {
     activeLanguageId: PropTypes.string.isRequired
   };
 
-  onSelectItem(event, key) {
+  onSelectItem = (event, key) => {
     this.props.onSelect(key);
-  }
+  };
 
   getFlag(languageId) {
     if (languageId === 'uk') {
@@ -36,9 +36,10 @@ export default class LanguageDropdown extends React.Component {
     return Object.keys(languageState).map(id => {
       let language = languageState[id];
       return (
-        <MenuItem key={'language-item' + language.id}
-                  eventKey={language.id}
-                  active={language.id === activeLanguageId}
+        <MenuItem
+          key={'language-item' + language.id}
+          eventKey={language.id}
+          active={language.id === activeLanguageId}
         >
           {this.getItemContent(language)}
         </MenuItem>
@@ -49,10 +50,10 @@ export default class LanguageDropdown extends React.Component {
   render() {
     let activeLanguage = this.props.languages[this.props.activeLanguageId];
     return (
-      <Dropdown id="languages-dropdown" onSelect={this.onSelectItem.bind(this)} className="dropdown--custom-caret">
+      <Dropdown id="languages-dropdown" onSelect={this.onSelectItem} className="dropdown--custom-caret">
         <Dropdown.Toggle>
-          { this.getItemContent(activeLanguage) }
-          <i className="fa fa-caret-down"/>
+          {this.getItemContent(activeLanguage)}
+          <i className="fa fa-caret-down" />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {this.getLanguages()}

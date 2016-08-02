@@ -11,18 +11,18 @@ export default {
         Authorization: 'Bearer ' + token
       }
     })
-    .then(response => {
-      return {
-        type: TYPE,
-        data: response.data.models
-      }
-    })
-    .catch(error => {
-      if (error.data && error.data.errors) {
-        error = error.data.errors.error;
-      }
-      return Promise.reject(error)
-    });
+      .then(response => {
+        return {
+          type: TYPE,
+          data: response.data.models
+        }
+      })
+      .catch(error => {
+        if (error.data && error.data.errors) {
+          error = error.data.errors.error;
+        }
+        return Promise.reject(error)
+      });
   },
 
   deleteItem(id) {

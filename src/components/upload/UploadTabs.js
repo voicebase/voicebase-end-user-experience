@@ -18,18 +18,20 @@ export default class UploadTabs extends React.Component {
     let uploadState = this.props.uploadState;
 
     return (
-      <Tabs activeKey={uploadState.view.activeTab} onSelect={this.props.onSelectTab} className="dialog-tabs">
+      <Tabs id='upload-tabs' activeKey={uploadState.view.activeTab} onSelect={this.props.onSelectTab} className="dialog-tabs">
         <Tab eventKey={FILES_PREVIEW_TAB} title="Select files">
-          <UploadPreview playerState={this.props.playerState}
-                         uploadState={uploadState}
-                         actions={this.props.actions}
+          <UploadPreview
+            playerState={this.props.playerState}
+            uploadState={uploadState}
+            actions={this.props.actions}
           />
         </Tab>
         <Tab eventKey={OPTIONS_TAB} title="Processing options">
-          <UploadOptions token={this.props.token}
-                         uploadState={uploadState}
-                         settingsState={this.props.settingsState}
-                         actions={this.props.actions}
+          <UploadOptions
+            token={this.props.token}
+            uploadState={uploadState}
+            settingsState={this.props.settingsState}
+            actions={this.props.actions}
           />
         </Tab>
       </Tabs>

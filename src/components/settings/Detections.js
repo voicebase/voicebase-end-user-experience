@@ -27,12 +27,13 @@ export class Detections extends React.Component {
 
     return (
       <div>
-        <SettingsList state={state}
-                      type={this.type}
-                      actions={this.props.actions}
-                      onAddItem={this.addDetection.bind(this)}
-                      onDeleteItem={this.deleteDetection.bind(this)}
-                      onEditItem={this.editDetection.bind(this)}
+        <SettingsList
+          state={state}
+          type={this.type}
+          actions={this.props.actions}
+          onAddItem={this.addDetection.bind(this)}
+          onDeleteItem={this.deleteDetection.bind(this)}
+          onEditItem={this.editDetection.bind(this)}
         />
       </div>
     )

@@ -55,43 +55,42 @@ export class SettingsListItem extends React.Component {
         <ListGroupItem href="javascript:void(0)" onClick={this.toggleItem.bind(this)}>
           <Col sm={11}>
             <h4 className="list-group-item-heading">
-              { item.displayName }&nbsp;
-              { item.isDefault && <Label bsStyle="primary">Default</Label> }
+              {item.displayName}&nbsp;
+              {item.isDefault && <Label bsStyle="primary">Default</Label>}
             </h4>
           </Col>
-          { (item.isDeletePending || item.isEditPending) && <Spinner isSmallItem/> }
-          {
-            !item.isDeletePending && !item.isEditPending &&
+          {(item.isDeletePending || item.isEditPending) && <Spinner isSmallItem />}
+          {!item.isDeletePending && !item.isEditPending &&
             <Button bsStyle="link" className="btn-delete" onClick={this.deleteItem.bind(this)}>
-              <i className="fa fa-trash"/>
+              <i className="fa fa-trash" />
             </Button>
           }
         </ListGroupItem>
 
         <Collapse id={type + item.id} in={this.props.isActive}>
           <div>
-            {
-              type === 'predictions' &&
-              <PredictionForm formKey={type + item.id}
-                              initialValues={initialValue}
-                              onSubmit={this.editItem.bind(this)}
-                              onCancel={this.collapseForm.bind(this)}
+            {type === 'predictions' &&
+              <PredictionForm
+                formKey={type + item.id}
+                initialValues={initialValue}
+                onSubmit={this.editItem.bind(this)}
+                onCancel={this.collapseForm.bind(this)}
               />
             }
-            {
-              type === 'detection' &&
-              <DetectionForm formKey={type + item.id}
-                             initialValues={initialValue}
-                             onSubmit={this.editItem.bind(this)}
-                             onCancel={this.collapseForm.bind(this)}
+            {type === 'detection' &&
+              <DetectionForm
+                formKey={type + item.id}
+                initialValues={initialValue}
+                onSubmit={this.editItem.bind(this)}
+                onCancel={this.collapseForm.bind(this)}
               />
             }
-            {
-              type === 'numbers' &&
-              <NumbersForm formKey={type + item.id}
-                           initialValues={initialValue}
-                           onSubmit={this.editItem.bind(this)}
-                           onCancel={this.collapseForm.bind(this)}
+            {type === 'numbers' &&
+              <NumbersForm
+                formKey={type + item.id}
+                initialValues={initialValue}
+                onSubmit={this.editItem.bind(this)}
+                onCancel={this.collapseForm.bind(this)}
               />
             }
           </div>

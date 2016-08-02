@@ -42,39 +42,37 @@ export default class UploadPreview extends React.Component {
 
     return (
       <ListGroup className="preview-players-list">
-        {
-          uploadState.fileIds.map(fileId => {
-            let file = uploadState.files[fileId];
-            let itemClasses = classnames({
-              'preview-player-item--video': file.type === 'video',
-              'preview-player-item--audio': file.type === 'audio'
-            });
+        {uploadState.fileIds.map(fileId => {
+          let file = uploadState.files[fileId];
+          let itemClasses = classnames({
+            'preview-player-item--video': file.type === 'video',
+            'preview-player-item--audio': file.type === 'audio'
+          });
 
-            return (
-              <ListGroupItem key={'preview' + fileId} className={itemClasses}>
-                <h4>{file.file.name}</h4>
-                <div className="preview-player-row">
-                  <div className="player-wrapper">
-                    <Player mediaId={fileId}
-                            playerType="FileInputPlayer"
-                            playerState={playerState.players[fileId] || {loading: true}}
-                            hasNextKeywordButton={false}
-                            hasDownloadButton={false}
-                            isShowKeywordsMarkers={false}
-                            actions={this.props.actions}
-                    />
-                  </div>
-                  {
-                    playerState.players[fileId] &&
-                    <Button bsStyle="danger" className="btn-delete" onClick={this.removeFile.bind(this, fileId)}>
-                      <i className="fa fa-fw fa-times"/>
-                    </Button>
-                  }
+          return (
+            <ListGroupItem key={'preview' + fileId} className={itemClasses}>
+              <h4>{file.file.name}</h4>
+              <div className="preview-player-row">
+                <div className="player-wrapper">
+                  <Player
+                    mediaId={fileId}
+                    playerType="FileInputPlayer"
+                    playerState={playerState.players[fileId] || {loading: true}}
+                    hasNextKeywordButton={false}
+                    hasDownloadButton={false}
+                    isShowKeywordsMarkers={false}
+                    actions={this.props.actions}
+                  />
                 </div>
-              </ListGroupItem>
-            )
-          })
-        }
+                {playerState.players[fileId] &&
+                  <Button bsStyle="danger" className="btn-delete" onClick={this.removeFile.bind(this, fileId)}>
+                    <i className="fa fa-fw fa-times" />
+                  </Button>
+                }
+              </div>
+            </ListGroupItem>
+          )
+        })}
       </ListGroup>
     )
   }

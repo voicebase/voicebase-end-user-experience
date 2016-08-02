@@ -38,7 +38,7 @@ export default class UploadZone extends React.Component {
         isValid = false;
       }
       if (file.size / 1024 / 1024 > 100) {
-        this.showError(`Sorry, the max file upload = 100 MB`);
+        this.showError('Sorry, the max file upload = 100 MB');
         isValid = false;
       }
     });

@@ -10,8 +10,11 @@ import UploadProgressList from '../components/upload/UploadProgressList'
 import Spinner from '../components/Spinner'
 
 export class AllView extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
   static propTypes = {
-    history: PropTypes.object.isRequired,
     state: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
@@ -19,7 +22,7 @@ export class AllView extends React.Component {
   componentWillMount(nextProps) {
     let mediaList = this.props.state.media.mediaList;
     if (mediaList.get('isGetCompleted') && mediaList.get('mediaIds').size === 0) {
-      this.props.history.pushState(null, '/upload');
+      this.context.router.push('/upload');
     }
   }
 
@@ -54,32 +57,35 @@ export class AllView extends React.Component {
     return (
       <div>
         {mediaList.get('isGetPending') && !state.search.get('isSearching') && <Spinner />}
-        {
-          (!mediaList.get('isGetPending') || state.search.get('isSearching')) &&
+        {(!mediaList.get('isGetPending') || state.search.get('isSearching')) &&
           <div>
             <div className="content__heading">
               <h3>
                 All My Files&nbsp;
-                <CounterLabel value={mediaList.get('mediaIds').size}/>
+                <CounterLabel value={mediaList.get('mediaIds').size} />
               </h3>
             </div>
-            <SearchForm state={state.search}
-                        onSearch={this.onSearch.bind(this)}
-                        actions={this.props.actions}
+            <SearchForm
+              state={state.search}
+              onSearch={this.onSearch.bind(this)}
+              actions={this.props.actions}
             />
-            <MediaListToolbar token={state.auth.token}
-                              selectedMediaIds={mediaList.get('selectedMediaIds').toJS()}
-                              actions={this.props.actions}
-            />
-
-            <UploadProgressList uploadState={state.upload.toJS()}
-                                actions={this.props.actions}
+            <MediaListToolbar
+              token={state.auth.token}
+              selectedMediaIds={mediaList.get('selectedMediaIds').toJS()}
+              actions={this.props.actions}
             />
 
-            <MediaList token={state.auth.token}
-                       state={state.media}
-                       searchString={state.search.get('searchString')}
-                       actions={this.props.actions}
+            <UploadProgressList
+              uploadState={state.upload.toJS()}
+              actions={this.props.actions}
+            />
+
+            <MediaList
+              token={state.auth.token}
+              state={state.media}
+              searchString={state.search.get('searchString')}
+              actions={this.props.actions}
             />
           </div>
         }

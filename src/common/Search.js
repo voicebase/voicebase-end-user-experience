@@ -71,14 +71,14 @@ export const splitPhrase = function (phrase) {
   phrase = phrase.toLocaleLowerCase().replace(/"/g, '');
   phrase = replaceAndTrim(phrase);
   let phraseWords = phrase.split(/(?=\W)(?=\s)/);
-  let inner_words = [];
+  let innerWords = [];
   phraseWords.forEach(word => {
     word = replaceAndTrim(word);
     if (word !== '') {
-      inner_words.push(word);
+      innerWords.push(word);
     }
   });
-  return inner_words;
+  return innerWords;
 };
 
 export const searchWords = function (words, fuseEngine) {

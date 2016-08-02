@@ -9,15 +9,15 @@ export default {
         Authorization: 'Bearer ' + token
       }
     })
-    .then(response => {
-      return response.data;
-    })
-    .catch(error => {
-      if (error.data && error.data.errors) {
-        error = error.data.errors.error;
-      }
-      return Promise.reject(error)
-    });
+      .then(response => {
+        return response.data;
+      })
+      .catch(error => {
+        if (error.data && error.data.errors) {
+          error = error.data.errors.error;
+        }
+        return Promise.reject(error)
+      });
   },
 
   deleteGroup(token, groupId, groupName) {
@@ -27,15 +27,15 @@ export default {
         Authorization: 'Bearer ' + token
       }
     })
-    .then(response => {
-      return {groupId};
-    })
-    .catch(error => {
-      if (error.data && error.data.errors) {
-        error = error.data.errors.error;
-      }
-      return Promise.reject({error})
-    });
+      .then(response => {
+        return {groupId};
+      })
+      .catch(error => {
+        if (error.data && error.data.errors) {
+          error = error.data.errors.error;
+        }
+        return Promise.reject({error})
+      });
   },
 
   createGroup(token, groupId, newGroup) {
@@ -49,18 +49,18 @@ export default {
         'Content-Type': 'application/json'
       }
     })
-    .then(response => {
-      return {
-        groupId,
-        data: response.data
-      }
-    })
-    .catch(error => {
-      if (error.data && error.data.errors) {
-        error = error.data.errors[0].error;
-      }
-      return Promise.reject({groupId, error})
-    });
+      .then(response => {
+        return {
+          groupId,
+          data: response.data
+        }
+      })
+      .catch(error => {
+        if (error.data && error.data.errors) {
+          error = error.data.errors[0].error;
+        }
+        return Promise.reject({groupId, error})
+      });
   }
 
 }

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import {Row, Col, Input, Button} from 'react-bootstrap'
+import {Row, Col, FormGroup, FormControl, InputGroup, Button} from 'react-bootstrap'
 import DatePicker from './DatePicker'
 import DropdownList from './DropdownList'
 
@@ -65,40 +65,47 @@ export class SearchForm extends React.Component {
         <Row>
           <Col sm={searchWidth}>
             <div className="form-group form-group--search">
-              <i className="fa fa-search"/>
-              <Input type="text"
-                     placeholder="Search transcripts..."
-                     value={state.searchString}
-                     buttonAfter={this.searchButtonAddon()}
-                     onKeyPress={this.handleEnterKey.bind(this)}
-                     onChange={this.changeSearchText.bind(this)}
-              />
+              <i className="fa fa-search" />
+              <FormGroup>
+                <InputGroup>
+                  <FormControl
+                    type="text"
+                    placeholder="Search transcripts..."
+                    value={state.searchString}
+                    onKeyPress={this.handleEnterKey.bind(this)}
+                    onChange={this.changeSearchText.bind(this)}
+                  />
+                  <InputGroup.Addon bsClass='input-group-btn'>
+                    {this.searchButtonAddon()}
+                  </InputGroup.Addon>
+                </InputGroup>
+              </FormGroup>
             </div>
           </Col>
 
-          {
-            state.view.datePickerEnabled &&
+          {state.view.datePickerEnabled &&
             <Col sm={datePickerWidth}>
-              <DatePicker dateFrom={state.dateFrom}
-                          dateTo={state.dateTo}
-                          applyDate={this.applyDate.bind(this)}
-                          clearDate={this.clearDate.bind(this)}/>
+              <DatePicker
+                dateFrom={state.dateFrom}
+                dateTo={state.dateTo}
+                applyDate={this.applyDate.bind(this)}
+                clearDate={this.clearDate.bind(this)}
+              />
             </Col>
           }
 
-          {
-            state.view.orderEnabled &&
+          {state.view.orderEnabled &&
             <Col sm={orderWidth}>
               <div className="pull-right">
-                <DropdownList onSelect={this.onSelectOrder.bind(this)}
-                              dropdownKey="sort-list-dropdown"
-                              items={state.order}
-                              activeItemId={state.selectedOrderId}
+                <DropdownList
+                  onSelect={this.onSelectOrder.bind(this)}
+                  dropdownKey="sort-list-dropdown"
+                  items={state.order}
+                  activeItemId={state.selectedOrderId}
                 />
               </div>
             </Col>
           }
-
         </Row>
       </form>
     )

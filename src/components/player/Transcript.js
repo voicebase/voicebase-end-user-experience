@@ -253,12 +253,13 @@ export class Transcript extends React.Component {
               }
               else {
                 return (
-                  <span key={'word-' + i}
-                        className={highlightClass}
-                        style={wordStyle}
-                        ref={currentWordsCounter === 1 ? 'current' : null}
-                        onMouseEnter={this.onHoverDetectionSegment.bind(this, utterance, endPhraseWords[word.p])}
-                        onMouseLeave={this.onBlurDetectionSegment.bind(this)}
+                  <span
+                    key={'word-' + i}
+                    className={highlightClass}
+                    style={wordStyle}
+                    ref={currentWordsCounter === 1 ? 'current' : null}
+                    onMouseEnter={this.onHoverDetectionSegment.bind(this, utterance, endPhraseWords[word.p])}
+                    onMouseLeave={this.onBlurDetectionSegment.bind(this)}
                   >
                     {(word.m === 'punc') ? wordVal : ' ' + wordVal}
                   </span>

@@ -33,33 +33,31 @@ export class Keywords extends React.Component {
         <Row>
           <Col sm={3} className="listing__keywords__topics__container">
             <ul className="listing__keywords__topics">
-              {
-                this.props.topicsIds.map(topicId => {
-                  return (
-                    <KeywordTopic key={'topic-' + topicId}
-                                  topicName={topics[topicId].name}
-                                  isActive={activeTopicId === topicId}
-                                  onClickTopic={this.setActiveTopic.bind(this, topicId)}
-                    />
-                  )
-                })
-              }
+              {this.props.topicsIds.map(topicId => {
+                return (
+                  <KeywordTopic
+                    key={'topic-' + topicId}
+                    topicName={topics[topicId].name}
+                    isActive={activeTopicId === topicId}
+                    onClickTopic={this.setActiveTopic.bind(this, topicId)}
+                  />
+                )
+              })}
             </ul>
           </Col>
           <Col sm={9} className="listing__keywords__container">
             <ul className="listing__keywords-of-topic">
-              {
-                activeTopic.keywordsIds.map(keywordId => {
-                  let keyword = activeTopic.keywords[keywordId];
-                  return (
-                    <KeywordWord key={'keyword-' + keywordId}
-                                 keyword={keyword}
-                                 activeSpeakerId={activeSpeakerId}
-                                 setMarkers={this.setMarkers.bind(this)}
-                    />
-                  )
-                })
-              }
+              {activeTopic.keywordsIds.map(keywordId => {
+                let keyword = activeTopic.keywords[keywordId];
+                return (
+                  <KeywordWord
+                    key={'keyword-' + keywordId}
+                    keyword={keyword}
+                    activeSpeakerId={activeSpeakerId}
+                    setMarkers={this.setMarkers.bind(this)}
+                  />
+                )
+              })}
             </ul>
           </Col>
         </Row>

@@ -27,12 +27,13 @@ export class Numbers extends React.Component {
 
     return (
       <div>
-        <SettingsList state={state}
-                      type={this.type}
-                      actions={this.props.actions}
-                      onAddItem={this.addNumber.bind(this)}
-                      onDeleteItem={this.deleteNumber.bind(this)}
-                      onEditItem={this.editNumber.bind(this)}
+        <SettingsList
+          state={state}
+          type={this.type}
+          actions={this.props.actions}
+          onAddItem={this.addNumber.bind(this)}
+          onDeleteItem={this.deleteNumber.bind(this)}
+          onEditItem={this.editNumber.bind(this)}
         />
       </div>
     )

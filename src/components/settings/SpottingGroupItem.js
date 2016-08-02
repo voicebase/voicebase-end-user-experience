@@ -66,41 +66,38 @@ export class SpottingGroupItem extends React.Component {
         <ListGroupItem href="javascript:void(0)" onClick={this.toggleItem.bind(this)}>
           <Col sm={4}>
             <h4 className="list-group-item-heading">
-              { group.name }
-              { group.isDefault && <Label bsStyle="primary">Default</Label> }
+              {group.name}
+              {group.isDefault && <Label bsStyle="primary">Default</Label>}
             </h4>
           </Col>
           <Col sm={7} className="overflow-hidden">
             <p className="list-group-item-labels">
-              {
-                group.keywordIds.map(keywordId => {
-                  let keywordName = group.keywords[keywordId];
-                  let key = 'group__keyword-label-' + keywordName;
-                  return <Label key={key} className="label-bordered">{ keywordName }</Label>
-                })
-              }
+              {group.keywordIds.map(keywordId => {
+                let keywordName = group.keywords[keywordId];
+                let key = 'group__keyword-label-' + keywordName;
+                return <Label key={key} className="label-bordered">{keywordName}</Label>
+              })}
             </p>
           </Col>
-          { (group.isDeletePending || group.isEditPending) && <Spinner isSmallItem/> }
-          {
-            !group.isDeletePending && !group.isEditPending &&
+          {(group.isDeletePending || group.isEditPending) && <Spinner isSmallItem />}
+          {!group.isDeletePending && !group.isEditPending &&
             <Button bsStyle="link" className="btn-delete" onClick={this.deleteGroup.bind(this)}>
-              <i className="fa fa-trash"/>
+              <i className="fa fa-trash" />
             </Button>
           }
         </ListGroupItem>
 
         <Collapse id={'group-form' + group.id} in={this.props.isActive}>
           <div>
-            <SpottingGroupItemForm formKey={'group' + group.id}
-                                   keywordsSelectValue={keywordsSelectValue}
-                                   initialValues={initialValue}
-                                   onSubmit={this.editGroup.bind(this)}
-                                   onCancel={this.collapseForm.bind(this)}
+            <SpottingGroupItemForm
+              formKey={'group' + group.id}
+              keywordsSelectValue={keywordsSelectValue}
+              initialValues={initialValue}
+              onSubmit={this.editGroup.bind(this)}
+              onCancel={this.collapseForm.bind(this)}
             />
           </div>
         </Collapse>
-
       </section>
     )
   }

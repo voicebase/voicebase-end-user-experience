@@ -1,17 +1,17 @@
-import thunk from 'redux-thunk'
-import rootReducer from './rootReducer'
-import promiseMiddleware from 'redux-promise-middleware';
 import {
   applyMiddleware,
   compose,
   createStore
 } from 'redux'
+import thunk from 'redux-thunk'
+import promiseMiddleware from 'redux-promise-middleware';
+import rootReducer from './rootReducer'
 
 import storage from './storage';
 
 export default function configureStore (initialState) {
-  let createStoreWithMiddleware
-  const middleware = applyMiddleware(thunk, promiseMiddleware())
+  let createStoreWithMiddleware;
+  const middleware = applyMiddleware(thunk, promiseMiddleware());
 
   if (__DEBUG__) {
     createStoreWithMiddleware = compose(
@@ -30,13 +30,13 @@ export default function configureStore (initialState) {
 
   const store = createStoreWithMiddleware(createStore)(
     rootReducer, initialState
-  )
+  );
   if (module.hot) {
     module.hot.accept('./rootReducer', () => {
-      const nextRootReducer = require('./rootReducer').default
+      const nextRootReducer = require('./rootReducer').default;
 
       store.replaceReducer(nextRootReducer)
     })
   }
-  return store
+  return store;
 }

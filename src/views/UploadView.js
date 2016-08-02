@@ -5,14 +5,17 @@ import UploadZone from '../components/upload/UploadZone'
 import UploadContainer from '../components/upload/UploadContainer'
 
 export class UploadView extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
   static propTypes = {
-    history: PropTypes.object.isRequired,
     state: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
 
   onFinish() {
-    this.props.history.pushState(null, '/all');
+    this.context.router.push('/all');
   }
 
   render () {
@@ -20,16 +23,15 @@ export class UploadView extends React.Component {
 
     return (
       <div>
-        {
-          fileIds.size === 0 &&
+        {fileIds.size === 0 &&
           <UploadZone actions={this.props.actions} />
         }
-        {
-          fileIds.size > 0 &&
-          <UploadContainer state={this.props.state}
-                           isModal={false}
-                           onFinish={this.onFinish.bind(this)}
-                           actions={this.props.actions}
+        {fileIds.size > 0 &&
+          <UploadContainer
+            state={this.props.state}
+            isModal={false}
+            onFinish={this.onFinish.bind(this)}
+            actions={this.props.actions}
           />
         }
       </div>

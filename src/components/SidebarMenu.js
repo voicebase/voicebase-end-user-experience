@@ -4,9 +4,12 @@ import Logo from '../images/voicebase-logo-2.png'
 import CounterLabel from '../components/CounterLabel'
 
 export class SidebarMenu extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
   static propTypes = {
     state: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
 
@@ -15,7 +18,7 @@ export class SidebarMenu extends React.Component {
   }
 
   isItemActive(path) {
-    return this.props.state.router.path === path;
+    return this.context.router.isActive(path);
   }
 
   getAllItem() {
@@ -24,7 +27,7 @@ export class SidebarMenu extends React.Component {
     if (mediaIds.size > 0) {
       content = <NavItem active={this.isItemActive('/all')} onClick={this.redirect.bind(this, '/all')}>
         All My Files
-        <CounterLabel value={mediaIds.size}/>
+        <CounterLabel value={mediaIds.size} />
       </NavItem>
     }
     return content;
@@ -36,14 +39,14 @@ export class SidebarMenu extends React.Component {
     if (lastUploadedIds.size > 0) {
       content = <NavItem active={this.isItemActive('/last-upload')} onClick={this.redirect.bind(this, '/last-upload')}>
         Last Upload
-        <CounterLabel value={lastUploadedIds.size}/>
+        <CounterLabel value={lastUploadedIds.size} />
       </NavItem>
     }
     return content;
   }
 
   redirect(path) {
-    this.props.history.pushState(null, path);
+    this.context.router.push(path);
   }
 
   render () {
@@ -62,10 +65,6 @@ export class SidebarMenu extends React.Component {
         </Nav>
 
         <Nav stacked className="bottom">
-          {
-            /* TODO enable account menu when it;s ready */
-            //<NavItem active={this.isItemActive('/account')} onClick={this.redirect.bind(this, '/account')}>My Account</NavItem>
-          }
           <NavItem active={this.isItemActive('/settings')} onClick={this.redirect.bind(this, '/settings')}>Settings</NavItem>
           <NavItem onClick={this.signOut.bind(this)}>Logout</NavItem>
         </Nav>

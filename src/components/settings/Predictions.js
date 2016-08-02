@@ -27,12 +27,13 @@ export class Predictions extends React.Component {
 
     return (
       <div>
-        <SettingsList state={state}
-                      type={this.type}
-                      actions={this.props.actions}
-                      onAddItem={this.addPrediction.bind(this)}
-                      onDeleteItem={this.deletePrediction.bind(this)}
-                      onEditItem={this.editPrediction.bind(this)}
+        <SettingsList
+          state={state}
+          type={this.type}
+          actions={this.props.actions}
+          onAddItem={this.addPrediction.bind(this)}
+          onDeleteItem={this.deletePrediction.bind(this)}
+          onEditItem={this.editPrediction.bind(this)}
         />
       </div>
     )

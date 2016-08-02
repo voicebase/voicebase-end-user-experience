@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { reduxForm } from 'redux-form';
-import {Input, Button} from 'react-bootstrap'
+import {Button, FormGroup, FormControl, Checkbox} from 'react-bootstrap'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 
@@ -30,23 +30,42 @@ class SpottingGroupItemForm extends React.Component {
     return (
       <div>
         <form className="form-settings" onSubmit={handleSubmit}>
-          <Input type="text" name="name" placeholder="Group Name (Mandatory)" {...name} />
-          {name.touched && name.error && <div className="login-field-error">{name.error}</div>}
+          <FormGroup>
+            <FormControl
+              type="text"
+              name="name"
+              placeholder="Group Name (Mandatory)"
+              {...name}
+            />
+            {name.touched && name.error && <div className="login-field-error">{name.error}</div>}
+          </FormGroup>
 
           <div className="form-group">
-            <Select name="keywords"
-                    placeholder="Add a word or phrase"
-                    multi
-                    allowCreate
-                    options={this.props.keywordsSelectValue}
-                    {...keywords}
-                    onBlur={() => {}}
+            <Select
+              name="keywords"
+              placeholder="Add a word or phrase"
+              multi
+              allowCreate
+              options={this.props.keywordsSelectValue}
+              {...keywords}
+              onBlur={() => {}}
             />
           </div>
           {keywords.visited && keywords.error && <div className="login-field-error">{keywords.error}</div>}
 
-          <Input type="textarea" name="description" placeholder="Description (Optional)" {...description} />
-          <Input type="checkbox" name="isDefault" label="Default phrase group" {...isDefault} />
+          <FormGroup>
+            <FormControl
+              componentClass="textarea"
+              name="description"
+              placeholder="Description (Optional)"
+              {...description}
+            />
+          </FormGroup>
+
+          <Checkbox {...isDefault}>
+            Default phrase group
+          </Checkbox>
+
           <div className="buttons">
             <Button type="submit" bsStyle="success" disabled={pristine}>Save</Button>
             <Button bsStyle="link" onClick={this.cancel.bind(this)}>Cancel</Button>

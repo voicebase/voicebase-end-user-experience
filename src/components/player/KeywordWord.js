@@ -16,7 +16,8 @@ export class KeywordWord extends React.Component {
     return isChangedActiveSpeakerId || isChangedKeywords;
   }
 
-  onClickKeyword(keyword) {
+  onClickKeyword = () => {
+    const keyword = this.props.keyword;
     let color = COLORS[0];
     let times = this.getKeywordTimes(keyword);
     let markers = times.map(_time => {
@@ -28,7 +29,7 @@ export class KeywordWord extends React.Component {
       }
     });
     this.props.setMarkers(markers);
-  }
+  };
 
   getKeywordTimes(keyword) {
     let times = [];
@@ -53,7 +54,7 @@ export class KeywordWord extends React.Component {
 
     return (
       <li>
-        <a href="javascript:void(0)" onClick={this.onClickKeyword.bind(this, keyword)}>
+        <a href="javascript:void(0)" onClick={this.onClickKeyword}>
           <span className="listing__keywords__keyword-name">{keyword.name}</span>
           <span> ({times.length})</span>
         </a>

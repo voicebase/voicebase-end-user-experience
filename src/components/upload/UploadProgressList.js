@@ -28,10 +28,10 @@ export default class UploadProgressList extends React.Component {
 
     return (
       <div>
-        {
-          pendingFileIds.length > 0 &&
-          <UploadProgress uploadState={uploadState}
-                          pendingFileIds={pendingFileIds}
+        {pendingFileIds.length > 0 &&
+          <UploadProgress
+            uploadState={uploadState}
+            pendingFileIds={pendingFileIds}
           />
         }
       </div>

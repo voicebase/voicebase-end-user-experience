@@ -36,71 +36,74 @@ export class VbsPlayerApp extends React.Component {
     let mediaData = this.props.mediaDataState;
     let activeTab = mediaData.view.activeTab;
     let markersState = this.props.markersState;
+    const mediaId = this.props.mediaId;
 
     return (
       <div className="vbs-player-app">
-        <Player mediaId={this.props.mediaId}
-                playerType="JwPlayer"
-                mediaState={mediaData}
-                markersState={markersState}
-                playerState={playerState}
-                hasNextKeywordButton
-                hasDownloadButton
-                isShowKeywordsMarkers={activeTab === KEYWORDS_TAB || activeTab === GROUPS_TAB}
-                actions={this.props.actions} />
+        <Player
+          mediaId={mediaId}
+          playerType="JwPlayer"
+          mediaState={mediaData}
+          markersState={markersState}
+          playerState={playerState}
+          hasNextKeywordButton
+          hasDownloadButton
+          isShowKeywordsMarkers={activeTab === KEYWORDS_TAB || activeTab === GROUPS_TAB}
+          actions={this.props.actions}
+        />
 
-        <Tabs className="listing__tabs" activeKey={activeTab} onSelect={this.selectTab.bind(this)}>
+        <Tabs id={'tabs-' + mediaId} className="listing__tabs" activeKey={activeTab} onSelect={this.selectTab.bind(this)}>
           <Tab eventKey={KEYWORDS_TAB} title="Keywords">
-            <Keywords mediaId={this.props.mediaId}
-                      type="keywords"
-                      activeSpeaker={mediaData.activeSpeaker}
-                      activeTopic={mediaData.activeTopic}
-                      topicsIds={mediaData.topicsIds}
-                      topics={mediaData.topics}
-                      actions={this.props.actions}
+            <Keywords
+              mediaId={mediaId}
+              type="keywords"
+              activeSpeaker={mediaData.activeSpeaker}
+              activeTopic={mediaData.activeTopic}
+              topicsIds={mediaData.topicsIds}
+              topics={mediaData.topics}
+              actions={this.props.actions}
             />
           </Tab>
-          {
-            mediaData.groupsIds && mediaData.groupsIds.length > 0 &&
+          {mediaData.groupsIds && mediaData.groupsIds.length > 0 &&
             <Tab eventKey={GROUPS_TAB} title="Phrase Groups">
-              <Keywords mediaId={this.props.mediaId}
-                        type="groups"
-                        activeSpeaker={mediaData.activeSpeaker}
-                        activeTopic={mediaData.activeGroup}
-                        topicsIds={mediaData.groupsIds}
-                        topics={mediaData.groups}
-                        actions={this.props.actions}
+              <Keywords
+                mediaId={mediaId}
+                type="groups"
+                activeSpeaker={mediaData.activeSpeaker}
+                activeTopic={mediaData.activeGroup}
+                topicsIds={mediaData.groupsIds}
+                topics={mediaData.groups}
+                actions={this.props.actions}
               />
             </Tab>
           }
-          {
-            mediaData.predictions &&
+          {mediaData.predictions &&
             <Tab eventKey={PREDICTION_TAB} title="Prediction">
               <Predictions predictionsState={mediaData.predictions} />
             </Tab>
           }
-          {
-            mediaData.utterances &&
+          {mediaData.utterances &&
             <Tab eventKey={DETECTION_TAB} title="Detection">
-              <DetectionList mediaId={this.props.mediaId}
-                             utterances={mediaData.utterances}
-                             playerState={playerState}
-                             actions={this.props.actions}
+              <DetectionList
+                mediaId={mediaId}
+                utterances={mediaData.utterances}
+                playerState={playerState}
+                actions={this.props.actions}
               />
             </Tab>
           }
         </Tabs>
 
-        {
-          (activeTab === KEYWORDS_TAB || activeTab === DETECTION_TAB || activeTab === GROUPS_TAB) &&
-          <Transcript mediaId={this.props.mediaId}
-                      duration={playerState.duration}
-                      played={playerState.played}
-                      transcript={mediaData.transcript}
-                      utterances={mediaData.utterances}
-                      speakers={mediaData.speakers}
-                      activeTab={mediaData.view.activeTab}
-                      markersState={markersState}
+        {(activeTab === KEYWORDS_TAB || activeTab === DETECTION_TAB || activeTab === GROUPS_TAB) &&
+          <Transcript
+            mediaId={mediaId}
+            duration={playerState.duration}
+            played={playerState.played}
+            transcript={mediaData.transcript}
+            utterances={mediaData.utterances}
+            speakers={mediaData.speakers}
+            activeTab={mediaData.view.activeTab}
+            markersState={markersState}
           />
         }
       </div>

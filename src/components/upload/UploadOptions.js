@@ -174,27 +174,27 @@ export default class UploadPreview extends React.Component {
         <form className="upload-options">
           <Row>
             <Col sm={6}>
-              {
-                activeLanguageId &&
+              {activeLanguageId &&
                 <div className="form-group dropdown-full-width">
                   <label className="control-label">What languages are spoken in the files?</label>
-                  <LanguageDropdown languages={items.languages.items}
-                                    activeLanguageId={activeLanguageId}
-                                    onSelect={this.onSelectLanguage.bind(this)}
+                  <LanguageDropdown
+                    languages={items.languages.items}
+                    activeLanguageId={activeLanguageId}
+                    onSelect={this.onSelectLanguage.bind(this)}
                   />
                 </div>
               }
             </Col>
 
             <Col sm={6}>
-              {
-                activePriority &&
+              {activePriority &&
                 <div className="form-group dropdown-full-width">
                   <label className="control-label">Pick a priority for processing</label>
-                  <DropdownList onSelect={this.onSelectPriority.bind(this)}
-                                dropdownKey="priority-dropdown"
-                                items={priorities.items}
-                                activeItemId={activePriority}
+                  <DropdownList
+                    onSelect={this.onSelectPriority.bind(this)}
+                    dropdownKey="priority-dropdown"
+                    items={priorities.items}
+                    activeItemId={activePriority}
                   />
                 </div>
               }
@@ -216,18 +216,20 @@ export default class UploadPreview extends React.Component {
                   <Col md={6}>
                     <div className="form-group">
                       <label className="control-label">Speaker 1</label>
-                      <input type="text" className="form-control" placeholder="Name of Speaker 1"
-                             value={speakers.left}
-                             onChange={this.onChangeLeftSpeaker.bind(this)}
+                      <input
+                        type="text" className="form-control" placeholder="Name of Speaker 1"
+                        value={speakers.left}
+                        onChange={this.onChangeLeftSpeaker.bind(this)}
                       />
                     </div>
                   </Col>
                   <Col md={6}>
                     <div className="form-group">
                       <label className="control-label">Speaker 2</label>
-                      <input type="text" className="form-control" placeholder="Name of Speaker 2"
-                             value={speakers.right}
-                             onChange={this.onChangeRightSpeaker.bind(this)}
+                      <input
+                        type="text" className="form-control" placeholder="Name of Speaker 2"
+                        value={speakers.right}
+                        onChange={this.onChangeRightSpeaker.bind(this)}
                       />
                     </div>
                   </Col>
@@ -235,60 +237,57 @@ export default class UploadPreview extends React.Component {
               </Fade>
             </Col>
           </Row>
-          {
-            predictions.view.enabled &&
+          {predictions.view.enabled &&
             <Row>
               <Col sm={12}>
-                {
-                  !predictions.isGetPending && !predictions.errorMessage &&
+                {!predictions.isGetPending && !predictions.errorMessage &&
                   <div className="form-group">
                     <label className="control-label">Enable 1 or more prediction models (Optional)</label>
-                    <Select placeholder="Pick a prediction model"
-                            multi
-                            value={predictionsValue.defaultValue.join(',')}
-                            options={predictionsValue.selectValue}
-                            onChange={this.onChangePrediction.bind(this)}
-                            onBlur={() => {}}
+                    <Select
+                      placeholder="Pick a prediction model"
+                      multi
+                      value={predictionsValue.defaultValue.join(',')}
+                      options={predictionsValue.selectValue}
+                      onChange={this.onChangePrediction.bind(this)}
+                      onBlur={() => {}}
                     />
                   </div>
                 }
               </Col>
             </Row>
           }
-          {
-            detection.view.enabled &&
+          {detection.view.enabled &&
             <Row>
               <Col sm={12}>
-                {
-                  !detection.isGetPending && !detection.errorMessage &&
+                {!detection.isGetPending && !detection.errorMessage &&
                   <div className="form-group">
                     <label className="control-label">Enable 1 or more detection models (Optional)</label>
-                    <Select placeholder="Pick a detection model"
-                            multi
-                            value={detectionValue.defaultValue.join(',')}
-                            options={detectionValue.selectValue}
-                            onChange={this.onChangeDetection.bind(this)}
-                            onBlur={() => {}}
+                    <Select
+                      placeholder="Pick a detection model"
+                      multi
+                      value={detectionValue.defaultValue.join(',')}
+                      options={detectionValue.selectValue}
+                      onChange={this.onChangeDetection.bind(this)}
+                      onBlur={() => {}}
                     />
                   </div>
                 }
               </Col>
             </Row>
           }
-          {
-            numbers.view.enabled &&
+          {numbers.view.enabled &&
             <Row>
               <Col sm={12}>
-                {
-                  !numbers.isGetPending && !numbers.errorMessage &&
+                {!numbers.isGetPending && !numbers.errorMessage &&
                   <div className="form-group">
                     <label className="control-label">Enable 1 or more number formats (Optional)</label>
-                    <Select placeholder="Pick a number format"
-                            multi
-                            value={numbersValue.defaultValue.join(',')}
-                            options={numbersValue.selectValue}
-                            onChange={this.onChangeNumbers.bind(this)}
-                            onBlur={() => {}}
+                    <Select
+                      placeholder="Pick a number format"
+                      multi
+                      value={numbersValue.defaultValue.join(',')}
+                      options={numbersValue.selectValue}
+                      onChange={this.onChangeNumbers.bind(this)}
+                      onBlur={() => {}}
                     />
                   </div>
                 }
@@ -297,16 +296,16 @@ export default class UploadPreview extends React.Component {
           }
           <Row>
             <Col sm={12}>
-              {
-                !groups.isGetPending && !groups.errorMessage &&
+              {!groups.isGetPending && !groups.errorMessage &&
                 <div className="form-group">
                   <label className="control-label">Enable 1 or more phrase groups (Optional)</label>
-                  <Select placeholder="Pick 1 or more phrase groups"
-                          multi
-                          value={groupsValue.defaultValue.join(',')}
-                          options={groupsValue.selectValue}
-                          onChange={this.onChangeGroups.bind(this)}
-                          onBlur={() => {}}
+                  <Select
+                    placeholder="Pick 1 or more phrase groups"
+                    multi
+                    value={groupsValue.defaultValue.join(',')}
+                    options={groupsValue.selectValue}
+                    onChange={this.onChangeGroups.bind(this)}
+                    onBlur={() => {}}
                   />
                 </div>
               }
@@ -314,17 +313,17 @@ export default class UploadPreview extends React.Component {
           </Row>
           <Row>
             <Col sm={12}>
-              {
-                uploadState.view.showVocabularies &&
+              {uploadState.view.showVocabularies &&
                 <div className="form-group">
                   <label className="control-label">Add 1 or more custom terms (Optional)</label>
-                  <Select placeholder="Pick 1 or more custom terms"
-                          multi
-                          allowCreate
-                          value={vocabularyValue.defaultValue.join(',')}
-                          options={vocabularyValue.selectValue}
-                          onChange={this.onChangeVocabulary.bind(this)}
-                          onBlur={() => {}}
+                  <Select
+                    placeholder="Pick 1 or more custom terms"
+                    multi
+                    allowCreate
+                    value={vocabularyValue.defaultValue.join(',')}
+                    options={vocabularyValue.selectValue}
+                    onChange={this.onChangeVocabulary.bind(this)}
+                    onBlur={() => {}}
                   />
                 </div>
               }

@@ -6,19 +6,18 @@ import Logo from '../images/voicebase-logo-2.png'
 import LoginForm from '../components/LoginForm'
 
 export class LoginView extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
   static propTypes = {
-    history: PropTypes.object.isRequired,
     state: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   componentWillUpdate(nextProps) {
     if (nextProps.state.auth.token) {
-      this.props.history.pushState(null, '/')
+      this.context.router.push('/');
     }
   }
 
@@ -34,13 +33,15 @@ export class LoginView extends React.Component {
     return (
       <div className="login-overlay">
         <div className="login-content">
-          <img src={Logo} className="img-responsive"/>
+          <img src={Logo} className="img-responsive" />
           <Panel>
-            <LoginForm onSubmit={this.signIn.bind(this)}
-                       handleRemember={this.setRemember.bind(this)}
-                       isRemember={this.props.state.auth.isRemember}
-                       errorMessage={this.props.state.auth.errorMessage}
-                       isPending={this.props.state.auth.isPending} />
+            <LoginForm
+              onSubmit={this.signIn.bind(this)}
+              handleRemember={this.setRemember.bind(this)}
+              isRemember={this.props.state.auth.isRemember}
+              errorMessage={this.props.state.auth.errorMessage}
+              isPending={this.props.state.auth.isPending}
+            />
           </Panel>
         </div>
       </div>

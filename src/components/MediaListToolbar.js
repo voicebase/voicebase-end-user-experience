@@ -31,18 +31,18 @@ export class MediaListToolbar extends React.Component {
     };
 
     return (
-        <div className='listings__toolbar' style={style}>
-          <ButtonGroup bsSize="small">
-            <Button className="btn-count" disabled>
-              <span className="count">{countIds}</span> selected files
-            </Button>
-            <Button onClick={this.deleteSelected.bind(this)}>
-              <i className="fa fa-trash" /> Delete selected
-            </Button>
-            <Button onClick={this.selectAll.bind(this)}>Select all</Button>
-            <Button onClick={this.unselectAll.bind(this)}>Deselect all</Button>
-          </ButtonGroup>
-        </div>
+      <div className='listings__toolbar' style={style}>
+        <ButtonGroup bsSize="small">
+          <Button className="btn-count" disabled>
+            <span className="count">{countIds}</span> selected files
+          </Button>
+          <Button onClick={this.deleteSelected.bind(this)}>
+            <i className="fa fa-trash" /> Delete selected
+          </Button>
+          <Button onClick={this.selectAll.bind(this)}>Select all</Button>
+          <Button onClick={this.unselectAll.bind(this)}>Deselect all</Button>
+        </ButtonGroup>
+      </div>
     )
   }
 }

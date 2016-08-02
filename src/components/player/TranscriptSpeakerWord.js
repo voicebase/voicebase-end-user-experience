@@ -24,11 +24,9 @@ export class TranscriptSpeakerWord extends React.Component {
 
     return (
       <div className="listing__transcript__speaker-wrapper">
-        {!isFirst && <br/>}
+        {!isFirst && <br />}
         <div className="listing__transcript__speaker">
-          <div className="highlighted"
-                style={wordStyle}
-          >
+          <div className="highlighted" style={wordStyle}>
             {word.w}
           </div>
           <div className="listing__transcript__speaker-time">

@@ -149,19 +149,16 @@ export default class ProcessingListItem extends React.Component {
     return (
       <div className="list-group-item listing listing--processing">
         <h4 className="list-group-item-heading">{this.props.mediaId}</h4>
-        {
-          (!mediaDataState || (mediaDataState && !mediaDataState.jobTasks)) &&
+        {(!mediaDataState || (mediaDataState && !mediaDataState.jobTasks)) &&
           <div className="progress">
             <div className="progress__step active">Processing</div>
           </div>
         }
-        {
-          (mediaDataState && mediaDataState.jobTasks) &&
+        {(mediaDataState && mediaDataState.jobTasks) &&
           <div className="progress">
             <div className={this.getClasses(fileStatus)}>Transcript</div>
             <div className={this.getClasses(keywordsStatus)}>Analytics</div>
-            {
-              predictionStatus &&
+            {predictionStatus &&
               <div className="progress__step done">Prediction/detection</div>
             }
             <div className={resultClasses}>Results</div>

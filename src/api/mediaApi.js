@@ -136,15 +136,15 @@ export default {
           Authorization: 'Bearer ' + token
         }
       })
-      .then(response => {
-        return response.data.media;
-      })
-      .catch(error => {
-        if (error.data && error.data.errors) {
-          error = error.data.errors.error;
-        }
-        return Promise.reject({error})
-      });
+        .then(response => {
+          return response.data.media;
+        })
+        .catch(error => {
+          if (error.data && error.data.errors) {
+            error = error.data.errors.error;
+          }
+          return Promise.reject({error})
+        });
     }
   },
 

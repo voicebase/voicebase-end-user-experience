@@ -57,48 +57,46 @@ export class SpottingGroups extends React.Component {
 
     return (
       <div>
-        { groupsState.isGetPending && <Spinner /> }
-        {
-          groupsState.errorMessage &&
+        {groupsState.isGetPending && <Spinner />}
+        {groupsState.errorMessage &&
           <Alert bsStyle="warning">
             {groupsState.errorMessage}
           </Alert>
         }
-        {
-          !groupsState.isGetPending &&
+        {!groupsState.isGetPending &&
           <div>
-            {groupsState.isAddPending && <div className="btn-add-settings"><Spinner/></div>}
-            {
-              !groupsState.isAddPending &&
+            {groupsState.isAddPending && <div className="btn-add-settings"><Spinner /></div>}
+            {!groupsState.isAddPending &&
               <Button bsStyle="link" className="btn-add" onClick={this.expandCreateForm.bind(this)}>
-                <i className="fa fa-plus"/>&nbsp;{groupsState.view.addButtonLabel}
+                <i className="fa fa-plus" />&nbsp;{groupsState.view.addButtonLabel}
               </Button>
             }
 
             <Collapse id="add-collapse-group" in={this.state.openCreate}>
               <div>
-                <SpottingGroupItemForm formKey={'add-group'}
-                                       keywordsSelectValue={keywordsSelectValueForAdd}
-                                       initialValues={initialValueForAdd}
-                                       onSubmit={this.addGroup.bind(this)}
-                                       onCancel={this.collapseCreateForm.bind(this)}
+                <SpottingGroupItemForm
+                  formKey={'add-group'}
+                  keywordsSelectValue={keywordsSelectValueForAdd}
+                  initialValues={initialValueForAdd}
+                  onSubmit={this.addGroup.bind(this)}
+                  onCancel={this.collapseCreateForm.bind(this)}
                 />
               </div>
             </Collapse>
 
             <Panel className="panel panel-default panel-settings">
               <ListGroup>
-                {
-                  groupsState.groupIds.map(groupId => {
-                    return (
-                      <SpottingGroupItem key={'group' + groupId}
-                                         token={this.props.token}
-                                         group={groupsState.groups[groupId]}
-                                         isActive={activeGroup === groupId}
-                                         actions={this.props.actions}/>
-                    )
-                  })
-                }
+                {groupsState.groupIds.map(groupId => {
+                  return (
+                    <SpottingGroupItem
+                      key={'group' + groupId}
+                      token={this.props.token}
+                      group={groupsState.groups[groupId]}
+                      isActive={activeGroup === groupId}
+                      actions={this.props.actions}
+                    />
+                  )
+                })}
               </ListGroup>
             </Panel>
           </div>

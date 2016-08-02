@@ -46,12 +46,13 @@ export default class UploadContainer extends React.Component {
   getTabs() {
     let state = this.props.state;
     return (
-      <UploadTabs token={state.auth.token}
-                  uploadState={state.upload.toJS()}
-                  playerState={state.media.player.toJS()}
-                  settingsState={state.settings}
-                  onSelectTab={this.onSelectTab.bind(this)}
-                  actions={this.props.actions}
+      <UploadTabs
+        token={state.auth.token}
+        uploadState={state.upload.toJS()}
+        playerState={state.media.player.toJS()}
+        settingsState={state.settings}
+        onSelectTab={this.onSelectTab.bind(this)}
+        actions={this.props.actions}
       />
     )
   }
@@ -66,32 +67,32 @@ export default class UploadContainer extends React.Component {
 
     return (
       <div>
-        {
-          this.props.isModal &&
-          <UploadModal showForm={uploadState.view.showForm}
-                       nextTab={this.nextTab.bind(this)}
-                       nextButtonText={nextButtonText}
-                       onClose={this.onClose.bind(this)}
-                       onSelectTab={this.onSelectTab.bind(this)}
+        {this.props.isModal &&
+          <UploadModal
+            showForm={uploadState.view.showForm}
+            nextTab={this.nextTab.bind(this)}
+            nextButtonText={nextButtonText}
+            onClose={this.onClose.bind(this)}
+            onSelectTab={this.onSelectTab.bind(this)}
           >
-            { this.getTabs() }
+            {this.getTabs()}
           </UploadModal>
         }
-        {
-          !this.props.isModal &&
+        {!this.props.isModal &&
           <div>
             <div className="content__heading">
               {isFilePreviewTab && <h3><span className="text-muted">Step 1 of 2:</span> Select files for upload</h3>}
               {isOptionsTab && <h3><span className="text-muted">Step 2 of 2:</span> Choose processing options</h3>}
             </div>
 
-            <UploadPanel showForm={uploadState.view.showForm}
-                         nextTab={this.nextTab.bind(this)}
-                         nextButtonText={nextButtonText}
-                         onClose={this.onClose.bind(this)}
-                         onSelectTab={this.onSelectTab.bind(this)}
+            <UploadPanel
+              showForm={uploadState.view.showForm}
+              nextTab={this.nextTab.bind(this)}
+              nextButtonText={nextButtonText}
+              onClose={this.onClose.bind(this)}
+              onSelectTab={this.onSelectTab.bind(this)}
             >
-              { this.getTabs() }
+              {this.getTabs()}
             </UploadPanel>
           </div>
         }
