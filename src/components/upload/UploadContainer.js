@@ -12,18 +12,18 @@ export default class UploadContainer extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
-  onClose() {
+  onClose = () => {
     this.props.state.upload.get('fileIds').forEach(id => {
       this.props.actions.destroyPlayer(id);
     });
     this.props.actions.cancelUpload();
-  }
+  };
 
-  onSelectTab(key) {
+  onSelectTab = (key) => {
     this.props.actions.chooseTab(key);
-  }
+  };
 
-  nextTab() {
+  nextTab = () => {
     let uploadState = this.props.state.upload.toJS();
     if (uploadState.view.activeTab === FILES_PREVIEW_TAB) {
       this.onSelectTab(OPTIONS_TAB);
@@ -41,7 +41,7 @@ export default class UploadContainer extends React.Component {
       });
       this.props.onFinish();
     }
-  }
+  };
 
   getTabs() {
     let state = this.props.state;
@@ -51,7 +51,7 @@ export default class UploadContainer extends React.Component {
         uploadState={state.upload.toJS()}
         playerState={state.media.player.toJS()}
         settingsState={state.settings}
-        onSelectTab={this.onSelectTab.bind(this)}
+        onSelectTab={this.onSelectTab}
         actions={this.props.actions}
       />
     )
@@ -70,10 +70,10 @@ export default class UploadContainer extends React.Component {
         {this.props.isModal &&
           <UploadModal
             showForm={uploadState.view.showForm}
-            nextTab={this.nextTab.bind(this)}
+            nextTab={this.nextTab}
             nextButtonText={nextButtonText}
-            onClose={this.onClose.bind(this)}
-            onSelectTab={this.onSelectTab.bind(this)}
+            onClose={this.onClose}
+            onSelectTab={this.onSelectTab}
           >
             {this.getTabs()}
           </UploadModal>
@@ -87,10 +87,10 @@ export default class UploadContainer extends React.Component {
 
             <UploadPanel
               showForm={uploadState.view.showForm}
-              nextTab={this.nextTab.bind(this)}
+              nextTab={this.nextTab}
               nextButtonText={nextButtonText}
-              onClose={this.onClose.bind(this)}
-              onSelectTab={this.onSelectTab.bind(this)}
+              onClose={this.onClose}
+              onSelectTab={this.onSelectTab}
             >
               {this.getTabs()}
             </UploadPanel>

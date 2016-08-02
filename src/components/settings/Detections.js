@@ -10,17 +10,17 @@ export class Detections extends React.Component {
 
   type = 'detection';
 
-  addDetection(values) {
+  addDetection = (values) => {
     this.props.actions.addItem(this.props.token, this.type, values);
-  }
+  };
 
-  deleteDetection(id) {
+  deleteDetection = (id) => {
     this.props.actions.deleteItem(this.props.token, this.type, id);
-  }
+  };
 
-  editDetection(id, values) {
+  editDetection = (id, values) => {
     this.props.actions.editItem(this.props.token, this.type, id, values);
-  }
+  };
 
   render() {
     let state = this.props.state;
@@ -31,9 +31,9 @@ export class Detections extends React.Component {
           state={state}
           type={this.type}
           actions={this.props.actions}
-          onAddItem={this.addDetection.bind(this)}
-          onDeleteItem={this.deleteDetection.bind(this)}
-          onEditItem={this.editDetection.bind(this)}
+          onAddItem={this.addDetection}
+          onDeleteItem={this.deleteDetection}
+          onEditItem={this.editDetection}
         />
       </div>
     )

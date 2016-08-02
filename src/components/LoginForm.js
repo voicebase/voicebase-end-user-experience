@@ -23,9 +23,9 @@ export class LoginForm extends React.Component {
     }
   }
 
-  onChangeRemember(event) {
+  onChangeRemember = (event) => {
     this.props.handleRemember(event.target.checked);
-  }
+  };
 
   render () {
     const {
@@ -46,7 +46,7 @@ export class LoginForm extends React.Component {
           <Input type="password" hasFeedback name="password" label="Password" placeholder="Password" {...password} />
           {password.touched && password.error && <div className="login-field-error">{password.error}</div>}
 
-          <Input type="checkbox" label="Remember me" checked={this.props.isRemember} onChange={this.onChangeRemember.bind(this)} />
+          <Input type="checkbox" label="Remember me" checked={this.props.isRemember} onChange={this.onChangeRemember} />
           <hr />
           <Button type="submit" bsStyle="primary" className="pull-left" disabled={this.props.isPending} onClick={handleSubmit}>
             {this.props.isPending ? 'Signing In...' : 'Sign In'}

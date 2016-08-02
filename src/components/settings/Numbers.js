@@ -10,17 +10,17 @@ export class Numbers extends React.Component {
 
   type = 'numbers';
 
-  addNumber(values) {
+  addNumber = (values) => {
     this.props.actions.addItem(this.props.token, this.type, values);
-  }
+  };
 
-  deleteNumber(id) {
+  deleteNumber = (id) => {
     this.props.actions.deleteItem(this.props.token, this.type, id);
-  }
+  };
 
-  editNumber(id, values) {
+  editNumber = (id, values) => {
     this.props.actions.editItem(this.props.token, this.type, id, values);
-  }
+  };
 
   render() {
     let state = this.props.state;
@@ -31,9 +31,9 @@ export class Numbers extends React.Component {
           state={state}
           type={this.type}
           actions={this.props.actions}
-          onAddItem={this.addNumber.bind(this)}
-          onDeleteItem={this.deleteNumber.bind(this)}
-          onEditItem={this.editNumber.bind(this)}
+          onAddItem={this.addNumber}
+          onDeleteItem={this.deleteNumber}
+          onEditItem={this.editNumber}
         />
       </div>
     )

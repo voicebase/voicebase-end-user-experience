@@ -17,7 +17,7 @@ export class MediaListItem extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
-  toggle(event) {
+  toggle = (event) => {
     if (event.target.type) return false; // prevent click on checkbox
 
     if (!this.props.isExpanded) {
@@ -32,22 +32,22 @@ export class MediaListItem extends React.Component {
       this.props.actions.removeDataForMedia(this.props.mediaId);
       this.props.actions.destroyPlayer(this.props.mediaId);
     }
-  }
+  };
 
-  selectMedia(event) {
+  selectMedia = (event) => {
     if (event.target.checked) {
       this.props.actions.selectMedia(this.props.mediaId);
     }
     else {
       this.props.actions.unselectMedia(this.props.mediaId);
     }
-  }
+  };
 
-  deleteMedia(event) {
+  deleteMedia = (event) => {
     event.preventDefault();
     event.stopPropagation();
     this.props.actions.deleteMedia(this.props.token, this.props.mediaId);
-  }
+  };
 
   isGettingMediaData(mediaData) {
     return (mediaData && (mediaData.getPending || mediaData.getUrlPending));
@@ -101,7 +101,7 @@ export class MediaListItem extends React.Component {
 
     return (
       <div>
-        <div className={itemClasses} onClick={this.toggle.bind(this)}>
+        <div className={itemClasses} onClick={this.toggle}>
           <MediaListItemTitle
             mediaId={this.props.mediaId}
             metadata={media.metadata}
@@ -111,9 +111,9 @@ export class MediaListItem extends React.Component {
             &nbsp;
             {duration && <span>Length {parsedDuration}</span>}
           </p>
-          <input type="checkbox" className="listing__checkbox" checked={checked} onChange={this.selectMedia.bind(this)} />
+          <input type="checkbox" className="listing__checkbox" checked={checked} onChange={this.selectMedia} />
           {media.deletePending && <Spinner isMediumItem />}
-          {!media.deletePending && <a href="#" className="listing__delete" onClick={this.deleteMedia.bind(this)}><i className="fa fa-trash" /></a>}
+          {!media.deletePending && <a href="#" className="listing__delete" onClick={this.deleteMedia}><i className="fa fa-trash" /></a>}
         </div>
         <Collapse in={this.props.isExpanded}>
           <div className="listing__body">

@@ -56,13 +56,13 @@ export class Transcript extends React.Component {
     }
   }
 
-  onHoverTranscript() {
+  onHoverTranscript = () => {
     this.isHoverTranscript = true;
-  }
+  };
 
-  onBlurTranscript() {
+  onBlurTranscript = () => {
     this.isHoverTranscript = false;
-  }
+  };
 
   calcTimeBound(time) {
     return parseInt(time / this.transcriptHighlight, 10) * this.transcriptHighlight;
@@ -98,9 +98,9 @@ export class Transcript extends React.Component {
     }
   }
 
-  onBlurDetectionSegment() {
+  onBlurDetectionSegment = () => {
     this.setState({hoverUtterance: null, hoverKeyword: null});
-  }
+  };
 
   checkPhrase (findingKeyword, words, index) {
     let wordObj = {
@@ -182,7 +182,7 @@ export class Transcript extends React.Component {
 
     return (
       <div className="listing__transcript">
-        <div className={contentClasses} ref="transcript" onMouseEnter={this.onHoverTranscript.bind(this)} onMouseLeave={this.onBlurTranscript.bind(this)}>
+        <div className={contentClasses} ref="transcript" onMouseEnter={this.onHoverTranscript} onMouseLeave={this.onBlurTranscript}>
           {
             transcript.wordIds.map((wordId, i) => {
               let word = transcript.words[wordId];
@@ -258,8 +258,10 @@ export class Transcript extends React.Component {
                     className={highlightClass}
                     style={wordStyle}
                     ref={currentWordsCounter === 1 ? 'current' : null}
+                    /*eslint-disable*/
                     onMouseEnter={this.onHoverDetectionSegment.bind(this, utterance, endPhraseWords[word.p])}
-                    onMouseLeave={this.onBlurDetectionSegment.bind(this)}
+                    /*eslint-enable*/
+                    onMouseLeave={this.onBlurDetectionSegment}
                   >
                     {(word.m === 'punc') ? wordVal : ' ' + wordVal}
                   </span>

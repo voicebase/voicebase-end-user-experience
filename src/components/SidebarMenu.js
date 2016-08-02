@@ -2,47 +2,44 @@ import React, { PropTypes } from 'react'
 import {Nav, NavItem} from 'react-bootstrap'
 import Logo from '../images/voicebase-logo-2.png'
 import CounterLabel from '../components/CounterLabel'
+import SidebarLink from './SidebarLink'
 
 export class SidebarMenu extends React.Component {
-  static contextTypes = {
-    router: React.PropTypes.object.isRequired
-  };
-
   static propTypes = {
     state: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
 
-  signOut() {
+  signOut = () => {
     this.props.actions.signOut();
-  }
-
-  isItemActive(path) {
-    return this.context.router.isActive(path);
-  }
+  };
 
   getAllItem() {
-    let content = null;
     let mediaIds = this.props.state.media.mediaList.get('mediaIds');
-    if (mediaIds.size > 0) {
-      content = <NavItem active={this.isItemActive('/all')} onClick={this.redirect.bind(this, '/all')}>
-        All My Files
-        <CounterLabel value={mediaIds.size} />
-      </NavItem>
-    }
-    return content;
+    if (mediaIds.size <= 0) return null;
+
+    return (
+      <SidebarLink url='/all'>
+        <div>
+          All My Files
+          <CounterLabel value={mediaIds.size} />
+        </div>
+      </SidebarLink>
+    )
   }
 
   getLastUploadedItem() {
-    let content = null;
     let lastUploadedIds = this.props.state.media.mediaList.get('lastUploadedIds');
-    if (lastUploadedIds.size > 0) {
-      content = <NavItem active={this.isItemActive('/last-upload')} onClick={this.redirect.bind(this, '/last-upload')}>
-        Last Upload
-        <CounterLabel value={lastUploadedIds.size} />
-      </NavItem>
-    }
-    return content;
+    if (lastUploadedIds.size <= 0) return null;
+
+    return (
+      <SidebarLink url='/last-upload'>
+        <div>
+          Last Upload
+          <CounterLabel value={lastUploadedIds.size} />
+        </div>
+      </SidebarLink>
+    )
   }
 
   redirect(path) {
@@ -57,16 +54,18 @@ export class SidebarMenu extends React.Component {
         </div>
 
         <Nav stacked>
-          <NavItem active={this.isItemActive('/upload')} className="upload-files" onClick={this.redirect.bind(this, '/upload')}>
-            Upload Files
-          </NavItem>
+          <SidebarLink url='/upload' className="upload-files">
+            <div>Upload Files</div>
+          </SidebarLink>
           {this.getAllItem()}
           {this.getLastUploadedItem()}
         </Nav>
 
         <Nav stacked className="bottom">
-          <NavItem active={this.isItemActive('/settings')} onClick={this.redirect.bind(this, '/settings')}>Settings</NavItem>
-          <NavItem onClick={this.signOut.bind(this)}>Logout</NavItem>
+          <SidebarLink url='/settings'>
+            <div>Settings</div>
+          </SidebarLink>
+          <NavItem onClick={this.signOut}>Logout</NavItem>
         </Nav>
       </div>
     )

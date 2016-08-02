@@ -14,13 +14,13 @@ export class Keywords extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
-  setActiveTopic(topicId) {
+  setActiveTopic = (topicId) => {
     this.props.actions.setActiveTopic(this.props.mediaId, topicId, this.props.type);
-  }
+  };
 
-  setMarkers(markers) {
+  setMarkers = (markers) => {
     this.props.actions.setMarkers(this.props.mediaId, markers);
-  }
+  };
 
   render () {
     let topics = this.props.topics;
@@ -37,9 +37,10 @@ export class Keywords extends React.Component {
                 return (
                   <KeywordTopic
                     key={'topic-' + topicId}
+                    topicId={topicId}
                     topicName={topics[topicId].name}
                     isActive={activeTopicId === topicId}
-                    onClickTopic={this.setActiveTopic.bind(this, topicId)}
+                    onClickTopic={this.setActiveTopic}
                   />
                 )
               })}
@@ -54,7 +55,7 @@ export class Keywords extends React.Component {
                     key={'keyword-' + keywordId}
                     keyword={keyword}
                     activeSpeakerId={activeSpeakerId}
-                    setMarkers={this.setMarkers.bind(this)}
+                    setMarkers={this.setMarkers}
                   />
                 )
               })}

@@ -71,50 +71,54 @@ export default class UploadPreview extends React.Component {
     return Object.keys(items).filter(itemId => items[itemId].isDefault);
   }
 
-  onSelectLanguage(languageId) {
+  onSelectLanguage = (languageId) => {
     this.props.actions.setLanguage(languageId);
-  }
+  };
 
-  onSelectPriority(priorityId) {
+  onSelectPriority = (priorityId) => {
     this.props.actions.setPriority(priorityId);
-  }
+  };
 
-  onChangePrediction(newValue) {
+  onChangePrediction = (newValue) => {
     let value = this.parseSelectValue(newValue);
     this.props.actions.setPrediction(value);
-  }
+  };
 
-  onChangeDetection(newValue) {
+  onChangeDetection = (newValue) => {
     let value = this.parseSelectValue(newValue);
     this.props.actions.setDetection(value);
-  }
+  };
 
-  onChangeNumbers(newValue) {
+  onChangeNumbers = (newValue) => {
     let value = this.parseSelectValue(newValue);
     this.props.actions.setNumbers(value);
-  }
+  };
 
-  onChangeGroups(newValue) {
+  onChangeGroups = (newValue) => {
     let value = this.parseSelectValue(newValue);
     this.props.actions.setGroups(value);
-  }
+  };
 
-  onChangeVocabulary(newValue) {
+  onChangeVocabulary = (newValue) => {
     let value = this.parseSelectValue(newValue);
     this.props.actions.setVocabulary(value);
-  }
+  };
 
-  onChangeStereo(isStereo) {
-    this.props.actions.setIsStereo(isStereo);
-  }
+  turnOnStereo = () => {
+    this.props.actions.setIsStereo(true);
+  };
 
-  onChangeLeftSpeaker(event) {
+  turnOffStereo = () => {
+    this.props.actions.setIsStereo(false);
+  };
+
+  onChangeLeftSpeaker = (event) => {
     this.onChangeSpeakerName(event, 'left');
-  }
+  };
 
-  onChangeRightSpeaker(event) {
+  onChangeRightSpeaker = (event) => {
     this.onChangeSpeakerName(event, 'right');
-  }
+  };
 
   onChangeSpeakerName(event, type) {
     const speakerName = event.target.value;
@@ -141,6 +145,8 @@ export default class UploadPreview extends React.Component {
     }
     return {defaultValue, selectValue}
   }
+
+  onBlur = () => {};
 
   render() {
     let uploadState = this.props.uploadState;
@@ -180,7 +186,7 @@ export default class UploadPreview extends React.Component {
                   <LanguageDropdown
                     languages={items.languages.items}
                     activeLanguageId={activeLanguageId}
-                    onSelect={this.onSelectLanguage.bind(this)}
+                    onSelect={this.onSelectLanguage}
                   />
                 </div>
               }
@@ -191,7 +197,7 @@ export default class UploadPreview extends React.Component {
                 <div className="form-group dropdown-full-width">
                   <label className="control-label">Pick a priority for processing</label>
                   <DropdownList
-                    onSelect={this.onSelectPriority.bind(this)}
+                    onSelect={this.onSelectPriority}
                     dropdownKey="priority-dropdown"
                     items={priorities.items}
                     activeItemId={activePriority}
@@ -205,8 +211,8 @@ export default class UploadPreview extends React.Component {
               <div className="form-group">
                 <label className="control-label">Are the files in stereo?</label>
                 <ButtonGroup>
-                  <Button active={isStereo} onClick={this.onChangeStereo.bind(this, true)}>Yes</Button>
-                  <Button active={!isStereo} onClick={this.onChangeStereo.bind(this, false)}>No</Button>
+                  <Button active={isStereo} onClick={this.turnOnStereo}>Yes</Button>
+                  <Button active={!isStereo} onClick={this.turnOffStereo}>No</Button>
                 </ButtonGroup>
               </div>
             </Col>
@@ -219,7 +225,7 @@ export default class UploadPreview extends React.Component {
                       <input
                         type="text" className="form-control" placeholder="Name of Speaker 1"
                         value={speakers.left}
-                        onChange={this.onChangeLeftSpeaker.bind(this)}
+                        onChange={this.onChangeLeftSpeaker}
                       />
                     </div>
                   </Col>
@@ -229,7 +235,7 @@ export default class UploadPreview extends React.Component {
                       <input
                         type="text" className="form-control" placeholder="Name of Speaker 2"
                         value={speakers.right}
-                        onChange={this.onChangeRightSpeaker.bind(this)}
+                        onChange={this.onChangeRightSpeaker}
                       />
                     </div>
                   </Col>
@@ -246,10 +252,11 @@ export default class UploadPreview extends React.Component {
                     <Select
                       placeholder="Pick a prediction model"
                       multi
+                      simpleValue
                       value={predictionsValue.defaultValue.join(',')}
                       options={predictionsValue.selectValue}
-                      onChange={this.onChangePrediction.bind(this)}
-                      onBlur={() => {}}
+                      onChange={this.onChangePrediction}
+                      onBlur={this.onBlur}
                     />
                   </div>
                 }
@@ -265,10 +272,11 @@ export default class UploadPreview extends React.Component {
                     <Select
                       placeholder="Pick a detection model"
                       multi
+                      simpleValue
                       value={detectionValue.defaultValue.join(',')}
                       options={detectionValue.selectValue}
-                      onChange={this.onChangeDetection.bind(this)}
-                      onBlur={() => {}}
+                      onChange={this.onChangeDetection}
+                      onBlur={this.onBlur}
                     />
                   </div>
                 }
@@ -284,10 +292,11 @@ export default class UploadPreview extends React.Component {
                     <Select
                       placeholder="Pick a number format"
                       multi
+                      simpleValue
                       value={numbersValue.defaultValue.join(',')}
                       options={numbersValue.selectValue}
-                      onChange={this.onChangeNumbers.bind(this)}
-                      onBlur={() => {}}
+                      onChange={this.onChangeNumbers}
+                      onBlur={this.onBlur}
                     />
                   </div>
                 }
@@ -302,10 +311,11 @@ export default class UploadPreview extends React.Component {
                   <Select
                     placeholder="Pick 1 or more phrase groups"
                     multi
+                    simpleValue
                     value={groupsValue.defaultValue.join(',')}
                     options={groupsValue.selectValue}
-                    onChange={this.onChangeGroups.bind(this)}
-                    onBlur={() => {}}
+                    onChange={this.onChangeGroups}
+                    onBlur={this.onBlur}
                   />
                 </div>
               }
@@ -319,11 +329,12 @@ export default class UploadPreview extends React.Component {
                   <Select
                     placeholder="Pick 1 or more custom terms"
                     multi
+                    simpleValue
                     allowCreate
                     value={vocabularyValue.defaultValue.join(',')}
                     options={vocabularyValue.selectValue}
-                    onChange={this.onChangeVocabulary.bind(this)}
-                    onBlur={() => {}}
+                    onChange={this.onChangeVocabulary}
+                    onBlur={this.onBlur}
                   />
                 </div>
               }

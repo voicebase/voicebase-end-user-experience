@@ -10,17 +10,17 @@ export class Predictions extends React.Component {
 
   type = 'predictions';
 
-  addPrediction(values) {
+  addPrediction = (values) => {
     this.props.actions.addItem(this.props.token, this.type, values);
-  }
+  };
 
-  deletePrediction(id) {
+  deletePrediction = (id) => {
     this.props.actions.deleteItem(this.props.token, this.type, id);
-  }
+  };
 
-  editPrediction(id, values) {
+  editPrediction = (id, values) => {
     this.props.actions.editItem(this.props.token, this.type, id, values);
-  }
+  };
 
   render() {
     let state = this.props.state;
@@ -31,9 +31,9 @@ export class Predictions extends React.Component {
           state={state}
           type={this.type}
           actions={this.props.actions}
-          onAddItem={this.addPrediction.bind(this)}
-          onDeleteItem={this.deletePrediction.bind(this)}
-          onEditItem={this.editPrediction.bind(this)}
+          onAddItem={this.addPrediction}
+          onDeleteItem={this.deletePrediction}
+          onEditItem={this.editPrediction}
         />
       </div>
     )

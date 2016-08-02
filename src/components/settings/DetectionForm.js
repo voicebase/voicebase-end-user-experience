@@ -12,10 +12,10 @@ class DetectionForm extends React.Component {
     onCancel: PropTypes.func.isRequired
   };
 
-  cancel () {
+  cancel = () => {
     this.props.resetForm();
     this.props.onCancel();
-  }
+  };
 
   render () {
     const {
@@ -34,7 +34,7 @@ class DetectionForm extends React.Component {
           <Input type="checkbox" name="isDefault" label="Default detection model" {...isDefault} />
           <div className="buttons">
             <Button type="submit" bsStyle="success" disabled={pristine}>Save</Button>
-            <Button bsStyle="link" onClick={this.cancel.bind(this)}>Cancel</Button>
+            <Button bsStyle="link" onClick={this.cancel}>Cancel</Button>
           </div>
         </form>
       </div>

@@ -46,18 +46,18 @@ export default class UploadZone extends React.Component {
     return isValid;
   }
 
-  onDrop (files) {
+  onDrop = (files) => {
     console.log(files);
     let isValid = this.validate(files);
     if (isValid) {
       this.props.actions.addFiles(files);
     }
-  }
+  };
 
   render () {
     return (
       <div>
-        <Dropzone className="upload-dropzone" ref="dropzone" onDrop={this.onDrop.bind(this)} activeClassName="upload-dropzone--active">
+        <Dropzone className="upload-dropzone" ref="dropzone" onDrop={this.onDrop} activeClassName="upload-dropzone--active">
           <div className="empty-overlay">
             <div className="empty-overlay__message">
               <i className="fa fa-cloud-upload" />

@@ -16,28 +16,28 @@ export class SettingsList extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
-  expandCreateForm(event) {
+  expandCreateForm = (event) => {
     event.preventDefault();
     event.stopPropagation();
     this.props.actions.toggleCreateForm(this.props.type, true);
-  }
+  };
 
-  collapseCreateForm() {
+  collapseCreateForm = () => {
     this.props.actions.toggleCreateForm(this.props.type, false);
-  }
+  };
 
-  expandItem(type, itemId) {
+  expandItem = (type, itemId) => {
     this.props.actions.setActiveItem(type, itemId);
-  }
+  };
 
-  collapseItem(type) {
+  collapseItem = (type) => {
     this.props.actions.clearActiveItem(type);
-  }
+  };
 
-  addItem(values) {
+  addItem = (values) => {
     this.collapseCreateForm();
     this.props.onAddItem(values);
-  }
+  };
 
   render() {
     let state = this.props.state;
@@ -56,7 +56,7 @@ export class SettingsList extends React.Component {
           <div>
             {state.isAddPending && <div className="btn-add-settings"><Spinner /></div>}
             {!state.isAddPending &&
-              <Button bsStyle="link" className="btn-add" onClick={this.expandCreateForm.bind(this)}>
+              <Button bsStyle="link" className="btn-add" onClick={this.expandCreateForm}>
                 <i className="fa fa-plus" />&nbsp;{state.view.addButtonLabel}
               </Button>
             }
@@ -65,22 +65,22 @@ export class SettingsList extends React.Component {
                 {type === 'predictions' &&
                   <PredictionForm
                     formKey={'add-' + type}
-                    onSubmit={this.addItem.bind(this)}
-                    onCancel={this.collapseCreateForm.bind(this)}
+                    onSubmit={this.addItem}
+                    onCancel={this.collapseCreateForm}
                   />
                 }
                 {type === 'detection' &&
                   <DetectionForm
                     formKey={'add-' + type}
-                    onSubmit={this.addItem.bind(this)}
-                    onCancel={this.collapseCreateForm.bind(this)}
+                    onSubmit={this.addItem}
+                    onCancel={this.collapseCreateForm}
                   />
                 }
                 {type === 'numbers' &&
                   <NumbersForm
                     formKey={'add-' + type}
-                    onSubmit={this.addItem.bind(this)}
-                    onCancel={this.collapseCreateForm.bind(this)}
+                    onSubmit={this.addItem}
+                    onCancel={this.collapseCreateForm}
                   />
                 }
               </div>
@@ -96,8 +96,8 @@ export class SettingsList extends React.Component {
                       isActive={activeItemId === id}
                       onDeleteItem={this.props.onDeleteItem}
                       onEditItem={this.props.onEditItem}
-                      onSetActiveItem={this.expandItem.bind(this)}
-                      onClearActiveItem={this.collapseItem.bind(this)}
+                      onSetActiveItem={this.expandItem}
+                      onClearActiveItem={this.collapseItem}
                     />
                   )
                 })}

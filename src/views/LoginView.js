@@ -21,13 +21,13 @@ export class LoginView extends React.Component {
     }
   }
 
-  signIn(credentials) {
+  signIn = (credentials) => {
     this.props.actions.signIn(credentials);
-  }
+  };
 
-  setRemember(isRemember) {
+  setRemember = (isRemember) => {
     this.props.actions.setRemember(isRemember);
-  }
+  };
 
   render() {
     return (
@@ -36,8 +36,8 @@ export class LoginView extends React.Component {
           <img src={Logo} className="img-responsive" />
           <Panel>
             <LoginForm
-              onSubmit={this.signIn.bind(this)}
-              handleRemember={this.setRemember.bind(this)}
+              onSubmit={this.signIn}
+              handleRemember={this.setRemember}
               isRemember={this.props.state.auth.isRemember}
               errorMessage={this.props.state.auth.errorMessage}
               isPending={this.props.state.auth.isPending}

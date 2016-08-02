@@ -17,29 +17,29 @@ export class SettingsListItem extends React.Component {
     onClearActiveItem: PropTypes.func.isRequired
   };
 
-  toggleItem() {
+  toggleItem = () => {
     if (this.props.isActive) {
       this.collapseForm();
     }
     else {
       this.props.onSetActiveItem(this.props.type, this.props.item.id);
     }
-  }
+  };
 
-  collapseForm() {
+  collapseForm = () => {
     this.props.onClearActiveItem(this.props.type);
-  }
+  };
 
-  deleteItem(event) {
+  deleteItem = (event) => {
     event.preventDefault();
     event.stopPropagation();
     this.props.onDeleteItem(this.props.item.id);
-  }
+  };
 
-  editItem(values) {
+  editItem = (values) => {
     this.collapseForm();
     this.props.onEditItem(this.props.item.id, values);
-  }
+  };
 
   render() {
     let type = this.props.type;
@@ -52,7 +52,7 @@ export class SettingsListItem extends React.Component {
 
     return (
       <section className={listItemClasses}>
-        <ListGroupItem href="javascript:void(0)" onClick={this.toggleItem.bind(this)}>
+        <ListGroupItem href="javascript:void(0)" onClick={this.toggleItem}>
           <Col sm={11}>
             <h4 className="list-group-item-heading">
               {item.displayName}&nbsp;
@@ -61,7 +61,7 @@ export class SettingsListItem extends React.Component {
           </Col>
           {(item.isDeletePending || item.isEditPending) && <Spinner isSmallItem />}
           {!item.isDeletePending && !item.isEditPending &&
-            <Button bsStyle="link" className="btn-delete" onClick={this.deleteItem.bind(this)}>
+            <Button bsStyle="link" className="btn-delete" onClick={this.deleteItem}>
               <i className="fa fa-trash" />
             </Button>
           }
@@ -73,24 +73,24 @@ export class SettingsListItem extends React.Component {
               <PredictionForm
                 formKey={type + item.id}
                 initialValues={initialValue}
-                onSubmit={this.editItem.bind(this)}
-                onCancel={this.collapseForm.bind(this)}
+                onSubmit={this.editItem}
+                onCancel={this.collapseForm}
               />
             }
             {type === 'detection' &&
               <DetectionForm
                 formKey={type + item.id}
                 initialValues={initialValue}
-                onSubmit={this.editItem.bind(this)}
-                onCancel={this.collapseForm.bind(this)}
+                onSubmit={this.editItem}
+                onCancel={this.collapseForm}
               />
             }
             {type === 'numbers' &&
               <NumbersForm
                 formKey={type + item.id}
                 initialValues={initialValue}
-                onSubmit={this.editItem.bind(this)}
-                onCancel={this.collapseForm.bind(this)}
+                onSubmit={this.editItem}
+                onCancel={this.collapseForm}
               />
             }
           </div>

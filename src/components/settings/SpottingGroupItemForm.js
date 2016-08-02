@@ -15,10 +15,12 @@ class SpottingGroupItemForm extends React.Component {
     onCancel: PropTypes.func.isRequired
   };
 
-  cancel () {
+  cancel = () => {
     this.props.resetForm();
     this.props.onCancel();
-  }
+  };
+
+  onBlur = () => {};
 
   render () {
     const {
@@ -48,7 +50,7 @@ class SpottingGroupItemForm extends React.Component {
               allowCreate
               options={this.props.keywordsSelectValue}
               {...keywords}
-              onBlur={() => {}}
+              onBlur={this.onBlur}
             />
           </div>
           {keywords.visited && keywords.error && <div className="login-field-error">{keywords.error}</div>}
@@ -68,7 +70,7 @@ class SpottingGroupItemForm extends React.Component {
 
           <div className="buttons">
             <Button type="submit" bsStyle="success" disabled={pristine}>Save</Button>
-            <Button bsStyle="link" onClick={this.cancel.bind(this)}>Cancel</Button>
+            <Button bsStyle="link" onClick={this.cancel}>Cancel</Button>
           </div>
         </form>
       </div>

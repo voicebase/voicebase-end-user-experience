@@ -13,38 +13,38 @@ export class SearchForm extends React.Component {
   searchButtonAddon() {
     let isSearching = this.props.state.get('isSearching');
     return (
-      <Button bsStyle="primary" onClick={this.startSearch.bind(this)} disabled={isSearching}>
+      <Button bsStyle="primary" onClick={this.startSearch} disabled={isSearching}>
         {isSearching ? 'Searching...' : 'Search'}
       </Button>
     )
   }
 
-  applyDate(dateFrom, dateTo) {
+  applyDate = (dateFrom, dateTo) => {
     this.props.actions.applyDate({dateFrom, dateTo});
-  }
+  };
 
-  clearDate() {
+  clearDate = () => {
     this.props.actions.clearDate();
-  }
+  };
 
-  onSelectOrder(orderId) {
+  onSelectOrder = (orderId) => {
     this.props.actions.selectOrder(orderId);
-  }
+  };
 
-  changeSearchText(event) {
+  changeSearchText = (event) => {
     this.props.actions.setSearchString(event.target.value);
-  }
+  };
 
-  handleEnterKey(event) {
+  handleEnterKey = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
       this.startSearch();
     }
-  }
+  };
 
-  startSearch() {
+  startSearch = () => {
     this.props.onSearch();
-  }
+  };
 
   render() {
     let state = this.props.state.toJS();
@@ -72,8 +72,8 @@ export class SearchForm extends React.Component {
                     type="text"
                     placeholder="Search transcripts..."
                     value={state.searchString}
-                    onKeyPress={this.handleEnterKey.bind(this)}
-                    onChange={this.changeSearchText.bind(this)}
+                    onKeyPress={this.handleEnterKey}
+                    onChange={this.changeSearchText}
                   />
                   <InputGroup.Addon bsClass='input-group-btn'>
                     {this.searchButtonAddon()}
@@ -88,8 +88,8 @@ export class SearchForm extends React.Component {
               <DatePicker
                 dateFrom={state.dateFrom}
                 dateTo={state.dateTo}
-                applyDate={this.applyDate.bind(this)}
-                clearDate={this.clearDate.bind(this)}
+                applyDate={this.applyDate}
+                clearDate={this.clearDate}
               />
             </Col>
           }
@@ -98,7 +98,7 @@ export class SearchForm extends React.Component {
             <Col sm={orderWidth}>
               <div className="pull-right">
                 <DropdownList
-                  onSelect={this.onSelectOrder.bind(this)}
+                  onSelect={this.onSelectOrder}
                   dropdownKey="sort-list-dropdown"
                   items={state.order}
                   activeItemId={state.selectedOrderId}

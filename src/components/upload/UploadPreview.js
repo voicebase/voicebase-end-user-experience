@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
-import classnames from 'classnames'
-import { ListGroup, ListGroupItem, Button } from 'react-bootstrap'
-import Player from '../player/Player';
+import { ListGroup } from 'react-bootstrap'
+import UploadPreviewItem from './UploadPreviewItem';
 
 export default class UploadPreview extends React.Component {
   static propTypes = {
@@ -31,11 +30,6 @@ export default class UploadPreview extends React.Component {
     }
   }
 
-  removeFile(id) {
-    this.props.actions.removeFile(id);
-    this.props.actions.destroyPlayer(id);
-  }
-
   render () {
     let uploadState = this.props.uploadState;
     let playerState = this.props.playerState;
@@ -44,33 +38,15 @@ export default class UploadPreview extends React.Component {
       <ListGroup className="preview-players-list">
         {uploadState.fileIds.map(fileId => {
           let file = uploadState.files[fileId];
-          let itemClasses = classnames({
-            'preview-player-item--video': file.type === 'video',
-            'preview-player-item--audio': file.type === 'audio'
-          });
 
           return (
-            <ListGroupItem key={'preview' + fileId} className={itemClasses}>
-              <h4>{file.file.name}</h4>
-              <div className="preview-player-row">
-                <div className="player-wrapper">
-                  <Player
-                    mediaId={fileId}
-                    playerType="FileInputPlayer"
-                    playerState={playerState.players[fileId] || {loading: true}}
-                    hasNextKeywordButton={false}
-                    hasDownloadButton={false}
-                    isShowKeywordsMarkers={false}
-                    actions={this.props.actions}
-                  />
-                </div>
-                {playerState.players[fileId] &&
-                  <Button bsStyle="danger" className="btn-delete" onClick={this.removeFile.bind(this, fileId)}>
-                    <i className="fa fa-fw fa-times" />
-                  </Button>
-                }
-              </div>
-            </ListGroupItem>
+            <UploadPreviewItem
+              key={'preview' + fileId}
+              file={file}
+              fileId={fileId}
+              playerState={playerState}
+              actions={this.props.actions}
+            />
           )
         })}
       </ListGroup>

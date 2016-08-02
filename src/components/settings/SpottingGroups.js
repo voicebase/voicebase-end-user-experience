@@ -19,21 +19,21 @@ export class SpottingGroups extends React.Component {
     };
   }
 
-  expandCreateForm(event) {
+  expandCreateForm = (event) => {
     event.preventDefault();
     event.stopPropagation();
     this.setState({
       openCreate: true
     });
-  }
+  };
 
-  collapseCreateForm() {
+  collapseCreateForm = () => {
     this.setState({
       openCreate: false
     });
-  }
+  };
 
-  addGroup(values) {
+  addGroup = (values) => {
     let keywords = values.keywords.split(',');
     let newGroup = {
       name: values.name,
@@ -41,7 +41,7 @@ export class SpottingGroups extends React.Component {
     };
     this.collapseCreateForm();
     this.props.actions.addGroup(this.props.token, newGroup);
-  }
+  };
 
   render() {
     let groupsState = this.props.groupsState;
@@ -67,7 +67,7 @@ export class SpottingGroups extends React.Component {
           <div>
             {groupsState.isAddPending && <div className="btn-add-settings"><Spinner /></div>}
             {!groupsState.isAddPending &&
-              <Button bsStyle="link" className="btn-add" onClick={this.expandCreateForm.bind(this)}>
+              <Button bsStyle="link" className="btn-add" onClick={this.expandCreateForm}>
                 <i className="fa fa-plus" />&nbsp;{groupsState.view.addButtonLabel}
               </Button>
             }
@@ -78,8 +78,8 @@ export class SpottingGroups extends React.Component {
                   formKey={'add-group'}
                   keywordsSelectValue={keywordsSelectValueForAdd}
                   initialValues={initialValueForAdd}
-                  onSubmit={this.addGroup.bind(this)}
-                  onCancel={this.collapseCreateForm.bind(this)}
+                  onSubmit={this.addGroup}
+                  onCancel={this.collapseCreateForm}
                 />
               </div>
             </Collapse>

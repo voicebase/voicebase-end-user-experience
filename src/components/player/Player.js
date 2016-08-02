@@ -5,6 +5,7 @@ import { ButtonGroup, Button, Popover, OverlayTrigger } from 'react-bootstrap'
 import Spinner from '../Spinner';
 import VolumeSlider from './VolumeSlider';
 import PlayerSpeakers from './PlayerSpeakers';
+import Marker from './Marker';
 import { parseTime } from '../../common/Common';
 
 export class Player extends React.Component {
@@ -59,34 +60,34 @@ export class Player extends React.Component {
     }
   }
 
-  togglePlay() {
+  togglePlay = () => {
     (this.props.playerState.playing) ? this.onPause() : this.onPlay();
-  }
+  };
 
-  onDuration(duration) {
+  onDuration = (duration) => {
     if (duration && duration > 0 && this.props.playerState.duration !== duration) {
       this.props.actions.setDuration(this.props.mediaId, duration);
     }
-  }
+  };
 
-  onPlay() {
+  onPlay = () => {
     this.props.actions.play(this.props.mediaId);
-  }
+  };
 
-  onPause() {
+  onPause = () => {
     if (this.props.playerState.loaded !== 0) {
       this.props.actions.pause(this.props.mediaId);
     }
-  }
+  };
 
-  onProgress({played, loaded}) {
+  onProgress = ({played, loaded}) => {
     if (played && this.props.playerState.played !== played) {
       this.props.actions.setPosition(this.props.mediaId, played);
     }
     if (loaded && this.props.playerState.loaded !== loaded) {
       this.props.actions.setBuffered(this.props.mediaId, loaded);
     }
-  }
+  };
 
   calcPosition(event) {
     let timelineLeftOffset = this.refs.timeline.getBoundingClientRect().left;
@@ -95,23 +96,23 @@ export class Player extends React.Component {
     return ((clickLeftOffset - timelineLeftOffset)) / timelineWidth;
   }
 
-  calcTimeOffset(time) {
+  calcTimeOffset = (time) => {
     let timelineWidth = this.refs.timeline && this.refs.timeline.clientWidth || 0;
     let duration = this.props.playerState.duration;
     if (!duration) return 0;
 
     return ((time * timelineWidth) / duration);
-  }
+  };
 
-  onSeekMouseDown(event) {
+  onSeekMouseDown = (event) => {
     let position = this.calcPosition(event);
     this.setState({
       seeking: true,
       seekValue: position
     });
-  }
+  };
 
-  onSeekMouseMove(event) {
+  onSeekMouseMove = (event) => {
     if (!this.state.seeking) {
       return false;
     }
@@ -121,17 +122,17 @@ export class Player extends React.Component {
     });
   };
 
-  onSeekMouseUp(event) {
+  onSeekMouseUp = (event) => {
     this.setState({ seeking: false });
     let position = this.calcPosition(event);
     this.seekOnPosition(position);
-  }
+  };
 
-  onSeekMarker(markerTime) {
+  onSeekMarker = (markerTime) => {
     let duration = this.props.playerState.duration;
     let position = (duration) ? markerTime / duration : 0;
     this.seekOnPosition(position);
-  }
+  };
 
   seekToFirstMarker(markersState) {
     let firstMarker = markersState.markers[markersState.markerIds[0]];
@@ -141,7 +142,7 @@ export class Player extends React.Component {
     }, 100);
   }
 
-  seekToNextMarker() {
+  seekToNextMarker = () => {
     let isLastMarker = true;
     let markersState = this.props.markersState;
     for (let markerId of markersState.markerIds) {
@@ -158,7 +159,7 @@ export class Player extends React.Component {
       let firstMarker = markersState.markers[markersState.markerIds[0]];
       this.onSeekMarker(firstMarker.time);
     }
-  }
+  };
 
   seekToUtterance(time) {
     this.props.actions.clearUtteranceTime(this.props.mediaId);
@@ -178,11 +179,11 @@ export class Player extends React.Component {
     }
   }
 
-  onVolumeChange(value) {
+  onVolumeChange = (value) => {
     this.setState({
       volume: value
     });
-  }
+  };
 
   getSlider() {
     let id = 'volume-slider' + this.props.mediaId;
@@ -191,7 +192,7 @@ export class Player extends React.Component {
         <VolumeSlider
           orientation="vertical"
           value={this.state.volume}
-          onChange={this.onVolumeChange.bind(this)}
+          onChange={this.onVolumeChange}
         />
       </Popover>
     )
@@ -203,31 +204,25 @@ export class Player extends React.Component {
 
     return markersState.markerIds.map(markerId => {
       let marker = markersState.markers[markerId];
-      let position = this.calcTimeOffset(marker.time);
-      let style = {
-        left: position + 'px',
-        borderBottomColor: marker.color
-      };
       return (
-        <a
-          href="#"
+        <Marker
           key={'marker-' + markerId}
-          className="player__keywords__marker"
-          style={style}
-          onClick={this.onSeekMarker.bind(this, marker.time)}
+          marker={marker}
+          calcTimeOffset={this.calcTimeOffset}
+          onSeekMarker={this.onSeekMarker}
         />
       )
     })
   }
 
-  fullscreenPlayer() {
+  fullscreenPlayer = () => {
     this.props.actions.setFullscreen(this.props.mediaId, true);
-  }
+  };
 
-  exitFullscreen() {
+  exitFullscreen = () => {
     this.props.actions.setFullscreen(this.props.mediaId, false);
     setTimeout(() => this.forceUpdate(), 100); // for re-rendering markers
-  }
+  };
 
   render () {
     let playerState = this.props.playerState;
@@ -249,7 +244,7 @@ export class Player extends React.Component {
 
     let mediaState = this.props.mediaState;
     let duration = this.props.playerState.duration;
-    let timePercentValue = (!this.state.seeking) ? (playerState.played) : (this.state.seekValue)
+    let timePercentValue = (!this.state.seeking) ? (playerState.played) : (this.state.seekValue);
     let sliderValue = timePercentValue * 100;
     let sliderStyles = {left: sliderValue + '%'};
     let progressStyles = {width: sliderValue + '%'};
@@ -282,27 +277,27 @@ export class Player extends React.Component {
             height='100%'
             url={playerState.url}
             playing={playerState.playing}
-            onPlay={this.onPlay.bind(this)}
+            onPlay={this.onPlay}
             volume={volume}
-            onProgress={this.onProgress.bind(this)}
-            onEnded={this.onPause.bind(this)}
-            onDuration={this.onDuration.bind(this)}
+            onProgress={this.onProgress}
+            onEnded={this.onPause}
+            onDuration={this.onDuration}
           />
           {playerState.type === 'video' && !playerState.isFullscreen &&
-            <a href="#" className="vbs-player__original__fullscreen-btn" onClick={this.fullscreenPlayer.bind(this)}><i className="fa fa-arrows-alt" /></a>
+            <a href="#" className="vbs-player__original__fullscreen-btn" onClick={this.fullscreenPlayer}>
+              <i className="fa fa-arrows-alt" />
+            </a>
           }
         </div>
         <div className="player">
           <ButtonGroup className="player__buttons">
-            <Button bsStyle="primary" onClick={this.togglePlay.bind(this)}>
-              {playerState.playing && isLoaded &&
-                <i className="fa fa-fw fa-circle-o-notch fa-spin" />
-              }
+            <Button bsStyle="primary" onClick={this.togglePlay}>
+              {playerState.playing && isLoaded && <i className="fa fa-fw fa-circle-o-notch fa-spin" />}
               {playerState.playing && !isLoaded && <i className="fa fa-fw fa-pause" />}
               {!playerState.playing && <i className="fa fa-fw fa-play" />}
             </Button>
             {this.props.hasNextKeywordButton &&
-              <Button onClick={this.seekToNextMarker.bind(this)} disabled={!hasMarkers} >
+              <Button onClick={this.seekToNextMarker} disabled={!hasMarkers} >
                 <i className="fa fa-fw fa-play fa-rotate-270" />
                 <i className="fa fa-share fa-topleft" />
               </Button>
@@ -311,9 +306,9 @@ export class Player extends React.Component {
 
           <div className="player__timeline show-keywords">
             <div
-              onMouseDown={this.onSeekMouseDown.bind(this)}
-              onMouseMove={this.onSeekMouseMove.bind(this)}
-              onMouseUp={this.onSeekMouseUp.bind(this)}
+              onMouseDown={this.onSeekMouseDown}
+              onMouseMove={this.onSeekMouseMove}
+              onMouseUp={this.onSeekMouseUp}
             >
               <div className="player__timeline__slider" style={sliderStyles}></div>
               <div ref="timeline" className="player__timeline__progress">
@@ -326,7 +321,7 @@ export class Player extends React.Component {
                     <PlayerSpeakers
                       speakers={speakers}
                       transcriptSpeakers={transcriptSpeakers}
-                      calcTimeOffset={this.calcTimeOffset.bind(this)}
+                      calcTimeOffset={this.calcTimeOffset}
                       duration={duration}
                     />
                   }
@@ -350,7 +345,7 @@ export class Player extends React.Component {
               <Button><i className="fa fa-fw fa-volume-up" /></Button>
             </OverlayTrigger>
             {this.props.hasDownloadButton && <Button><i className="fa fa-fw fa-cloud-download" /></Button>}
-            {playerState.isFullscreen && <Button onClick={this.exitFullscreen.bind(this)}>Exit</Button>}
+            {playerState.isFullscreen && <Button onClick={this.exitFullscreen}>Exit</Button>}
           </ButtonGroup>
         </div>
       </div>

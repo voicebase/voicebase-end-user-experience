@@ -27,9 +27,9 @@ export class VbsPlayerApp extends React.Component {
     this.props.actions.removeDataForMedia(this.props.mediaId);
   }
 
-  selectTab(key) {
+  selectTab = (key) => {
     this.props.actions.choosePlayerAppTab(this.props.mediaId, key);
-  }
+  };
 
   render () {
     let playerState = this.props.playerState;
@@ -52,7 +52,7 @@ export class VbsPlayerApp extends React.Component {
           actions={this.props.actions}
         />
 
-        <Tabs id={'tabs-' + mediaId} className="listing__tabs" activeKey={activeTab} onSelect={this.selectTab.bind(this)}>
+        <Tabs id={'tabs-' + mediaId} className="listing__tabs" activeKey={activeTab} onSelect={this.selectTab}>
           <Tab eventKey={KEYWORDS_TAB} title="Keywords">
             <Keywords
               mediaId={mediaId}

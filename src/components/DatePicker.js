@@ -13,15 +13,15 @@ export class DatePicker extends React.Component {
     clearDate: PropTypes.func.isRequired
   };
 
-  saveDate(event, picker) {
+  saveDate = (event, picker) => {
     let fromDate = picker.startDate.format('MM/DD/YYYY H') + ':00';
     let toDate = picker.endDate.format('MM/DD/YYYY H') + ':00';
     this.props.applyDate(fromDate, toDate);
-  }
+  };
 
-  cancel() {
+  cancel = () => {
     this.props.clearDate();
-  }
+  };
 
   render() {
     let dateValue = '';
@@ -66,7 +66,7 @@ export class DatePicker extends React.Component {
 
     return (
       <div className='form-group form-group--date'>
-        <DateRangePicker {...settings} onApply={this.saveDate.bind(this)} onCancel={this.cancel.bind(this)}>
+        <DateRangePicker {...settings} onApply={this.saveDate} onCancel={this.cancel}>
           <i className='fa fa-calendar-o' />
           <Input type='text' name='daterange' className="readonly--non-grey" readOnly value={dateValue} placeholder='Date range' />
         </DateRangePicker>

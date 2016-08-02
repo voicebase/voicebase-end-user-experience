@@ -14,9 +14,9 @@ export class UploadView extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
-  onFinish() {
+  onFinish = () => {
     this.context.router.push('/all');
-  }
+  };
 
   render () {
     let fileIds = this.props.state.upload.get('fileIds');
@@ -30,7 +30,7 @@ export class UploadView extends React.Component {
           <UploadContainer
             state={this.props.state}
             isModal={false}
-            onFinish={this.onFinish.bind(this)}
+            onFinish={this.onFinish}
             actions={this.props.actions}
           />
         }

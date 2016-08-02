@@ -41,7 +41,7 @@ export class AllView extends React.Component {
     }
   }
 
-  onSearch() {
+  onSearch = () => {
     let state = this.props.state;
     this.props.actions.startSearch();
     this.props.actions.getMedia(state.auth.token, {
@@ -49,7 +49,7 @@ export class AllView extends React.Component {
       dateTo: state.search.get('dateTo'),
       searchString: state.search.get('searchString')
     })
-  }
+  };
 
   render () {
     let state = this.props.state;
@@ -67,7 +67,7 @@ export class AllView extends React.Component {
             </div>
             <SearchForm
               state={state.search}
-              onSearch={this.onSearch.bind(this)}
+              onSearch={this.onSearch}
               actions={this.props.actions}
             />
             <MediaListToolbar

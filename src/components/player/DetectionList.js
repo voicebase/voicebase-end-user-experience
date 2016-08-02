@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import DetectionListItem from './DetectionListItem'
 
 export default class DetectionList extends React.Component {
   static propTypes = {
@@ -8,17 +9,17 @@ export default class DetectionList extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
-  calcTimeOffset(time) {
+  calcTimeOffset = (time) => {
     let timelineWidth = this.props.playerState.timelineWidth;
     let duration = this.props.playerState.duration;
     if (!duration) return 0;
 
     return ((time * timelineWidth) / duration);
-  }
+  };
 
-  onClickMarker(time) {
+  onClickMarker = (time) => {
     this.props.actions.setUtteranceTime(this.props.mediaId, time);
-  }
+  };
 
   render() {
     let utterances = this.props.utterances;
@@ -41,22 +42,13 @@ export default class DetectionList extends React.Component {
               <span className="listing__detection__label" style={labelStyle}>{utterance.name}</span>
               <div className="listing__detection__container" style={timelineStyle}>
                 {utterance.segments.map((segment, i) => {
-                  let start = this.calcTimeOffset(segment.s / 1000);
-                  let end = this.calcTimeOffset(segment.e / 1000);
-
-                  let segmentStyles = {
-                    left: start + 'px',
-                    width: (end - start) + 'px',
-                    backgroundColor: utterance.color
-                  };
-
                   return (
-                    <a
-                      href="#"
+                    <DetectionListItem
                       key={'utterance-marker-' + utterId + '-segment-' + i}
-                      className="listing__detection__marker"
-                      style={segmentStyles}
-                      onClick={this.onClickMarker.bind(this, segment.s / 1000)}
+                      segment={segment}
+                      color={utterance.color}
+                      calcTimeOffset={this.calcTimeOffset}
+                      onClickMarker={this.onClickMarker}
                     />
                   )
                 })}

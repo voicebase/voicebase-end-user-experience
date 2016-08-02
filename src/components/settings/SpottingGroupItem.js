@@ -12,26 +12,26 @@ export class SpottingGroupItem extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
-  toggleItem() {
+  toggleItem = () => {
     if (this.props.isActive) {
       this.collapseForm();
     }
     else {
       this.props.actions.setActiveGroup(this.props.group.id);
     }
-  }
+  };
 
-  collapseForm() {
+  collapseForm = () => {
     this.props.actions.clearActiveGroup();
-  }
+  };
 
-  deleteGroup(event) {
+  deleteGroup = (event) => {
     event.preventDefault();
     event.stopPropagation();
     this.props.actions.deleteGroup(this.props.token, this.props.group.id, this.props.group.name);
-  }
+  };
 
-  editGroup(values) {
+  editGroup = (values) => {
     let keywords = values.keywords.split(',');
 
     let newGroup = {
@@ -40,7 +40,7 @@ export class SpottingGroupItem extends React.Component {
     };
     this.collapseForm();
     this.props.actions.editGroup(this.props.token, this.props.group.id, newGroup);
-  }
+  };
 
   render() {
     let group = this.props.group;
@@ -63,7 +63,7 @@ export class SpottingGroupItem extends React.Component {
 
     return (
       <section className={listItemClasses}>
-        <ListGroupItem href="javascript:void(0)" onClick={this.toggleItem.bind(this)}>
+        <ListGroupItem href="javascript:void(0)" onClick={this.toggleItem}>
           <Col sm={4}>
             <h4 className="list-group-item-heading">
               {group.name}
@@ -81,7 +81,7 @@ export class SpottingGroupItem extends React.Component {
           </Col>
           {(group.isDeletePending || group.isEditPending) && <Spinner isSmallItem />}
           {!group.isDeletePending && !group.isEditPending &&
-            <Button bsStyle="link" className="btn-delete" onClick={this.deleteGroup.bind(this)}>
+            <Button bsStyle="link" className="btn-delete" onClick={this.deleteGroup}>
               <i className="fa fa-trash" />
             </Button>
           }
@@ -93,8 +93,8 @@ export class SpottingGroupItem extends React.Component {
               formKey={'group' + group.id}
               keywordsSelectValue={keywordsSelectValue}
               initialValues={initialValue}
-              onSubmit={this.editGroup.bind(this)}
-              onCancel={this.collapseForm.bind(this)}
+              onSubmit={this.editGroup}
+              onCancel={this.collapseForm}
             />
           </div>
         </Collapse>
