@@ -1,9 +1,8 @@
 import React from 'react';
 import { shallowRender } from '../../src/common/Test'
-import TestUtils from 'react-addons-test-utils'
 
 import { LoginForm, validateLogin } from '../../src/components/LoginForm'
-import {Input, Button, Alert} from 'react-bootstrap'
+import {FormControl, Checkbox, Button, Alert} from 'react-bootstrap'
 
 describe('LoginForm component', function () {
   let component;
@@ -86,15 +85,15 @@ describe('LoginForm component', function () {
     });
 
     it('check UserName input', function() {
-      let userField = form.props.children[0];
-      let userError = form.props.children[1];
-      assert.equal(userField.type, Input);
+      let formGroup = form.props.children[0];
+      let userField = formGroup.props.children[1];
+      let userError = formGroup.props.children[3];
       assert.equal(userField.props.type, 'text');
       assert.equal(userField.props.name, 'username');
       assert.equal(userField.props.label, 'Email');
       assert.equal(userField.props.placeholder, 'Email');
       assert.equal(userField.props.value, 'user');
-      assert.equal(userError, '');
+      assert.equal(userError, null);
     });
 
     it('check error for UserName input', function() {
@@ -112,22 +111,21 @@ describe('LoginForm component', function () {
       };
       component = getComponent(props);
       form = getForm();
-      let userError = form.props.children[1];
-      assert.equal(userError.type, 'div');
-      assert.equal(userError.props.className, 'login-field-error');
+      let formGroup = form.props.children[0];
+      let userError = formGroup.props.children[3];
       assert.equal(userError.props.children, 'error');
     });
 
     it('check Password input', function() {
-      let passwordField = form.props.children[2];
-      let passwordError = form.props.children[3];
-      assert.equal(passwordField.type, Input);
+      let formGroup = form.props.children[1];
+      let passwordField = formGroup.props.children[1];
+      let passwordError = formGroup.props.children[3];
       assert.equal(passwordField.props.type, 'password');
       assert.equal(passwordField.props.name, 'password');
       assert.equal(passwordField.props.label, 'Password');
       assert.equal(passwordField.props.placeholder, 'Password');
       assert.equal(passwordField.props.value, 'pass');
-      assert.equal(passwordError, '');
+      assert.equal(passwordError, null);
     });
 
     it('check error for Password input', function() {
@@ -145,17 +143,14 @@ describe('LoginForm component', function () {
       };
       component = getComponent(props);
       form = getForm();
-      let passwordError = form.props.children[3];
-      assert.equal(passwordError.type, 'div');
-      assert.equal(passwordError.props.className, 'login-field-error');
+      let formGroup = form.props.children[1];
+      let passwordError = formGroup.props.children[3];
       assert.equal(passwordError.props.children, 'error');
     });
 
     it('check Remember me checkbox', function() {
-      let checkboxField = form.props.children[4];
-      assert.equal(checkboxField.type, Input);
-      assert.equal(checkboxField.props.type, 'checkbox');
-      assert.equal(checkboxField.props.label, 'Remember me');
+      let checkboxField = form.props.children[2];
+      assert.equal(checkboxField.type, Checkbox);
       assert.equal(checkboxField.props.checked, options.isRemember);
     });
 
@@ -163,14 +158,14 @@ describe('LoginForm component', function () {
       const handleRemember = sinon.spy();
       component = getComponent({handleRemember});
       form = getForm();
-      let checkboxField = form.props.children[4];
+      let checkboxField = form.props.children[2];
       let mockEvent = {target: {checked: false}};
       checkboxField.props.onChange(mockEvent);
       assert.isTrue(handleRemember.calledOnce);
     });
 
     it('check submit Button', function() {
-      let btn = form.props.children[6];
+      let btn = form.props.children[4];
       assert.equal(btn.type, Button);
       assert.equal(btn.props.type, 'submit');
       assert.equal(btn.props.disabled, false);
@@ -183,7 +178,7 @@ describe('LoginForm component', function () {
         isPending: true
       });
       form = getForm();
-      let btn = form.props.children[6];
+      let btn = form.props.children[4];
       assert.equal(btn.props.disabled, true);
       assert.equal(btn.props.children, 'Signing In...');
     });
@@ -192,7 +187,7 @@ describe('LoginForm component', function () {
       const handleSubmit = sinon.spy();
       component = getComponent({handleSubmit});
       form = getForm();
-      let btn = form.props.children[6];
+      let btn = form.props.children[4];
       btn.props.onClick();
       assert.isTrue(handleSubmit.calledOnce);
     });

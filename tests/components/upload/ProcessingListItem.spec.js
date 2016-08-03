@@ -212,7 +212,7 @@ describe('ProcessingListItem component', function () {
     let progress = TestUtils.findRenderedDOMComponentWithClass(component, 'progress');
     let steps = progress.children;
     assert.equal(steps[0].className, 'progress__step done');
-    assert.equal(steps[1].className, 'progress__step active');
+    assert.equal(steps[1].className, 'progress__step done');
     assert.equal(steps[2].className, 'progress__step done');
     assert.equal(steps[3].className, 'progress__step');
   });
@@ -266,7 +266,7 @@ describe('ProcessingListItem component', function () {
     assert.equal(steps[0].className, 'progress__step done');
     assert.equal(steps[1].className, 'progress__step done');
     assert.equal(steps[2].className, 'progress__step done');
-    assert.equal(steps[3].className, 'progress__step active');
+    assert.equal(steps[3].className, 'progress__step done');
   });
 
   it('Check getDataForMedia() call', function() {

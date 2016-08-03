@@ -4,7 +4,7 @@ import TestUtils from 'react-addons-test-utils'
 
 import { SearchForm } from '../../src/components/SearchForm'
 import { initialState } from '../../src/redux/modules/search'
-import {Row, Col, Input, Button} from 'react-bootstrap'
+import {Row, Col, FormGroup, FormControl, Button} from 'react-bootstrap'
 import DatePicker from '../../src/components/DatePicker'
 import DropdownList from '../../src/components/DropdownList'
 
@@ -47,12 +47,24 @@ describe('SearchForm component', function () {
   describe('Check Search Input', function() {
     let input;
 
-    const getInput = function () {
+    const getInputGroup = function () {
       return component
         .props.children
         .props.children[0]
         .props.children
         .props.children[1]
+        .props.children
+    };
+
+    const getInput = function () {
+      return getInputGroup()
+        .props.children[0]
+    };
+
+    const getSeacrhBtn = function () {
+      return getInputGroup()
+        .props.children[1]
+        .props.children;
     };
 
     beforeEach(function () {
@@ -60,7 +72,7 @@ describe('SearchForm component', function () {
     });
 
     it('Check root element', function() {
-      assert.equal(input.type, Input);
+      assert.equal(input.type, FormControl);
     });
 
     it('Check value from initialState', function() {
@@ -77,7 +89,7 @@ describe('SearchForm component', function () {
     });
 
     it('Check search button in default state', function() {
-      let btn = input.props.buttonAfter;
+      let btn = getSeacrhBtn();
       assert.equal(btn.props.bsStyle, 'primary');
       assert.equal(btn.props.disabled, false);
       assert.equal(btn.props.children, 'Search');
@@ -88,8 +100,7 @@ describe('SearchForm component', function () {
         ...options,
         state: initialState.set('isSearching', true)
       });
-      input = getInput();
-      let btn = input.props.buttonAfter;
+      let btn = getSeacrhBtn();
       assert.equal(btn.props.disabled, true);
       assert.equal(btn.props.children, 'Searching...');
     });
@@ -100,8 +111,7 @@ describe('SearchForm component', function () {
         ...options,
         onSearch: search
       });
-      input = getInput();
-      let btn = input.props.buttonAfter;
+      let btn = getSeacrhBtn();
       btn.props.onClick();
       assert.isTrue(search.calledOnce);
     });

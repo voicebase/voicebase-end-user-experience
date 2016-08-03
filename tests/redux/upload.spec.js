@@ -17,10 +17,6 @@ import {
   default as uploadReducer
 } from '../../src/redux/modules/upload'
 
-import configureMockStore from 'redux-mock-store';
-import promiseMiddleware from 'redux-promise-middleware';
-import thunk from 'redux-thunk';
-
 import Immutable, { fromJS } from 'immutable'
 import { checkActionTypes, checkCreatingAction, checkIsFunction, checkApiAction } from '../../src/common/Test'
 
@@ -129,7 +125,8 @@ describe('(Redux Module) upload.js', function () {
       view: {
         showForm: true,
         activeTab: FILES_PREVIEW_TAB,
-        isStereoFile: false
+        isStereoFile: false,
+        showVocabularies: true
       },
       fileIds: ['0', '1'],
       files: {
