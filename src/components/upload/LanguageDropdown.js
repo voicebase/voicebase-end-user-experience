@@ -10,7 +10,7 @@ export default class LanguageDropdown extends React.Component {
     activeLanguageId: PropTypes.string.isRequired
   };
 
-  onSelectItem = (event, key) => {
+  onSelectItem = (key) => {
     this.props.onSelect(key);
   };
 

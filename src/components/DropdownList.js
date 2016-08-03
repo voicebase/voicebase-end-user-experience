@@ -9,7 +9,7 @@ export default class DropdownList extends React.Component {
     activeItemId: PropTypes.string.isRequired
   };
 
-  onSelectItem = (event, key) => {
+  onSelectItem = (key) => {
     this.props.onSelect(key);
   };
 
