@@ -155,23 +155,5 @@ describe('UploadPreview component', function () {
     assert.equal(destroyPlayer.called, false);
   });
 
-  it('Check removeFile()', function () {
-    let removeFile = sinon.spy();
-    let destroyPlayer = sinon.spy();
-    component = getComponent({
-      ...options,
-      actions: {
-        ...options.actions,
-        removeFile,
-        destroyPlayer
-      }
-    });
-
-    component.removeFile('id');
-
-    assert.equal(removeFile.calledOnce, true);
-    assert.equal(destroyPlayer.calledOnce, true);
-  });
-
 });
 

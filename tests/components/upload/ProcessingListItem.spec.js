@@ -181,7 +181,7 @@ describe('ProcessingListItem component', function () {
       mediaDataState: {
         ...options.mediaDataState,
         jobTasks: tasks
-          .setIn(['j1', 'status'], 'completed')
+          .setIn(['j1', 'status'], 'finished')
           .toJS()
       }
     });
@@ -200,11 +200,11 @@ describe('ProcessingListItem component', function () {
       mediaDataState: {
         ...options.mediaDataState,
         jobTasks: tasks
-          .setIn(['j1', 'status'], 'completed')
-          .setIn(['j2', 'status'], 'completed')
-          .setIn(['j3', 'status'], 'completed')
-          .setIn(['j4', 'status'], 'completed')
-          .setIn(['j7', 'status'], 'completed')
+          .setIn(['j1', 'status'], 'finished')
+          .setIn(['j2', 'status'], 'finished')
+          .setIn(['j3', 'status'], 'finished')
+          .setIn(['j4', 'status'], 'finished')
+          .setIn(['j7', 'status'], 'finished')
           .toJS()
       }
     });
@@ -212,7 +212,6 @@ describe('ProcessingListItem component', function () {
     let progress = TestUtils.findRenderedDOMComponentWithClass(component, 'progress');
     let steps = progress.children;
     assert.equal(steps[0].className, 'progress__step done');
-    assert.equal(steps[1].className, 'progress__step done');
     assert.equal(steps[2].className, 'progress__step done');
     assert.equal(steps[3].className, 'progress__step');
   });
@@ -223,8 +222,8 @@ describe('ProcessingListItem component', function () {
       mediaDataState: {
         ...options.mediaDataState,
         jobTasks: tasks
-          .setIn(['j5', 'status'], 'completed')
-          .setIn(['j6', 'status'], 'completed')
+          .setIn(['j5', 'status'], 'finished')
+          .setIn(['j6', 'status'], 'finished')
           .toJS()
       }
     });
@@ -243,14 +242,14 @@ describe('ProcessingListItem component', function () {
       mediaDataState: {
         ...options.mediaDataState,
         jobTasks: tasks
-          .setIn(['j1', 'status'], 'completed')
-          .setIn(['j2', 'status'], 'completed')
-          .setIn(['j3', 'status'], 'completed')
-          .setIn(['j4', 'status'], 'completed')
-          .setIn(['j5', 'status'], 'completed')
-          .setIn(['j6', 'status'], 'completed')
-          .setIn(['j7', 'status'], 'completed')
-          .setIn(['j8', 'status'], 'completed')
+          .setIn(['j1', 'status'], 'finished')
+          .setIn(['j2', 'status'], 'finished')
+          .setIn(['j3', 'status'], 'finished')
+          .setIn(['j4', 'status'], 'finished')
+          .setIn(['j5', 'status'], 'finished')
+          .setIn(['j6', 'status'], 'finished')
+          .setIn(['j7', 'status'], 'finished')
+          .setIn(['j8', 'status'], 'finished')
           .toJS()
       }
     });
@@ -266,7 +265,6 @@ describe('ProcessingListItem component', function () {
     assert.equal(steps[0].className, 'progress__step done');
     assert.equal(steps[1].className, 'progress__step done');
     assert.equal(steps[2].className, 'progress__step done');
-    assert.equal(steps[3].className, 'progress__step done');
   });
 
   it('Check getDataForMedia() call', function() {
