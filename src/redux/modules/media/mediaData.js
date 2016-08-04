@@ -180,11 +180,12 @@ export const parseMediaData = function (data) {
       };
       activeTopic = 'ALL_TOPICS';
     }
-    if (data.keywords.latest.groups) {
-      let parseGroupsResult = parseGroups(data.keywords.latest.groups);
-      groupsIds = parseGroupsResult.groupIds;
-      groups = parseGroupsResult.groups;
-      activeGroup = parseGroupsResult.activeGroup;
+    if (data.keywords.latest.groups && Array.isArray(data.keywords.latest.groups)) {
+      let parseGroupsResult = parseTopics(data.keywords.latest.groups);
+      groupsIds = parseGroupsResult.topicsIds;
+      groups = parseGroupsResult.topics;
+      activeGroup = parseGroupsResult.activeTopic;
+      speakers = Object.assign({}, speakers, parseGroupsResult.speakers);
     }
   }
 
@@ -307,6 +308,7 @@ const parseTopics = function (topicsArr) {
   return {topicsIds, topics, activeTopic, speakers}
 };
 
+/*
 const parseGroups = function (groupsData) {
   let activeGroup = null;
   let groupIds = [];
@@ -345,6 +347,7 @@ const parseGroups = function (groupsData) {
 
   return {groupIds, groups, activeGroup}
 };
+*/
 
 const addSpeaker = function (speakersObject, newSpeakersNames) {
   newSpeakersNames.forEach(speakerName => {
