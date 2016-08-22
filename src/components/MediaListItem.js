@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
-import {Collapse, Alert, Row, Col} from 'react-bootstrap'
+import {Collapse} from 'react-bootstrap'
 import classnames from 'classnames';
 import MediaListItemTitle from './MediaListItemTitle';
 import Spinner from './Spinner';
-import VbsPlayerApp from './player/VbsPlayerApp';
+import { VoicebasePlayer } from 'voicebase-player-v2';
 import { parseTime, getDateLabel } from '../common/Common';
 
 export class MediaListItem extends React.Component {
@@ -12,7 +12,6 @@ export class MediaListItem extends React.Component {
     mediaId: PropTypes.string.isRequired,
     isExpanded: PropTypes.bool.isRequired,
     listItemState: PropTypes.object.isRequired,
-    mediaState: PropTypes.object.isRequired,
     searchString: PropTypes.string.isRequired,
     actions: PropTypes.object.isRequired
   };
@@ -21,16 +20,10 @@ export class MediaListItem extends React.Component {
     if (event.target.type) return false; // prevent click on checkbox
 
     if (!this.props.isExpanded) {
-      if (!this.props.mediaState.mediaData.has(this.props.mediaId)) {
-        this.props.actions.getMediaUrl(this.props.token, this.props.mediaId);
-        this.props.actions.getDataForMedia(this.props.token, this.props.mediaId, this.props.searchString);
-      }
       this.props.actions.expandMedia(this.props.mediaId);
     }
     else {
       this.props.actions.collapseMedia(this.props.mediaId);
-      this.props.actions.removeDataForMedia(this.props.mediaId);
-      this.props.actions.destroyPlayer(this.props.mediaId);
     }
   };
 
@@ -49,44 +42,19 @@ export class MediaListItem extends React.Component {
     this.props.actions.deleteMedia(this.props.token, this.props.mediaId);
   };
 
-  isGettingMediaData(mediaData) {
-    return (mediaData && (mediaData.getPending || mediaData.getUrlPending));
-  }
-
   getPlayerApp() {
-    let state = this.props.mediaState;
-    let mediaId = this.props.mediaId;
-    let playerState = state.player.hasIn(['players', mediaId])
-      ? state.player.getIn(['players', mediaId]).toJS()
-      : {loading: true};
-
-    let mediaDataState = state.mediaData.has(this.props.mediaId)
-      ? state.mediaData.get(this.props.mediaId).toJS()
-      : null;
-
-    let markersState = state.markers.has(mediaId)
-      ? state.markers.get(mediaId).toJS()
-      : null;
-
     return (
-      <VbsPlayerApp
+      <VoicebasePlayer
         token={this.props.token}
         mediaId={this.props.mediaId}
-        playerState={playerState}
-        mediaDataState={mediaDataState}
-        markersState={markersState}
-        actions={this.props.actions}
+        searchString={this.props.searchString}
       />
     );
   }
 
   render () {
     let itemClasses = classnames('list-group-item', 'listing', {collapsed: !this.props.isExpanded});
-    let mediaState = this.props.mediaState;
     let media = this.props.listItemState;
-    let mediaData = mediaState.mediaData.has(this.props.mediaId)
-      ? mediaState.mediaData.get(this.props.mediaId).toJS()
-      : null;
 
     let checked = media.checked;
 
@@ -117,19 +85,7 @@ export class MediaListItem extends React.Component {
         </div>
         <Collapse in={this.props.isExpanded}>
           <div className="listing__body">
-            {this.isGettingMediaData(mediaData) && <div className="spinner-media_item"><Spinner /></div>}
-            {mediaData && mediaData.status === 'failed' &&
-              <Row className="row-without-margin">
-                <Col sm={12}>
-                  <Alert bsStyle="danger">
-                    <h4>Upload was failed</h4>
-                  </Alert>
-                </Col>
-              </Row>
-            }
-            {!this.isGettingMediaData(mediaData) && mediaData && mediaData.status === 'finished' &&
-              this.getPlayerApp()
-            }
+            {this.props.isExpanded && this.getPlayerApp()}
           </div>
         </Collapse>
       </div>

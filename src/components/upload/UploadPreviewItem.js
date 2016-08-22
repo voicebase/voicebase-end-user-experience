@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import { ListGroupItem, Button } from 'react-bootstrap'
-import Player from '../player/Player';
+import { FilePlayer } from 'voicebase-player-v2';
 
 export default class UploadPreviewItem extends React.Component {
   static propTypes = {
@@ -14,11 +14,10 @@ export default class UploadPreviewItem extends React.Component {
   onRemove = () => {
     const { fileId, actions } = this.props;
     actions.removeFile(fileId);
-    actions.destroyPlayer(fileId);
   };
 
   render () {
-    const { file, fileId, playerState, actions } = this.props;
+    const { file, fileId, playerState } = this.props;
     const itemClasses = classnames({
       'preview-player-item--video': file.type === 'video',
       'preview-player-item--audio': file.type === 'audio'
@@ -29,14 +28,9 @@ export default class UploadPreviewItem extends React.Component {
         <h4>{file.file.name}</h4>
         <div className="preview-player-row">
           <div className="player-wrapper">
-            <Player
-              mediaId={fileId}
-              playerType="FileInputPlayer"
-              playerState={playerState.players[fileId] || {loading: true}}
-              hasNextKeywordButton={false}
-              hasDownloadButton={false}
-              isShowKeywordsMarkers={false}
-              actions={actions}
+            <FilePlayer
+              fileId={fileId}
+              file={file}
             />
           </div>
           {playerState.players[fileId] &&

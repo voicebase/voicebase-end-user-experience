@@ -41,7 +41,6 @@ export class MediaList extends React.Component {
                 mediaId={mediaId}
                 isExpanded={mediaId === mediaList.activeMediaId}
                 token={this.props.token}
-                mediaState={state}
                 listItemState={mediaList.media[mediaId]}
                 searchString={this.props.searchString}
                 actions={this.props.actions}

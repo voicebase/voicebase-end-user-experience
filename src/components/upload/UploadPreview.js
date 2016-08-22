@@ -9,27 +9,6 @@ export default class UploadPreview extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
-  componentWillMount() {
-    let fileIds = this.props.uploadState.fileIds;
-    if (fileIds.length > 0) {
-      fileIds.forEach(id => {
-        if (!this.props.playerState.players[id]) {
-          let file = this.props.uploadState.files[id];
-          this.props.actions.createPlayer(id, URL.createObjectURL(file.file), file.type);
-        }
-      });
-    }
-  }
-
-  componentWillUnmount() {
-    let fileIds = this.props.uploadState.fileIds;
-    if (fileIds.length > 0) {
-      fileIds.forEach(id => {
-        this.props.actions.destroyPlayer(id);
-      });
-    }
-  }
-
   render () {
     let uploadState = this.props.uploadState;
     let playerState = this.props.playerState;

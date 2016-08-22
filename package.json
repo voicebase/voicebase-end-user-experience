@@ -61,6 +61,7 @@
     "redux-promise-middleware": "^3.3.2",
     "redux-thunk": "^2.1.0",
     "url": "^0.11.0",
+    "voicebase-player-v2": "git+ssh://git@github.com/voicebase/voicebase-player-v2.git",
     "yargs": "^4.8.1"
   },
   "devDependencies": {

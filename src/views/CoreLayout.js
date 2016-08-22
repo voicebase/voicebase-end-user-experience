@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'font-awesome/css/font-awesome.min.css'
+import 'voicebase-player-v2/dist/voicebase-player.css'
 import '../styles/core.scss'
 
 function CoreLayout ({ children }) {
