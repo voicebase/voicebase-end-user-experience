@@ -7,7 +7,6 @@ export default class UploadPreviewItem extends React.Component {
   static propTypes = {
     file: PropTypes.object.isRequired,
     fileId: PropTypes.string.isRequired,
-    playerState: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
 
@@ -17,7 +16,7 @@ export default class UploadPreviewItem extends React.Component {
   };
 
   render () {
-    const { file, fileId, playerState } = this.props;
+    const { file, fileId } = this.props;
     const itemClasses = classnames({
       'preview-player-item--video': file.type === 'video',
       'preview-player-item--audio': file.type === 'audio'
@@ -33,11 +32,9 @@ export default class UploadPreviewItem extends React.Component {
               file={file}
             />
           </div>
-          {playerState.players[fileId] &&
-            <Button bsStyle="danger" className="btn-delete" onClick={this.onRemove}>
-              <i className="fa fa-fw fa-times" />
-            </Button>
-          }
+          <Button bsStyle="danger" className="btn-delete" onClick={this.onRemove}>
+            <i className="fa fa-fw fa-times" />
+          </Button>
         </div>
       </ListGroupItem>
     )

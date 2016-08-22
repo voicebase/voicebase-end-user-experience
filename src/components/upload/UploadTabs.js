@@ -8,7 +8,6 @@ export default class UploadTabs extends React.Component {
   static propTypes = {
     token: PropTypes.string.isRequired,
     uploadState: PropTypes.object.isRequired,
-    playerState: PropTypes.object.isRequired,
     settingsState: PropTypes.object.isRequired,
     onSelectTab: PropTypes.func.isRequired,
     actions: PropTypes.object.isRequired
@@ -21,7 +20,6 @@ export default class UploadTabs extends React.Component {
       <Tabs id='upload-tabs' activeKey={uploadState.view.activeTab} onSelect={this.props.onSelectTab} className="dialog-tabs">
         <Tab eventKey={FILES_PREVIEW_TAB} title="Select files">
           <UploadPreview
-            playerState={this.props.playerState}
             uploadState={uploadState}
             actions={this.props.actions}
           />

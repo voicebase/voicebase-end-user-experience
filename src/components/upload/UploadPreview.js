@@ -5,13 +5,11 @@ import UploadPreviewItem from './UploadPreviewItem';
 export default class UploadPreview extends React.Component {
   static propTypes = {
     uploadState: PropTypes.object.isRequired,
-    playerState: PropTypes.object,
     actions: PropTypes.object.isRequired
   };
 
   render () {
     let uploadState = this.props.uploadState;
-    let playerState = this.props.playerState;
 
     return (
       <ListGroup className="preview-players-list">
@@ -23,7 +21,6 @@ export default class UploadPreview extends React.Component {
               key={'preview' + fileId}
               file={file}
               fileId={fileId}
-              playerState={playerState}
               actions={this.props.actions}
             />
           )
