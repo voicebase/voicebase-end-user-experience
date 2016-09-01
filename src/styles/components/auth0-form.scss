@@ -1,0 +1,13 @@
+.auth0-lock-container {
+  .auth0-lock-submit {
+    background-color: #95e05a !important;
+  }
+
+  .auth0-lock-sign-up-terms-agreement a {
+    text-decoration: underline;
+
+    &:hover {
+      color: #31519A;
+    }
+  }
+}

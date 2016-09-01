@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react'
 import {actions as authActions} from '../redux/modules/auth'
 import connectWrapper from '../redux/utils/connect'
-import {Panel} from 'react-bootstrap'
 import Logo from '../images/voicebase-logo-2.png'
-import LoginForm from '../components/LoginForm'
+import Spinner from '../components/Spinner'
 
 export class LoginView extends React.Component {
   static contextTypes = {
@@ -15,34 +14,39 @@ export class LoginView extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillMount () {
+    this.props.actions.signIn();
+  }
+
   componentWillUpdate(nextProps) {
-    if (nextProps.state.auth.token) {
+    let nextAuth = nextProps.state.auth;
+    if (nextAuth.token) {
       this.context.router.push('/');
+    }
+    if (nextAuth.auth0Token && !nextAuth.profile.email_verified) {
+      this.context.router.push('/confirm');
     }
   }
 
-  signIn = (credentials) => {
-    this.props.actions.signIn(credentials);
-  };
-
-  setRemember = (isRemember) => {
-    this.props.actions.setRemember(isRemember);
-  };
+  signIn() {
+    this.props.actions.signIn();
+  }
 
   render() {
+    const auth = this.props.state.auth;
+
     return (
       <div className="login-overlay">
         <div className="login-content">
-          <img src={Logo} className="img-responsive" />
-          <Panel>
-            <LoginForm
-              onSubmit={this.signIn}
-              handleRemember={this.setRemember}
-              isRemember={this.props.state.auth.isRemember}
-              errorMessage={this.props.state.auth.errorMessage}
-              isPending={this.props.state.auth.isPending}
-            />
-          </Panel>
+          <img src={Logo} className="img-responsive"/>
+          {
+            (auth.isPending || auth.tokenPending) &&
+            <Spinner />
+          }
         </div>
       </div>
     )
