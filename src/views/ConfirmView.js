@@ -17,7 +17,7 @@ export class ConfirmView extends React.Component {
       <div className="login-overlay">
         <div className="confirm-email-container">
           <div className="confirm-email-container_logo">
-            <img src={Logo} className="img-responsive"/>
+            <img src={Logo} className="img-responsive" />
           </div>
           <h1>Thank you!</h1>
           <h3>Please go to your email inbox and complete the email verification request from VoiceBase</h3>

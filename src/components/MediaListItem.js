@@ -5,6 +5,7 @@ import MediaListItemTitle from './MediaListItemTitle';
 import Spinner from './Spinner';
 import { VoicebasePlayer } from 'voicebase-player-v2';
 import { parseTime, getDateLabel } from '../common/Common';
+import { baseUrl } from '../api/baseUrl'
 
 export class MediaListItem extends React.Component {
   static propTypes = {
@@ -45,6 +46,7 @@ export class MediaListItem extends React.Component {
   getPlayerApp() {
     return (
       <VoicebasePlayer
+        apiUrl={baseUrl}
         token={this.props.token}
         mediaId={this.props.mediaId}
         searchString={this.props.searchString}

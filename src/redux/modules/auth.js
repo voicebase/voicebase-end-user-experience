@@ -21,7 +21,7 @@ export const signIn = () => {
       promise: authLockApi.signIn()
         .then(response => {
           if (response.profile.email_verified) {
-            dispatch(createToken(response.token));
+            dispatch(createToken(response.token, true));
           }
           return response;
         })
@@ -29,9 +29,9 @@ export const signIn = () => {
   })
 };
 
-export const createToken = createAction(CREATE_TOKEN, (auth0Token) => {
+export const createToken = createAction(CREATE_TOKEN, (auth0Token, ephemeral) => {
   return {
-    promise: authLockApi.createToken(auth0Token)
+    promise: authLockApi.createToken(auth0Token, ephemeral)
   }
 });
 

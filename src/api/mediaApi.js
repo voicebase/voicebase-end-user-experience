@@ -160,8 +160,12 @@ export default {
       });
     }
     else {
-      let url = `${baseUrl}/media/${mediaId}/streams?access_token=${token}`;
-      return axios.get(url)
+      let url = `${baseUrl}/media/${mediaId}/streams`;
+      return axios.get(url, {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      })
         .then(response => {
           let url = null;
           if (response.data && response.data.streams && response.data.streams.original) {

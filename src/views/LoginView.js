@@ -14,10 +14,6 @@ export class LoginView extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount () {
     this.props.actions.signIn();
   }
@@ -42,9 +38,8 @@ export class LoginView extends React.Component {
     return (
       <div className="login-overlay">
         <div className="login-content">
-          <img src={Logo} className="img-responsive"/>
-          {
-            (auth.isPending || auth.tokenPending) &&
+          <img src={Logo} className="img-responsive" />
+          {(auth.isPending || auth.tokenPending) &&
             <Spinner />
           }
         </div>
