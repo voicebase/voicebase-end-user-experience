@@ -1,7 +1,5 @@
 import React, {PropTypes} from 'react'
 import {Dropdown, MenuItem} from 'react-bootstrap'
-import UsFlag from '../../images/us.png'
-import UkFlag from '../../images/uk.png'
 
 export default class LanguageDropdown extends React.Component {
   static propTypes = {
@@ -14,19 +12,9 @@ export default class LanguageDropdown extends React.Component {
     this.props.onSelect(key);
   };
 
-  getFlag(languageId) {
-    if (languageId === 'uk') {
-      return UkFlag;
-    }
-    else if (languageId === 'us') {
-      return UsFlag;
-    }
-  }
-
   getItemContent(language) {
-    let flag = this.getFlag(language.id);
     return (
-      <span><img className="flag" src={flag} /> {language.name}</span>
+      <span><img className="flag" src={require('../../images/' + language.id + '.png')} /> {language.name}</span>
     )
   }
 

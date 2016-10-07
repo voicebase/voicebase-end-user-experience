@@ -191,6 +191,9 @@ export default {
       data.append('media', file);
 
       let jobConf = {executor: 'v2'};
+      if (options.language) {
+        jobConf.language = options.language;
+      }
 
       let groupsConf = {};
       if (options.groups && options.groups.length > 0) {

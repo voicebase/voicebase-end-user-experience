@@ -138,16 +138,28 @@ export const initialState = fromJS({
   languages: {
     itemIds: ['fr', 'de', 'it', 'pt', 'us'],
     items: {
-      us: {
-        id: 'us',
+      'en-US': {
+        id: 'en-US',
         name: 'US English'
       },
-      uk: {
-        id: 'uk',
+      'en-UK': {
+        id: 'en-UK',
         name: 'UK English'
       }
+      // 'en-AU': {
+      //   id: 'en-AU',
+      //   name: 'Australian English'
+      // },
+      // 'es-LA': {
+      //   id: 'es-LA',
+      //   name: 'Latin American Spanish'
+      // },
+      // 'pt-BZ': {
+      //   id: 'pt-BZ',
+      //   name: 'Brazilian Portuguese'
+      // }
     },
-    defaultLanguage: 'us'
+    defaultLanguage: 'en-US'
   },
   priority: {
     itemIds: ['high', 'medium', 'low'],
