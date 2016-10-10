@@ -3,8 +3,6 @@ import moment from 'moment';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'react-bootstrap-daterangepicker/css/daterangepicker.css'
 
-import {Input} from 'react-bootstrap'
-
 export class DatePicker extends React.Component {
   static propTypes = {
     dateFrom: PropTypes.string.isRequired,
@@ -68,7 +66,7 @@ export class DatePicker extends React.Component {
       <div className='form-group form-group--date'>
         <DateRangePicker {...settings} onApply={this.saveDate} onCancel={this.cancel}>
           <i className='fa fa-calendar-o' />
-          <Input type='text' name='daterange' className="readonly--non-grey" readOnly value={dateValue} placeholder='Date range' />
+          <input type='text' name='daterange' className="form-control readonly--non-grey" readOnly value={dateValue} placeholder='Date range' />
         </DateRangePicker>
       </div>
     )

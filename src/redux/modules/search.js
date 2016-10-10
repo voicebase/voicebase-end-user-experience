@@ -35,8 +35,8 @@ export const actions = {
  * */
 export const initialState = fromJS({
   view: {
-    datePickerEnabled: false,
-    orderEnabled: false
+    datePickerEnabled: true,
+    orderEnabled: true
   },
   dateFrom: '',
   dateTo: '',
@@ -44,12 +44,12 @@ export const initialState = fromJS({
   selectedOrderId: '3',
   isSearching: false,
   order: {
-    1: {
-      name: 'Order by Title A-Z'
-    },
-    2: {
-      name: 'Order by Title Z-A'
-    },
+    // 1: {
+    //   name: 'Order by Title A-Z'
+    // },
+    // 2: {
+    //   name: 'Order by Title Z-A'
+    // },
     3: {
       name: 'Order by Newest'
     },
