@@ -10,6 +10,8 @@ export const SELECT_ORDER = 'SELECT_ORDER';
 export const SET_SEARCH_STRING = 'SET_SEARCH_STRING';
 export const START_SEARCH = 'START_SEARCH';
 export const CANCEL_SEARCH = 'CANCEL_SEARCH';
+export const ORDER_DATE_DOWN = '3';
+export const ORDER_DATE_UP = '4';
 
 /*
  * Actions
@@ -50,10 +52,10 @@ export const initialState = fromJS({
     // 2: {
     //   name: 'Order by Title Z-A'
     // },
-    3: {
+    [ORDER_DATE_DOWN]: {
       name: 'Order by Newest'
     },
-    4: {
+    [ORDER_DATE_UP]: {
       name: 'Order by Oldest'
     }
   }

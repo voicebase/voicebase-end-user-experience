@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import {Row, Col, FormGroup, FormControl, InputGroup, Button} from 'react-bootstrap'
+import { ORDER_DATE_DOWN, ORDER_DATE_UP } from '../redux/modules/search'
 import DatePicker from './DatePicker'
 import DropdownList from './DropdownList'
 
@@ -29,6 +30,10 @@ export class SearchForm extends React.Component {
 
   onSelectOrder = (orderId) => {
     this.props.actions.selectOrder(orderId);
+    if (orderId === ORDER_DATE_DOWN || orderId === ORDER_DATE_UP) {
+      const isDesc = orderId === ORDER_DATE_DOWN;
+      this.props.actions.orderByDate(isDesc);
+    }
   };
 
   changeSearchText = (event) => {

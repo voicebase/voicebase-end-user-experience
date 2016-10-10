@@ -18,6 +18,7 @@ export const SELECT_ALL_MEDIA = 'SELECT_ALL_MEDIA';
 export const UNSELECT_ALL_MEDIA = 'UNSELECT_ALL_MEDIA';
 export const DELETE_MEDIA = 'DELETE_MEDIA';
 export const CLEAR_MEDIA_LIST_ERROR = 'CLEAR_MEDIA_LIST_ERROR';
+export const ORDER_BY_DATE = 'ORDER_BY_DATE';
 
 /*
  * Actions
@@ -46,6 +47,7 @@ export const deleteMedia = createAction(DELETE_MEDIA, (token, mediaId) => {
     promise: MediaApi.deleteMedia(token, mediaId)
   }
 });
+export const orderByDate = createAction(ORDER_BY_DATE, (isDesc) => isDesc);
 
 export const actions = {
   getMedia,
@@ -59,7 +61,8 @@ export const actions = {
   selectAllMedia,
   unselectAllMedia,
   deleteMedia,
-  clearMediaListError
+  clearMediaListError,
+  orderByDate
 };
 
 /*
@@ -198,5 +201,18 @@ export default handleActions({
 
   [CLEAR_MEDIA_LIST_ERROR]: (state) => {
     return state.set('errorMessage', '');
+  },
+
+  [ORDER_BY_DATE]: (state, { payload: isDesc }) => {
+    let media = state.get('media');
+    media = media.sortBy((mediaObj) => mediaObj.get('dateCreated'));
+
+    let mediaIds = media.keySeq().toArray();
+    if (isDesc) {
+      mediaIds = mediaIds.reverse();
+    }
+
+    return state
+      .merge({mediaIds});
   }
 }, initialState);
