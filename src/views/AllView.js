@@ -45,8 +45,6 @@ export class AllView extends React.Component {
     let state = this.props.state;
     this.props.actions.startSearch();
     this.props.actions.getMedia(state.auth.token, {
-      dateFrom: state.search.get('dateFrom'),
-      dateTo: state.search.get('dateTo'),
       searchString: state.search.get('searchString')
     })
   };

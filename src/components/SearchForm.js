@@ -22,10 +22,12 @@ export class SearchForm extends React.Component {
 
   applyDate = (dateFrom, dateTo) => {
     this.props.actions.applyDate({dateFrom, dateTo});
+    this.props.actions.filterByDate(dateFrom, dateTo);
   };
 
   clearDate = () => {
     this.props.actions.clearDate();
+    this.props.actions.filterByDate();
   };
 
   onSelectOrder = (orderId) => {

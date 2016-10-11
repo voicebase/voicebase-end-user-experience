@@ -30,11 +30,11 @@ export class DatePicker extends React.Component {
     let settings = {
       'timePicker': true,
       'timePicker24Hour': true,
-      'timePickerIncrement': 60,
+      'timePickerIncrement': 1,
       'ranges': {
         'Today': [
           moment().startOf('day'),
-          moment()
+          moment().endOf('day')
         ],
         'Yesterday': [
           moment().subtract(1, 'days').startOf('day'),
@@ -42,7 +42,7 @@ export class DatePicker extends React.Component {
         ],
         'This Week': [
           moment().startOf('week'),
-          moment()
+          moment().endOf('day')
         ],
         'Last Week': [
           moment().subtract(1, 'week').startOf('week'),
@@ -50,7 +50,7 @@ export class DatePicker extends React.Component {
         ],
         'This Month': [
           moment().startOf('month'),
-          moment()
+          moment().endOf('day')
         ],
         'Last Month': [
           moment().subtract(1, 'month').startOf('month'),

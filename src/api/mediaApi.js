@@ -1,57 +1,15 @@
 import axios from 'axios'
 import $ from 'jquery'
-import { dateToIso } from '../common/Common'
 import { baseUrl } from './baseUrl'
-import fakeJson from './../fakeData/fakeData'
-import fakeDataVideoJson from './../fakeData/fakeDataVideo'
-import cablehotleadJson from './../fakeData/cablehotlead'
-import CallCenter1Json from './../fakeData/CallCenter1'
-
-const fakeExamples = {
-  'fake_cablehotlead': {
-    mediaId: 'fake_cablehotlead',
-    metadata: cablehotleadJson.media.metadata,
-    data: cablehotleadJson.media,
-    url: 'http://demo.voicebase.dev5.sibers.com/bryonJPTest1.mp3'
-  },
-  'fake_callCenter1': {
-    mediaId: 'fake_callCenter1',
-    metadata: CallCenter1Json.media.metadata,
-    data: CallCenter1Json.media,
-    url: 'http://demo.voicebase.dev5.sibers.com/CallCenter1.mp4'
-  },
-  'fake_mediaId': {
-    mediaId: 'fake_mediaId',
-    metadata: fakeJson.media.metadata,
-    data: fakeJson.media,
-    url: 'http://demo.voicebase.dev5.sibers.com/washington.mp3'
-  },
-  'fake_video_media': {
-    mediaId: 'fake_video_media',
-    metadata: fakeDataVideoJson.media.metadata,
-    data: fakeDataVideoJson.media,
-    url: 'http://demo.voicebase.dev5.sibers.com/dual.mp4'
-  }
-};
 
 export default {
   getMedia(token, searchOptions = {}) {
-    let filterDateFrom = '';
-    let filterDateTo = '';
     let filterQuery = '';
-    if (searchOptions.dateFrom) {
-      let isoDate = dateToIso(searchOptions.dateFrom);
-      filterDateFrom = '&filter.created.gte=' + isoDate;
-    }
-    if (searchOptions.dateTo) {
-      let isoDate = dateToIso(searchOptions.dateTo);
-      filterDateTo = '&filter.created.lte=' + isoDate;
-    }
     if (searchOptions.searchString) {
       filterQuery = '&query=' + searchOptions.searchString;
     }
 
-    let url = `${baseUrl}/media?include=metadata${filterDateFrom}${filterDateTo}${filterQuery}`;
+    let url = `${baseUrl}/media?include=metadata${filterQuery}`;
     return axios.get(url, {
       headers: {
         Authorization: 'Bearer ' + token
@@ -62,17 +20,6 @@ export default {
         let processingMedia = {};
         let mediaIds = [];
         let media = {};
-        if (__DEBUG__) {
-          mediaIds = [].concat(Object.keys(fakeExamples));
-          Object.keys(fakeExamples).forEach(id => {
-            let fakeExample = fakeExamples[id];
-            media[id] = {
-              mediaId: id,
-              status: 'finished',
-              metadata: fakeExample.metadata
-            }
-          });
-        }
         if (response.data.media) {
           response.data.media.forEach(mediaItem => {
             if (mediaItem.status === 'failed' || mediaItem.status === 'finished') {
@@ -122,67 +69,46 @@ export default {
   },
 
   getDataForMedia(token, mediaId) {
-    if (mediaId.indexOf('fake') > -1 && fakeExamples[mediaId]) {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(fakeExamples[mediaId].data);
-        }, 500)
+    let url = `${baseUrl}/media/${mediaId}`;
+    return axios.get(url, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(response => {
+        return response.data.media;
       })
-    }
-    else {
-      let url = `${baseUrl}/media/${mediaId}`;
-      return axios.get(url, {
-        headers: {
-          Authorization: 'Bearer ' + token
+      .catch(error => {
+        if (error.data && error.data.errors) {
+          error = error.data.errors.error;
         }
-      })
-        .then(response => {
-          return response.data.media;
-        })
-        .catch(error => {
-          if (error.data && error.data.errors) {
-            error = error.data.errors.error;
-          }
-          return Promise.reject({error})
-        });
-    }
+        return Promise.reject({error})
+      });
   },
 
   getMediaUrl(token, mediaId) {
-    if (mediaId.indexOf('fake') > -1 && fakeExamples[mediaId]) {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({
-            url: fakeExamples[mediaId].url,
-            mediaId
-          });
-        }, 500)
-      });
-    }
-    else {
-      let url = `${baseUrl}/media/${mediaId}/streams`;
-      return axios.get(url, {
-        headers: {
-          Authorization: 'Bearer ' + token
+    let url = `${baseUrl}/media/${mediaId}/streams`;
+    return axios.get(url, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(response => {
+        let url = null;
+        if (response.data && response.data.streams && response.data.streams.original) {
+          url = response.data.streams.original;
         }
+        return {
+          url: url,
+          mediaId
+        };
       })
-        .then(response => {
-          let url = null;
-          if (response.data && response.data.streams && response.data.streams.original) {
-            url = response.data.streams.original;
-          }
-          return {
-            url: url,
-            mediaId
-          };
-        })
-        .catch(error => {
-          if (error.data && error.data.errors) {
-            error = error.data.errors.error;
-          }
-          return Promise.reject(error)
-        });
-    }
+      .catch(error => {
+        if (error.data && error.data.errors) {
+          error = error.data.errors.error;
+        }
+        return Promise.reject(error)
+      });
   },
 
   postMedia(token, fileId, file, options) {

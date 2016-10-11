@@ -19,6 +19,7 @@ export const UNSELECT_ALL_MEDIA = 'UNSELECT_ALL_MEDIA';
 export const DELETE_MEDIA = 'DELETE_MEDIA';
 export const CLEAR_MEDIA_LIST_ERROR = 'CLEAR_MEDIA_LIST_ERROR';
 export const ORDER_BY_DATE = 'ORDER_BY_DATE';
+export const FILTER_BY_DATE = 'FILTER_BY_DATE';
 
 /*
  * Actions
@@ -48,6 +49,9 @@ export const deleteMedia = createAction(DELETE_MEDIA, (token, mediaId) => {
   }
 });
 export const orderByDate = createAction(ORDER_BY_DATE, (isDesc) => isDesc);
+export const filterByDate = createAction(FILTER_BY_DATE, (dateFrom, dateTo) => {
+  return {dateFrom, dateTo};
+});
 
 export const actions = {
   getMedia,
@@ -62,7 +66,8 @@ export const actions = {
   unselectAllMedia,
   deleteMedia,
   clearMediaListError,
-  orderByDate
+  orderByDate,
+  filterByDate
 };
 
 /*
@@ -211,6 +216,22 @@ export default handleActions({
     if (isDesc) {
       mediaIds = mediaIds.reverse();
     }
+
+    return state
+      .merge({mediaIds});
+  },
+
+  [FILTER_BY_DATE]: (state, { payload }) => {
+    const dateFrom = (payload.dateFrom) ? new Date(payload.dateFrom) : null;
+    const dateTo = (payload.dateTo) ? new Date(payload.dateTo) : null;
+    let media = state.get('media');
+    media = media.filter((mediaObj) => {
+      if (!dateFrom || !dateTo) return true;
+
+      const dateCreated = new Date(mediaObj.get('dateCreated'));
+      return dateCreated >= dateFrom && dateCreated <= dateTo;
+    });
+    let mediaIds = media.keySeq().toArray();
 
     return state
       .merge({mediaIds});
