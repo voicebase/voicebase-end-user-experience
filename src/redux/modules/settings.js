@@ -145,19 +145,19 @@ export const initialState = fromJS({
       'en-UK': {
         id: 'en-UK',
         name: 'UK English'
+      },
+      'en-AU': {
+        id: 'en-AU',
+        name: 'Australian English'
+      },
+      'es-LA': {
+        id: 'es-LA',
+        name: 'Latin American Spanish'
+      },
+      'pt-BZ': {
+        id: 'pt-BZ',
+        name: 'Brazilian Portuguese'
       }
-      // 'en-AU': {
-      //   id: 'en-AU',
-      //   name: 'Australian English'
-      // },
-      // 'es-LA': {
-      //   id: 'es-LA',
-      //   name: 'Latin American Spanish'
-      // },
-      // 'pt-BZ': {
-      //   id: 'pt-BZ',
-      //   name: 'Brazilian Portuguese'
-      // }
     },
     defaultLanguage: 'en-US'
   },

@@ -14,7 +14,7 @@ export default class LanguageDropdown extends React.Component {
 
   getItemContent(language) {
     return (
-      <span><img className="flag" src={require('../../images/' + language.id + '.png')} /> {language.name}</span>
+      <span>{language.name}</span>
     )
   }
 
