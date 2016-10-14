@@ -40,10 +40,10 @@ export default {
 
   createGroup(token, groupId, newGroup) {
     let url = `${baseUrl}/definitions/keywords/groups/${newGroup.name}`;
-    return axios.put(url, {
-      name: newGroup.name,
-      keywords: newGroup.keywords
-    }, {
+    const data = {
+      group: newGroup
+    };
+    return axios.put(url, data, {
       headers: {
         Authorization: 'Bearer ' + token,
         'Content-Type': 'application/json'

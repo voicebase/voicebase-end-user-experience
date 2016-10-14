@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { reduxForm } from 'redux-form';
 import {Button, FormGroup, FormControl, Checkbox} from 'react-bootstrap'
-import Select from 'react-select'
+import { Creatable } from 'react-select'
 import 'react-select/dist/react-select.css'
 
 class SpottingGroupItemForm extends React.Component {
@@ -39,20 +39,19 @@ class SpottingGroupItemForm extends React.Component {
               placeholder="Group Name (Mandatory)"
               {...name}
             />
-            {name.touched && name.error && <div className="login-field-error">{name.error}</div>}
           </FormGroup>
+          {name.touched && name.error && <div className="login-field-error">{name.error}</div>}
 
-          <div className="form-group">
-            <Select
+          <FormGroup>
+            <Creatable
               name="keywords"
               placeholder="Add a word or phrase"
               multi
-              allowCreate
               options={this.props.keywordsSelectValue}
               {...keywords}
               onBlur={this.onBlur}
             />
-          </div>
+          </FormGroup>
           {keywords.visited && keywords.error && <div className="login-field-error">{keywords.error}</div>}
 
           <FormGroup>

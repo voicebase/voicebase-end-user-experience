@@ -34,7 +34,7 @@ export class SpottingGroups extends React.Component {
   };
 
   addGroup = (values) => {
-    let keywords = values.keywords.split(',');
+    let keywords = values.keywords.map(keyword => keyword.value);
     let newGroup = {
       name: values.name,
       keywords

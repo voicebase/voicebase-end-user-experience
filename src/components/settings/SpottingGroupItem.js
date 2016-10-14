@@ -32,7 +32,7 @@ export class SpottingGroupItem extends React.Component {
   };
 
   editGroup = (values) => {
-    let keywords = values.keywords.split(',');
+    let keywords = values.keywords.map(keyword => keyword.value);
 
     let newGroup = {
       name: values.name,
