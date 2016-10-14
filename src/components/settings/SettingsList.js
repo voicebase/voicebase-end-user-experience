@@ -5,6 +5,7 @@ import SettingsListItem from './SettingsListItem'
 import PredictionForm from './PredictionForm'
 import DetectionForm from './DetectionForm'
 import NumbersForm from './NumbersForm'
+import VocabularyForm from './VocabularyForm'
 
 export class SettingsList extends React.Component {
   static propTypes = {
@@ -79,6 +80,14 @@ export class SettingsList extends React.Component {
                 {type === 'numbers' &&
                   <NumbersForm
                     formKey={'add-' + type}
+                    onSubmit={this.addItem}
+                    onCancel={this.collapseCreateForm}
+                  />
+                }
+                {type === 'vocabularies' &&
+                  <VocabularyForm
+                    formKey={'add-' + type}
+                    termsSelectValue={[]}
                     onSubmit={this.addItem}
                     onCancel={this.collapseCreateForm}
                   />

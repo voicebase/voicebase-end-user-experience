@@ -6,6 +6,7 @@ import SpottingGroups from '../components/settings/SpottingGroups'
 import Predictions from '../components/settings/Predictions'
 import Detections from '../components/settings/Detections'
 import Numbers from '../components/settings/Numbers'
+import Vocabularies from '../components/settings/Vocabularies'
 
 export class SettingsView extends React.Component {
   static propTypes = {
@@ -25,6 +26,9 @@ export class SettingsView extends React.Component {
     }
     if (state.settings.items.getIn(['numbers', 'view', 'enabled'])) {
       this.props.actions.getItems(this.props.state.auth.token, 'numbers');
+    }
+    if (state.settings.items.getIn(['vocabularies', 'view', 'enabled'])) {
+      this.props.actions.getItems(this.props.state.auth.token, 'vocabularies');
     }
   }
 
@@ -83,6 +87,16 @@ export class SettingsView extends React.Component {
               <Numbers
                 token={this.props.state.auth.token}
                 state={state.settings.items.get('numbers').toJS()}
+                actions={this.props.actions}
+              />
+            </Tab>
+          }
+
+          {state.settings.items.getIn(['vocabularies', 'view', 'enabled']) &&
+            <Tab eventKey={3} title={this.getTabTitle(state.settings.items.get('vocabularies'), 'itemIds')}>
+              <Vocabularies
+                token={this.props.state.auth.token}
+                state={state.settings.items.get('vocabularies').toJS()}
                 actions={this.props.actions}
               />
             </Tab>

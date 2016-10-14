@@ -7,6 +7,7 @@ import { normalize } from '../../common/Normalize'
 import PredictionsApi from '../../api/predictionsApi'
 import DetectionsApi from '../../api/detectionsApi'
 import NumbersApi from '../../api/numbersApi'
+import VocabularyApi from '../../api/vocabularyApi'
 
 /*
  * Constants
@@ -34,6 +35,9 @@ const getApi = function (type) {
   else if (type === 'numbers') {
     api = NumbersApi;
   }
+  else if (type === 'vocabularies') {
+    api = VocabularyApi;
+  }
   return api;
 };
 
@@ -47,13 +51,13 @@ export const getItems = createAction(GET_ITEMS, (token, type) => {
   }
 });
 
-export const deleteItem = createAction(DELETE_ITEM, (token, type, id) => {
+export const deleteItem = createAction(DELETE_ITEM, (token, type, id, name) => {
   return {
     data: {
       type,
       id
     },
-    promise: getApi(type).deleteItem(id)
+    promise: getApi(type).deleteItem(token, id, name)
   }
 });
 
@@ -63,7 +67,7 @@ export const editItem = createAction(EDIT_ITEM, (token, type, id, newItem) => {
       type,
       id
     },
-    promise: getApi(type).editItem(id, newItem)
+    promise: getApi(type).editItem(token, id, newItem)
   }
 });
 
@@ -72,7 +76,7 @@ export const addItem = createAction(ADD_ITEM, (token, type, newItem) => {
     data: {
       type
     },
-    promise: getApi(type).editItem(null, newItem)
+    promise: getApi(type).editItem(token, null, newItem)
   }
 });
 
@@ -131,6 +135,16 @@ export const initialState = fromJS({
       enabled: false,
       title: 'Number Formats',
       addButtonLabel: 'Add number format',
+      isExpandList: false,
+      isExpandCreateForm: false
+    }
+  },
+  vocabularies: {
+    ...itemInitialState,
+    view: {
+      enabled: true,
+      title: 'Custom terms',
+      addButtonLabel: 'Add terms list',
       isExpandList: false,
       isExpandCreateForm: false
     }
