@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import SettingsList from './SettingsList'
+import { parseVocabulary } from '../../common/Vocabulary'
 
 export class Predictions extends React.Component {
   static propTypes = {
@@ -10,13 +11,11 @@ export class Predictions extends React.Component {
 
   type = 'vocabularies';
 
-  parseTerms = (values) => {
-    return values.terms.map(term => term.value);
-  };
-
   addItem = (values) => {
-    values.terms = this.parseTerms(values);
-    this.props.actions.addItem(this.props.token, this.type, values);
+    return parseVocabulary(values)
+      .then((vocabulary) => {
+        this.props.actions.addItem(this.props.token, this.type, vocabulary);
+      });
   };
 
   deleteItem = (id, name) => {
@@ -24,8 +23,10 @@ export class Predictions extends React.Component {
   };
 
   editItem = (id, values) => {
-    values.terms = this.parseTerms(values);
-    this.props.actions.editItem(this.props.token, this.type, id, values);
+    return parseVocabulary(values)
+      .then((vocabulary) => {
+        this.props.actions.editItem(this.props.token, this.type, id, vocabulary);
+      });
   };
 
   render() {

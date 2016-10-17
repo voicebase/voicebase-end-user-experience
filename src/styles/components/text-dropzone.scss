@@ -1,0 +1,38 @@
+.text-dropzone {
+
+}
+
+.text-dropzone__zone {
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  transition: all .3s ease;
+}
+
+.text-dropzone__message {
+  display: flex;
+  align-items: center;
+
+  i {
+    font-size: 54px;
+    color: #85d04a;
+  }
+
+  i,
+  .btn {
+    margin: 0 5px;
+  }
+}
+
+.text-dropzone:hover,
+.text-dropzone--active {
+  .text-dropzone__zone {
+    border-color: #aaa;
+    background: white;
+  }
+}
+
+.text-dropzone__file-preview {
+  display: flex;
+  align-items: center;
+}
