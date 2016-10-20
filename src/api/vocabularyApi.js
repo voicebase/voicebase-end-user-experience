@@ -12,7 +12,11 @@ export default {
       }
     })
       .then(response => {
-        return {type: 'vocabularies', data: response.data.vocabularies};
+        let vocabularies = response.data.vocabularies;
+        vocabularies = vocabularies.sort((a, b) => {
+          return (a.name > b.name) ? 1 : (b.name > a.name) ? -1 : 0
+        });
+        return {type: 'vocabularies', data: vocabularies};
       })
       .catch(error => {
         if (error.data && error.data.errors) {

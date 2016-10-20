@@ -80,3 +80,9 @@ export const sortByField = function (field) {
     return result * sortOrder;
   };
 };
+
+export const parseReactSelectValues = function (terms) {
+  return terms.map((term) => {
+    return (term.value) ? term.value : term;
+  })
+};

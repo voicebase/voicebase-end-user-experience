@@ -1,3 +1,5 @@
+import { parseReactSelectValues } from './Common'
+
 export const parseVocabularyFile = function (file) {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -20,16 +22,13 @@ export const parseVocabularyFile = function (file) {
   });
 };
 
-export const parseTerms = function (terms) {
-  return terms.map(term => term.value);
-};
-
 export const parseVocabulary = function (vocabulary) {
   return new Promise((resolve) => {
-    const promises = vocabulary.termsFiles.map((file) => parseVocabularyFile(file));
+    const files = vocabulary.termsFiles || [];
+    const promises = files.map((file) => parseVocabularyFile(file));
     Promise.all(promises)
       .then((parsedFiles) => {
-        let terms = parseTerms(vocabulary.terms);
+        let terms = parseReactSelectValues(vocabulary.terms);
         parsedFiles.forEach((file) => {
           terms = terms.concat(file);
         });

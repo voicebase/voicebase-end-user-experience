@@ -26,11 +26,12 @@ class VocabularyForm extends React.Component {
   render () {
     const {
       fields: { name, terms, termsFiles },
+      termsSelectValue,
       handleSubmit,
       pristine
     } = this.props;
 
-    const termsFilesValue = termsFiles.value || null;
+    const termsFilesValue = termsFiles.value || [];
 
     return (
       <div>
@@ -50,7 +51,7 @@ class VocabularyForm extends React.Component {
               name="terms"
               placeholder="Add a word or phrase"
               multi
-              options={this.props.termsSelectValue}
+              options={termsSelectValue}
               {...terms}
               onBlur={this.onBlur}
             />

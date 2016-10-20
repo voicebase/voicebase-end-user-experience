@@ -93,7 +93,7 @@ export class SettingsView extends React.Component {
           }
 
           {state.settings.items.getIn(['vocabularies', 'view', 'enabled']) &&
-            <Tab eventKey={3} title={this.getTabTitle(state.settings.items.get('vocabularies'), 'itemIds')}>
+            <Tab eventKey={4} title={this.getTabTitle(state.settings.items.get('vocabularies'), 'itemIds')}>
               <Vocabularies
                 token={this.props.state.auth.token}
                 state={state.settings.items.get('vocabularies').toJS()}
