@@ -3,6 +3,7 @@ import {Panel, Collapse, ListGroup, Alert, Button} from 'react-bootstrap'
 import SpottingGroupItem from './SpottingGroupItem'
 import Spinner from '../Spinner'
 import SpottingGroupItemForm from './SpottingGroupItemForm'
+import { parseReactSelectValues } from '../../common/Common'
 
 export class SpottingGroups extends React.Component {
   static propTypes = {
@@ -34,7 +35,7 @@ export class SpottingGroups extends React.Component {
   };
 
   addGroup = (values) => {
-    let keywords = values.keywords.map(keyword => keyword.value);
+    let keywords = parseReactSelectValues(values.keywords);
     let newGroup = {
       name: values.name,
       keywords
