@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import { Row, Col, ButtonGroup, Button, Fade } from 'react-bootstrap'
-import Select from 'react-select'
+import Select, { Creatable } from 'react-select'
 import 'react-select/dist/react-select.css'
-
+import { parseReactSelectValues } from '../../common/Common'
 import LanguageDropdown from './LanguageDropdown'
 import DropdownList from '../DropdownList'
 
@@ -26,6 +26,9 @@ export default class UploadPreview extends React.Component {
     }
     if (items.predictions.itemIds.length === 0 && items.predictions.view.enabled) {
       this.props.actions.getItems(this.props.token, 'predictions');
+    }
+    if (items.vocabularies.itemIds.length === 0 && items.vocabularies.view.enabled) {
+      this.props.actions.getItems(this.props.token, 'vocabularies');
     }
     if (items.detection.itemIds.length === 0 && items.detection.view.enabled) {
       this.props.actions.getItems(this.props.token, 'detection');
@@ -104,6 +107,11 @@ export default class UploadPreview extends React.Component {
     this.props.actions.setVocabulary(value);
   };
 
+  onChangeCustomTerms = (newValue) => {
+    let value = this.parseSelectValue(newValue);
+    this.props.actions.setCustomTerms(value);
+  };
+
   turnOnStereo = () => {
     this.props.actions.setIsStereo(true);
   };
@@ -126,10 +134,10 @@ export default class UploadPreview extends React.Component {
   }
 
   parseSelectValue(value) {
-    return (value) ? value.split(',') : [];
+    return parseReactSelectValues(value) || [];
   }
 
-  getSelectValue(key, items) {
+  getSelectValue(key, items, isPlainArray) {
     let uploadState = this.props.uploadState;
     let defaultValue = [];
     let selectValue = [];
@@ -137,8 +145,9 @@ export default class UploadPreview extends React.Component {
       defaultValue = uploadState.options[key];
       selectValue = Object.keys(items).map((id, i) => {
         let item = items[id];
+        const value = (!isPlainArray) ? item.id || i : item;
         return {
-          value: item.id || i,
+          value,
           label: item.displayName || item.name || item
         }
       });
@@ -158,22 +167,24 @@ export default class UploadPreview extends React.Component {
     let activePriority = uploadState.options.priority;
 
     let predictions = items.predictions;
-    let predictionsValue = this.getSelectValue('predictions', predictions.items);
+    let predictionsValue = this.getSelectValue('predictions', predictions.items, false);
 
     let detection = items.detection;
-    let detectionValue = this.getSelectValue('detection', detection.items);
+    let detectionValue = this.getSelectValue('detection', detection.items, false);
 
     let numbers = items.numbers;
-    let numbersValue = this.getSelectValue('numbers', numbers.items);
+    let numbersValue = this.getSelectValue('numbers', numbers.items, false);
 
     let groups = settingsState.groups.toJS();
-    let groupsValue = this.getSelectValue('groups', groups.groups);
+    let groupsValue = this.getSelectValue('groups', groups.groups, false);
+
+    const vocabularies = items.vocabularies;
+    let vocabularyValue = this.getSelectValue('vocabularies', vocabularies.items, false);
+
+    const customTerms = this.getSelectValue('customTerms', uploadState.options.customTerms, true);
 
     const isStereo = uploadState.view.isStereoFile;
     const speakers = uploadState.options.speakers;
-
-    const vocabularies = uploadState.options.vocabularies;
-    let vocabularyValue = this.getSelectValue('vocabularies', vocabularies);
 
     return (
       <div>
@@ -252,8 +263,7 @@ export default class UploadPreview extends React.Component {
                     <Select
                       placeholder="Pick a prediction model"
                       multi
-                      simpleValue
-                      value={predictionsValue.defaultValue.join(',')}
+                      value={predictionsValue.defaultValue}
                       options={predictionsValue.selectValue}
                       onChange={this.onChangePrediction}
                       onBlur={this.onBlur}
@@ -272,8 +282,7 @@ export default class UploadPreview extends React.Component {
                     <Select
                       placeholder="Pick a detection model"
                       multi
-                      simpleValue
-                      value={detectionValue.defaultValue.join(',')}
+                      value={detectionValue.defaultValue}
                       options={detectionValue.selectValue}
                       onChange={this.onChangeDetection}
                       onBlur={this.onBlur}
@@ -292,8 +301,7 @@ export default class UploadPreview extends React.Component {
                     <Select
                       placeholder="Pick a number format"
                       multi
-                      simpleValue
-                      value={numbersValue.defaultValue.join(',')}
+                      value={numbersValue.defaultValue}
                       options={numbersValue.selectValue}
                       onChange={this.onChangeNumbers}
                       onBlur={this.onBlur}
@@ -311,8 +319,7 @@ export default class UploadPreview extends React.Component {
                   <Select
                     placeholder="Pick 1 or more phrase groups"
                     multi
-                    simpleValue
-                    value={groupsValue.defaultValue.join(',')}
+                    value={groupsValue.defaultValue}
                     options={groupsValue.selectValue}
                     onChange={this.onChangeGroups}
                     onBlur={this.onBlur}
@@ -325,15 +332,30 @@ export default class UploadPreview extends React.Component {
             <Col sm={12}>
               {uploadState.view.showVocabularies &&
                 <div className="form-group">
-                  <label className="control-label">Add 1 or more custom terms (Optional)</label>
+                  <label className="control-label">Pick 1 or more list of custom terms (Optional)</label>
                   <Select
-                    placeholder="Pick 1 or more custom terms"
+                    placeholder="Pick 1 or more list of custom terms"
                     multi
-                    simpleValue
-                    allowCreate
-                    value={vocabularyValue.defaultValue.join(',')}
+                    value={vocabularyValue.defaultValue}
                     options={vocabularyValue.selectValue}
                     onChange={this.onChangeVocabulary}
+                    onBlur={this.onBlur}
+                  />
+                </div>
+              }
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={12}>
+              {uploadState.view.showVocabularies &&
+                <div className="form-group">
+                  <label className="control-label">Add 1 or more custom terms (Optional)</label>
+                  <Creatable
+                    placeholder="Add 1 or more custom terms"
+                    multi
+                    value={customTerms.defaultValue}
+                    options={customTerms.selectValue}
+                    onChange={this.onChangeCustomTerms}
                     onBlur={this.onBlur}
                   />
                 </div>

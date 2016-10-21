@@ -34,7 +34,10 @@ export default class UploadContainer extends React.Component {
       let groups = options.groups && options.groups.map(groupId => settings.groups.getIn(['groups', groupId, 'name']));
       let predictions = options.predictions && options.predictions.map(id => settings.items.getIn(['predictions', 'items', id, 'modelId']));
       let speakers = (uploadState.view.isStereoFile) ? options.speakers : null;
-      let vocabularies = (uploadState.view.showVocabularies) ? options.vocabularies : null;
+      let vocabularies = null;
+      if (uploadState.view.showVocabularies) {
+        vocabularies = this.parseVocabularies(options, settings.items.get('vocabularies'));
+      }
       let language = options.language;
       uploadState.fileIds.forEach(fileId => {
         let file = uploadState.files[fileId].file;
@@ -42,6 +45,15 @@ export default class UploadContainer extends React.Component {
       });
       this.props.onFinish();
     }
+  };
+
+  parseVocabularies = (options, vocabulariesState) => {
+    let termsResult = [].concat(options.customTerms);
+    options.vocabularies.forEach((id) => {
+      const terms = vocabulariesState.getIn(['items', id, 'terms']).toJS();
+      termsResult = termsResult.concat(terms);
+    });
+    return termsResult;
   };
 
   getTabs() {
