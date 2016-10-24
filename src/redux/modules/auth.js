@@ -1,4 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
+import axios from 'axios'
 
 import authLockApi from '../../api/authLockApi'
 
@@ -45,12 +46,27 @@ export const setRemember = createAction(SET_REMEMBER, (isRemember) => isRemember
 
 export const signOut = createAction(SIGN_OUT, {});
 
+export const handleErrors = () => {
+  return (dispatch) => {
+    axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response.status === 401) {
+          dispatch(signOut());
+          return Promise.reject(error);
+        }
+      }
+    );
+  };
+};
+
 export const actions = {
   signIn,
   signOut,
   setRemember,
   createToken,
-  getApiKeys
+  getApiKeys,
+  handleErrors
 };
 
 /*

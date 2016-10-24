@@ -16,6 +16,7 @@ export class AppLayout extends React.Component {
   };
 
   componentWillMount() {
+    this.props.actions.handleErrors();
     this.redirectIfNotLoggedIn();
     const token = this.props.state.auth.token;
     if (token) {
