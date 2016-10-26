@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import TestUtils from 'react-addons-test-utils'
 
-import KeywordWord from '../../../src/components/player/KeywordWord'
+import KeywordWord from '../../../app/components/player/KeywordWord'
 
 describe('KeywordWord component', function () {
   let component;

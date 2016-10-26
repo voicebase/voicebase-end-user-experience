@@ -1,66 +1,36 @@
-/* eslint key-spacing:0 spaced-comment:0 */
-import _debug from 'debug'
-import path from 'path'
 import { argv } from 'yargs'
+import path from 'path'
 
-const debug = _debug('app:config:_base')
-const config = {
-  env : process.env.NODE_ENV,
+const env = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+const isProd = env === 'production';
+
+let pathBase = path.resolve(__dirname, '../');
+
+let config = {
+  env : env,
 
   // ----------------------------------
   // Project Structure
   // ----------------------------------
-  path_base  : path.resolve(__dirname, '../'),
-  dir_client : 'src',
-  dir_dist   : 'dist',
-  dir_server : 'server',
-  dir_test   : 'tests',
+  path_base: pathBase,
+  path_dist: pathBase + '/dist/resources',
+  path_client: pathBase + '/app',
+  path_server: pathBase + '/server',
+  path_test   : 'tests',
 
   // ----------------------------------
   // Server Configuration
   // ----------------------------------
   server_host : 'localhost',
   server_port : process.env.PORT || 5090,
+  webpack_port : process.env.PORT || 5091,
 
   // ----------------------------------
   // Compiler Configuration
   // ----------------------------------
-  compiler_css_modules     : false,
-  compiler_enable_hmr      : false,
-  compiler_devtool         : 'source-map',
-  compiler_hash_type       : 'hash',
-  compiler_fail_on_warning : false,
-  compiler_quiet           : false,
-  compiler_public_path     : '',
-  compiler_stats           : {
-    chunks : false,
-    chunkModules : false,
-    colors : true
-  },
-  compiler_vendor : [
-    'axios',
-    'history',
-    'react',
-    'react-dom',
-    'react-redux',
-    'react-router',
-    'react-router-redux',
-    'redux',
-    'redux-actions',
-    'classnames',
-    'redux-promise-middleware',
-    'redux-thunk',
-    'redux-form',
-    'redux-localstorage',
-    'react-bootstrap',
-    'react-bootstrap-daterangepicker',
-    'react-dropzone',
-    'react-notification-system',
-    'react-select',
-    'immutable',
-    'jquery',
-    'fuse.js'
-  ],
+  compiler_devtool   : !isProd ? 'eval-source-map' : null,
+  compiler_enable_hmr: false,
+  compiler_public_path: '',
 
   // ----------------------------------
   // Test Configuration
@@ -69,63 +39,22 @@ const config = {
   coverage_reporters : [
     { type : 'text-summary' },
     { type : 'html', dir : 'coverage' }
-  ]
-}
+  ],
 
-/************************************************
--------------------------------------------------
-
-All Internal Configuration Below
-Edit at Your Own Risk
-
--------------------------------------------------
-************************************************/
-
-// ------------------------------------
-// Environment
-// ------------------------------------
-config.globals = {
-  'process.env'  : {
-    'NODE_ENV' : JSON.stringify(config.env)
-  },
-  'NODE_ENV'     : config.env,
-  '__DEV__'      : config.env === 'development',
-  '__PROD__'     : config.env === 'production',
-  '__DEBUG__'    : config.env === 'development' && !argv.no_debug,
-  '__DEBUG_NEW_WINDOW__' : !!argv.nw,
-  '__BASENAME__' : JSON.stringify(process.env.BASENAME || '')
-}
-
-// ------------------------------------
-// Validate Vendor Dependencies
-// ------------------------------------
-const pkg = require('../package.json')
-
-config.compiler_vendor = config.compiler_vendor
-  .filter(dep => {
-    if (pkg.dependencies[dep]) return true
-
-    debug(
-      `Package "${dep}" was not found as an npm dependency in package.json; ` +
-      `it won't be included in the webpack vendor bundle.\n` +
-      `Consider removing it from vendor_dependencies in ~/config/index.js`
-    )
-  })
-
-// ------------------------------------
-// Utilities
-// ------------------------------------
-config.utils_paths = (() => {
-  const resolve = path.resolve
-
-  const base = (...args) =>
-    resolve.apply(resolve, [config.path_base, ...args])
-
-  return {
-    base   : base,
-    client : base.bind(null, config.dir_client),
-    dist   : base.bind(null, config.dir_dist)
+  // ------------------------------------
+  // Environment
+  // ------------------------------------
+  globals: {
+    'process.env'  : {
+      'NODE_ENV' : JSON.stringify(env)
+    },
+    'NODE_ENV'     : env,
+    '__DEV__'      : !isProd,
+    '__PROD__'     : isProd,
+    '__DEBUG__'    : !isProd,
+    '__BASENAME__' : JSON.stringify(process.env.BASENAME || '')
   }
-})()
 
-export default config
+};
+
+export default config;

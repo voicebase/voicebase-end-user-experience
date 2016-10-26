@@ -14,9 +14,9 @@ import {
   actions,
   initialState,
   default as mediaListReducer
-} from '../../../src/redux/modules/media/mediaList'
+} from '../../../app/redux/modules/media/mediaList'
 
-import { checkActionTypes, checkIsFunction, checkCreatingAction, checkApiAction, checkCreatingActionWithMultipleParameters } from '../../../src/common/Test'
+import { checkActionTypes, checkIsFunction, checkCreatingAction, checkApiAction, checkCreatingActionWithMultipleParameters } from '../../../app/common/Test'
 import configureMockStore from 'redux-mock-store';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';

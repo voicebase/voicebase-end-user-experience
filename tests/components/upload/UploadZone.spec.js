@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../src/common/Test'
+import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import UploadZone from '../../../src/components/upload/UploadZone'
+import UploadZone from '../../../app/components/upload/UploadZone'
 
 describe('UploadZone component', function () {
   let component;

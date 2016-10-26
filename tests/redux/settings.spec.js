@@ -10,14 +10,14 @@ import {
   itemInitialState,
   initialState,
   settings
-} from '../../src/redux/modules/settings'
+} from '../../app/redux/modules/settings'
 
 import { createAction } from 'redux-actions'
 import configureMockStore from 'redux-mock-store';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 
-import { checkActionTypes, checkIsFunction, checkCreatingAction, checkApiAction, checkAsyncAction } from '../../src/common/Test'
+import { checkActionTypes, checkIsFunction, checkCreatingAction, checkApiAction, checkAsyncAction } from '../../app/common/Test'
 import Immutable, { fromJS } from 'immutable'
 
 describe('(Redux Module) settings.js', function () {

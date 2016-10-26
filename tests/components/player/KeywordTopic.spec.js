@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../src/common/Test'
+import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import KeywordTopic from '../../../src/components/player/KeywordTopic'
+import KeywordTopic from '../../../app/components/player/KeywordTopic'
 
 describe('KeywordTopic component', function () {
   let component;

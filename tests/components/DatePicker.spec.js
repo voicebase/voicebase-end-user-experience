@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallowRender } from '../../src/common/Test'
+import { shallowRender } from '../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import { DatePicker } from '../../src/components/DatePicker'
+import { DatePicker } from '../../app/components/DatePicker'
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import { Input } from 'react-bootstrap'
 import moment from 'moment';

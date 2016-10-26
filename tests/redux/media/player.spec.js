@@ -14,9 +14,9 @@ import {
   initialState,
   initialPlayerState,
   default as playerReducer
-} from '../../../src/redux/modules/media/player'
+} from '../../../app/redux/modules/media/player'
 
-import { checkActionTypes, checkCreatingAction, checkCreatingActionWithMultipleParameters } from '../../../src/common/Test'
+import { checkActionTypes, checkCreatingAction, checkCreatingActionWithMultipleParameters } from '../../../app/common/Test'
 import Immutable, { fromJS } from 'immutable'
 
 describe('(Redux Module) markers.js', function () {

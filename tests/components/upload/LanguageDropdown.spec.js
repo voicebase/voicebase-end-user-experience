@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../src/common/Test'
+import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import LanguageDropdown from '../../../src/components/upload/LanguageDropdown'
-import UsFlag from '../../../src/images/us.png'
-import UkFlag from '../../../src/images/uk.png'
+import LanguageDropdown from '../../../app/components/upload/LanguageDropdown'
+import UsFlag from '../../../app/images/us.png'
+import UkFlag from '../../../app/images/uk.png'
 
 describe('LanguageDropdown component', function () {
   let component;

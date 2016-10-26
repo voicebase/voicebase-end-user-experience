@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallowRender } from '../../src/common/Test'
+import { shallowRender } from '../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import DropdownList from '../../src/components/DropdownList'
+import DropdownList from '../../app/components/DropdownList'
 import {Dropdown, MenuItem} from 'react-bootstrap'
 
 describe('DropdownList component', function () {

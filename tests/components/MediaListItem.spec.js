@@ -1,19 +1,19 @@
 import React from 'react';
-import { shallowRender } from '../../src/common/Test'
+import { shallowRender } from '../../app/common/Test'
 
-import { MediaListItem } from '../../src/components/MediaListItem'
-import { MediaListItemTitle } from '../../src/components/MediaListItemTitle'
-import VbsPlayerApp from '../../src/components/player/VbsPlayerApp';
-import Spinner from '../../src/components/Spinner';
-import { parseTime } from '../../src/common/Common';
+import { MediaListItem } from '../../app/components/MediaListItem'
+import { MediaListItemTitle } from '../../app/components/MediaListItemTitle'
+import VbsPlayerApp from '../../app/components/player/VbsPlayerApp';
+import Spinner from '../../app/components/Spinner';
+import { parseTime } from '../../app/common/Common';
 import {Collapse, Alert, Row, Col} from 'react-bootstrap'
 
-import { initialState as dataState } from '../../src/redux/modules/media/mediaData'
-import { initialState as markersState } from '../../src/redux/modules/media/markers'
+import { initialState as dataState } from '../../app/redux/modules/media/mediaData'
+import { initialState as markersState } from '../../app/redux/modules/media/markers'
 import {
   initialState as playerState,
   initialPlayerState
-} from '../../src/redux/modules/media/player'
+} from '../../app/redux/modules/media/player'
 
 
 describe('MediaListItem component', function () {

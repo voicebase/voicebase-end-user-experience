@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallowRender } from '../../../src/common/Test'
+import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import DetectionList from '../../../src/components/player/DetectionList'
+import DetectionList from '../../../app/components/player/DetectionList'
 
 describe('DetectionList component', function () {
   let component;

@@ -15,10 +15,10 @@ import {
   actions,
   initialState,
   default as uploadReducer
-} from '../../src/redux/modules/upload'
+} from '../../app/redux/modules/upload'
 
 import Immutable, { fromJS } from 'immutable'
-import { checkActionTypes, checkCreatingAction, checkIsFunction, checkApiAction } from '../../src/common/Test'
+import { checkActionTypes, checkCreatingAction, checkIsFunction, checkApiAction } from '../../app/common/Test'
 
 describe('(Redux Module) upload.js', function () {
 

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import TestUtils from 'react-addons-test-utils'
 
-import Player from '../../../src/components/player/Player'
+import Player from '../../../app/components/player/Player'
 
 describe('Player component', function () {
   let component;

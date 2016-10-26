@@ -8,10 +8,10 @@ import {
   actions,
   initialState,
   default as searchReducer
-} from '../../src/redux/modules/search'
+} from '../../app/redux/modules/search'
 
 import Immutable, { fromJS } from 'immutable'
-import { checkActionTypes, checkCreatingAction } from '../../src/common/Test'
+import { checkActionTypes, checkCreatingAction } from '../../app/common/Test'
 
 describe('(Redux Module) search.js', function () {
 

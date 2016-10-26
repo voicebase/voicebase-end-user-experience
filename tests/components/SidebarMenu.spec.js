@@ -1,12 +1,12 @@
 import React from 'react';
-import { shallowRender } from '../../src/common/Test'
+import { shallowRender } from '../../app/common/Test'
 import { fromJS } from 'immutable'
 
-import { SidebarMenu } from '../../src/components/SidebarMenu'
-import { SidebarLink } from '../../src/components/SidebarLink'
+import { SidebarMenu } from '../../app/components/SidebarMenu'
+import { SidebarLink } from '../../app/components/SidebarLink'
 import {Nav, NavItem} from 'react-bootstrap'
-import Logo from '../../src/images/voicebase-logo-2.png'
-import CounterLabel from '../../src/components/CounterLabel'
+import Logo from '../../app/images/voicebase-logo-2.png'
+import CounterLabel from '../../app/components/CounterLabel'
 
 describe('SidebarMenu component', function () {
   let component;

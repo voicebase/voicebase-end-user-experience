@@ -6,7 +6,7 @@ import {
   getRandomColor,
   getFileType,
   dateToIso
-} from '../../src/common/Common'
+} from '../../app/common/Common'
 
 describe('(Common functions) Common.js', function () {
   describe('padLeft()', function () {

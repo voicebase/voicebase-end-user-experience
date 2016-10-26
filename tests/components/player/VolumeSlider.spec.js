@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../src/common/Test'
+import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
 import {
   capitalize,
   maxmin,
   default as VolumeSlider
-} from '../../../src/components/player/VolumeSlider'
+} from '../../../app/components/player/VolumeSlider'
 
 describe('VolumeSlider component', function () {
   let component;

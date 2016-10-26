@@ -1,12 +1,12 @@
 import React from 'react';
-import { shallowRender } from '../../src/common/Test'
+import { shallowRender } from '../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import { SearchForm } from '../../src/components/SearchForm'
-import { initialState } from '../../src/redux/modules/search'
+import { SearchForm } from '../../app/components/SearchForm'
+import { initialState } from '../../app/redux/modules/search'
 import {Row, Col, FormGroup, FormControl, Button} from 'react-bootstrap'
-import DatePicker from '../../src/components/DatePicker'
-import DropdownList from '../../src/components/DropdownList'
+import DatePicker from '../../app/components/DatePicker'
+import DropdownList from '../../app/components/DropdownList'
 
 describe('SearchForm component', function () {
   let component;

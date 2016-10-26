@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallowRender } from '../../../src/common/Test'
+import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import Predictions from '../../../src/components/player/Predictions'
+import Predictions from '../../../app/components/player/Predictions'
 
 describe('Predictions component', function () {
   let component;

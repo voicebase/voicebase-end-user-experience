@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import TestUtils from 'react-addons-test-utils'
 import { fromJS } from 'immutable'
-import ProcessingListItem from '../../../src/components/upload/ProcessingListItem'
+import ProcessingListItem from '../../../app/components/upload/ProcessingListItem'
 
 describe('ProcessingListItem component', function () {
   let component;

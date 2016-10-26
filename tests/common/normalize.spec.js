@@ -1,4 +1,4 @@
-import { normalize } from '../../src/common/Normalize'
+import { normalize } from '../../app/common/Normalize'
 
 describe('(Common functions) Normalize.js', function () {
 

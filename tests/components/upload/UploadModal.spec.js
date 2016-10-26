@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallowRender } from '../../../src/common/Test'
+import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import UploadModal from '../../../src/components/upload/UploadModal'
+import UploadModal from '../../../app/components/upload/UploadModal'
 
 describe('UploadModal component', function () {
   let component;

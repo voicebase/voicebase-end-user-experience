@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallowRender } from '../../src/common/Test'
+import { shallowRender } from '../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import { MediaListToolbar } from '../../src/components/MediaListToolbar'
+import { MediaListToolbar } from '../../app/components/MediaListToolbar'
 import {ButtonGroup, Button} from 'react-bootstrap'
 
 describe('MediaListToolbar component', function () {

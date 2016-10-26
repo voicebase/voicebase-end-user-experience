@@ -5,9 +5,9 @@ import {
   actions,
   initialState,
   default as authReducer
-} from '../../src/redux/modules/auth'
+} from '../../app/redux/modules/auth'
 
-import { checkActionTypes, checkIsFunction, checkCreatingAction, checkApiAction, checkAsyncAction } from '../../src/common/Test'
+import { checkActionTypes, checkIsFunction, checkCreatingAction, checkApiAction, checkAsyncAction } from '../../app/common/Test'
 
 describe('(Redux Module) auth.js', function () {
   describe('Constants', () => {

@@ -8,9 +8,9 @@ import {
   actions,
   initialState,
   default as groupsReducer
-} from '../../src/redux/modules/groups'
+} from '../../app/redux/modules/groups'
 
-import { checkActionTypes, checkIsFunction, checkCreatingAction, checkApiAction, checkAsyncAction } from '../../src/common/Test'
+import { checkActionTypes, checkIsFunction, checkCreatingAction, checkApiAction, checkAsyncAction } from '../../app/common/Test'
 import Immutable, { fromJS } from 'immutable'
 
 describe('(Redux Module) groups.js', function () {

@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallowRender } from '../../src/common/Test'
+import { shallowRender } from '../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import { MediaListItemTitle } from '../../src/components/MediaListItemTitle'
+import { MediaListItemTitle } from '../../app/components/MediaListItemTitle'
 
 describe('MediaListItemTitle component', function () {
   let component;

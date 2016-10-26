@@ -1,13 +1,13 @@
 import React from 'react';
-import { shallowRender } from '../../src/common/Test'
+import { shallowRender } from '../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import { MediaList } from '../../src/components/MediaList'
-import { initialState as listState } from '../../src/redux/modules/media/mediaList'
-import { initialState as dataState } from '../../src/redux/modules/media/mediaData'
+import { MediaList } from '../../app/components/MediaList'
+import { initialState as listState } from '../../app/redux/modules/media/mediaList'
+import { initialState as dataState } from '../../app/redux/modules/media/mediaData'
 import { Alert } from 'react-bootstrap'
-import MediaListItem from '../../src/components/MediaListItem'
-import ProcessingListItem from '../../src/components/upload/ProcessingListItem'
+import MediaListItem from '../../app/components/MediaListItem'
+import ProcessingListItem from '../../app/components/upload/ProcessingListItem'
 
 describe('MediaListToolbar component', function () {
   let component;

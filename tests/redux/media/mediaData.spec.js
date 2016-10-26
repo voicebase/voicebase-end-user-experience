@@ -9,11 +9,11 @@ import {
   initialViewState,
   parseMediaData,
   default as mediaDataReducer
-} from '../../../src/redux/modules/media/mediaData'
+} from '../../../app/redux/modules/media/mediaData'
 
-import { checkActionTypes, checkIsFunction, checkCreatingAction, checkApiAction, checkCreatingActionWithMultipleParameters } from '../../../src/common/Test'
+import { checkActionTypes, checkIsFunction, checkCreatingAction, checkApiAction, checkCreatingActionWithMultipleParameters } from '../../../app/common/Test'
 import Immutable, { fromJS } from 'immutable'
-import fakeData from '../../../src/fakeData/fakeData'
+import fakeData from '../../../app/fakeData/fakeData'
 
 describe('(Redux Module) mediaData.js', function () {
   describe('Constants', () => {

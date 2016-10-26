@@ -2,4 +2,4 @@ coverage/**
 node_modules/**
 dist/**
 *.spec.js
-src/index.html
+app/index.html

@@ -1,6 +1,6 @@
 import React from 'react';
-import { shallowRender } from '../../src/common/Test'
-import { Spinner } from '../../src/components/Spinner'
+import { shallowRender } from '../../app/common/Test'
+import { Spinner } from '../../app/components/Spinner'
 
 
 describe('Spinner component', function () {

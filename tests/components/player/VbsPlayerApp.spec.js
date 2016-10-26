@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../src/common/Test'
+import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import VbsPlayerApp from '../../../src/components/player/VbsPlayerApp'
+import VbsPlayerApp from '../../../app/components/player/VbsPlayerApp'
 
 describe('VbsPlayerApp component', function () {
   let component;

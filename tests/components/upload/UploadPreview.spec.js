@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../src/common/Test'
+import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import UploadPreview from '../../../src/components/upload/UploadPreview'
+import UploadPreview from '../../../app/components/upload/UploadPreview'
 
 describe('UploadPreview component', function () {
   let component;

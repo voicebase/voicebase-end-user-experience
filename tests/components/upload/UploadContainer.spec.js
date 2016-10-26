@@ -1,23 +1,23 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../src/common/Test'
+import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import UploadContainer from '../../../src/components/upload/UploadContainer'
+import UploadContainer from '../../../app/components/upload/UploadContainer'
 import {
   initialState as playerState
-} from '../../../src/redux/modules/media/player'
+} from '../../../app/redux/modules/media/player'
 import {
   OPTIONS_TAB,
   initialState as uploadState
-} from '../../../src/redux/modules/upload'
+} from '../../../app/redux/modules/upload'
 import {
   initialState as settingsState
-} from '../../../src/redux/modules/settings'
+} from '../../../app/redux/modules/settings'
 import {
   initialState as groupsState
-} from '../../../src/redux/modules/groups'
-import actions from '../../../src/redux/rootActions'
+} from '../../../app/redux/modules/groups'
+import actions from '../../../app/redux/rootActions'
 
 describe('UploadContainer component', function () {
   let component;

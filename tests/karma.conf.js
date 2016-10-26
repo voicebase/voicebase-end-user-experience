@@ -1,6 +1,6 @@
 import { argv } from 'yargs'
 import config from '../config'
-import webpackConfig from './webpack.config'
+import webpackConfig from '../webpack/webpack.config'
 
 const debug = require('debug')('app:karma')
 debug('Create configuration.')
@@ -11,7 +11,8 @@ const karmaConfig = {
     './node_modules/phantomjs-polyfill/bind-polyfill.js',
     'node_modules/babel-polyfill/dist/polyfill.js',
     {
-      pattern: `./${config.dir_test}/**/*.js`,
+      // pattern: `./${config.path_test}/**/*.js`,
+      pattern: `./${config.path_test}/common/**/*.js`,
       watched: false,
       served: true,
       included: true
@@ -20,16 +21,15 @@ const karmaConfig = {
   singleRun: !argv.watch,
   frameworks: ['mocha', 'chai-sinon', 'chai-as-promised', 'chai'],
   preprocessors: {
-    [`${config.dir_test}/**/*.js`]: ['webpack']
+    [`${config.path_test}/**/*.js`]: ['webpack']
   },
   reporters: ['spec'],
   browsers: ['PhantomJS'],
   webpack: {
     devtool: (argv.watch) ? 'inline-source-map' : 'eval',
-    entry:{},
+    entry: {},
     resolve: webpackConfig.resolve,
-    plugins: webpackConfig.plugins
-      .filter(plugin => !plugin.__KARMA_IGNORE__),
+    plugins: webpackConfig.plugins,
     module: {
       loaders: webpackConfig.module.loaders
     },

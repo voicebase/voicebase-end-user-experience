@@ -1,6 +1,6 @@
 import React from 'react';
-import { shallowRender } from '../../src/common/Test'
-import { CounterLabel } from '../../src/components/CounterLabel'
+import { shallowRender } from '../../app/common/Test'
+import { CounterLabel } from '../../app/components/CounterLabel'
 
 
 describe('CounterLabel component', function () {

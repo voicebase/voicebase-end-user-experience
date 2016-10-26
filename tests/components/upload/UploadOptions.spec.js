@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../src/common/Test'
+import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import UploadOptions from '../../../src/components/upload/UploadOptions'
+import UploadOptions from '../../../app/components/upload/UploadOptions'
 import {
   initialState as uploadState
-} from '../../../src/redux/modules/upload'
+} from '../../../app/redux/modules/upload'
 import {
   initialState as settingsState
-} from '../../../src/redux/modules/settings'
+} from '../../../app/redux/modules/settings'
 import {
   initialState as groupsState
-} from '../../../src/redux/modules/groups'
+} from '../../../app/redux/modules/groups'
 
 describe('UploadOptions component', function () {
   let component;

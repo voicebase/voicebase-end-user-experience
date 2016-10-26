@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../src/common/Test'
+import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import UploadProgress from '../../../src/components/upload/UploadProgress'
+import UploadProgress from '../../../app/components/upload/UploadProgress'
 
 describe('UploadProgress component', function () {
   let component;

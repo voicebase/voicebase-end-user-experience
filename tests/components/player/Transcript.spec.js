@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../src/common/Test'
+import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import Transcript from '../../../src/components/player/Transcript'
-import { DETECTION_TAB } from '../../../src/redux/modules/media/mediaData'
+import Transcript from '../../../app/components/player/Transcript'
+import { DETECTION_TAB } from '../../../app/redux/modules/media/mediaData'
 
 describe('Transcript component', function () {
   let component;

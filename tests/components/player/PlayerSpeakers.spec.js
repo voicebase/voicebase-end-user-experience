@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../src/common/Test'
+import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import PlayerSpeakers from '../../../src/components/player/PlayerSpeakers'
+import PlayerSpeakers from '../../../app/components/player/PlayerSpeakers'
 
 describe('PlayerSpeakers component', function () {
   let component;

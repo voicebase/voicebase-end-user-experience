@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../../src/common/Test'
+import { shallowRender } from '../../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
-import JwPlayer from '../../../../src/components/player/react-player/JwPlayer'
+import JwPlayer from '../../../../app/components/player/react-player/JwPlayer'
 
 describe('JwPlayer component', function () {
   let component;

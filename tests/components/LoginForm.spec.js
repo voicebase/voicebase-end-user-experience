@@ -1,7 +1,7 @@
 import React from 'react';
-import { shallowRender } from '../../src/common/Test'
+import { shallowRender } from '../../app/common/Test'
 
-import { LoginForm, validateLogin } from '../../src/components/LoginForm'
+import { LoginForm, validateLogin } from '../../app/components/LoginForm'
 import {FormControl, Checkbox, Button, Alert} from 'react-bootstrap'
 
 describe('LoginForm component', function () {
