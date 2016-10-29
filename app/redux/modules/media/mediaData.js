@@ -4,8 +4,6 @@ import { normalize } from '../../../common/Normalize'
 import { fromJS } from 'immutable';
 
 import MediaApi from '../../../api/mediaApi'
-import { setMarkers } from './markers'
-import { localSearch, searchResultsToMarkers } from '../../../common/Search'
 
 /*
  * Constants
@@ -13,14 +11,6 @@ import { localSearch, searchResultsToMarkers } from '../../../common/Search'
 export const GET_DATA_FOR_MEDIA = 'GET_DATA_FOR_MEDIA';
 export const REMOVE_DATA_FOR_MEDIA = 'REMOVE_DATA_FOR_MEDIA';
 export const GET_MEDIA_URL = 'GET_MEDIA_URL';
-export const SET_ACTIVE_TOPIC = 'SET_ACTIVE_TOPIC';
-export const CHOOSE_PLAYER_APP_TAB = 'CHOOSE_PLAYER_APP_TAB';
-
-//view
-export const KEYWORDS_TAB = 1;
-export const DETECTION_TAB = 2;
-export const PREDICTION_TAB = 3;
-export const GROUPS_TAB = 4;
 
 /*
  * Actions
@@ -34,14 +24,6 @@ export const getDataForMedia = (token, mediaId, searchString) => {
         mediaId
       },
       promise: MediaApi.getDataForMedia(token, mediaId)
-        .then(response => {
-          if (searchString) {
-            let searchResult = localSearch(response.transcripts.latest.words, searchString);
-            let markers = searchResultsToMarkers(searchResult);
-            dispatch(setMarkers(mediaId, markers));
-          }
-          return response;
-        })
     }
   });
 };
@@ -55,19 +37,10 @@ export const getMediaUrl = createAction(GET_MEDIA_URL, (token, mediaId) => {
     promise: MediaApi.getMediaUrl(token, mediaId)
   }
 });
-export const setActiveTopic = createAction(SET_ACTIVE_TOPIC, (mediaId, topicId, type) => {
-  return {mediaId, topicId, type};
-});
-export const choosePlayerAppTab = createAction(CHOOSE_PLAYER_APP_TAB, (mediaId, tabId) => {
-  return {mediaId, tabId};
-});
-
 export const actions = {
   getDataForMedia,
   removeDataForMedia,
-  getMediaUrl,
-  setActiveTopic,
-  choosePlayerAppTab
+  getMediaUrl
 };
 
 /*
@@ -75,18 +48,13 @@ export const actions = {
  * */
 export const initialState = fromJS({});
 
-export const initialViewState = {
-  activeTab: KEYWORDS_TAB
-};
-
 /*
  * Reducers
  * */
 export default handleActions({
   [GET_DATA_FOR_MEDIA + '_PENDING']: (state, { payload }) => {
     return state.mergeIn([payload.mediaId], {
-      getPending: true,
-      view: initialViewState
+      getPending: true
     });
   },
 
@@ -116,8 +84,7 @@ export default handleActions({
       utterances: response.utterances,
       jobTasks: response.jobTasks,
       getPending: false,
-      getError: '',
-      view: initialViewState
+      getError: ''
     });
   },
 
@@ -144,17 +111,7 @@ export default handleActions({
       getUrlPending: false,
       getUrlError: ''
     });
-  },
-
-  [SET_ACTIVE_TOPIC]: (state, { payload }) => {
-    let field = payload.type === 'keywords' ? 'activeTopic' : 'activeGroup';
-    return state.setIn([payload.mediaId, field], payload.topicId);
-  },
-
-  [CHOOSE_PLAYER_APP_TAB]: (state, { payload: {tabId, mediaId} }) => {
-    return state.setIn([mediaId, 'view', 'activeTab'], tabId);
   }
-
 }, initialState);
 
 export const parseMediaData = function (data) {

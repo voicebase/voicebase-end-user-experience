@@ -13,7 +13,6 @@ export default class UploadProgressList extends React.Component {
     processFileIds.forEach(id => {
       let file = uploadState.files[id];
       this.props.actions.removeFile(id);
-      this.props.actions.destroyPlayer(id);
       this.props.actions.addProcessingMedia({
         mediaId: file.data.mediaId,
         status: file.data.status,

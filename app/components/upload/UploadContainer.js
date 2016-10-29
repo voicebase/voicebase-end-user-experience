@@ -13,9 +13,6 @@ export default class UploadContainer extends React.Component {
   };
 
   onClose = () => {
-    this.props.state.upload.get('fileIds').forEach(id => {
-      this.props.actions.destroyPlayer(id);
-    });
     this.props.actions.cancelUpload();
   };
 
