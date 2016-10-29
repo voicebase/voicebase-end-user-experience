@@ -10,9 +10,9 @@ const karmaConfig = {
   files: [
     './node_modules/phantomjs-polyfill/bind-polyfill.js',
     'node_modules/babel-polyfill/dist/polyfill.js',
+    'dist/resources/dll.vendor.js',
     {
-      // pattern: `./${config.path_test}/**/*.js`,
-      pattern: `./${config.path_test}/common/**/*.js`,
+      pattern: `./${config.path_test}/**/*.js`,
       watched: false,
       served: true,
       included: true

@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallowRender } from '../../app/common/Test'
-import TestUtils from 'react-addons-test-utils'
 
 import { MediaList } from '../../app/components/MediaList'
 import { initialState as listState } from '../../app/redux/modules/media/mediaList'
@@ -118,7 +117,6 @@ describe('MediaListToolbar component', function () {
         assert.equal(item.props.mediaId, mediaId);
         assert.equal(item.props.isExpanded, false);
         assert.equal(item.props.token, optionsWithMediaIds.token);
-        expect(item.props.mediaState).to.eql(optionsWithMediaIds.state);
         expect(item.props.listItemState).to.eql(mediaResponse.media[mediaId]);
         expect(item.props.actions).to.eql(optionsWithMediaIds.actions);
       });

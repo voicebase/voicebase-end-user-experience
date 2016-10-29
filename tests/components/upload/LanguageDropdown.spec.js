@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
 import LanguageDropdown from '../../../app/components/upload/LanguageDropdown'
-import UsFlag from '../../../app/images/us.png'
-import UkFlag from '../../../app/images/uk.png'
 
 describe('LanguageDropdown component', function () {
   let component;
@@ -55,27 +52,10 @@ describe('LanguageDropdown component', function () {
     assert.equal(onSelect.calledOnce, true);
   });
 
-  it('Check getFlag()', function () {
-    let res = component.getFlag('us');
-    expect(res).to.eql(UsFlag);
-    res = component.getFlag('uk');
-    expect(res).to.eql(UkFlag);
-    res = component.getFlag('');
-    assert.isUndefined(res);
-  });
-
   it('Check getItemContent()', function () {
     let item = component.getItemContent(options.languages.us);
-    let child = item.props.children;
-    let img = child[0];
-    let space = child[1];
-    let name = child[2];
     assert.equal(item.type, 'span');
-    assert.equal(img.type, 'img');
-    assert.equal(img.props.className, 'flag');
-    assert.equal(img.props.src, UsFlag);
-    assert.equal(space, ' ');
-    assert.equal(name, options.languages.us.name);
+    assert.equal(item.props.children, options.languages.us.name);
   });
 
 });

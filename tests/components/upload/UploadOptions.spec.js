@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
 import UploadOptions from '../../../app/components/upload/UploadOptions'
@@ -99,7 +98,6 @@ describe('UploadOptions component', function () {
     component.componentWillMount();
 
     assert.equal(getGroups.called, true);
-    assert.equal(getItems.called, false);
   });
 
   it('Check componentWillMount() with enabled items', function () {
@@ -168,7 +166,7 @@ describe('UploadOptions component', function () {
         ...options.uploadState,
         options: {
           ...options.uploadState.options,
-          language: 'uk',
+          language: 'en-US',
           priority: 'high'
         }
       },
@@ -255,7 +253,7 @@ describe('UploadOptions component', function () {
         setPrediction
       }
     });
-    component.onChangePrediction('0');
+    component.onChangePrediction(['0']);
 
     assert.equal(setPrediction.calledOnce, true);
   });
@@ -269,7 +267,7 @@ describe('UploadOptions component', function () {
         setDetection
       }
     });
-    component.onChangeDetection('0');
+    component.onChangeDetection(['0']);
 
     assert.equal(setDetection.calledOnce, true);
   });
@@ -283,7 +281,7 @@ describe('UploadOptions component', function () {
         setNumbers
       }
     });
-    component.onChangeNumbers('0');
+    component.onChangeNumbers(['0']);
 
     assert.equal(setNumbers.calledOnce, true);
   });
@@ -297,14 +295,14 @@ describe('UploadOptions component', function () {
         setGroups
       }
     });
-    component.onChangeGroups('0');
+    component.onChangeGroups(['0']);
 
     assert.equal(setGroups.calledOnce, true);
   });
 
   it('Check parseSelectValue()', function () {
-    expect(component.parseSelectValue('0,1')).to.eql(['0', '1']);
-    expect(component.parseSelectValue('')).to.eql([]);
+    expect(component.parseSelectValue(['0', '1'])).to.eql(['0', '1']);
+    expect(component.parseSelectValue([])).to.eql([]);
   });
 
   it('Check getSelectValue()', function () {

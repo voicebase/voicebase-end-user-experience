@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallowRender } from '../../app/common/Test'
-import TestUtils from 'react-addons-test-utils'
 
 import { DatePicker } from '../../app/components/DatePicker'
 import DateRangePicker from 'react-bootstrap-daterangepicker';
@@ -30,11 +29,6 @@ describe('DatePicker component', function () {
     assert.equal(component.props.className, 'form-group form-group--date');
   });
 
-  it('check existing of DateRangePicker', function() {
-    let datePicker = component.props.children;
-    assert.equal(datePicker.type, DateRangePicker);
-  });
-
   it('check count of DateRangePicker children', function() {
     let datePicker = component.props.children;
     expect(datePicker.props.children.length).to.equal(2);
@@ -45,12 +39,6 @@ describe('DatePicker component', function () {
     let icon = datePicker.props.children[0];
     assert.equal(icon.type, 'i');
     assert.equal(icon.props.className, 'fa fa-calendar-o');
-  });
-
-  it('check input in DateRangePicker', function() {
-    let datePicker = component.props.children;
-    let input = datePicker.props.children[1];
-    assert.equal(input.type, Input);
   });
 
   it('Check default empty value of date input', function() {

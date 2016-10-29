@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallowRender } from '../../app/common/Test'
-import TestUtils from 'react-addons-test-utils'
 
 import DropdownList from '../../app/components/DropdownList'
 import {Dropdown, MenuItem} from 'react-bootstrap'
@@ -30,9 +29,8 @@ describe('DropdownList component', function () {
     component = getComponent();
   });
 
-  it('Check type, id and class', function() {
+  it('Check id and class', function() {
     let component = getComponent();
-    assert.equal(component.type, Dropdown);
     assert.equal(component.props.id, 'test-dropdown');
     assert.equal(component.props.className, 'dropdown--custom-caret');
   });
@@ -53,10 +51,6 @@ describe('DropdownList component', function () {
 
     beforeEach(function () {
       toggle = getToggle(component);
-    });
-
-    it('Check type', function() {
-      assert.equal(toggle.type, Dropdown.Toggle);
     });
 
     it('Check name', function() {
@@ -88,10 +82,6 @@ describe('DropdownList component', function () {
       menu = getMenu(component);
     });
 
-    it('Check type', function() {
-      assert.equal(menu.type, Dropdown.Menu);
-    });
-
     it('Check childrens count', function() {
       assert.equal(menu.props.children.length, Object.keys(items).length);
     });
@@ -99,7 +89,6 @@ describe('DropdownList component', function () {
     it('Check MenuItem', function() {
       let itemId = 0;
       let firstMenuItem = menu.props.children[itemId];
-      assert.equal(firstMenuItem.type, MenuItem);
       assert.equal(firstMenuItem.key, dropdownKey + 'priority-item' + itemId);
       assert.equal(firstMenuItem.props.eventKey, itemId);
       assert.equal(firstMenuItem.props.children, items[itemId].name);

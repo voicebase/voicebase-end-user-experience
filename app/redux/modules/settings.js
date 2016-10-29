@@ -150,7 +150,7 @@ export const initialState = fromJS({
     }
   },
   languages: {
-    itemIds: ['fr', 'de', 'it', 'pt', 'us'],
+    itemIds: ['en-US', 'en-UK', 'en-AU', 'es-LA', 'pt-BZ'],
     items: {
       'en-US': {
         id: 'en-US',

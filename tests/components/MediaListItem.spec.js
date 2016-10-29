@@ -3,18 +3,9 @@ import { shallowRender } from '../../app/common/Test'
 
 import { MediaListItem } from '../../app/components/MediaListItem'
 import { MediaListItemTitle } from '../../app/components/MediaListItemTitle'
-import VbsPlayerApp from '../../app/components/player/VbsPlayerApp';
 import Spinner from '../../app/components/Spinner';
 import { parseTime } from '../../app/common/Common';
 import {Collapse, Alert, Row, Col} from 'react-bootstrap'
-
-import { initialState as dataState } from '../../app/redux/modules/media/mediaData'
-import { initialState as markersState } from '../../app/redux/modules/media/markers'
-import {
-  initialState as playerState,
-  initialPlayerState
-} from '../../app/redux/modules/media/player'
-
 
 describe('MediaListItem component', function () {
   let component;
@@ -36,15 +27,8 @@ describe('MediaListItem component', function () {
       },
       status: "finished"
     },
-    mediaState: {
-      markers: markersState,
-      mediaData: dataState,
-      player: playerState
-    },
     actions: {
       collapseMedia: function(mediaId){},
-      getMediaUrl: function(token, mediaId){},
-      getDataForMedia: function(token, mediaId){},
       expandMedia: function(mediaId){},
       selectMedia: function(mediaId){},
       unselectMedia: function(mediaId){},
@@ -60,12 +44,12 @@ describe('MediaListItem component', function () {
       ..._options
     };
     return shallowRender(
-      <MediaListItem token={props.token}
-                     mediaId={props.mediaId}
-                     isExpanded={props.isExpanded}
-                     listItemState={props.listItemState}
-                     mediaState={props.mediaState}
-                     actions={props.actions}
+      <MediaListItem
+        token={props.token}
+        mediaId={props.mediaId}
+        isExpanded={props.isExpanded}
+        listItemState={props.listItemState}
+        actions={props.actions}
       />
     );
   };
@@ -108,52 +92,32 @@ describe('MediaListItem component', function () {
 
     it('Check toggle for collapsed row without data for mediaId', function() {
       let expandMedia = sinon.spy();
-      let getMediaUrl = sinon.spy();
-      let getDataForMedia = sinon.spy();
       component = getComponent({
         ...options,
         isExpanded: false,
         actions: {
           ...options.actions,
-          expandMedia: expandMedia,
-          getDataForMedia: getDataForMedia,
-          getMediaUrl: getMediaUrl
+          expandMedia: expandMedia
         }
       });
       itemRow = getItemRow();
       itemRow.props.onClick({target: {}});
       assert.isTrue(expandMedia.calledOnce);
-      assert.isTrue(getMediaUrl.calledOnce);
-      assert.isTrue(getDataForMedia.calledOnce);
     });
 
     it('Check toggle for collapsed row with data for mediaId', function() {
       let expandMedia = sinon.spy();
-      let getMediaUrl = sinon.spy();
-      let getDataForMedia = sinon.spy();
       component = getComponent({
         ...options,
         isExpanded: false,
-        mediaState: {
-          ...options.mediaState,
-          mediaData: options.mediaState.mediaData.merge({
-            mediaId: {
-              mediaId: 'mediaId'
-            }
-          })
-        },
         actions: {
           ...options.actions,
-          expandMedia: expandMedia,
-          getDataForMedia: getDataForMedia,
-          getMediaUrl: getMediaUrl
+          expandMedia: expandMedia
         }
       });
       itemRow = getItemRow();
       itemRow.props.onClick({target: {}});
       assert.isTrue(expandMedia.calledOnce);
-      assert.isFalse(getMediaUrl.called);
-      assert.isFalse(getDataForMedia.called);
     });
 
     it('Check toggle for expanded row', function() {
@@ -325,19 +289,6 @@ describe('MediaListItem component', function () {
       return component.props.children[1];
     };
 
-    const getBody = function () {
-      return component
-        .props.children[1]
-        .props.children;
-    };
-
-    const getError = function () {
-      return component
-        .props.children[1]
-        .props.children
-        .props.children[1];
-    };
-
     beforeEach(function () {
       collapse = getCollapse();
     });
@@ -354,270 +305,6 @@ describe('MediaListItem component', function () {
       });
       collapse = getCollapse();
       assert.equal(collapse.props.in, true);
-    });
-
-    it('Check Collapse children without mediaData', function() {
-      let body = getBody();
-      body.props.children.forEach(child => {
-        assert.isNull(child);
-      });
-    });
-
-    describe('Check Spinner for getting mediaData', function () {
-      const getSpinner = function () {
-        return component
-          .props.children[1]
-          .props.children
-          .props.children[0];
-      };
-
-      it('Check Spinner without pending flags', function() {
-        component = getComponent({
-          ...options,
-          mediaState: {
-            ...options.mediaState,
-            mediaData: options.mediaState.mediaData.merge({
-              mediaId: {
-                mediaId: 'mediaId'
-              }
-            })
-          }
-        });
-        let spinner = getSpinner();
-        assert.isUndefined(spinner);
-      });
-
-      it('Check Spinner with getPending flag', function() {
-        component = getComponent({
-          ...options,
-          mediaState: {
-            ...options.mediaState,
-            mediaData: options.mediaState.mediaData.merge({
-              mediaId: {
-                mediaId: 'mediaId',
-                getPending: true
-              }
-            })
-          }
-        });
-        let spinner = getSpinner();
-        assert.equal(spinner.type, 'div');
-        assert.equal(spinner.props.className, 'spinner-media_item');
-        assert.equal(spinner.props.children.type, Spinner);
-      });
-
-      it('Check Spinner with getUrlPending flag', function() {
-        component = getComponent({
-          ...options,
-          mediaState: {
-            ...options.mediaState,
-            mediaData: options.mediaState.mediaData.merge({
-              mediaId: {
-                mediaId: 'mediaId',
-                getUrlPending: true
-              }
-            })
-          }
-        });
-        let spinner = getSpinner();
-        assert.equal(spinner.type, 'div');
-      });
-
-      it('Check Spinner with getPending && getUrlPending flag', function() {
-        component = getComponent({
-          ...options,
-          mediaState: {
-            ...options.mediaState,
-            mediaData: options.mediaState.mediaData.merge({
-              mediaId: {
-                mediaId: 'mediaId',
-                getPending: true,
-                getUrlPending: true
-              }
-            })
-          }
-        });
-        let spinner = getSpinner();
-        assert.equal(spinner.type, 'div');
-      });
-
-    });
-
-    it('Check error if status === "failed"', function() {
-      component = getComponent({
-        ...options,
-        mediaState: {
-          ...options.mediaState,
-          mediaData: options.mediaState.mediaData.merge({
-            mediaId: {
-              mediaId: 'mediaId',
-              status: 'failed'
-            }
-          })
-        }
-      });
-      let error = getError();
-      assert.equal(error.type, Row);
-    });
-
-    describe('Check Player Block', function () {
-      const getPlayer = function () {
-        return component
-          .props.children[1]
-          .props.children
-          .props.children[2];
-      };
-
-      it('Check player block without mediaData.data', function() {
-        component = getComponent({
-          ...options,
-          mediaState: {
-            ...options.mediaState,
-            mediaData: options.mediaState.mediaData.merge({
-              mediaId: {
-                mediaId: 'mediaId'
-              }
-            })
-          }
-        });
-        let playerApp = getPlayer();
-        assert.isFalse(playerApp);
-      });
-
-      it('Check player block without status === "finished"', function() {
-        component = getComponent({
-          ...options,
-          mediaState: {
-            ...options.mediaState,
-            mediaData: options.mediaState.mediaData.merge({
-              mediaId: {
-                mediaId: 'mediaId',
-                data: {},
-                status: 'failed'
-              }
-            })
-          }
-        });
-        let playerApp = getPlayer();
-        assert.isFalse(playerApp);
-      });
-
-      it('Check player block with default settings', function() {
-        component = getComponent({
-          ...options,
-          mediaState: {
-            ...options.mediaState,
-            mediaData: options.mediaState.mediaData.merge({
-              mediaId: {
-                mediaId: 'mediaId',
-                data: {},
-                status: 'finished'
-              }
-            })
-          }
-        });
-        let playerApp = getPlayer();
-        assert.equal(playerApp.type, VbsPlayerApp);
-        assert.equal(playerApp.props.token, options.token);
-        assert.equal(playerApp.props.mediaId, options.mediaId);
-        expect(playerApp.props.playerState).to.eql({loading: true});
-        expect(playerApp.props.actions).to.eql(options.actions);
-      });
-
-      it('Check player state of player block', function() {
-        let _initialPlayerState = {
-          ...initialPlayerState,
-          url: 'url',
-          type: 'audio'
-        };
-        component = getComponent({
-          ...options,
-          mediaState: {
-            ...options.mediaState,
-            player: options.mediaState.player.merge({
-              playerIds: ['mediaId'],
-              players: {
-                mediaId: _initialPlayerState
-              }
-            }),
-            mediaData: options.mediaState.mediaData.merge({
-              mediaId: {
-                mediaId: 'mediaId',
-                data: {},
-                status: 'finished'
-              }
-            })
-          }
-        });
-        let playerApp = getPlayer();
-        expect(playerApp.props.playerState).to.eql(_initialPlayerState);
-      });
-
-      it('Check mediaDataState of player block', function() {
-        let data = {
-          mediaId: 'mediaId',
-          data: {},
-          status: 'finished'
-        };
-
-        component = getComponent({
-          ...options,
-          mediaState: {
-            ...options.mediaState,
-            mediaData: options.mediaState.mediaData.merge({
-              mediaId: data
-            })
-          }
-        });
-        let playerApp = getPlayer();
-        expect(playerApp.props.mediaDataState).to.eql(data);
-      });
-
-      it('Check empty markersState of player block', function() {
-        component = getComponent({
-          ...options,
-          mediaState: {
-            ...options.mediaState,
-            mediaData: options.mediaState.mediaData.merge({
-              mediaId: {
-                mediaId: 'mediaId',
-                data: {},
-                status: 'finished'
-              }
-            })
-          }
-        });
-        let playerApp = getPlayer();
-        expect(playerApp.props.markersState).to.eql(null);
-      });
-
-      it('Check non-empty markersState of player block', function() {
-        let markersState = {
-          "mediaId": {
-            "markerIds": ["0"],
-            "markers": {
-              "0": {"id": "0", "time": 123.55, "keywordName": "premium package"}
-            },
-            "justCreated": true
-          }
-        };
-        component = getComponent({
-          ...options,
-          mediaState: {
-            ...options.mediaState,
-            markers: options.mediaState.markers.merge(markersState),
-            mediaData: options.mediaState.mediaData.merge({
-              mediaId: {
-                mediaId: 'mediaId',
-                data: {},
-                status: 'finished'
-              }
-            })
-          }
-        });
-        let playerApp = getPlayer();
-        expect(playerApp.props.markersState).to.eql(markersState['mediaId']);
-      });
     });
   });
 });

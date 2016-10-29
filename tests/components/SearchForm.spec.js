@@ -1,10 +1,9 @@
 import React from 'react';
 import { shallowRender } from '../../app/common/Test'
-import TestUtils from 'react-addons-test-utils'
 
 import { SearchForm } from '../../app/components/SearchForm'
 import { initialState } from '../../app/redux/modules/search'
-import {Row, Col, FormGroup, FormControl, Button} from 'react-bootstrap'
+import { FormControl } from 'react-bootstrap'
 import DatePicker from '../../app/components/DatePicker'
 import DropdownList from '../../app/components/DropdownList'
 
@@ -16,6 +15,7 @@ describe('SearchForm component', function () {
     onSearch: function (){},
     actions: {
       applyDate: function (dateObj){},
+      filterByDate: function (dateFrom, dateTo){},
       clearDate: function (){},
       selectOrder: function (orderId){},
       setSearchString: function (searchString){}
@@ -184,30 +184,36 @@ describe('SearchForm component', function () {
 
       it('Check applyDate for DatePicker', function() {
         const applyDate = sinon.spy();
+        const filterByDate = sinon.spy();
         component = getComponent({
           ...options,
           actions: {
             ...options.actions,
-            applyDate: applyDate
+            applyDate: applyDate,
+            filterByDate
           }
         });
         datePicker = getDatePicker();
         datePicker.props.applyDate();
         assert.isTrue(applyDate.calledOnce);
+        assert.isTrue(filterByDate.calledOnce);
       });
 
       it('Check clearDate for DatePicker', function() {
         const clearDate = sinon.spy();
+        const filterByDate = sinon.spy();
         component = getComponent({
           ...options,
           actions: {
             ...options.actions,
-            clearDate: clearDate
+            clearDate: clearDate,
+            filterByDate
           }
         });
         datePicker = getDatePicker();
         datePicker.props.clearDate();
         assert.isTrue(clearDate.calledOnce);
+        assert.isTrue(filterByDate.calledOnce);
       });
 
     });

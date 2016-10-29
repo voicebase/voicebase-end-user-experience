@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
 import UploadProgressList from '../../../app/components/upload/UploadProgressList'
@@ -27,7 +26,6 @@ describe('UploadProgressList component', function () {
     },
     actions: {
       removeFile: function(){},
-      destroyPlayer: function(){},
       addProcessingMedia: function(){}
     }
   };
@@ -56,13 +54,11 @@ describe('UploadProgressList component', function () {
 
   it('Check componentWillUpdate', function () {
     let removeFile = sinon.spy();
-    let destroyPlayer = sinon.spy();
     let addProcessingMedia = sinon.spy();
     component = getComponent({
       ...options,
       actions: {
         removeFile,
-        destroyPlayer,
         addProcessingMedia
       }
     });
@@ -70,7 +66,6 @@ describe('UploadProgressList component', function () {
     component.componentWillUpdate(options);
 
     assert.equal(removeFile.calledOnce, true);
-    assert.equal(destroyPlayer.calledOnce, true);
     assert.equal(addProcessingMedia.calledOnce, true);
   });
 

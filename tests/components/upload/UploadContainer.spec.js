@@ -1,12 +1,8 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { shallowRender } from '../../../app/common/Test'
 import TestUtils from 'react-addons-test-utils'
 
 import UploadContainer from '../../../app/components/upload/UploadContainer'
-import {
-  initialState as playerState
-} from '../../../app/redux/modules/media/player'
 import {
   OPTIONS_TAB,
   initialState as uploadState
@@ -31,9 +27,6 @@ describe('UploadContainer component', function () {
     state: {
       auth: {
         token: 'token'
-      },
-      media: {
-        player: playerState
       },
       upload: uploadState,
       settings: {
@@ -74,34 +67,15 @@ describe('UploadContainer component', function () {
   });
 
   it('Check onClose()', function() {
-    let destroyPlayer = sinon.spy();
     let cancelUpload = sinon.spy();
     component = getComponent({
       ...options,
-      state: {
-        ...options.state,
-        upload: uploadState
-          .set('fileIds', ['0'])
-          .set('files', {
-            '0': {
-              file: {
-                name: 'First',
-                file: 'inputData'
-              },
-              type: 'audio'
-            }
-          })
-      },
       actions: {
         ...options.actions,
-        destroyPlayer,
         cancelUpload
       }
     });
-
     component.onClose();
-
-    assert.equal(destroyPlayer.calledOnce, true);
     assert.equal(cancelUpload.calledOnce, true);
   });
 

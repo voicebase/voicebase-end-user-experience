@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { baseUrl } from './baseUrl'
 
-const DOMAIN = window.voicebaseEnv.auth0Domain || 'voicebase-dev.auth0.com';
-const CLIENT_ID = window.voicebaseEnv.auth0ClientId || 'OCGWPv8TtRySqVezChYf6KJsof7ATG83';
+const DOMAIN = (window.voicebaseEnv && window.voicebaseEnv.auth0Domain) || 'voicebase-dev.auth0.com';
+const CLIENT_ID = (window.voicebaseEnv && window.voicebaseEnv.auth0ClientId) || 'OCGWPv8TtRySqVezChYf6KJsof7ATG83';
 const AUTH0_OPTIONS = {
   theme: {
     logo: 'https://s3.amazonaws.com/www-tropo-com/wp-content/uploads/2015/06/voicebase-logo.png'
