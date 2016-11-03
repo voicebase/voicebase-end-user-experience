@@ -18,20 +18,30 @@ export class UploadView extends React.Component {
     this.context.router.push('/all');
   };
 
+  getLocalFilesCount () {
+    const uploadState = this.props.state.upload;
+    const filesIds = uploadState.get('fileIds').filter((id) => {
+      const file = uploadState.getIn(['files', id]);
+      return !file.get('isPostPending');
+    });
+    return filesIds.size;
+  }
+
   render () {
-    let fileIds = this.props.state.upload.get('fileIds');
+    const { state, actions } = this.props;
+    const filesCount = this.getLocalFilesCount();
 
     return (
       <div>
-        {fileIds.size === 0 &&
-          <UploadZone actions={this.props.actions} />
+        {filesCount === 0 &&
+          <UploadZone actions={actions} />
         }
-        {fileIds.size > 0 &&
+        {filesCount > 0 &&
           <UploadContainer
-            state={this.props.state}
+            state={state}
             isModal={false}
             onFinish={this.onFinish}
-            actions={this.props.actions}
+            actions={actions}
           />
         }
       </div>

@@ -28,30 +28,31 @@ export class AllView extends React.Component {
   }
 
   componentDidUpdate() {
-    let state = this.props.state;
+    const { state, actions } = this.props;
+
     let mediaList = state.media.mediaList;
     if (state.search.get('isSearching') && (mediaList.get('isGetCompleted') || mediaList.get('errorMessage'))) {
-      this.props.actions.cancelSearch();
+      actions.cancelSearch();
     }
     if (mediaList.get('errorMessage')) {
       this.refs.notificationSystem.addNotification({
         message: mediaList.get('errorMessage'),
         level: 'error'
       });
-      this.props.actions.clearMediaListError();
+      actions.clearMediaListError();
     }
   }
 
   onSearch = () => {
-    let state = this.props.state;
-    this.props.actions.startSearch();
-    this.props.actions.getMedia(state.auth.token, {
+    const { state, actions } = this.props;
+    actions.startSearch();
+    actions.getMedia(state.auth.token, {
       searchString: state.search.get('searchString')
     })
   };
 
   render () {
-    let state = this.props.state;
+    const { state, actions } = this.props;
     let mediaList = state.media.mediaList;
     const errorState = state.error.toJS();
     return (
@@ -68,31 +69,31 @@ export class AllView extends React.Component {
             <SearchForm
               state={state.search}
               onSearch={this.onSearch}
-              actions={this.props.actions}
+              actions={actions}
             />
             <MediaListToolbar
               token={state.auth.token}
               selectedMediaIds={mediaList.get('selectedMediaIds').toJS()}
-              actions={this.props.actions}
+              actions={actions}
             />
 
             <UploadProgressList
               uploadState={state.upload.toJS()}
-              actions={this.props.actions}
+              actions={actions}
             />
 
             <MediaList
               token={state.auth.token}
               state={state.media}
               searchString={state.search.get('searchString')}
-              actions={this.props.actions}
+              actions={actions}
             />
           </div>
         }
         <NotificationSystem ref="notificationSystem" />
         <ErrorList
           errorState={errorState}
-          actions={this.props.actions}
+          actions={actions}
         />
       </div>
     )

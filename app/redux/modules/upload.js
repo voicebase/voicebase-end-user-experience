@@ -138,10 +138,7 @@ export default handleActions({
 
   [POST_FILE + '_PENDING']: (state, {payload: fileId}) => {
     return state
-      .mergeIn(['files', fileId], {
-        isPostPending: true,
-        errorMessage: ''
-      })
+      .setIn(['files', fileId, 'isPostPending'], true)
       .setIn(['view', 'showForm'], false);
   },
 
