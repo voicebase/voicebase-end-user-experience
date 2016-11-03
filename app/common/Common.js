@@ -1,5 +1,9 @@
 import { months } from '../common/months'
 
+export const getRandomId = function (prefix) {
+  return `${prefix}-${new Date().getTime().toString()}`;
+};
+
 export const parseTime = function (seconds) {
   let hours = `${Math.floor(seconds / 3600)}`;
   let minutes = `${Math.floor(seconds % 3600 / 60)}`;

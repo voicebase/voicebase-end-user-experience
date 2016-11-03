@@ -8,6 +8,7 @@ import MediaListToolbar from '../components/MediaListToolbar'
 import MediaList from '../components/MediaList'
 import UploadProgressList from '../components/upload/UploadProgressList'
 import Spinner from '../components/Spinner'
+import ErrorList from '../components/error/ErrorList'
 
 export class AllView extends React.Component {
   static contextTypes = {
@@ -52,6 +53,7 @@ export class AllView extends React.Component {
   render () {
     let state = this.props.state;
     let mediaList = state.media.mediaList;
+    const errorState = state.error.toJS();
     return (
       <div>
         {mediaList.get('isGetPending') && !state.search.get('isSearching') && <Spinner />}
@@ -88,6 +90,10 @@ export class AllView extends React.Component {
           </div>
         }
         <NotificationSystem ref="notificationSystem" />
+        <ErrorList
+          errorState={errorState}
+          actions={this.props.actions}
+        />
       </div>
     )
   }

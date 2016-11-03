@@ -5,6 +5,7 @@ import {actions as mediaDataActions} from '../redux/modules/media/mediaData'
 import {actions as groupsActions} from '../redux/modules/groups'
 import {actions as settingsActions} from '../redux/modules/settings'
 import {actions as uploadActions} from '../redux/modules/upload'
+import {actions as errorActions} from '../redux/modules/error'
 
 export default Object.assign(
   authActions,
@@ -13,5 +14,6 @@ export default Object.assign(
   mediaDataActions,
   groupsActions,
   settingsActions,
-  uploadActions
+  uploadActions,
+  errorActions
 )

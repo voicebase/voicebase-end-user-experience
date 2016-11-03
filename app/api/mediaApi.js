@@ -197,7 +197,7 @@ export default {
         },
         error: function (jqXHR, textStatus, errorThrown) {
           console.log(errorThrown + ': Error ' + jqXHR.status);
-          reject({fileId, error: 'Upload is failed'})
+          reject('Upload is failed')
         }
       });
     })

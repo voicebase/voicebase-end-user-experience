@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions'
 import { fromJS } from 'immutable';
 import { normalize } from '../../common/Normalize'
 import { getFileType } from '../../common/Common'
+import { pushError } from './error'
 import MediaApi from '../../api/mediaApi'
 
 /*
@@ -30,12 +31,26 @@ export const OPTIONS_TAB = 2;
  * */
 export const addFiles = createAction(ADD_FILES, (files) => files);
 export const removeFile = createAction(REMOVE_FILE, (id) => id);
-export const postFile = createAction(POST_FILE, (token, fileId, file, options) => {
-  return {
-    data: {fileId},
-    promise: MediaApi.postMedia(token, fileId, file, options)
-  }
+
+export const _postFilePending = createAction(`${POST_FILE}_PENDING`, (fileId) => fileId);
+export const _postFileFulfilled = createAction(`${POST_FILE}_FULFILLED`, (fileId, response) => {
+  return {fileId, response};
 });
+
+export const postFile = (token, fileId, file, options) => {
+  return (dispatch) => {
+    dispatch(_postFilePending(fileId));
+    MediaApi.postMedia(token, fileId, file, options)
+      .then((response) => {
+        dispatch(_postFileFulfilled(fileId, response));
+      })
+      .catch((error) => {
+        dispatch(pushError(error));
+        dispatch(removeFile(fileId));
+      })
+  };
+};
+
 export const setLanguage = createAction(SET_LANGUAGE, (language) => language);
 export const setPriority = createAction(SET_PRIORITY, (priority) => priority);
 export const setPrediction = createAction(SET_PREDICTION, (predictionIds) => predictionIds);
@@ -121,20 +136,13 @@ export default handleActions({
       .deleteIn(['files', id]);
   },
 
-  [POST_FILE + '_PENDING']: (state, {payload}) => {
+  [POST_FILE + '_PENDING']: (state, {payload: fileId}) => {
     return state
-      .mergeIn(['files', payload.fileId], {
+      .mergeIn(['files', fileId], {
         isPostPending: true,
         errorMessage: ''
       })
       .setIn(['view', 'showForm'], false);
-  },
-
-  [POST_FILE + '_REJECTED']: (state, {payload: {fileId, error}}) => {
-    return state.mergeIn(['files', fileId], {
-      isPostPending: false,
-      errorMessage: error
-    });
   },
 
   [POST_FILE + '_FULFILLED']: (state, {payload: {fileId, data}}) => {
