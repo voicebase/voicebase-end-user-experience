@@ -121,13 +121,29 @@ export default {
         jobConf.language = options.language;
       }
 
-      let groupsConf = {};
+      let keywordsConf = {};
       if (options.groups && options.groups.length > 0) {
-        groupsConf = {
+        keywordsConf = {
           keywords: {
             groups: options.groups
           }
         };
+      }
+
+      let topicsConf = {};
+      if (options.language === 'es-LA' || options.language === 'pt-BZ') {
+        if (!keywordsConf.keywords) {
+          keywordsConf.keywords = {};
+        }
+        keywordsConf.keywords = {
+          ...keywordsConf.keywords,
+          semantic: false
+        };
+        topicsConf = {
+          topics: {
+            semantic: false
+          }
+        }
       }
 
       let predictionsConf = {};
@@ -167,13 +183,14 @@ export default {
         };
       }
 
-      let sumConf = Object.assign({}, jobConf, groupsConf, predictionsConf, speakersConf, transcriptConf);
+      let sumConf = Object.assign({}, jobConf, keywordsConf, topicsConf, predictionsConf, speakersConf, transcriptConf);
 
       let conf = {
         configuration: sumConf
       };
       data.append('configuration', JSON.stringify(conf));
 
+/*
       let metadata = {
         metadata: {
           external: {
@@ -182,6 +199,7 @@ export default {
         }
       };
       data.append('metadata', JSON.stringify(metadata));
+*/
 
       $.ajax({
         url: baseUrl + '/media',
@@ -193,7 +211,7 @@ export default {
           'Authorization': 'Bearer ' + token
         },
         success: function (data) {
-          resolve({fileId, data});
+          resolve(data);
         },
         error: function (jqXHR, textStatus, errorThrown) {
           console.log(errorThrown + ': Error ' + jqXHR.status);

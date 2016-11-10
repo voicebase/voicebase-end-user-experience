@@ -110,7 +110,13 @@ export default class ProcessingListItem extends React.Component {
         isProgress: ingestStatus.isProgress || transcriptStatus.isProgress,
         isCompleted: ingestStatus.isCompleted && transcriptStatus.isCompleted
       };
-      keywordsStatus = this.getProgressStatus(processingTasks.keywords);
+      if (processingTasks.keywords) {
+        keywordsStatus = this.getProgressStatus(processingTasks.keywords);
+      }
+      else {
+        keywordsStatus = {isProgress: false, isCompleted: true};
+      }
+
       predictionStatus = processingTasks.prediction || processingTasks.detection;
     }
     return {

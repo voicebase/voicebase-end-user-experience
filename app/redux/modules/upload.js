@@ -142,12 +142,13 @@ export default handleActions({
       .setIn(['view', 'showForm'], false);
   },
 
-  [POST_FILE + '_FULFILLED']: (state, {payload: {fileId, data}}) => {
+  [POST_FILE + '_FULFILLED']: (state, {payload}) => {
+    const { fileId, response } = payload;
     return state.mergeIn(['files', fileId], {
       isPostPending: false,
       isPostComplete: true,
-      mediaId: data.mediaId,
-      data
+      mediaId: response.mediaId,
+      data: response
     });
   },
 
