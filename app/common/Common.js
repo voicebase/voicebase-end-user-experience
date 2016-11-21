@@ -73,14 +73,27 @@ export const getDateLabel = function (date) {
   return `${month} ${day}, ${year}`;
 };
 
-export const sortByField = function (field) {
-  var sortOrder = 1;
+export const getSortOrder = function (field) {
+  let sortOrder = 1;
   if (field[0] === '-') {
     sortOrder = -1;
     field = field.substr(1);
   }
+  return {sortOrder, field};
+};
+
+export const sortByField = function (_field) {
+  const { sortOrder, field } = getSortOrder(_field);
   return function (a, b) {
-    var result = (a[field] < b[field]) ? -1 : (a[field] > b[field]) ? 1 : 0;
+    const result = (a[field] < b[field]) ? -1 : (a[field] > b[field]) ? 1 : 0;
+    return result * sortOrder;
+  };
+};
+
+export const sortByDate = function (_field) {
+  const { sortOrder, field } = getSortOrder(_field);
+  return function (a, b) {
+    const result = new Date(b[field]) - new Date(a[field]);
     return result * sortOrder;
   };
 };

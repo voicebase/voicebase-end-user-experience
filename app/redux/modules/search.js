@@ -43,7 +43,7 @@ export const initialState = fromJS({
   dateFrom: '',
   dateTo: '',
   searchString: '',
-  selectedOrderId: ORDER_DATE_UP,
+  selectedOrderId: ORDER_DATE_DOWN,
   isSearching: false,
   order: {
     // 1: {

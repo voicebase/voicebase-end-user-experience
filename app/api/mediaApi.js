@@ -1,6 +1,7 @@
 import axios from 'axios'
 import $ from 'jquery'
 import { baseUrl } from './baseUrl'
+import { sortByDate } from '../common/Common'
 
 export default {
   getMedia(token, searchOptions = {}) {
@@ -21,7 +22,8 @@ export default {
         let mediaIds = [];
         let media = {};
         if (response.data.media) {
-          response.data.media.forEach(mediaItem => {
+          const sortedMedia = response.data.media.sort(sortByDate('dateCreated'));
+          sortedMedia.forEach(mediaItem => {
             if (mediaItem.status === 'failed' || mediaItem.status === 'finished') {
               mediaIds.push(mediaItem.mediaId);
               media[mediaItem.mediaId] = mediaItem;
