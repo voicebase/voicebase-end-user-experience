@@ -42,6 +42,22 @@ export const editGroup = createAction(EDIT_GROUP, (token, groupId, newGroup) => 
   }
 });
 
+export const editGroupName = (token, groupId, newGroup) => {
+  return (dispatch, getState) => {
+    const oldGroupName = getState().settings.groups.getIn(['groups', groupId, 'name']);
+    dispatch({type: EDIT_GROUP + '_PENDING', payload: {groupId}});
+    GroupsApi.createGroup(token, groupId, newGroup)
+      .then((response) => {
+        dispatch(deleteGroup(token, groupId, oldGroupName)).then(() => {
+          dispatch({type: ADD_GROUP + '_FULFILLED', payload: {data: response.data}})
+        })
+      })
+      .catch((error) => {
+        dispatch({type: EDIT_GROUP + '_REJECTED', payload: {groupId, error}});
+      });
+  };
+};
+
 export const addGroup = createAction(ADD_GROUP, (token, newGroup) => {
   return {
     data: {
@@ -58,6 +74,7 @@ export const actions = {
   getGroups,
   deleteGroup,
   editGroup,
+  editGroupName,
   addGroup,
   setActiveGroup,
   clearActiveGroup

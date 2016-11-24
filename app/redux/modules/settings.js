@@ -71,6 +71,22 @@ export const editItem = createAction(EDIT_ITEM, (token, type, id, newItem) => {
   }
 });
 
+export const editItemName = (token, type, id, newItem) => {
+  return (dispatch, getState) => {
+    const oldItemName = getState().settings.items.getIn([type, 'items', id, 'name']);
+    dispatch({type: EDIT_ITEM + '_PENDING', payload: {type, id}});
+    getApi(type).editItem(token, id, newItem)
+      .then((response) => {
+        dispatch(deleteItem(token, type, id, oldItemName)).then(() => {
+          dispatch({type: ADD_ITEM + '_FULFILLED', payload: {type, data: response.data}})
+        })
+      })
+      .catch((error) => {
+        dispatch({type: EDIT_ITEM + '_REJECTED', payload: {type, id, error}});
+      });
+  };
+};
+
 export const addItem = createAction(ADD_ITEM, (token, type, newItem) => {
   return {
     data: {
@@ -89,6 +105,7 @@ export const actions = {
   getItems,
   deleteItem,
   editItem,
+  editItemName,
   addItem,
   toggleCreateForm,
   setActiveItem,

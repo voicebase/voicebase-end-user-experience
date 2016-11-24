@@ -23,9 +23,18 @@ export class Predictions extends React.Component {
   };
 
   editItem = (id, values) => {
+    const { state, token, actions } = this.props;
+    const item = state.items[id];
+    const isEditName = item.name !== values.name;
+
     return parseVocabulary(values)
       .then((vocabulary) => {
-        this.props.actions.editItem(this.props.token, this.type, id, vocabulary);
+        if (isEditName) {
+          actions.editItemName(token, this.type, id, vocabulary);
+        }
+        else {
+          actions.editItem(token, this.type, id, vocabulary);
+        }
       });
   };
 

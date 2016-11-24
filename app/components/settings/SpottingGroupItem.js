@@ -33,6 +33,7 @@ export class SpottingGroupItem extends React.Component {
   };
 
   editGroup = (values) => {
+    const { actions, token, group } = this.props;
     let keywords = parseReactSelectValues(values.keywords);
 
     let newGroup = {
@@ -40,7 +41,13 @@ export class SpottingGroupItem extends React.Component {
       keywords
     };
     this.collapseForm();
-    this.props.actions.editGroup(this.props.token, this.props.group.id, newGroup);
+    const isEditName = newGroup.name !== group.name;
+    if (isEditName) {
+      actions.editGroupName(token, group.id, newGroup);
+    }
+    else {
+      actions.editGroup(token, group.id, newGroup);  
+    }    
   };
 
   render() {
