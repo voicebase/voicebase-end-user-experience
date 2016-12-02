@@ -36,6 +36,23 @@ export const createToken = createAction(CREATE_TOKEN, (auth0Token, ephemeral) =>
   }
 });
 
+export const regenerateToken = () => {
+  return (dispatch, getState) => {
+    const token = getState().auth.auth0Token;
+    const ONE_HOUR = 60 * 60 * 1000;
+    const intervalId = setInterval(function () {
+      authLockApi.createToken(token, true)
+        .then((response) => {
+          dispatch({type: CREATE_TOKEN + '_FULFILLED', payload: response});
+        })
+        .catch((error) => {
+          clearInterval(intervalId);
+          dispatch({type: CREATE_TOKEN + '_REJECTED', payload: error});
+        });
+    }, ONE_HOUR);
+  };
+};
+
 export const getApiKeys = createAction(GET_API_KEYS, (auth0Token) => {
   return {
     promise: authLockApi.getApiKeys(auth0Token)
@@ -65,6 +82,7 @@ export const actions = {
   signOut,
   setRemember,
   createToken,
+  regenerateToken,
   getApiKeys,
   handleErrors
 };

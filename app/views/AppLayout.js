@@ -20,6 +20,7 @@ export class AppLayout extends React.Component {
     this.redirectIfNotLoggedIn();
     const token = this.props.state.auth.token;
     if (token) {
+      this.props.actions.regenerateToken();
       this.props.actions.getMedia(token);
     }
   }
