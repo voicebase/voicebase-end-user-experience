@@ -10,7 +10,7 @@ export default {
       filterQuery = '&query=' + searchOptions.searchString;
     }
 
-    let url = `${baseUrl}/media?include=metadata${filterQuery}`;
+    let url = `${baseUrl}/media?sortOrder=asc&include=metadata${filterQuery}`;
     return axios.get(url, {
       headers: {
         Authorization: 'Bearer ' + token
