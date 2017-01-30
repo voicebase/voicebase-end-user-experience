@@ -63,10 +63,6 @@ describe('(Redux Module) upload.js', function () {
       it('check POST_FILE_FULFILLED when call action postFile', (done) => {
         checkApiAction(actions, 'postFile', POST_FILE, ['token', 'fileId', {}, {}], false, done);
       });
-
-      it('check POST_FILE_REJECTED when call action postFile', (done) => {
-        checkApiAction(actions, 'postFile', POST_FILE, ['token', 'fileId', {}, {}], true, done);
-      });
     });
 
     describe('SET_LANGUAGE', () => {
@@ -176,7 +172,7 @@ describe('(Redux Module) upload.js', function () {
         .setIn(['view', 'showForm'], false)
         .mergeIn(['files', '0'], {
           isPostPending: true,
-          errorMessage: ''
+          isPostComplete: false
         });
 
       // Add two files
@@ -187,34 +183,10 @@ describe('(Redux Module) upload.js', function () {
 
       let postPendingRes = uploadReducer(addRes, {
         type: POST_FILE + '_PENDING',
-        payload: {fileId: '0'}
+        payload: '0'
       });
 
       assert.isTrue(Immutable.is(expectedRes, postPendingRes));
-    });
-
-    it('POST_FILE_REJECTED reducer', function () {
-      let expectedRes = addFilesState
-        .mergeIn(['files', '0'], {
-          isPostPending: false,
-          errorMessage: 'error'
-        });
-
-      // Add two files
-      let addRes = uploadReducer(initialState, {
-        type: 'ADD_FILES',
-        payload: files
-      });
-
-      let postRemoveRes = uploadReducer(addRes, {
-        type: POST_FILE + '_REJECTED',
-        payload: {
-          fileId: '0',
-          error: 'error'
-        }
-      });
-
-      assert.isTrue(Immutable.is(expectedRes, postRemoveRes));
     });
 
     it('POST_FILE_FULFILLED reducer', function () {
@@ -225,7 +197,6 @@ describe('(Redux Module) upload.js', function () {
         .mergeIn(['files', fileId], {
           isPostPending: false,
           isPostComplete: true,
-          errorMessage: '',
           mediaId: mediaId,
           data: {
             mediaId: mediaId
@@ -241,7 +212,7 @@ describe('(Redux Module) upload.js', function () {
       // Pending
       let postPendingRes = uploadReducer(addRes, {
         type: POST_FILE + '_PENDING',
-        payload: {fileId: fileId}
+        payload: fileId
       });
 
       // post success
@@ -249,7 +220,7 @@ describe('(Redux Module) upload.js', function () {
         type: POST_FILE + '_FULFILLED',
         payload: {
           fileId: fileId,
-          data: {
+          response: {
             mediaId: mediaId
           }
         }
