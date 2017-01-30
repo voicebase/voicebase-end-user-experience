@@ -22,7 +22,7 @@ export class UploadView extends React.Component {
     const uploadState = this.props.state.upload;
     const filesIds = uploadState.get('fileIds').filter((id) => {
       const file = uploadState.getIn(['files', id]);
-      return !file.get('isPostPending');
+      return !file.get('isPostPending') && !file.get('isPostComplete');
     });
     return filesIds.size;
   }
