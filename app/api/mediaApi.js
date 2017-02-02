@@ -133,7 +133,7 @@ export default {
       }
 
       let topicsConf = {};
-      if (options.language === 'es-LA' || options.language === 'pt-BZ') {
+      if (options.language === 'es-LA' || options.language === 'pt-BR') {
         if (!keywordsConf.keywords) {
           keywordsConf.keywords = {};
         }

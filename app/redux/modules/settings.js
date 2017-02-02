@@ -167,7 +167,7 @@ export const initialState = fromJS({
     }
   },
   languages: {
-    itemIds: ['en-US', 'en-UK', 'en-AU', 'es-LA', 'pt-BZ'],
+    itemIds: ['en-US', 'en-UK', 'en-AU', 'es-LA', 'pt-BR'],
     items: {
       'en-US': {
         id: 'en-US',
@@ -185,8 +185,8 @@ export const initialState = fromJS({
         id: 'es-LA',
         name: 'Latin American Spanish'
       },
-      'pt-BZ': {
-        id: 'pt-BZ',
+      'pt-BR': {
+        id: 'pt-BR',
         name: 'Brazilian Portuguese'
       }
     },
