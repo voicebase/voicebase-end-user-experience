@@ -25,6 +25,7 @@
     "axios": "^0.13.1",
     "bootstrap": "^3.3.6",
     "classnames": "^2.2.3",
+    "cross-env": "^1.0.8",
     "deep-equal": "^1.0.1",
     "font-awesome": "^4.5.0",
     "fuse.js": "^2.0.1",
