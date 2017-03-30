@@ -37,8 +37,10 @@ export default class UploadContainer extends React.Component {
       }
       let language = options.language;
       uploadState.fileIds.forEach(fileId => {
-        let file = uploadState.files[fileId].file;
-        this.props.actions.postFile(this.props.state.auth.token, fileId, file, {groups, predictions, speakers, vocabularies, language});
+        let fileObj = uploadState.files[fileId];
+        if (!fileObj.isPostPending) {
+          this.props.actions.postFile(this.props.state.auth.token, fileId, fileObj.file, {groups, predictions, speakers, vocabularies, language});
+        }
       });
       this.props.onFinish();
     }

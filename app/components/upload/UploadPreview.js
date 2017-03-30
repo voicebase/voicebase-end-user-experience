@@ -15,6 +15,7 @@ export default class UploadPreview extends React.Component {
       <ListGroup className="preview-players-list">
         {uploadState.fileIds.map(fileId => {
           let file = uploadState.files[fileId];
+          if (file.isPostPending) return null;
 
           return (
             <UploadPreviewItem

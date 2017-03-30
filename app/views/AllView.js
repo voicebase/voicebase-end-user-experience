@@ -6,7 +6,7 @@ import CounterLabel from '../components/CounterLabel'
 import SearchForm from '../components/SearchForm'
 import MediaListToolbar from '../components/MediaListToolbar'
 import MediaList from '../components/MediaList'
-import UploadProgressList from '../components/upload/UploadProgressList'
+import UploadProgress from '../components/upload/UploadProgress'
 import Spinner from '../components/Spinner'
 import ErrorList from '../components/error/ErrorList'
 
@@ -77,9 +77,8 @@ export class AllView extends React.Component {
               actions={actions}
             />
 
-            <UploadProgressList
+            <UploadProgress
               uploadState={state.upload.toJS()}
-              actions={actions}
             />
 
             <MediaList

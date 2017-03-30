@@ -1,8 +1,9 @@
 import { createAction, handleActions } from 'redux-actions'
 import { fromJS } from 'immutable';
-import { normalize } from '../../common/Normalize'
+import { normalizeWithRandomId } from '../../common/Normalize'
 import { getFileType } from '../../common/Common'
 import { pushError } from './error'
+import { addProcessingMedia } from './media/mediaList'
 import MediaApi from '../../api/mediaApi'
 
 /*
@@ -33,16 +34,18 @@ export const addFiles = createAction(ADD_FILES, (files) => files);
 export const removeFile = createAction(REMOVE_FILE, (id) => id);
 
 export const _postFilePending = createAction(`${POST_FILE}_PENDING`, (fileId) => fileId);
-export const _postFileFulfilled = createAction(`${POST_FILE}_FULFILLED`, (fileId, response) => {
-  return {fileId, response};
-});
 
 export const postFile = (token, fileId, file, options) => {
   return (dispatch) => {
     dispatch(_postFilePending(fileId));
     MediaApi.postMedia(token, fileId, file, options)
       .then((response) => {
-        dispatch(_postFileFulfilled(fileId, response));
+        dispatch(removeFile(fileId));
+        dispatch(addProcessingMedia({
+          mediaId: response.mediaId,
+          status: response.status,
+          metadata: response.metadata
+        }));
       })
       .catch((error) => {
         dispatch(pushError(error));
@@ -112,17 +115,17 @@ export const initialState = fromJS({
  * Reducers
  * */
 export default handleActions({
-  [ADD_FILES]: (state, { payload: files }) => {
-    let result = normalize(files, file => {
+  [ADD_FILES]: (state, { payload: newFiles }) => {
+    let result = normalizeWithRandomId(newFiles, (file) => {
       let type = getFileType(file);
       return { file, type }
     });
 
+    const fileIds = state.get('fileIds').concat(result.ids);
+    const files = state.get('files').merge(result.entities);
+
     return state
-      .merge({
-        fileIds: result.ids,
-        files: result.entities
-      })
+      .merge({fileIds, files})
       .mergeIn(['view'], {
         showForm: true,
         activeTab: FILES_PREVIEW_TAB
@@ -139,20 +142,9 @@ export default handleActions({
   [POST_FILE + '_PENDING']: (state, {payload: fileId}) => {
     return state
       .mergeIn(['files', fileId], {
-        isPostPending: true,
-        isPostComplete: false
+        isPostPending: true
       })
       .setIn(['view', 'showForm'], false);
-  },
-
-  [POST_FILE + '_FULFILLED']: (state, {payload}) => {
-    const { fileId, response } = payload;
-    return state.mergeIn(['files', fileId], {
-      isPostPending: false,
-      isPostComplete: true,
-      mediaId: response.mediaId,
-      data: response
-    });
   },
 
   [CANCEL_UPLOAD]: () => {
