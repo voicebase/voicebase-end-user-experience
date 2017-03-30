@@ -40,12 +40,12 @@ export const postFile = (token, fileId, file, options) => {
     dispatch(_postFilePending(fileId));
     MediaApi.postMedia(token, fileId, file, options)
       .then((response) => {
-        dispatch(removeFile(fileId));
         dispatch(addProcessingMedia({
           mediaId: response.mediaId,
           status: response.status,
           metadata: response.metadata
         }));
+        dispatch(removeFile(fileId));
       })
       .catch((error) => {
         dispatch(pushError(error));

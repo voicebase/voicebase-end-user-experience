@@ -15,8 +15,14 @@ export class SidebarMenu extends React.Component {
   };
 
   getAllItem() {
-    let mediaIds = this.props.state.media.mediaList.get('mediaIds');
-    if (mediaIds.size <= 0) return null;
+    const { state } = this.props;
+    const mediaIds = state.media.mediaList.get('mediaIds');
+    const processingIds = state.media.mediaList.get('processingIds');
+    const pendingFiles = state.upload.get('fileIds').filter((id) => {
+      const file = state.upload.getIn(['files', id]);
+      return file.get('isPostPending');
+    });
+    if (mediaIds.size === 0 && pendingFiles.size === 0 && processingIds.size === 0) return null;
 
     return (
       <SidebarLink url='/all'>

@@ -20,17 +20,11 @@ export class AllView extends React.Component {
     actions: PropTypes.object.isRequired
   };
 
-  componentWillMount(nextProps) {
-    let mediaList = this.props.state.media.mediaList;
-    if (mediaList.get('isGetCompleted') && mediaList.get('mediaIds').size === 0) {
-      this.context.router.push('/upload');
-    }
-  }
-
   componentDidUpdate() {
     const { state, actions } = this.props;
 
     let mediaList = state.media.mediaList;
+
     if (state.search.get('isSearching') && (mediaList.get('isGetCompleted') || mediaList.get('errorMessage'))) {
       actions.cancelSearch();
     }
