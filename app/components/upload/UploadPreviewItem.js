@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import { ListGroupItem, Button } from 'react-bootstrap'
-import { FilePlayer } from 'voicebase-player-v2';
+import { FilePlayer } from 'voicebase-player';
 
 export default class UploadPreviewItem extends React.Component {
   static propTypes = {

@@ -3,7 +3,7 @@ import {Collapse} from 'react-bootstrap'
 import classnames from 'classnames';
 import MediaListItemTitle from './MediaListItemTitle';
 import Spinner from './Spinner';
-import { VoicebasePlayer } from 'voicebase-player-v2';
+import { VoicebasePlayer } from 'voicebase-player';
 import { parseTime, getDateLabel } from '../common/Common';
 import { baseUrl } from '../api/baseUrl'
 
