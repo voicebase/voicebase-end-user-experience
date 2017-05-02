@@ -1,6 +1,6 @@
 {
-  "name": "voicebase-end-user-experience",
-  "version": "0.0.1",
+  "name": "voicebase-transcript-director",
+  "version": "0.0.1-beta",
   "description": "Voicebase End User Portal",
   "engines": {
     "node": ">=5.0.0",
