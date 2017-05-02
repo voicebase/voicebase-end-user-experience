@@ -2,6 +2,9 @@
   "name": "voicebase-transcript-director",
   "version": "0.0.1-beta",
   "description": "Voicebase End User Portal",
+  "publishConfig":{
+    "registry": "https://nexus.dev.voicebase.com/nexus/content/repositories/npm-internal"
+  },
   "engines": {
     "node": ">=5.0.0",
     "npm": "^3.0.0"
@@ -13,6 +16,7 @@
     "dll_prod": "cross-env NODE_ENV=production npm run dll",
     "test": "babel-node ./node_modules/karma/bin/karma start tests/karma.conf.js",
     "test-dev": "babel-node ./node_modules/karma/bin/karma start tests/karma.conf.js --watch",
+    "prepublish": "npm run clean && npm run dll_prod && cross-env NODE_ENV=production babel-node webpack/webpack.compiler.js",
     "build": "npm run clean && npm run dll_prod && cross-env NODE_ENV=production babel-node webpack/webpack.compiler.js"
   },
   "repository": {
