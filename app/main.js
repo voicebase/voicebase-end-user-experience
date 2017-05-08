@@ -11,7 +11,7 @@ const browserHistory = useRouterHistory(createBrowserHistory)({
   basename: __BASENAME__
 });
 
-const store = configureStore(window.__INITIAL_STATE__);
+const store = configureStore(window.__INITIAL_STATE__ || {});
 const history = syncHistoryWithStore(browserHistory, store);
 const routes = configureRoutes(store, history);
 
