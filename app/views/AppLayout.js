@@ -18,10 +18,13 @@ export class AppLayout extends React.Component {
   componentWillMount() {
     this.props.actions.handleErrors();
     this.redirectIfNotLoggedIn();
-    const token = this.props.state.auth.token;
+    const token = this.props.state.auth && this.props.state.auth.token;
     if (token) {
-      this.props.actions.regenerateToken();
-      this.props.actions.getMedia(token);
+      this.props.actions.regenerateToken(); // returns undefined
+      this.props.actions.getMedia(token).catch(e => { // avoid reject without catch
+        console.log('getMedia failed in AppLayout, probably due to an expired token ')
+        console.log(e)
+      })
     }
   }
 
