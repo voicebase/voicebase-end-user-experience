@@ -7,16 +7,25 @@ import configureRoutes from './routes'
 import Root from './containers/Root'
 import configureStore from './redux/configureStore'
 
-const browserHistory = useRouterHistory(createBrowserHistory)({
-  basename: __BASENAME__
-});
+;(async function mainJs() {
+  const browserHistory = useRouterHistory(createBrowserHistory)({
+    basename: __BASENAME__
+  })
+  const store = configureStore(window.__INITIAL_STATE__)
+  const history = syncHistoryWithStore(browserHistory, store)
+  const routes = configureRoutes(store, history)
 
-const store = configureStore(window.__INITIAL_STATE__);
-const history = syncHistoryWithStore(browserHistory, store);
-const routes = configureRoutes(store, history);
-
-// Render the React application to the DOM
-ReactDOM.render(
-  <Root history={history} routes={routes} store={store} />,
-  document.getElementById('root')
-);
+  ReactDOM.render(
+    <Root history={history} routes={routes} store={store} />,
+    document.getElementById('root'),
+  )
+})().catch(e => {
+  const m = 'app/main.js initial render Error:'
+  console.error(m, e)
+  if (document && document.body) {
+    const message = `${m} ${e && e.message}`
+    const node = document.createTextNode(message)
+    document.body.insertBefore(node, document.body.firstChild)
+    document.body.style.color = 'red'
+  }
+})
