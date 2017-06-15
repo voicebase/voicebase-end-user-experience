@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
-import { useRouterHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
-import configureRoutes from './routes'
-import Root from './containers/Root'
+import {useRouterHistory} from 'react-router'
+import {syncHistoryWithStore} from 'react-router-redux'
+import configureRoutes from './Router/routes'
+import Root from './Router/Root'
 import configureStore from './redux/configureStore'
 
 ;(async function mainJs() {
