@@ -4,7 +4,7 @@ import { initialState as authInitialState } from './modules/auth'
 const storageConfig = {
   key: 'voicebaseStorage',
   merge: (initialState, persistedState) => {
-    if (persistedState.auth && !persistedState.auth.isRemember) {
+    if (persistedState && persistedState.auth && !persistedState.auth.isRemember) {
       return {
         ...persistedState,
         auth: {
