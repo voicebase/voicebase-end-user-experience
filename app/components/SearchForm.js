@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import {Row, Col, FormGroup, FormControl, InputGroup, Button} from 'react-bootstrap'
-import { ORDER_DATE_DOWN, ORDER_DATE_UP } from '../redux/modules/search'
+import {ORDER_DATE_DOWN, ORDER_DATE_UP} from '../redux/modules/search'
 import DatePicker from './DatePicker'
 import DropdownList from './DropdownList'
 
