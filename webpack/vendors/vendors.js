@@ -1,6 +1,5 @@
 require('axios');
 require('classnames');
-require('deep-equal');
 require('immutable');
 require('jquery');
 require('react');
