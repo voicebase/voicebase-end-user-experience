@@ -16,22 +16,22 @@ export class AppLayout extends React.Component {
   };
 
   componentWillMount() {
-    this.props.actions.handleErrors();
-    this.redirectIfNotLoggedIn();
-    const token = this.props.state.auth.token;
+    this.props.actions.handleErrors() // thunk with value from axios.interceptors.response.use
+    this.redirectIfNotLoggedIn()
+    const token = this.props.state.auth.token
     if (token) {
-      this.props.actions.regenerateToken();
-      this.props.actions.getMedia(token);
+      this.props.actions.regenerateToken()
+      this.props.actions.getMedia(token)
     }
   }
 
   componentDidUpdate() {
-    this.redirectIfNotLoggedIn();
+    this.redirectIfNotLoggedIn()
   }
 
   redirectIfNotLoggedIn() {
     if (!this.props.state.auth.token) {
-      this.context.router.push('/login');
+      this.context.router.push('/login')
     }
   }
 
