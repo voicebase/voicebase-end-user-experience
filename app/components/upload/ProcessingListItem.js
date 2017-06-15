@@ -60,7 +60,7 @@ export default class ProcessingListItem extends React.Component {
         }
         else {
           this.refs.notificationSystem.addNotification({
-            message: 'Upload was failed',
+            message: 'Upload failed',
             level: 'error'
           });
         }

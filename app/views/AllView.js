@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import connectWrapper from '../redux/utils/connect'
 import {actions as authActions} from '../redux/modules/auth'
 import NotificationSystem from 'react-notification-system'
@@ -29,8 +30,13 @@ export class AllView extends React.Component {
       actions.cancelSearch();
     }
     if (mediaList.get('errorMessage')) {
+      let message = mediaList.get('errorMessage')
+      if (typeof message !== 'string') {
+        console.error('AllView: received non-string message', message)
+        message = String(message)
+      }
       this.refs.notificationSystem.addNotification({
-        message: mediaList.get('errorMessage'),
+        message,
         level: 'error'
       });
       actions.clearMediaListError();

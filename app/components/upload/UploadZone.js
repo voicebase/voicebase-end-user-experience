@@ -9,6 +9,10 @@ export default class UploadZone extends React.Component {
   };
 
   showError(message) {
+    if (typeof message !== 'string') {
+      console.error('UploadZone: received non-string message', message)
+      message = String(message)
+    }
     this.refs.notificationSystem.addNotification({
       message,
       level: 'error'

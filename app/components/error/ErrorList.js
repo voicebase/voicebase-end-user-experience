@@ -14,6 +14,7 @@ export class ErrorList extends React.Component {
 
     addedErrors.forEach((id) => {
       const error = this.props.errorState.entities[id];
+      if (!(error instanceof Error)) console.error('ErrorList: received a non-Error:', error)
       this.addNotification(error);
     });
   }
@@ -21,7 +22,7 @@ export class ErrorList extends React.Component {
   addNotification (error) {
     this.refs.notificationSystem.addNotification({
       uid: error.uid,
-      message: error.message,
+      message: String(error.message),
       level: 'error',
       position: 'tc',
       autoDismiss: '5',

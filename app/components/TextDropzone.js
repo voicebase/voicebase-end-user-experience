@@ -13,6 +13,10 @@ export class TextDropzone extends React.Component {
   acceptFileFormats = ['.txt'];
 
   showError(message) {
+    if (typeof message !== 'string') {
+      console.error('TextDropzone: received non-string message', message)
+      message = String(message)
+    }
     this.refs.notificationSystem.addNotification({
       message,
       level: 'error'
