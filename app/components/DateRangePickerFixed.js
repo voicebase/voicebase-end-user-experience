@@ -9,9 +9,9 @@ import DateRangePicker from 'react-bootstrap-daterangepicker'
 import React from 'react'
 
 export default class extends DateRangePicker {
-	render() {
-		return React.Children.count(this.props.children) === 1
-			? React.cloneElement(this.props.children, {ref: 'picker'})
-			: React.createElement('div', {ref: 'picker'}, React.Children.map(this.props.children, child => React.cloneElement(child, {ref: 'picker'})))
-	}  
+  render() {
+    return React.Children.count(this.props.children) === 1
+      ? React.cloneElement(this.props.children, {ref: 'picker'})
+      : React.createElement('div', {ref: 'picker'}, React.Children.map(this.props.children, child => React.cloneElement(child, {ref: 'picker'})))
+  }  
 }

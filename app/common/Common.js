@@ -22,7 +22,7 @@ export const padLeft = function (string, total) {
 };
 
 export const replaceAndTrim = function (word) {
-  return word.replace(/<br\s*[\/]?>/gi, '').replace(/\n/gi, '').trim();
+  return word.replace(/<br\s*[/]?>/gi, '').replace(/\n/gi, '').trim();
 };
 
 export const getClearWordFromTranscript = function (word) {
