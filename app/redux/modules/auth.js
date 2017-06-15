@@ -1,4 +1,4 @@
-import { createAction, handleActions } from 'redux-actions'
+import {createAction, handleActions} from 'redux-actions'
 import axios from 'axios'
 
 import authLockApi from '../../api/authLockApi'
@@ -30,11 +30,10 @@ export const signIn = () => {
   })
 };
 
-export const createToken = createAction(CREATE_TOKEN, (auth0Token, ephemeral) => {
-  return {
-    promise: authLockApi.createToken(auth0Token, ephemeral)
-  }
-});
+// a promise-action
+export const createToken = createAction(CREATE_TOKEN, (auth0Token, ephemeral) => ({
+  promise: authLockApi.createToken(auth0Token, ephemeral)
+}))
 
 export const regenerateToken = () => {
   return (dispatch, getState) => {
@@ -63,19 +62,22 @@ export const setRemember = createAction(SET_REMEMBER, (isRemember) => isRemember
 
 export const signOut = createAction(SIGN_OUT, {});
 
-export const handleErrors = () => {
-  return (dispatch) => {
-    axios.interceptors.response.use(
-      (response) => response,
-      (error) => {
-        if (error.response.status === 401) {
-          dispatch(signOut());
-          return Promise.reject(error);
-        }
+// a thunk that adds a response interceptor signing out on 401 errors
+export const handleErrors = () => dispatch =>
+  axios.interceptors.response.use(
+    undefined, // response is passed through
+    error => {
+      if (error && error.response && error.response.status === 401) {
+        dispatch(signOut()).catch(logAndThrow)
       }
-    );
-  };
-};
+      throw error
+    }
+  )
+
+const logAndThrow = e => {
+  console.error('auth.js error occurrence', e)
+  throw e
+}
 
 export const actions = {
   signIn,
