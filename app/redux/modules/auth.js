@@ -60,25 +60,23 @@ export const getApiKeys = createAction(GET_API_KEYS, (auth0Token) => {
 
 export const setRemember = createAction(SET_REMEMBER, (isRemember) => isRemember);
 
-export const signOut = createAction(SIGN_OUT, {});
+export const signOut = createAction(SIGN_OUT, {})  // plain action that resets the store slice
 
-// a thunk that adds a response interceptor signing out on 401 errors
+// thunk adding catch middleware to axios. dispatch return value: undefined
 export const handleErrors = () => dispatch =>
   axios.interceptors.response.use(
     undefined, // response is passed through
-    error => {
-      if (error && error.response && error.response.status === 401) {
-        dispatch(signOut()).catch(logAndThrow)
-      }
-      throw error
+    e => {
+      if (e && e.response && e.response.status === 401) dispatch(signOut())
+      throw e
     }
   )
 
-const logAndThrow = e => {
+/*const logAndThrow = e => {
   console.error('auth.js error occurrence', e)
   throw e
 }
-
+*/
 export const actions = {
   signIn,
   signOut,

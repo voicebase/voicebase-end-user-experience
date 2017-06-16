@@ -16,7 +16,7 @@ export class AppLayout extends React.Component {
   };
 
   componentWillMount() {
-    this.props.actions.handleErrors() // thunk with value from axios.interceptors.response.use
+    this.props.actions.handleErrors() // thunk returning undefined
     this.redirectIfNotLoggedIn()
     const token = this.props.state.auth.token
     if (token) {

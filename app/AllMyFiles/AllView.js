@@ -22,7 +22,7 @@ export class AllView extends React.Component {
   };
 
   componentDidUpdate() {
-    const { state, actions } = this.props;
+    const {state, actions} = this.props
 
     let mediaList = state.media.mediaList;
 
@@ -39,7 +39,7 @@ export class AllView extends React.Component {
         message,
         level: 'error'
       });
-      actions.clearMediaListError();
+      actions.clearMediaListError()
     }
   }
 
