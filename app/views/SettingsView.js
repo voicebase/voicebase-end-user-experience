@@ -9,6 +9,8 @@ import Numbers from '../components/settings/Numbers'
 import Vocabularies from '../components/settings/Vocabularies'
 import {version} from 'voicebase-player'
 
+const versionApp = typeof VoiceBaseDemoAppVersion !== 'undefined' ? VoiceBaseDemoAppVersion : 'Demo App'
+
 export class SettingsView extends React.Component {
   constructor(props) {
     super(props)
@@ -60,7 +62,7 @@ export class SettingsView extends React.Component {
       <div className='content-settings'>
         <div className="content__heading">
           <h3 onClick={this.displayVersion}>Settings</h3>
-          {this.state.showVersion && <div style={{position: 'absolute', top: 0, right: 0, width: '100%', textAlign: 'right'}}>{version}</div>}
+          {this.state.showVersion && <div style={{position: 'absolute', top: 0, right: 0, width: '100%', textAlign: 'right'}}>{versionApp}<div>{version}</div></div>}
         </div>
         <Tabs id='content-settings-tabs'>
           <Tab eventKey={0} title={this.getTabTitle(state.settings.groups, 'groupIds')}>

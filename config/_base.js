@@ -1,5 +1,6 @@
 import { argv } from 'yargs'
 import path from 'path'
+import {versionKey, versionString} from '../config/versionmarker'
 
 const env = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 const isProd = env === 'production';
@@ -17,7 +18,6 @@ let config = {
   path_client: pathBase + '/app',
   path_server: pathBase + '/server',
   path_test   : 'tests',
-
   // ----------------------------------
   // Server Configuration
   // ----------------------------------
@@ -52,9 +52,9 @@ let config = {
     '__DEV__'      : !isProd,
     '__PROD__'     : isProd,
     '__DEBUG__'    : !isProd,
-    '__BASENAME__' : JSON.stringify(process.env.BASENAME || '')
-  }
-
+    '__BASENAME__' : JSON.stringify(process.env.BASENAME || ''),
+    [versionKey]: JSON.stringify(versionString),
+  },
 };
 
 export default config;
