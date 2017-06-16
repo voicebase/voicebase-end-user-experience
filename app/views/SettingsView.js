@@ -7,13 +7,21 @@ import Predictions from '../components/settings/Predictions'
 import Detections from '../components/settings/Detections'
 import Numbers from '../components/settings/Numbers'
 import Vocabularies from '../components/settings/Vocabularies'
+import {version} from 'voicebase-player'
 
 export class SettingsView extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+
   static propTypes = {
     history: PropTypes.object.isRequired,
     state: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };
+
+  displayVersion = () => this.setState({showVersion: !this.state.showVersion})
 
   componentWillMount() {
     let state = this.props.state;
@@ -51,7 +59,8 @@ export class SettingsView extends React.Component {
     return (
       <div className='content-settings'>
         <div className="content__heading">
-          <h3>Settings</h3>
+          <h3 onClick={this.displayVersion}>Settings</h3>
+          {this.state.showVersion && <div style={{position: 'absolute', top: 0, right: 0, width: '100%', textAlign: 'right'}}>{version}</div>}
         </div>
         <Tabs id='content-settings-tabs'>
           <Tab eventKey={0} title={this.getTabTitle(state.settings.groups, 'groupIds')}>
