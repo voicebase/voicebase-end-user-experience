@@ -12,7 +12,7 @@ const storageConfig = {
         }
       }
     }
-    return persistedState;
+    return initialState;
   }
 };
 
